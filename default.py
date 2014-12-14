@@ -7,10 +7,10 @@ import pickle
 try:
     from resources.libs import main,settings    
 except Exception, e:
-    elogo = xbmc.translatePath('special://home/addons/plugin.video.movie25-mod/resources/art/bigx.png')
+    elogo = xbmc.translatePath('special://home/addons/plugin.video.aftershock/resources/art/bigx.png')
     dialog = xbmcgui.Dialog()
-    ok=dialog.ok('[B][COLOR=FF67cc33]Movie25-Mod Import Error[/COLOR][/B]','Failed To Import Needed Modules',str(e),'Report missing Module at [COLOR=FF67cc33]https://code.google.com/p/innovate-dev/issues/list[/COLOR] to Fix')
-    xbmc.log('Movie25-Mod ERROR - Importing Modules: '+str(e), xbmc.LOGERROR)
+    ok=dialog.ok('[B][COLOR=FF67cc33]Aftershock Import Error[/COLOR][/B]','Failed To Import Needed Modules',str(e),'Report missing Module at [COLOR=FF67cc33]https://code.google.com/p/innovate-dev/issues/list[/COLOR] to Fix')
+    xbmc.log('Aftershock ERROR - Importing Modules: '+str(e), xbmc.LOGERROR)
 
 addon_id = settings.getAddOnID()
 selfAddon = xbmcaddon.Addon(id=addon_id)
@@ -27,8 +27,9 @@ TempPath=os.path.join(main.datapath,'Temp')
 try: os.makedirs(TempPath)
 except: pass
 
-#mainurl = 'http://www.movie25.so/movies/'
-mainurl = 'http://www.movie25.cm/'
+mainurl = settings.getMovie25URL()
+sominalurl = settings.getSominalURL()
+desirulezurl = settings.getDesiRulezURL()
 
 def AtoZ(index):
     main.addDir('0-9',mainurl + '0-9/',1,art+'/09.png')
@@ -36,39 +37,49 @@ def AtoZ(index):
             main.addDir(i,mainurl+i.lower()+'/',1,art+'/'+i.lower()+'.png')
 
 def MAIN():
-    xbmcgui.Window(10000).clearProperty('MASH_SSR_TYPE')
+    xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
     d = settings.getHomeItems()
     for index, value in sorted(enumerate(d), key=lambda x:x[1]):
         if value==None: continue
         if index==0:
-            main.addDirHome('Search',mainurl,420,art+'/search2.png')
+            main.addDirHome('Search',mainurl,420,art+'/search.png')
         elif index==1:
             main.addDirHome("All Fav's",mainurl,639,art+'/favsu.png')
         elif index==2:
             main.addDirHome('A-Z',mainurl,6,art+'/az2.png')
         elif index==3:
-            main.addDirHome('New Releases',mainurl + 'new-releases/',1,art+'/new2.png')
+            main.addDirHome('New Releases',mainurl + 'new-releases/',1,art+'/new.png')
         elif index==4:
-            main.addDirHome('Latest Added',mainurl + 'latest-added/',1,art+'/latest2.png')
+            main.addDirHome('Latest Added',mainurl + 'latest-added/',1,art+'/latest.png')
         elif index==5:
-            main.addDirHome('Featured Movies',mainurl + 'featured-movies/',1,art+'/feat2.png')
+            main.addDirHome('Featured Movies',mainurl + 'featured-movies/',1,art+'/feat.png')
         elif index==6:
-            main.addDirHome('Most Viewed',mainurl + 'most-viewed/',1,art+'/view2.png')
+            main.addDirHome('Most Viewed',mainurl + 'most-viewed/',1,art+'/view.png')
         elif index==7:
-            main.addDirHome('Most Voted',mainurl + 'most-voted/',1,art+'/vote2.png')
+            main.addDirHome('Most Voted',mainurl + 'most-voted/',1,art+'/vote.png')
         elif index==8:
             main.addDirHome('HD Releases',mainurl + 'latest-hd-movies/',1,art+'/dvd2hd.png')
         elif index==9:
-            main.addDirHome('Genre',mainurl,2,art+'/genre2.png')
+            main.addDirHome('Genre',mainurl,2,art+'/genre.png')
         elif index==10:
-            main.addDirHome('By Year',mainurl,7,art+'/year2.png')
+            main.addDirHome('By Year',mainurl,7,art+'/year.png')
         elif index==11:
             main.addDirHome('Watch History','history',222,art+'/whistory.png')
-        elif index==14:
-            main.addDirHome('International','http://www.desirulez.net',36,art+'/intl.png')
+        elif index==12:
+            main.addDirHome('International',desirulezurl,36,art+'/intl.png')
+        elif index==13:
+            main.addDirHome('Hindi Movies',sominalurl,50,art+'/intl.png')
         elif index==22:
-            main.addDirHome('Kids Zone',mainurl,76,art+'/kidzone2.png')
-    main.addPlayc('MashUp Settings',mainurl,1999,art+'/MashSettings.png','','','','','')
+            main.addDirHome('Kids Zone',mainurl,76,art+'/kidzone.png')
+    main.addPlayc('Aftershock Settings',mainurl,1999,art+'/MashSettings.png','','','','','')
+
+def MOVIES(url, index=False):
+    main.addDir('Featured',sominalurl,51,art+'/feat.png',categoryURL='hindi-movies',page=1)
+    main.addDir('2014',sominalurl,51,art+'/2014.png',categoryURL='2014',page=1)
+    #main.addDir('New Releases',sominalurl,51,art+'/new.png',categoryURL='hindi-movies/latest','page=1)
+    main.addDir('HD Releases',sominalurl,51,art+'/dvd2hd.png',categoryURL='hindi-blurays',page=1)
+    #main.addDir('Genre',mainurl,51,art+'/genre.png')
+    #main.addDir('By Year',mainurl,51,art+'/year.png')
     
 def GENRE(url,index=False):
     main.addDir('Action',mainurl + 'action/',1,art+'/act.png',index=index)
@@ -220,7 +231,7 @@ def getFavorites(section_title = None):
                         fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
                         fav_item['infolabels'].get('genre',''), fav_item['infolabels'].get('year',''))
     else:
-            xbmc.executebuiltin("XBMC.Notification([B][COLOR=FF67cc33]Mash Up[/COLOR][/B],[B]You Have No Saved Favourites[/B],5000,"")")
+            xbmc.executebuiltin("XBMC.Notification([B][COLOR=FF67cc33]Aftershock Up[/COLOR][/B],[B]You Have No Saved Favourites[/B],5000,"")")
     return
 
 def ListglobalFavALL():
@@ -231,8 +242,8 @@ def GlobalFav():
     if selfAddon.getSetting("groupfavs") == "true":
         ListglobalFavALL()
     else:
-        main.addLink("[COLOR red]Mash Up Fav's can also be favorited under XBMC favorites[/COLOR]",'','')
-        main.addDir("Downloaded Content",'Mash Up',241,art+'/downloadlog.png')
+        main.addLink("[COLOR red]Aftershock Fav's can also be favorited under XBMC favorites[/COLOR]",'','')
+        main.addDir("Downloaded Content",'Aftershock',241,art+'/downloadlog.png')
         main.addDir("Movie Fav's",'http://www.movie25.so/',641,art+'/fav.png')
         main.addDir("TV Show Fav's",'http://www.movie25.so/',640,art+'/fav.png')
         main.addDir("TV Episode Fav's",'http://www.movie25.so/',651,art+'/fav.png')
@@ -260,7 +271,7 @@ def History():
             main.addLink(item_title,item_url,item_image)
     else:
         dialog = xbmcgui.Dialog()
-        ok=dialog.ok('[B]Mash Up History[/B]', 'Watch history is disabled' ,'To enable go to addon settings','and enable Watch History')
+        ok=dialog.ok('[B]Aftershock History[/B]', 'Watch history is disabled' ,'To enable go to addon settings','and enable Watch History')
         history_items = wh.get_my_watch_history()
         for item in history_items:
             item_title = item['title']
@@ -315,6 +326,9 @@ episode=None
 location=None
 path=None
 index=None
+categoryURL=None
+page=None
+
 
 try: name=urllib.unquote_plus(params["name"])
 except: pass
@@ -345,6 +359,10 @@ except: pass
 try: path=urllib.unquote_plus(params["path"])
 except: pass
 try: index=urllib.unquote_plus(params["index"])
+except: pass
+try: page=urllib.unquote_plus(params["page"])
+except: pass
+try: categoryURL=urllib.unquote_plus(params["categoryURL"])
 except: pass
 
 print "Mode: "+str(mode)
@@ -427,6 +445,20 @@ elif mode==40: # Play all videos in the list
     video_source = xbmc.getInfoLabel('ListItem.Label')
     if items :
         desitv.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
+elif mode==50:
+    MOVIES(url, index)
+elif mode==51:
+    from resources.libs import sominal
+    sominal.LISTMOVIES(url, name, index, categoryURL=categoryURL, page=page)
+elif mode==52:
+    from resources.libs import sominal
+    sominal.LOADVIDEOS(url, name)
+elif mode==53:
+    from resources.libs import sominal
+    items = xbmc.getInfoLabel('ListItem.Property("videosList")')
+    video_source = xbmc.getInfoLabel('ListItem.Label')
+    if items :
+        sominal.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
 elif mode==71:
     from resources.libs.adventure import nationalgeo
     print ""+url
