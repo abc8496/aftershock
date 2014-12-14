@@ -145,7 +145,7 @@ def playNow(video_source, name):
     preferredFound = False
     prefKey = ''
     for source_name in PlayNowPreferredOrder:
-        for key in video_source.viewkeys():
+        for key in video_source.keys():
             if re.search(source_name, key, flags=re.I):
                 preferredFound = True
                 prefKey = key
