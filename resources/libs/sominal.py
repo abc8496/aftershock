@@ -38,6 +38,7 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
             
             for category in item.findAll('category'):
                 if category.text == 'Hindi Movies':
+                    print item
                     main.addDirX(name, url,52,'',searchMeta=True,metaType='Movies',categoryURL=categoryURL)
                     loadedLinks = loadedLinks + 1
                     percent = (loadedLinks * 100)/totalLinks
