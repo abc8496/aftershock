@@ -98,8 +98,10 @@ def resolve_url(url, filename = False):
                 stream_url=resolve_cloud(url)
             elif re.search('weed|vw.php',url,flags=re.I):
                 stream_url=resolve_weed(url)
-            elif re.search('mediaplaybox.com',url,flags=re.I):
+            elif re.search('mediaplaybox',url,flags=re.I):
                 stream_url = resolve_mediaplaybox(url)
+            elif re.search('desiflicks',url,flags=re.I):
+                stream_url = resolve_desiflicks(url)
             else:
                 print "host "+url
                 source = urlresolver.HostedMediaFile(url)
@@ -214,14 +216,25 @@ def load_json(data):
       return None
 def getVideoID(url):
     return re.compile('(id|url|v|si|data-config)=(.+?)/').findall(url + '/')[0][1]
+def resolve_desiflicks(url):
+    from resources.universal import EnkDekoder
+    import BeautifulSoup
+    link = main.OPENURL(url)
+    dek = EnkDekoder.dekode(link)
+    
+    if dek is not None:
+        link = dek
+    
+    stream_url = re.findall(';video_url=(.+?)&amp',link)[0]
+    print '>>>>> STREAM URL(desiflicks) >>>> ' + str(stream_url)
+    return stream_url
+    
 def resolve_mediaplaybox(url):
     import BeautifulSoup
     link = main.OPENURL(url)
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
     soup = BeautifulSoup.BeautifulSoup(link).findAll('div', {'itemprop':re.compile(r'\bvideo\b')})[0]
     soup = soup.findAll('meta', {'itemprop':re.compile(r'\bcontentURL\b')})[0]
-    print '************ INSIDE RESOLVER ***************'
-    print soup
     
     
     stream_url = soup['content']

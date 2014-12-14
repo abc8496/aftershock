@@ -460,10 +460,10 @@ def PlayWithoutQueueSupport(resolved_url, addon_id, video_type, title, season, e
     return player
 
     
-if sys.argv and len(sys.argv) >= 4 and sys.argv[3] == 'plugin.video.movie25.playbackengine':        
+if sys.argv and len(sys.argv) >= 4 and sys.argv[3] == 'plugin.video.aftershock.playbackengine':        
     
-    sys.argv[0] = 'plugin.video.movie25'
-    addon_pbe= Addon('plugin.video.movie25', sys.argv)
+    sys.argv[0] = 'plugin.video.aftershock'
+    addon_pbe= Addon('plugin.video.aftershock', sys.argv)
     
     pbe_mode = addon_pbe.queries.pop('pbe_mode')
     addon_id_tmp = addon_pbe.queries.pop('pbe_addon_id')

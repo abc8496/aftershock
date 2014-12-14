@@ -13,9 +13,6 @@ baseUrl=settings.getSominalURL()
 prettyName='Somminal'
 
 def LISTMOVIES(murl,name, index, categoryURL,page):
-    print 'MURL : ' + murl
-    print 'CATEGORYURL : ' + categoryURL
-    
     turl = baseUrl + 'category/'+ categoryURL + '/feed'
     
     totalMoviesToLoad = 25
@@ -29,12 +26,11 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
     
-    print '*******************************************'
     while (loadedLinks <= totalMoviesToLoad):
         purl = turl
         if int(page) > 1:
             purl = turl + "?paged=" + str(page)
-        link = main.OPENURL(purl, timeout=20)
+        link = main.OPENURL(purl)
         soup = BeautifulSoup.BeautifulSoup(link).findAll('item')
         for item in soup:
             name=item.title.text
@@ -59,23 +55,14 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
 def LOADVIDEOS(url, name):
-    print url
-    print name
     
     link = main.OPENURL(url)
-    #print link
-    #soup = BeautifulSoup.BeautifulSoup(link).findAll('div', {'class':re.compile(r'\bblog-content\b')})[0]
     
     soup = BeautifulSoup.BeautifulSoup(link)
     tags = soup.findAll('p')
     
     if len(tags) < 5:
         tags.extend(soup.findAll('span'))
-    #print soup.prettify()
-    #for child in soup:
-        #if child['style'] is not None and child['style'] == 'text-align: center;':
-        #print child
-    #print link
     
     video_playlist_items = []
     video_source_id = 0
@@ -84,7 +71,6 @@ def LOADVIDEOS(url, name):
     for tag in tags:
         if re.search('^(Source|ONLINE|Server)', tag.getText(), re.IGNORECASE):
             if len(video_playlist_items) > 0:
-                print tag.getText()
                 main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
             video_playlist_items = []
             video_source_id = video_source_id + 1
@@ -96,7 +82,7 @@ def LOADVIDEOS(url, name):
             aTag = aTags[0]
             if aTag is not None:
                 video_playlist_items.append(str(aTag['href']))
-                print str(aTag['href'])
+                video_source_name = re.findall('/.(.+?)/.',str(aTag['href']))[0]
     if len(video_playlist_items) > 0 :
         main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
 

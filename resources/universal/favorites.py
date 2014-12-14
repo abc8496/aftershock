@@ -258,7 +258,7 @@ class Favorites:
             'uni_fav_is_folder': common.bool2str(is_folder)            
             }
         
-        uni_fav_add_script = 'XBMC.RunScript(%s, %s, %s, "%s")' % (self._get_script_path(), self.sys_argv[1], self._build_params(uni_fav, infolabels), 'plugin.video.movie25.favorites')
+        uni_fav_add_script = 'XBMC.RunScript(%s, %s, %s, "%s")' % (self._get_script_path(), self.sys_argv[1], self._build_params(uni_fav, infolabels), 'plugin.video.aftershock.favorites')
         
         return uni_fav_add_script
         

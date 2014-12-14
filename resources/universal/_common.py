@@ -22,10 +22,13 @@ import xbmc
 import xbmcvfs
 import xbmcgui
 
-addon = Addon('plugin.video.movie25-mod')
+from resources.libs import settings 
+addon_id = settings.getAddOnID()
+
+addon = Addon(addon_id)
 addon_path = addon.get_path()
 
-default_path = 'special://profile/addon_data/plugin.video.movie25/Universal'
+default_path = 'special://profile/addon_data/'+addon_id+'/Universal'
 
 db_path = addon.get_setting('local_save_location')
 use_remote_db = addon.get_setting('use_remote_db')

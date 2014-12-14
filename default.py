@@ -74,9 +74,8 @@ def MAIN():
     main.addPlayc('Aftershock Settings',mainurl,1999,art+'/MashSettings.png','','','','','')
 
 def MOVIES(url, index=False):
-    main.addDir('Featured',sominalurl,51,art+'/feat.png',categoryURL='hindi-movies',page=1)
-    main.addDir('2014',sominalurl,51,art+'/2014.png',categoryURL='2014',page=1)
-    #main.addDir('New Releases',sominalurl,51,art+'/new.png',categoryURL='hindi-movies/latest','page=1)
+    main.addDir('New Releases',sominalurl,51,art+'/new.png',categoryURL='2014',page=1)
+    main.addDir('Latest Added',sominalurl,51,art+'/latest.png',categoryURL='hindi-movies',page=1)
     main.addDir('HD Releases',sominalurl,51,art+'/dvd2hd.png',categoryURL='hindi-blurays',page=1)
     #main.addDir('Genre',mainurl,51,art+'/genre.png')
     #main.addDir('By Year',mainurl,51,art+'/year.png')
