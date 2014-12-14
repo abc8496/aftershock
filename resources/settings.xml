@@ -76,6 +76,6 @@
     <setting id="movie25-url" type="text" label="[B]Movie25 URL[/B]" default="http://www.movie25.cm/" visible="false"/>	
     <setting id="sominal-url" type="text" label="[B]Sominal URL[/B]" default="http://www.playindiafilms.com/" visible="false"/>	
     <setting id="desirulez-url" type="text" label="[B]DesiRulez URL[/B]" default="http://www.desirulez.net/" visible="false"/>	
-    <setting id="sominal-moviesperpage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
+    <setting id="sominal-moviesPerPage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
    </category>
 </settings>

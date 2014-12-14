@@ -65,6 +65,7 @@ def LISTSHOWS(murl,channel,index=False):
 
 def LISTEPISODES(tvshowname,url):
     link=main.OPENURL(url)
+    print tvshowname
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
     match = re.findall('<a class=".+?" href="(.+?)" id=".+?">(.+?)</a>',link)
     dialogWait = xbmcgui.DialogProgress()
@@ -111,35 +112,11 @@ def getVideoSourceIcon(source_name):
     elif re.search('videoweed',source_name,flags=re.I):
         img_url = 'http://www.videoweed.es/images/logo.png'
     return img_url
-def VIDEOLINKS(name, url):
-    video_source_id = 1
-    video_source_name = None
-    video_playlist_items = []
-    
-    link=main.OPENURL(url)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    soup = BeautifulSoup.BeautifulSoup(link).findAll('blockquote', {'class':re.compile(r'\bpostcontent\b')})[0]
-    
-    for e in soup.findAll('br'):
-        e.extract()
-    if soup.has_key('div'):
-        soup = soup.findChild('div', recursive=False)
-    
-    for child in soup.findChildren():
-        if (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
-                if len(video_playlist_items) > 0:
-                    main.addPlayList(video_source_name, url,40, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
-                    video_playlist_items = []
-                    video_source_id = video_source_id + 1
-                video_source_name = child.getText()
-                video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('  ','')
-        elif (child.name =='a') and not child.getText() == 'registration' :
-            video_playlist_items.append(str(child['href']))
-    
-def preparevideolink(video_url, video_source):
-    return main.resolve_url(video_url, video_source)
-    
 def PLAY(name, items, episodeName, video_source):
+    print 'NAME : ' + name
+    print items
+    print 'EPISODE NAME : ' + episodeName
+    print 'VIDEO SOURCE : ' + video_source
     video_stream_links = []
     dialog = xbmcgui.DialogProgress()
     dialog.create('Resolving', 'Resolving Aftershock '+video_source+' Link...')       
@@ -159,4 +136,54 @@ def PLAY(name, items, episodeName, video_source):
     from resources.universal import playbackengine
     if len(video_stream_links) > 0:
         playbackengine.PlayAllInPL(episodeName, video_stream_links, img=getVideoSourceIcon(video_source))
-        
+
+def playNow(video_source, name):
+    PlayNowPreferredOrder = ['Flash Player 720','Flash Player DVD','Flash Player','dailymotion','PlayCineFlix']
+    print '**********************************'
+    #print video_source
+    
+    preferredFound = False
+    prefKey = ''
+    for source_name in PlayNowPreferredOrder:
+        for key in video_source.viewkeys():
+            if re.search(source_name, key, flags=re.I):
+                preferredFound = True
+                prefKey = key
+                print video_source[prefKey]
+        if preferredFound :
+            break
+    
+    PLAY(prefKey, video_source[prefKey],name, prefKey)
+
+def VIDEOLINKS(name, url):
+    video_source_id = 1
+    video_source_name = None
+    video_playlist_items = []
+    
+    video_source = {}
+    
+    link=main.OPENURL(url)
+    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
+    soup = BeautifulSoup.BeautifulSoup(link).findAll('blockquote', {'class':re.compile(r'\bpostcontent\b')})[0]
+    
+    for e in soup.findAll('br'):
+        e.extract()
+    if soup.has_key('div'):
+        soup = soup.findChild('div', recursive=False)
+    
+    for child in soup.findChildren():
+        if (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
+                if len(video_playlist_items) > 0:
+                    main.addPlayList(video_source_name, url,40, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
+                    
+                    video_source_id = video_source_id + 1
+                    video_source[video_source_name] = video_playlist_items
+                    video_playlist_items = []
+                video_source_name = child.getText()
+                video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('  ','')
+        elif (child.name =='a') and not child.getText() == 'registration' :
+            video_playlist_items.append(str(child['href']))
+    playNow(video_source, name)
+    
+def preparevideolink(video_url, video_source):
+    return main.resolve_url(video_url, video_source)

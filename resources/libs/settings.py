@@ -28,7 +28,7 @@ def getSominalURL():
 def getDesiRulezURL():
     return selfAddon.getSetting("desirulez-url")
 def getNoOfMoviesToLoad():
-    return selfAddon.getSetting("sominal-moviesPerPage")
+    return int(selfAddon.getSetting("sominal-moviesPerPage"))
     
 def getRefreshRequiredSettings():
     s=[]

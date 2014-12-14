@@ -497,3 +497,4 @@ def Clearhistory(path):
         os.remove(path)
 def removeNonASCII(text):
     return re.sub(r'[^\x00-\x7F]','-', text)
+    

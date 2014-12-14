@@ -15,7 +15,7 @@ prettyName='Somminal'
 def LISTMOVIES(murl,name, index, categoryURL,page):
     turl = baseUrl + 'category/'+ categoryURL + '/feed'
     
-    totalMoviesToLoad = 25
+    totalMoviesToLoad = settings.getNoOfMoviesToLoad()
         
     dialogWait = xbmcgui.DialogProgress()
     
@@ -26,6 +26,9 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
     
+    quality = None
+    hindiMovie = False
+    year = None
     while (loadedLinks <= totalMoviesToLoad):
         purl = turl
         if int(page) > 1:
@@ -33,26 +36,37 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
         link = main.OPENURL(purl)
         soup = BeautifulSoup.BeautifulSoup(link).findAll('item')
         for item in soup:
+            quality = ''
+            hindiMovie = False
+            year = ''
+            
             name=item.title.text
             url = item.comments.text.replace('#comments','')
-            
             for category in item.findAll('category'):
                 if category.text == 'Hindi Movies':
-                    print item
-                    main.addDirX(name, url,52,'',searchMeta=True,metaType='Movies',categoryURL=categoryURL)
-                    loadedLinks = loadedLinks + 1
-                    percent = (loadedLinks * 100)/totalLinks
-                    remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-                    dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
-                    if dialogWait.iscanceled(): return False   
+                    #print item
+                    hindiMovie = True
+                elif re.search('DVD',category.text, flags=re.I):
+                    quality = ' [COLOR orange][DVD][/COLOR] '
+                elif re.search('/*BluRay/*',category.text, flags=re.I):
+                    quality = ' [COLOR red][HD][/COLOR] '
+                elif re.search('[1-2][0,9][0-9][0-9]',category.text,flags=re.I):
+                    year = category.text
                 if dialogWait.iscanceled(): return False   
             if dialogWait.iscanceled(): return False   
+            if hindiMovie :
+                main.addDirX(name + quality, url,52,'',searchMeta=True,metaType='Movies',categoryURL=categoryURL, year=year)
+                loadedLinks = loadedLinks + 1
+                percent = (loadedLinks * 100)/totalLinks
+                remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
+                dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
+                if dialogWait.iscanceled(): return False   
         if dialogWait.iscanceled(): return False   
         page = str(int(page) + 1)
     dialogWait.close()
     del dialogWait
     
-    main.addDir('[COLOR blue]Page '+ str(page) +'[/COLOR]',murl,51,art+'/next.png',index=index, categoryURL=categoryURL,page=str(page))
+    main.addDir('[COLOR blue]Next[/COLOR]',murl,51,art+'/next.png',index=index, categoryURL=categoryURL,page=str(page))
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
 def LOADVIDEOS(url, name):

@@ -293,12 +293,12 @@ def resolve_playwire(url):
     #stream_url = 'http://config.playwire.com/18875/videos/v2/'+str(getVideoID(url))+'/manifest.f4m'
     link = main.OPENURL(stream_url)
     import xml.etree.ElementTree as ET
-    print link
+    #print link
     root = ET.fromstring(link)
     baseURL = root.find('{http://ns.adobe.com/f4m/1.0}baseURL').text
     mediaurl = root.find('{http://ns.adobe.com/f4m/1.0}media').attrib['url']
-    print baseURL
-    print mediaurl
+    #print baseURL
+    #print mediaurl
     stream_url = baseURL+'/'+mediaurl
     print '>>>>> STREAM URL >>>> ' + stream_url
     return stream_url
