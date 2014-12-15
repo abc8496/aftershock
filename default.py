@@ -513,6 +513,8 @@ elif mode==420:
 elif mode==639:
     print ""+url
     GlobalFav()
+elif mode == 778: #REFRESH METADATA
+    main.refresh_movie(name,iconimage)
 elif mode == 1999:
     settings.openSettings()
 

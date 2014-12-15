@@ -69,6 +69,25 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
     main.addDir('[COLOR blue]Next[/COLOR]',murl,51,art+'/next.png',index=index, categoryURL=categoryURL,page=str(page))
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
+
+def playNow(video_source, name):
+    PlayNowPreferredOrder = ['mediaplaybox','desiflicks']
+    print '**********************************'
+    #print video_source
+    
+    preferredFound = False
+    prefKey = ''
+    for source_name in PlayNowPreferredOrder:
+        for key in video_source.keys():
+            if re.search(source_name, key, flags=re.I):
+                preferredFound = True
+                prefKey = key
+                print video_source[prefKey]
+        if preferredFound :
+            break
+    
+    #PLAY(prefKey, video_source[prefKey],name, prefKey)
+
 def LOADVIDEOS(url, name):
     
     link = main.OPENURL(url)
@@ -82,14 +101,18 @@ def LOADVIDEOS(url, name):
     video_playlist_items = []
     video_source_id = 0
     video_source_name = None
+    video_source = {}
     
     for tag in tags:
         if re.search('^(Source|ONLINE|Server)', tag.getText(), re.IGNORECASE):
             if len(video_playlist_items) > 0:
                 main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
-            video_playlist_items = []
+                
+                video_source[video_source_name] = video_playlist_items
+                video_playlist_items = []
             video_source_id = video_source_id + 1
             video_source_name = tag.getText()
+                
         else:
             aTags = tag.findAll('a', attrs={'target':re.compile('_blank'),'href':re.compile('(mediaplaybox.com|desiflicks.com|desionlinetheater.com|wp.me|cine.sominaltvfilms.com|media.thesominaltv.com)')}, recursive=True)
             if aTags is None or len(aTags) != 1:
@@ -99,7 +122,13 @@ def LOADVIDEOS(url, name):
                 video_playlist_items.append(str(aTag['href']))
                 video_source_name = re.findall('/.(.+?)/.',str(aTag['href']))[0]
     if len(video_playlist_items) > 0 :
+        if len(video_source) == 0 :
+            video_source_id = video_source_id + 1
+        print 'HERE >>>>>>>> ' + str(video_source_id)
         main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
+        video_source[video_source_name] = video_playlist_items
+        
+    playNow(video_source, name)
 
 def preparevideolink(video_url, video_source):
     return main.resolve_url(video_url, video_source)

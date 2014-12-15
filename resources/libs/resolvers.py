@@ -225,19 +225,29 @@ def resolve_desiflicks(url):
     if dek is not None:
         link = dek
     
-    stream_url = re.findall(';video_url=(.+?)&amp',link)[0]
+    if re.search(';video_url',link):
+        stream_url = re.findall(';video_url=(.+?)&amp',link)[0]
+        stream_url = stream_url.replace('_ipod.mp4', '.flv')
+    elif re.search('iframe src=', link):
+        stream_url = re.findall('<iframe src="(.+?)"',link)[0]
+        stream_url = stream_url.replace('preview','edit')
     print '>>>>> STREAM URL(desiflicks) >>>> ' + str(stream_url)
     return stream_url
     
 def resolve_mediaplaybox(url):
-    import BeautifulSoup
+    url = url + '#'
+    video_id = re.compile('http://www.mediaplaybox.com/video/(.+?)#').findall(url)[0]
+    
+    url = 'http://www.mediaplaybox.com/mobile?vinf=' + str(video_id)
     link = main.OPENURL(url)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    soup = BeautifulSoup.BeautifulSoup(link).findAll('div', {'itemprop':re.compile(r'\bvideo\b')})[0]
-    soup = soup.findAll('meta', {'itemprop':re.compile(r'\bcontentURL\b')})[0]
+    video_file = re.compile('href="http://www.mediaplaybox.com/media/files_flv/(.+?)"').findall(link)[0]
+    stream_url = 'http://www.mediaplaybox.com/media/files_flv/' + video_file.replace('_ipod.mp4', '.flv')
+    # TODO : Implement HD Resoolver
+    #hd_video_link = 'http://www.mediaplaybox.com/media/files_flv/' + video_file.replace('_ipod.mp4', '_hd.mp4')
+    #response = HttpUtils.HttpClient().getResponse(url=hd_video_link)
+    #if response.status < 400:
+    #    stream_url= hd_video_link
     
-    
-    stream_url = soup['content']
     print '>>>>> STREAM URL(mediaplaybox) >>>> ' + str(stream_url)
     return stream_url
 
