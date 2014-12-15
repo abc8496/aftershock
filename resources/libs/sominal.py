@@ -86,7 +86,7 @@ def playNow(video_source, name):
         if preferredFound :
             break
     
-    #PLAY(prefKey, video_source[prefKey],name, prefKey)
+    PLAY(prefKey, video_source[prefKey],name, prefKey)
 
 def LOADVIDEOS(url, name):
     
