@@ -430,7 +430,7 @@ elif mode==36:
 elif mode==37:
     from resources.libs import desitv
     print ""+url
-    desitv.LISTSHOWS(url, name)
+    desitv.LISTSHOWS(url, name, CachePath)
 elif mode==38: # International LIST EPISODES
     from resources.libs import desitv
     print ""+url

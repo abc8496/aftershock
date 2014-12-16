@@ -1,4 +1,4 @@
-import urllib,re,sys,os
+import urllib,re,sys,os, time
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import main
 import BeautifulSoup
@@ -11,7 +11,11 @@ selfAddon = xbmcaddon.Addon(id=addon_id)
 art = main.art
 MainUrl='http://www.desirulez.net/'
 prettyName='DesiRulez'
-def getShowImage(channelName, showName):
+cacheFileName = 'DesiRulez.json'
+
+def getShowImage(channelName, showName, retry):
+    if retry == 0:
+        return ''
     baseURL = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q={query}'
     query = channelName.lower() + ' ' + showName.lower() + ' poster'
     url = baseURL.format(query=urllib.quote_plus(query))
@@ -26,11 +30,44 @@ def getShowImage(channelName, showName):
         else:
             return ''
     except Exception, e:
-        xbmc.log('Movie25-Mod ERROR - Importing Modules: '+str(e), xbmc.LOGERROR)
-        return getShowImage(channelName, showName)
+        xbmc.log('Aftershock ERROR - Importing Show Image: '+str(e), xbmc.LOGERROR)
+        return getShowImage(channelName, showName, retry-1)
     return ''
+
+def checkCache(murl, channel, cacheFilePath):
+    refreshCache = True
     
-def LISTSHOWS(murl,channel,index=False):
+    if not os.path.exists(cacheFilePath):
+        jsonFile = open(cacheFilePath, 'w')
+        dummyObj = {'channels':{}}
+        json.dump(dummyObj, jsonFile, encoding='utf-8')
+        jsonFile.close()
+    else:
+        lastModifiedTime = os.path.getmtime(cacheFilePath)
+        diffTime = long((time.time() - lastModifiedTime)/3600)
+        if diffTime < 720:
+            try :
+                jsonFile = open(cacheFilePath, 'r')
+                jsonChannelData = json.load(jsonFile, encoding='utf-8')
+                jsonFile.close()
+                if jsonChannelData['channels'][channel]:
+                    if re.search('past',murl,re.I):
+                        if jsonChannelData['channels'][channel]['pastTVShows']:
+                            refreshCache = False
+                    elif jsonChannelData['channels'][channel]['currentTVShows']:
+                        refreshCache = False
+            except Exception, e:
+                refreshCache = True
+    print '>>>>>>>>>> RESRESH CACHE : ' + str(refreshCache)
+    return refreshCache
+
+def buildCache(murl, channel, cacheFilePath, index):
+    channels = {}
+    channelDict = {}
+    channelData = {}
+    tvShows = []
+    tvShow = {}
+    pastTVShowURL = ''
     link=main.OPENURL(murl)
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
     match = re.findall('<div class="titleline"><h2 class="forumtitle"><a href="(.+?)">(.+?)</a></h2></div>',link)
@@ -45,16 +82,19 @@ def LISTSHOWS(murl,channel,index=False):
     remaining_display = label + ' loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    print match
     for url,name in match:
         if "color" in name:
             name=name.replace('<b><font color=red>','[COLOR red]').replace('</font></b>','[/COLOR]')
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
-            main.addTVInfo(name,MainUrl+url,37,getShowImage(channel,name),name,'')
+            pastTVShowURL = MainUrl + url
         elif label == 'Movies':
             main.addDirX(name, MainUrl+url,39,'',searchMeta=True, metaType='Movies')
         else:
-            main.addTVInfo(name,MainUrl+url,38,getShowImage(channel,name),name,'')
+            tvShow['url'] = MainUrl + url
+            tvShow['iconimage'] = getShowImage(channel, name, 2)
+            tvShow['name'] = name
+            tvShows.append(tvShow)
+            tvShow = {}
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = label + ' loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -62,6 +102,53 @@ def LISTSHOWS(murl,channel,index=False):
         if dialogWait.iscanceled(): return False   
     dialogWait.close()
     del dialogWait
+    
+    
+    
+    # Writing data to JSON File
+    jsonFile = open(cacheFilePath, 'r')
+    jsonChannelData = json.load(jsonFile, encoding='utf-8')
+    jsonFile.close()
+    channels = jsonChannelData['channels']
+    try :
+        channelData = channels[channel]
+    except Exception, e:
+        print 'exception'
+    if re.search('past', murl, re.I):
+        channelData['pastTVShows']=tvShows
+    else :
+        channelData['currentTVShows']=tvShows
+        channelData['currentTVShowURL'] = murl
+        channelData['pastTVShowURL'] = pastTVShowURL
+    channels[channel] = channelData
+    jsonFile = open(cacheFilePath, 'w')
+    json.dump(jsonChannelData, jsonFile, encoding='utf-8')
+    jsonFile.close()
+    
+def loadFromCache(murl, channel, cacheFilePath):
+    
+    jsonFile = open(cacheFilePath,'r')
+    jsonData = json.load(jsonFile, encoding='utf-8')
+    channels = jsonData['channels']
+    channelData = channels[channel]
+    tvShows = channelData['currentTVShows']
+    for tvShow in tvShows:
+        main.addTVInfo(tvShow['name'],tvShow['url'],38,tvShow['iconimage'],tvShow['name'],'')
+    if not re.search('past',murl,re.I):
+        main.addTVInfo('[COLOR red]' + channel + ' Past Shows[/COLOR]',channelData['pastTVShowURL'],37,'','Past Shows','')
+    jsonFile.close()
+
+def LISTSHOWS(murl,channel, CachePath, index=False):
+    cacheFilePath = os.path.join(CachePath, cacheFileName)
+    channel = channel.replace('[COLOR red]','').replace(' Past Shows[/COLOR]','')
+    label = 'TV Show'
+    if re.search('movie',murl,re.I):
+        label = 'Movies'
+    if checkCache(murl, channel, cacheFilePath) :
+        buildCache(murl, channel, cacheFilePath, index)
+        loadFromCache(murl, channel, cacheFilePath)
+    else:
+        loadFromCache(murl, channel, cacheFilePath)
     xbmcplugin.setContent(int(sys.argv[1]), label)
     main.VIEWS()
 

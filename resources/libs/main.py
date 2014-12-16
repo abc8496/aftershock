@@ -15,7 +15,7 @@ hostlist = None
 
 Dir = xbmc.translatePath(os.path.join('special://home/addons/'+addon_id, ''))
 datapath = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
-
+print '>>>>>>>>>>>DATAPATH : ' + str(datapath)
 
 ################################################################################ Common Calls ##########################################################################################################
 art = Dir+'/resources/art/'
