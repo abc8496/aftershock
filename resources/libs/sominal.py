@@ -47,7 +47,7 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
                     #print item
                     hindiMovie = True
                 elif re.search('DVD',category.text, flags=re.I):
-                    quality = ' [COLOR orange][DVD][/COLOR] '
+                    quality = ' [COLOR red][DVD][/COLOR] '
                 elif re.search('/*BluRay/*',category.text, flags=re.I):
                     quality = ' [COLOR red][HD][/COLOR] '
                 elif re.search('[1-2][0,9][0-9][0-9]',category.text,flags=re.I):

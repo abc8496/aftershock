@@ -6,6 +6,11 @@
 		<setting id="meta-view-tv" type="bool" label="[B]Metadata (TV Shows)[/B]" default="false"/>
 		<setting id="groupfavs" type="bool" label="[B]Group Favorites[/B]" default="false"/>
   		<setting id="whistory" type="bool" label="[B]Watch History[/B]" default="true"/>
+        <setting id="movie25-url" type="text" label="[B]Movie25 URL[/B]" default="http://www.movie25.cm/" visible="false"/>	
+        <setting id="sominal-url" type="text" label="[B]Sominal URL[/B]" default="http://www.playindiafilms.com/" visible="false"/>	
+        <setting id="desirulez-url" type="text" label="[B]DesiRulez URL[/B]" default="http://www.desirulez.net/" visible="false"/>	
+        <setting id="sominal-moviesPerPage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
+
    </category>
    
    <category label="Auto View">
@@ -62,20 +67,5 @@
 		<setting id="bit-disc"	type="enum" label="[B]Discovery Bitrate[/B]" values="3500k|1500k|600k" default="0"/>
 		<setting id="disj-qua"	type="enum" label="[B]DisneyJr. & MLB Bitrate[/B]" values="High|Medium|Low" default="0"/>
 		<setting id="espn-qua" type="select" label="[B]ESPN Bitrate[/B]" values="272p30_448k|324p30_948k|360p30_1464k|432p30_2096k|720p30_2896k" default="720p30_2896k"/>
-   </category>
-   
-   <category label="Downloads">
-		<setting id="download-folder" type="folder" label="[B]Download Folder[/B]" default=""/>
-		<setting id="delete-incomplete-downloads" type="bool" label="[B]Delete Incomplete Downloads[/B]" default="true"/>
-		<setting id="download-in-background" type="bool" label="[B]Download in Background[/B]" default="true" />
-		<setting id="notify-percent" enable="eq(-1,true)" label="[B]Notify Per[/B]" type="enum" values="2[B] %[/B]|5[B] %[/B]|10[B] %[/B]|20[B] %[/B]|25[B] %[/B]|50[B] %[/B]|100[B] %[/B]" default="2" />
-		<setting id="hide-download-instructions" type="bool" label="[B]Hide Download Instructions[/B]" default="false"/>
-		<setting id="jdcb" type="bool" label="[B]Jdownloader ON/Copy2Clipboard OFF[/B]" default="false"/>		
-   </category>
-   <category label="Home Layout">
-    <setting id="movie25-url" type="text" label="[B]Movie25 URL[/B]" default="http://www.movie25.cm/" visible="false"/>	
-    <setting id="sominal-url" type="text" label="[B]Sominal URL[/B]" default="http://www.playindiafilms.com/" visible="false"/>	
-    <setting id="desirulez-url" type="text" label="[B]DesiRulez URL[/B]" default="http://www.desirulez.net/" visible="false"/>	
-    <setting id="sominal-moviesPerPage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
    </category>
 </settings>

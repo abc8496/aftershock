@@ -46,7 +46,7 @@ def MAIN():
         elif index==1:
             main.addDirHome("All Fav's",mainurl,639,art+'/favsu.png')
         elif index==2:
-            main.addDirHome('A-Z',mainurl,6,art+'/az2.png')
+            main.addDirHome('A-Z',mainurl,6,art+'/az.png')
         elif index==3:
             main.addDirHome('New Releases',mainurl + 'new-releases/',1,art+'/new.png')
         elif index==4:
@@ -68,7 +68,7 @@ def MAIN():
         elif index==12:
             main.addDirHome('International',desirulezurl,36,art+'/intl.png')
         elif index==13:
-            main.addDirHome('Hindi Movies',sominalurl,50,art+'/intl.png')
+            main.addDirHome('Hindi Movies',sominalurl,50,art+'/hindimovies.png')
         elif index==22:
             main.addDirHome('Kids Zone',mainurl,76,art+'/kidzone.png')
     main.addPlayc('Aftershock Settings',mainurl,1999,art+'/MashSettings.png','','','','','')
@@ -106,6 +106,7 @@ def GENRE(url,index=False):
     main.VIEWSB()
         
 def YEAR(index=False):
+    main.addDir('2015','http://www.movie25.so/search.php?year=2015/',8,art+'/2015.png',index=index)
     main.addDir('2014','http://www.movie25.so/search.php?year=2014/',8,art+'/2014.png',index=index)
     main.addDir('2013','http://www.movie25.so/search.php?year=2013/',8,art+'/2013.png',index=index)
     main.addDir('2012','http://www.movie25.so/search.php?year=2012/',8,art+'/2012.png',index=index)
@@ -122,7 +123,7 @@ def YEAR(index=False):
     main.VIEWSB()
 def INT(url):
     logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
-    main.addDir('Hindi Movies',url+'/forums/20-Latest-Exclusive-Movie-HQ',37,art+'/Movies.jpeg')
+    main.addDir('Hindi Movies',url+'/forums/20-Latest-Exclusive-Movie-HQ',37,art+'/hindimovies.png')
     main.addDir('Star Plus',url+'/forumdisplay.php?f=42',37,logoBaseURL+'/ss/star_plus.jpg')
     main.addDir('Zee TV',url+'/forumdisplay.php?f=73',37,logoBaseURL+'/zz/zee_tv.jpg')
     main.addDir('Zindagi TV',url+'/forumdisplay.php?f=00',37,logoBaseURL+'/zz/zindagi_tv_pk.png')
@@ -242,12 +243,12 @@ def GlobalFav():
         ListglobalFavALL()
     else:
         main.addLink("[COLOR red]Aftershock Fav's can also be favorited under XBMC favorites[/COLOR]",'','')
-        main.addDir("Downloaded Content",'Aftershock',241,art+'/downloadlog.png')
+        #main.addDir("Downloaded Content",'Aftershock',241,art+'/downloadlog.png')
         main.addDir("Movie Fav's",'http://www.movie25.so/',641,art+'/fav.png')
         main.addDir("TV Show Fav's",'http://www.movie25.so/',640,art+'/fav.png')
-        main.addDir("TV Episode Fav's",'http://www.movie25.so/',651,art+'/fav.png')
-        main.addDir("Live Fav's",'http://www.movie25.so/',648,art+'/fav.png')
-        main.addDir("Misc. Fav's",'http://www.movie25.so/',650,art+'/fav.png')
+        #main.addDir("TV Episode Fav's",'http://www.movie25.so/',651,art+'/fav.png')
+        #main.addDir("Live Fav's",'http://www.movie25.so/',648,art+'/fav.png')
+        #main.addDir("Misc. Fav's",'http://www.movie25.so/',650,art+'/fav.png')
 def History():
     whprofile = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
     whdb=os.path.join(whprofile,'Universal','watch_history.db')
@@ -433,8 +434,8 @@ elif mode==37:
 elif mode==38: # International LIST EPISODES
     from resources.libs import desitv
     print ""+url
-    desitv.LISTEPISODES(name,url)
-elif mode==39: # International LIST EPISODES
+    desitv.LISTEPISODES(genre,url)
+elif mode==39: # International - MOVIE LINKS
     from resources.libs import desitv
     print ""+url
     desitv.VIDEOLINKS(name,url)
@@ -513,6 +514,8 @@ elif mode==420:
 elif mode==639:
     print ""+url
     GlobalFav()
+elif mode == 777: #TOGGLE WATCHED
+    main.ChangeWatched(iconimage, url, name, '', '')
 elif mode == 778: #REFRESH METADATA
     main.refresh_movie(name,iconimage)
 elif mode == 1999:

@@ -45,14 +45,16 @@ def LISTSHOWS(murl,channel,index=False):
     remaining_display = label + ' loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
+    print match
     for url,name in match:
         if "color" in name:
             name=name.replace('<b><font color=red>','[COLOR red]').replace('</font></b>','[/COLOR]')
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
-        if label == 'Movies':
+            main.addTVInfo(name,MainUrl+url,37,getShowImage(channel,name),name,'')
+        elif label == 'Movies':
             main.addDirX(name, MainUrl+url,39,'',searchMeta=True, metaType='Movies')
         else:
-            main.addTVInfo(name,MainUrl+url,38,getShowImage(channel,name),'','')
+            main.addTVInfo(name,MainUrl+url,38,getShowImage(channel,name),name,'')
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = label + ' loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -65,7 +67,6 @@ def LISTSHOWS(murl,channel,index=False):
 
 def LISTEPISODES(tvshowname,url):
     link=main.OPENURL(url)
-    print tvshowname
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
     match = re.findall('<a class=".+?" href="(.+?)" id=".+?">(.+?)</a>',link)
     dialogWait = xbmcgui.DialogProgress()
@@ -79,7 +80,7 @@ def LISTEPISODES(tvshowname,url):
         if "Online" not in name: continue
         name=name.replace(tvshowname,'').replace('Watch Online','')
         name=main.removeNonASCII(name)
-        main.addTVInfo(name,MainUrl+url,39,'','','') 
+        main.addTVInfo(name,MainUrl+url,39,'',tvshowname,'') 
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -87,9 +88,10 @@ def LISTEPISODES(tvshowname,url):
         if dialogWait.iscanceled(): return False   
     match=re.findall('<div id="above_threadlist" class="above_threadlist">(.+?)</div>',link)
     for string in match:
-        match1=re.findall('<a href="(.+?)" title="(.+?)">[0-9]+</a>', string)
+        match1=re.findall('<a href="(.+?)" title=".+?">([0-9]+?)</a>', string)
         for url, page in match1:
-            main.addTVInfo(page,MainUrl+url,38,'','','')
+            if not re.search('javascript',url,re.I):
+                main.addTVInfo('-> Page ' + str(page),MainUrl+url,38,'',tvshowname,'')
     dialogWait.close()
     del dialogWait
     xbmcplugin.setContent(int(sys.argv[1]), 'TV Shows')
@@ -113,10 +115,6 @@ def getVideoSourceIcon(source_name):
         img_url = 'http://www.videoweed.es/images/logo.png'
     return img_url
 def PLAY(name, items, episodeName, video_source):
-    print 'NAME : ' + name
-    print items
-    print 'EPISODE NAME : ' + episodeName
-    print 'VIDEO SOURCE : ' + video_source
     video_stream_links = []
     dialog = xbmcgui.DialogProgress()
     dialog.create('Resolving', 'Resolving Aftershock '+video_source+' Link...')       
@@ -138,9 +136,7 @@ def PLAY(name, items, episodeName, video_source):
         playbackengine.PlayAllInPL(episodeName, video_stream_links, img=getVideoSourceIcon(video_source))
 
 def playNow(video_source, name):
-    PlayNowPreferredOrder = ['Flash Player 720','Flash Player DVD','Flash Player','dailymotion','PlayCineFlix']
-    print '**********************************'
-    #print video_source
+    PlayNowPreferredOrder = ['Flash Player [COLOR red][HD][/COLOR]','Flash Player [COLOR blue][DVD][/COLOR]','Flash Player','dailymotion','PlayCineFlix']
     
     preferredFound = False
     prefKey = ''
@@ -149,7 +145,6 @@ def playNow(video_source, name):
             if re.search(source_name, key, flags=re.I):
                 preferredFound = True
                 prefKey = key
-                print video_source[prefKey]
         if preferredFound :
             break
     
@@ -180,7 +175,7 @@ def VIDEOLINKS(name, url):
                     video_source[video_source_name] = video_playlist_items
                     video_playlist_items = []
                 video_source_name = child.getText()
-                video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('  ','')
+                video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]')
         elif (child.name =='a') and not child.getText() == 'registration' :
             video_playlist_items.append(str(child['href']))
     playNow(video_source, name)

@@ -45,9 +45,9 @@ def LISTMOVIES(murl,index=False):
         pg= re.findall('/.+?/(\d+)',paginate[0])
         pg=int(pg[0])-1
         if r:
-            main.addDir('[COLOR blue]Page '+ str(pg)+' of '+r[0]+'[/COLOR]',xurl,1,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+ str(pg)+' of '+r[0]+'[/COLOR]',xurl,1,art+'/next.png',index=index)
         else:
-            main.addDir('[COLOR blue]Page '+ str(pg)+'[/COLOR]',xurl,1,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+ str(pg)+'[/COLOR]',xurl,1,art+'/next.png',index=index)
     
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
@@ -74,7 +74,7 @@ def UFCMOVIE25():
         if dialogWait.iscanceled(): return False 
     dialogWait.close()
     del dialogWait
-    main.addDir('[COLOR blue]Page 2[/COLOR]','http://www.movie25.so/search.php?page=2&key=ufc',9,art+'/next2.png')
+    main.addDir('[COLOR blue]Page 2[/COLOR]','http://www.movie25.so/search.php?page=2&key=ufc',9,art+'/next.png')
 
 def Searchhistory(index=False):
     seapath=os.path.join(main.datapath,'Search')
@@ -137,9 +137,9 @@ def SEARCH(murl = '',index=False):
     if exist:
         r = re.findall(""">Next</a><a href='search.php.?page=([^<]+)&key=.+?'>Last</a>""",link)
         if r:
-            main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,9,art+'/next.png',index=index)
         else:
-            main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,9,art+'/next.png',index=index)
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
 
 
@@ -226,9 +226,9 @@ def YEARB(murl,index=False):
     r = re.findall("Next</a><a href='search.php.?page=([^<]+)&year=.+?'>Last</a>",link)
     if r:
         main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,208,art+'/gotopage.png',index=index)
-        main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),9,art+'/next2.png',index=index)    
+        main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),9,art+'/next.png',index=index)    
     else:
-        main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),9,art+'/next2.png',index=index)
+        main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),9,art+'/next.png',index=index)
     
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
@@ -269,9 +269,9 @@ def NEXTPAGE(murl,index=False):
         r = re.findall("Next</a><a href='search.php.?page=([^<]+)&year=.+?'>Last</a>",link)
         if r:
             main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,208,art+'/gotopage.png',index=index)
-            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,9,art+'/next.png',index=index)
         else:
-            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,9,art+'/next.png',index=index)
         xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
         main.VIEWS()                
     else:
@@ -283,9 +283,9 @@ def NEXTPAGE(murl,index=False):
 #                 main.addDir('[COLOR red]Home[/COLOR]','',0,art+'/home.png')
         r = re.findall(""">Next</a><a href='search.php.?page=([^<]+)&key=.+?'>Last</a>""",link)
         if r:
-            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,9,art+'/next.png',index=index)
         else:
-            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,9,art+'/next2.png',index=index)
+            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,9,art+'/next.png',index=index)
 
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
@@ -349,7 +349,7 @@ def PLAY(name,murl):
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             from resources.universal import watchhistory
-            wh = watchhistory.WatchHistory('plugin.video.movie25')
+            wh = watchhistory.WatchHistory(addon_id)
             wh.add_item(hname+' '+'[COLOR green]Movie25[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
         player.KeepAlive()
         return ok
