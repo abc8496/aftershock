@@ -15,7 +15,6 @@ hostlist = None
 
 Dir = xbmc.translatePath(os.path.join('special://home/addons/'+addon_id, ''))
 datapath = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
-print '>>>>>>>>>>>DATAPATH : ' + str(datapath)
 
 ################################################################################ Common Calls ##########################################################################################################
 art = Dir+'/resources/art/'
@@ -30,8 +29,8 @@ def removeColoredText(text):
 ################################################################################ Types of Directories ##########################################################################################################
 
 def addDirX(name,url,mode,iconimage,plot='',fanart='',dur=0,genre='',year='',imdb='',tmdb='',isFolder=True,searchMeta=False,addToFavs=True,
-            id=None,fav_t='',fav_addon_t='',fav_sub_t='',metaType='Movies',menuItemPos=None,menuItems=None,down=False,replaceItems=True,index=False,categoryURL='',page=1):
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&plot="+urllib.quote_plus(plot)+"&fanart="+urllib.quote_plus(fanart)+"&genre="+urllib.quote_plus(genre)+"&index="+str(index)+"&categoryURL="+urllib.quote_plus(categoryURL)+"&page="+str(page)
+            id=None,fav_t='',fav_addon_t='',fav_sub_t='',metaType='Movies',menuItemPos=None,menuItems=None,down=False,replaceItems=True,index=False,page=1):
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&plot="+urllib.quote_plus(plot)+"&fanart="+urllib.quote_plus(fanart)+"&genre="+urllib.quote_plus(genre)+"&index="+str(index)+"&page="+str(page)
     if searchMeta:
         if metaType == 'TV':
             infoLabels = GETMETAEpiT(name,iconimage,plot)
@@ -124,8 +123,8 @@ def addPlayMs(name,url,mode,iconimage,plot,fanart,dur,genre,year):
 def addDirb(name,url,mode,iconimage,fanart):
     return addDirX(name,url,mode,iconimage,'',fanart,addToFavs=0)
     
-def addDir(name,url,mode,iconimage,plot='',fanart='',index=False,categoryURL='',page=1):
-    return addDirX(name,url,mode,iconimage,plot,fanart,addToFavs=0,replaceItems=False,index=index,categoryURL=categoryURL,page=page)
+def addDir(name,url,mode,iconimage,plot='',fanart='',index=False,page=1):
+    return addDirX(name,url,mode,iconimage,plot,fanart,addToFavs=0,replaceItems=False,index=index,page=page)
 
 def addDirHome(name,url,mode,iconimage,index=False):
     return addDirX(name,url,mode,iconimage,addToFavs=0,index=index)

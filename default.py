@@ -5,7 +5,7 @@ import urllib2
 import pickle
 
 try:
-    from resources.libs import main,settings    
+    from resources.libs import main,settings, constants, fileutil
 except Exception, e:
     elogo = xbmc.translatePath('special://home/addons/plugin.video.aftershock/resources/art/bigx.png')
     dialog = xbmcgui.Dialog()
@@ -17,24 +17,11 @@ selfAddon = xbmcaddon.Addon(id=addon_id)
 
 art = main.art
 ################################################################################ Directories ##########################################################################################################
-CachePath=os.path.join(main.datapath,'Cache')
-try: os.makedirs(CachePath)
-except: pass
-CookiesPath=os.path.join(main.datapath,'Cookies')
-try: os.makedirs(CookiesPath)
-except: pass
-TempPath=os.path.join(main.datapath,'Temp')
-try: os.makedirs(TempPath)
-except: pass
+fileutil.createDefaultDataDir(main.datapath)
 
 mainurl = settings.getMovie25URL()
 sominalurl = settings.getSominalURL()
 desirulezurl = settings.getDesiRulezURL()
-
-def AtoZ(index):
-    main.addDir('0-9',mainurl + '0-9/',1,art+'/09.png')
-    for i in string.ascii_uppercase:
-            main.addDir(i,mainurl+i.lower()+'/',1,art+'/'+i.lower()+'.png')
 
 def MAIN():
     xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
@@ -42,108 +29,126 @@ def MAIN():
     for index, value in sorted(enumerate(d), key=lambda x:x[1]):
         if value==None: continue
         if index==0:
-            main.addDirHome('Search',mainurl,420,art+'/search.png')
+            main.addDirHome('Search',mainurl,constants.MOVIE25_SEARCH_HISTORY,art+'/search.png')
         elif index==1:
-            main.addDirHome("All Fav's",mainurl,639,art+'/favsu.png')
+            main.addDirHome("All Fav's",mainurl,constants.MAIN_GLOBALFAV,art+'/favsu.png')
         elif index==2:
-            main.addDirHome('A-Z',mainurl,6,art+'/az.png')
+            main.addDirHome('A-Z',mainurl,constants.MOVIE_ATOZ,art+'/az.png')
         elif index==3:
-            main.addDirHome('New Releases',mainurl + 'new-releases/',1,art+'/new.png')
+            main.addDirHome('New Releases',mainurl + 'new-releases/',constants.MOVIE25_LISTMOVIES,art+'/new.png')
         elif index==4:
-            main.addDirHome('Latest Added',mainurl + 'latest-added/',1,art+'/latest.png')
+            main.addDirHome('Latest Added',mainurl + 'latest-added/',constants.MOVIE25_LISTMOVIES,art+'/latest.png')
         elif index==5:
-            main.addDirHome('Featured Movies',mainurl + 'featured-movies/',1,art+'/feat.png')
+            main.addDirHome('Featured Movies',mainurl + 'featured-movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
         elif index==6:
-            main.addDirHome('Most Viewed',mainurl + 'most-viewed/',1,art+'/view.png')
+            main.addDirHome('Most Viewed',mainurl + 'most-viewed/',constants.MOVIE25_LISTMOVIES,art+'/view.png')
         elif index==7:
-            main.addDirHome('Most Voted',mainurl + 'most-voted/',1,art+'/vote.png')
+            main.addDirHome('Most Voted',mainurl + 'most-voted/',constants.MOVIE25_LISTMOVIES,art+'/vote.png')
         elif index==8:
-            main.addDirHome('HD Releases',mainurl + 'latest-hd-movies/',1,art+'/dvd2hd.png')
+            main.addDirHome('HD Releases',mainurl + 'latest-hd-movies/',constants.MOVIE25_LISTMOVIES,art+'/dvd2hd.png')
         elif index==9:
-            main.addDirHome('Genre',mainurl,2,art+'/genre.png')
+            main.addDirHome('Genre',mainurl,constants.MOVIE_GENRE,art+'/genre.png')
         elif index==10:
-            main.addDirHome('By Year',mainurl,7,art+'/year.png')
+            main.addDirHome('By Year',mainurl,constants.MOVIE_YEAR,art+'/year.png')
         elif index==11:
-            main.addDirHome('Watch History','history',222,art+'/whistory.png')
+            main.addDirHome('Watch History','history',constants.MAIN_HISTORY,art+'/whistory.png')
         elif index==12:
-            main.addDirHome('International',desirulezurl,36,art+'/intl.png')
+            main.addDirHome('International',desirulezurl,constants.DESIRULEZ_CHANNELS,art+'/intl.png')
         elif index==13:
-            main.addDirHome('Hindi Movies',sominalurl,50,art+'/hindimovies.png')
+            main.addDirHome('Hindi Movies',sominalurl,constants.HINDI_MOVIES_MENU,art+'/hindimovies.png')
         elif index==22:
-            main.addDirHome('Kids Zone',mainurl,76,art+'/kidzone.png')
-    main.addPlayc('Aftershock Settings',mainurl,1999,art+'/MashSettings.png','','','','','')
+            main.addDirHome('Kids Zone',mainurl,constants.KIDZONE_MENU,art+'/kidzone.png')
+    main.addPlayc('Aftershock Settings',mainurl,constants.MAIN_SETTINGS,art+'/MashSettings.png','','','','','')
 
-def MOVIES(url, index=False):
-    main.addDir('New Releases',sominalurl,51,art+'/new.png',categoryURL='2014',page=1)
-    main.addDir('Latest Added',sominalurl,51,art+'/latest.png',categoryURL='hindi-movies',page=1)
-    main.addDir('HD Releases',sominalurl,51,art+'/dvd2hd.png',categoryURL='hindi-blurays',page=1)
+def AtoZ(index):
+    main.addDir('0-9',mainurl + '0-9/',constants.MOVIE25_LISTMOVIES,art+'/09.png')
+    for i in string.ascii_uppercase:
+            main.addDir(i,mainurl+i.lower()+'/',constants.MOVIE25_LISTMOVIES,art+'/'+i.lower()+'.png')
+
+def HINDI_MOVIE_MENU(url, index=False):
+    xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
+    d = settings.getHomeItems()
+    for index, value in sorted(enumerate(d), key=lambda x:x[1]):
+        if value==None: continue
+        if index==2:
+            pass
+            #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
+        elif index==3:
+            main.addDirHome('New Releases',sominalurl + 'category/2014/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
+        elif index==4:
+            main.addDirHome('Latest Added',sominalurl + 'category/hindi-movies/feed',constants.SOMINAL_LISTMOVIES,art+'/latest.png')
+        elif index==5:
+            pass
+            #main.addDirHome('Featured Movies',sominalurl + 'category/featured_movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
+        elif index==8:
+            main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')
+        elif index==9:
+            pass
+            #main.addDirHome('Genre',sominalurl,constants.MOVIE_GENRE,art+'/genre.png')
+        elif index==10:
+            pass
+            #main.addDirHome('By Year',sominalurl,constants.MOVIE_YEAR,art+'/year.png')
+    main.VIEWSB()
+
+    ##main.addDir('New Releases',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/new.png',categoryURL='2014',page=1)
+    ##main.addDir('Latest Added',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/latest.png',categoryURL='hindi-movies',page=1)
+    ##main.addDir('HD Releases',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png',categoryURL='hindi-blurays',page=1)
     #main.addDir('Genre',mainurl,51,art+'/genre.png')
     #main.addDir('By Year',mainurl,51,art+'/year.png')
     
 def GENRE(url,index=False):
-    main.addDir('Action',mainurl + 'action/',1,art+'/act.png',index=index)
-    main.addDir('Adventure',mainurl + 'adventure/',1,art+'/adv.png',index=index)
-    main.addDir('Animation',mainurl + 'animation/',1,art+'/ani.png',index=index)
-    main.addDir('Biography',mainurl + 'biography/',1,art+'/bio.png',index=index)
-    main.addDir('Comedy',mainurl + 'comedy/',1,art+'/com.png',index=index)
-    main.addDir('Crime',mainurl + 'crime/',1,art+'/cri.png',index=index)
-    main.addDir('Documentary',mainurl + 'documentary/',1,art+'/doc.png',index=index)
-    main.addDir('Drama',mainurl + 'drama/',1,art+'/dra.png',index=index)
-    main.addDir('Family',mainurl + 'family/',1,art+'/fam.png',index=index)
-    main.addDir('Fantasy',mainurl + 'fantasy/',1,art+'/fant.png',index=index)
-    main.addDir('History',mainurl + 'history/',1,art+'/history.png',index=index)
-    main.addDir('Horror',mainurl + 'horror/',1,art+'/hor.png',index=index)
-    main.addDir('Music',mainurl + 'music/',1,art+'/mus.png',index=index)
-    main.addDir('Musical',mainurl + 'musical/',1,art+'/mucl.png',index=index)
-    main.addDir('Mystery',mainurl + 'mystery/',1,art+'/mys.png',index=index)
-    main.addDir('Romance',mainurl + 'romance/',1,art+'/rom.png',index=index)
-    main.addDir('Sci-Fi',mainurl + 'sci-fi/',1,art+'/sci.png',index=index)
-    main.addDir('Short',mainurl + 'short/',1,art+'/sho.png',index=index)
-    main.addDir('Sport',mainurl + 'sport/',1,art+'/spo.png',index=index)
-    main.addDir('Thriller',mainurl + 'thriller/',1,art+'/thr.png',index=index)
-    main.addDir('War',mainurl + 'war/',1,art+'/war.png',index=index)
-    main.addDir('Western',mainurl + 'western/',1,art+'/west.png',index=index)
+    main.addDir('Action',mainurl + 'action/',constants.MOVIE25_LISTMOVIES,art+'/act.png',index=index)
+    main.addDir('Adventure',mainurl + 'adventure/',constants.MOVIE25_LISTMOVIES,art+'/adv.png',index=index)
+    main.addDir('Animation',mainurl + 'animation/',constants.MOVIE25_LISTMOVIES,art+'/ani.png',index=index)
+    main.addDir('Biography',mainurl + 'biography/',constants.MOVIE25_LISTMOVIES,art+'/bio.png',index=index)
+    main.addDir('Comedy',mainurl + 'comedy/',constants.MOVIE25_LISTMOVIES,art+'/com.png',index=index)
+    main.addDir('Crime',mainurl + 'crime/',constants.MOVIE25_LISTMOVIES,art+'/cri.png',index=index)
+    main.addDir('Documentary',mainurl + 'documentary/',constants.MOVIE25_LISTMOVIES,art+'/doc.png',index=index)
+    main.addDir('Drama',mainurl + 'drama/',constants.MOVIE25_LISTMOVIES,art+'/dra.png',index=index)
+    main.addDir('Family',mainurl + 'family/',constants.MOVIE25_LISTMOVIES,art+'/fam.png',index=index)
+    main.addDir('Fantasy',mainurl + 'fantasy/',constants.MOVIE25_LISTMOVIES,art+'/fant.png',index=index)
+    main.addDir('History',mainurl + 'history/',constants.MOVIE25_LISTMOVIES,art+'/history.png',index=index)
+    main.addDir('Horror',mainurl + 'horror/',constants.MOVIE25_LISTMOVIES,art+'/hor.png',index=index)
+    main.addDir('Music',mainurl + 'music/',constants.MOVIE25_LISTMOVIES,art+'/mus.png',index=index)
+    main.addDir('Musical',mainurl + 'musical/',constants.MOVIE25_LISTMOVIES,art+'/mucl.png',index=index)
+    main.addDir('Mystery',mainurl + 'mystery/',constants.MOVIE25_LISTMOVIES,art+'/mys.png',index=index)
+    main.addDir('Romance',mainurl + 'romance/',constants.MOVIE25_LISTMOVIES,art+'/rom.png',index=index)
+    main.addDir('Sci-Fi',mainurl + 'sci-fi/',constants.MOVIE25_LISTMOVIES,art+'/sci.png',index=index)
+    main.addDir('Short',mainurl + 'short/',constants.MOVIE25_LISTMOVIES,art+'/sho.png',index=index)
+    main.addDir('Sport',mainurl + 'sport/',constants.MOVIE25_LISTMOVIES,art+'/spo.png',index=index)
+    main.addDir('Thriller',mainurl + 'thriller/',constants.MOVIE25_LISTMOVIES,art+'/thr.png',index=index)
+    main.addDir('War',mainurl + 'war/',constants.MOVIE25_LISTMOVIES,art+'/war.png',index=index)
+    main.addDir('Western',mainurl + 'western/',constants.MOVIE25_LISTMOVIES,art+'/west.png',index=index)
     main.VIEWSB()
         
 def YEAR(index=False):
-    main.addDir('2015','http://www.movie25.so/search.php?year=2015/',8,art+'/2015.png',index=index)
-    main.addDir('2014','http://www.movie25.so/search.php?year=2014/',8,art+'/2014.png',index=index)
-    main.addDir('2013','http://www.movie25.so/search.php?year=2013/',8,art+'/2013.png',index=index)
-    main.addDir('2012','http://www.movie25.so/search.php?year=2012/',8,art+'/2012.png',index=index)
-    main.addDir('2011','http://www.movie25.so/search.php?year=2011/',8,art+'/2011.png',index=index)
-    main.addDir('2010','http://www.movie25.so/search.php?year=2010/',8,art+'/2010.png',index=index)
-    main.addDir('2009','http://www.movie25.so/search.php?year=2009/',8,art+'/2009.png',index=index)
-    main.addDir('2008','http://www.movie25.so/search.php?year=2008/',8,art+'/2008.png',index=index)
-    main.addDir('2007','http://www.movie25.so/search.php?year=2007/',8,art+'/2007.png',index=index)
-    main.addDir('2006','http://www.movie25.so/search.php?year=2006/',8,art+'/2006.png',index=index)
-    main.addDir('2005','http://www.movie25.so/search.php?year=2005/',8,art+'/2005.png',index=index)
-    main.addDir('2004','http://www.movie25.so/search.php?year=2004/',8,art+'/2004.png',index=index)
-    main.addDir('2003','http://www.movie25.so/search.php?year=2003/',8,art+'/2003.png',index=index)
-    main.addDir('Enter Year','http://www.movie25.com',23,art+'/enteryear.png',index=index)
+    for x in reversed(range(2003, 2016)):
+        main.addDir(str(x),'http://www.movie25.so/search.php?year='+str(x)+'/',constants.MOVIE_YEARB,art+'/'+str(x)+'.png',index=index)
+    main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
     main.VIEWSB()
 def INT(url):
     logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
-    main.addDir('Hindi Movies',url+'/forums/20-Latest-Exclusive-Movie-HQ',37,art+'/hindimovies.png')
-    main.addDir('Star Plus',url+'/forumdisplay.php?f=42',37,logoBaseURL+'/ss/star_plus.jpg')
-    main.addDir('Zee TV',url+'/forumdisplay.php?f=73',37,logoBaseURL+'/zz/zee_tv.jpg')
-    main.addDir('Zindagi TV',url+'/forumdisplay.php?f=00',37,logoBaseURL+'/zz/zindagi_tv_pk.png')
-    main.addDir('Sony TV',url+'/forumdisplay.php?f=63',37,logoBaseURL+'/ss/set_in.jpg')
-    main.addDir('Sony Pal',url+'/forumdisplay.php?f=00',37,logoBaseURL+'/ss/sony_pal_in.png')
-    main.addDir('Life OK',url+'/forumdisplay.php?f=1375',37,logoBaseURL+'/ll/life_ok_in.jpg')
-    main.addDir('Sahara One',url+'/forumdisplay.php?f=134',37,logoBaseURL+'/ss/sahara_one.jpg')
-    main.addDir('Star Jalsha',url+'/forumdisplay.php?f=667',37,logoBaseURL+'/ss/star_jalsha.jpg')
-    main.addDir('Colors TV',url+'/forumdisplay.php?f=176',37,logoBaseURL+'/cc/colors_in.jpg')
-    main.addDir('Sab TV',url+'/forumdisplay.php?f=254',37,logoBaseURL+'/ss/sony_sab_tv.jpg')
-    main.addDir('Star Pravah',url+'/forumdisplay.php?f=1138',37,logoBaseURL+'/ss/star_pravah.png')
-    main.addDir('Zing TV',url+'/forumdisplay.php?f=00',37,logoBaseURL+'/zz/zee_zing_asia.png')
-    main.addDir('MTV',url+'/forumdisplay.php?f=339',37,logoBaseURL+'/mm/mtv_india.jpg')
-    main.addDir('Channel [V]',url+'/forumdisplay.php?f=633',37,logoBaseURL+'/cc/channel_v_in.jpg')
-    main.addDir('Bindass TV',url+'/forumdisplay.php?f=504',37,logoBaseURL+'/uu/utv_bindass.jpg')
-    main.addDir('UTV Stars',url+'/forumdisplay.php?f=1274',37,logoBaseURL+'/uu/utv_stars.jpg')
-    main.addDir('POGO',url+'/forumdisplay.php?f=500',37,logoBaseURL+'/pp/pogo.jpg')
-    main.addDir('Disney',url+'/forumdisplay.php?f=479',37,logoBaseURL+'/dd/disney_channel_in.jpg')
-    main.addDir('Hungama TV',url+'/forumdisplay.php?f=472',37,logoBaseURL+'/hh/hungama.jpg')
-    main.addDir('Cartoon Network',url+'/forumdisplay.php?f=509',37,logoBaseURL+'/cc/cartoon_network_in.jpg')
+    main.addDir('Hindi Movies',url+'/forums/20-Latest-Exclusive-Movie-HQ',constants.DESIRULEZ_LISTSHOWS,art+'/hindimovies.png')
+    main.addDir('Star Plus',url+'/forumdisplay.php?f=42',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_plus.jpg')
+    main.addDir('Zee TV',url+'/forumdisplay.php?f=73',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zee_tv.jpg')
+    main.addDir('Zindagi TV',url+'/forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zindagi_tv_pk.png')
+    main.addDir('Sony TV',url+'/forumdisplay.php?f=63',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/set_in.jpg')
+    main.addDir('Sony Pal',url+'/forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sony_pal_in.png')
+    main.addDir('Life OK',url+'/forumdisplay.php?f=1375',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ll/life_ok_in.jpg')
+    main.addDir('Sahara One',url+'/forumdisplay.php?f=134',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sahara_one.jpg')
+    main.addDir('Star Jalsha',url+'/forumdisplay.php?f=667',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_jalsha.jpg')
+    main.addDir('Colors TV',url+'/forumdisplay.php?f=176',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/colors_in.jpg')
+    main.addDir('Sab TV',url+'/forumdisplay.php?f=254',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sony_sab_tv.jpg')
+    main.addDir('Star Pravah',url+'/forumdisplay.php?f=1138',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_pravah.png')
+    main.addDir('Zing TV',url+'/forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zee_zing_asia.png')
+    main.addDir('MTV',url+'/forumdisplay.php?f=339',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/mm/mtv_india.jpg')
+    main.addDir('Channel [V]',url+'/forumdisplay.php?f=633',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/channel_v_in.jpg')
+    main.addDir('Bindass TV',url+'/forumdisplay.php?f=504',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/uu/utv_bindass.jpg')
+    main.addDir('UTV Stars',url+'/forumdisplay.php?f=1274',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/uu/utv_stars.jpg')
+    main.addDir('POGO',url+'/forumdisplay.php?f=500',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/pp/pogo.jpg')
+    main.addDir('Disney',url+'/forumdisplay.php?f=479',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/dd/disney_channel_in.jpg')
+    main.addDir('Hungama TV',url+'/forumdisplay.php?f=472',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/hh/hungama.jpg')
+    main.addDir('Cartoon Network',url+'/forumdisplay.php?f=509',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/cartoon_network_in.jpg')
     main.VIEWSB()
 
 def getFavorites(section_title = None):
@@ -326,7 +331,7 @@ episode=None
 location=None
 path=None
 index=None
-categoryURL=None
+#categoryURL=None
 page=None
 
 
@@ -362,8 +367,6 @@ try: index=urllib.unquote_plus(params["index"])
 except: pass
 try: page=urllib.unquote_plus(params["page"])
 except: pass
-try: categoryURL=urllib.unquote_plus(params["categoryURL"])
-except: pass
 
 print "Mode: "+str(mode)
 print "URL: "+str(url)
@@ -374,151 +377,161 @@ if mode==None or url==None or len(url)<1:
     MAIN()
     main.VIEWSB()        
    
-elif mode==1:
+elif mode==constants.MOVIE25_LISTMOVIES:
     from resources.libs import movie25
     movie25.LISTMOVIES(url,index=index)
     
-elif mode==2:
+elif mode==constants.MOVIE_GENRE:
     print ""+url
     GENRE(url,index=index)
 
-elif mode==3:
+elif mode==constants.MOVIE25_VIDEOLINKS:
     from resources.libs import movie25
     print ""+url
     movie25.VIDEOLINKS(name,url)
 
-elif mode==4:
+elif mode==constants.MOVIE25_SEARCH:
     from resources.libs import movie25
     print ""+url
     movie25.SEARCH(url,index=index)
-elif mode==5:
+elif mode==constants.MOVIE25_PLAY:
     from resources.libs import movie25
     print ""+url
     movie25.PLAY(name,url)
 
-elif mode==6:
+elif mode==constants.MOVIE_ATOZ:
     AtoZ(index=index)
 
-elif mode==7:
+elif mode==constants.MOVIE_YEAR:
     YEAR(index=index)
 
-elif mode==8:
+elif mode==constants.MOVIE_YEARB:
     from resources.libs import movie25
     print ""+url
     movie25.YEARB(url,index=index)
 
-elif mode==9:
+elif mode==constants.MOVIE25_NEXTPAGE:
     from resources.libs import movie25
     print ""+url
     movie25.NEXTPAGE(url,index=index)
     
-elif mode==10:
+elif mode==constants.LIST_GLOBAL_FAV:
     from resources.libs import movie25
     ListglobalFavM25()
 
-elif mode==11:
+elif mode==constants.MOVIE25_GROUPED_HOSTS:
     from resources.libs import movie25
     print ""+url
     movie25.GroupedHosts(name,url,iconimage)
 
-elif mode==23:
+elif mode==constants.MOVIE25_ENTERYEAR:
     from resources.libs import movie25
     movie25.ENTYEAR(index=index)
-elif mode==36:
+elif mode==constants.DESIRULEZ_CHANNELS:
     print ""+url
     INT(url)
-elif mode==37:
+elif mode==constants.DESIRULEZ_LISTSHOWS:
     from resources.libs import desitv
     print ""+url
-    desitv.LISTSHOWS(url, name, CachePath)
-elif mode==38: # International LIST EPISODES
+    desitv.LISTSHOWS(url, name, fileutil.getPath(main.datapath, constants.CACHE_FILENAME))
+elif mode==constants.DESIRULEZ_LISTEPISODES: # International LIST EPISODES
     from resources.libs import desitv
     print ""+url
     desitv.LISTEPISODES(genre,url)
-elif mode==39: # International - MOVIE LINKS
+elif mode==constants.DESIRULEZ_VIDEOLINKS: # International - MOVIE LINKS
     from resources.libs import desitv
     print ""+url
     desitv.VIDEOLINKS(name,url)
-elif mode==40: # Play all videos in the list
+elif mode==constants.DESIRULEZ_PLAY: # Play all videos in the list
     from resources.libs import desitv
     items = xbmc.getInfoLabel('ListItem.Property("videosList")')
     video_source = xbmc.getInfoLabel('ListItem.Label')
     if items :
         desitv.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
-elif mode==50:
-    MOVIES(url, index)
-elif mode==51:
+elif mode==constants.HINDI_MOVIES_MENU:
+    HINDI_MOVIE_MENU(url, index)
+elif mode==constants.SOMINAL_LISTMOVIES:
     from resources.libs import sominal
-    sominal.LISTMOVIES(url, name, index, categoryURL=categoryURL, page=page)
-elif mode==52:
+    sominal.LISTMOVIES(url, name, index, page=page)
+elif mode==constants.SOMINAL_LOADVIDEOS:
     from resources.libs import sominal
     sominal.LOADVIDEOS(url, name)
-elif mode==53:
+elif mode==constants.SOMINAL_PLAY:
     from resources.libs import sominal
     items = xbmc.getInfoLabel('ListItem.Property("videosList")')
     video_source = xbmc.getInfoLabel('ListItem.Label')
     if items :
         sominal.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
-elif mode==71:
+elif mode==constants.NATGEO_NGDIR:
     from resources.libs.adventure import nationalgeo
     print ""+url
     nationalgeo.NGDir(url)
-elif mode==72:
+elif mode==constants.NATGEO_LISTNG:
     from resources.libs.adventure import nationalgeo
     print ""+url
     nationalgeo.LISTNG(url)
 
-elif mode==73:
+elif mode==constants.NATGEO_LISTNG2:
     from resources.libs.adventure import nationalgeo
     print ""+url
     nationalgeo.LISTNG2(url)
 
-elif mode==74:
+elif mode==constants.NATGEO_LINKNG:
     from resources.libs.adventure import nationalgeo
     print ""+url
     nationalgeo.LINKNG(name,url)
 
-elif mode==75:
+elif mode==constants.NATGEO_LINKNG2:
     from resources.libs.adventure import nationalgeo
     print ""+url
     nationalgeo.LINKNG2(name,url)
 
-elif mode==76:
+elif mode==constants.KIDZONE_MENU:
     print ""+url
     KIDZone(url)
-elif mode==107:
+elif mode==constants.DISNEYJR:
     from resources.libs.kids import disneyjr
     disneyjr.DISJR()
         
-elif mode==108:
+elif mode==constants.DISNEYJR_LIST:
     from resources.libs.kids import disneyjr
     disneyjr.DISJRList(url)
 
-elif mode==109:
+elif mode==constants.DISNEYJR_LIST2:
     from resources.libs.kids import disneyjr
     disneyjr.DISJRList2(url)
         
-elif mode==110:
+elif mode==constants.DISNEYJR_LINK:
     from resources.libs.kids import disneyjr
     disneyjr.DISJRLink(name,url,iconimage)       
-elif mode==128:
+elif mode==constants.MAIN_CLEAR_HISTORY:
     main.Clearhistory(url)
-elif mode==222:
+elif mode==constants.MAIN_HISTORY:
     print ""+url
     History()
 
-elif mode==420:
+elif mode==constants.MOVIE25_SEARCH_HISTORY:
     from resources.libs import movie25
     print ""+url
     movie25.Searchhistory(index=index)
-elif mode==639:
+elif mode==constants.MOVIE25_GOTOPAGE:
+    from resources.libs import movie25
+    print ""+url
+    movie25.GotoPage(url,index=index)
+
+elif mode==constants.MOVIE25_GOTOPAGEB:
+    from resources.libs import movie25
+    print ""+url
+    movie25.GotoPageB(url,index=index)
+
+elif mode==constants.MAIN_GLOBALFAV:
     print ""+url
     GlobalFav()
-elif mode == 777: #TOGGLE WATCHED
+elif mode == constants.TOGGLE_WATCHED: #TOGGLE WATCHED
     main.ChangeWatched(iconimage, url, name, '', '')
-elif mode == 778: #REFRESH METADATA
+elif mode == constants.REFRESH_METADATA: #REFRESH METADATA
     main.refresh_movie(name,iconimage)
-elif mode == 1999:
+elif mode == constants.MAIN_SETTINGS:
     settings.openSettings()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

@@ -4,7 +4,9 @@ import main
 import BeautifulSoup
 import simplejson as json
 
-from resources.libs import settings 
+import jsonutil, fileutil
+
+import settings, constants
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)
@@ -38,18 +40,13 @@ def checkCache(murl, channel, cacheFilePath):
     refreshCache = True
     
     if not os.path.exists(cacheFilePath):
-        jsonFile = open(cacheFilePath, 'w')
-        dummyObj = {'channels':{}}
-        json.dump(dummyObj, jsonFile, encoding='utf-8')
-        jsonFile.close()
+        jsonutil.createBlankChannelCache(cacheFilePath)
     else:
-        lastModifiedTime = os.path.getmtime(cacheFilePath)
+        lastModifiedTime = fileutil.lastModifiedTime(cacheFilePath)
         diffTime = long((time.time() - lastModifiedTime)/3600)
         if diffTime < 720:
             try :
-                jsonFile = open(cacheFilePath, 'r')
-                jsonChannelData = json.load(jsonFile, encoding='utf-8')
-                jsonFile.close()
+                jsonChannelData = jsonutil.readJson(cacheFilePath)
                 if jsonChannelData['channels'][channel]:
                     if re.search('past',murl,re.I):
                         if jsonChannelData['channels'][channel]['pastTVShows']:
@@ -88,7 +85,7 @@ def buildCache(murl, channel, cacheFilePath, index):
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
             pastTVShowURL = MainUrl + url
         elif label == 'Movies':
-            main.addDirX(name, MainUrl+url,39,'',searchMeta=True, metaType='Movies')
+            main.addDirX(name, MainUrl+url,constants.DESIRULEZ_VIDEOLINKS,'',searchMeta=True, metaType='Movies')
         else:
             tvShow['url'] = MainUrl + url
             tvShow['iconimage'] = getShowImage(channel, name, 2)
@@ -106,9 +103,7 @@ def buildCache(murl, channel, cacheFilePath, index):
     
     
     # Writing data to JSON File
-    jsonFile = open(cacheFilePath, 'r')
-    jsonChannelData = json.load(jsonFile, encoding='utf-8')
-    jsonFile.close()
+    jsonChannelData = jsonutil.readJson(cacheFilePath)
     channels = jsonChannelData['channels']
     try :
         channelData = channels[channel]
@@ -121,22 +116,16 @@ def buildCache(murl, channel, cacheFilePath, index):
         channelData['currentTVShowURL'] = murl
         channelData['pastTVShowURL'] = pastTVShowURL
     channels[channel] = channelData
-    jsonFile = open(cacheFilePath, 'w')
-    json.dump(jsonChannelData, jsonFile, encoding='utf-8')
-    jsonFile.close()
-    
+    jsonutil.writeJson(jsonChannelData, cacheFilePath)
+   
 def loadFromCache(murl, channel, cacheFilePath):
-    
-    jsonFile = open(cacheFilePath,'r')
-    jsonData = json.load(jsonFile, encoding='utf-8')
-    channels = jsonData['channels']
+    channels = jsonutil.readJson(cacheFilePath)['channels']
     channelData = channels[channel]
     tvShows = channelData['currentTVShows']
     for tvShow in tvShows:
-        main.addTVInfo(tvShow['name'],tvShow['url'],38,tvShow['iconimage'],tvShow['name'],'')
+        main.addTVInfo(tvShow['name'],tvShow['url'],constants.DESIRULEZ_LISTEPISODES,tvShow['iconimage'],tvShow['name'],'')
     if not re.search('past',murl,re.I):
-        main.addTVInfo('[COLOR red]' + channel + ' Past Shows[/COLOR]',channelData['pastTVShowURL'],37,'','Past Shows','')
-    jsonFile.close()
+        main.addTVInfo('[COLOR red]' + channel + ' Past Shows[/COLOR]',channelData['pastTVShowURL'],constants.DESIRULEZ_LISTSHOWS,'','Past Shows','')
 
 def LISTSHOWS(murl,channel, CachePath, index=False):
     cacheFilePath = os.path.join(CachePath, cacheFileName)
@@ -167,7 +156,7 @@ def LISTEPISODES(tvshowname,url):
         if "Online" not in name: continue
         name=name.replace(tvshowname,'').replace('Watch Online','')
         name=main.removeNonASCII(name)
-        main.addTVInfo(name,MainUrl+url,39,'',tvshowname,'') 
+        main.addTVInfo(name,MainUrl+url,constants.DESIRULEZ_VIDEOLINKS,'',tvshowname,'') 
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -178,7 +167,7 @@ def LISTEPISODES(tvshowname,url):
         match1=re.findall('<a href="(.+?)" title=".+?">([0-9]+?)</a>', string)
         for url, page in match1:
             if not re.search('javascript',url,re.I):
-                main.addTVInfo('-> Page ' + str(page),MainUrl+url,38,'',tvshowname,'')
+                main.addTVInfo('-> Page ' + str(page),MainUrl+url,constants.DESIRULEZ_LISTEPISODES,'',tvshowname,'')
     dialogWait.close()
     del dialogWait
     xbmcplugin.setContent(int(sys.argv[1]), 'TV Shows')
@@ -201,6 +190,7 @@ def getVideoSourceIcon(source_name):
     elif re.search('videoweed',source_name,flags=re.I):
         img_url = 'http://www.videoweed.es/images/logo.png'
     return img_url
+    
 def PLAY(name, items, episodeName, video_source):
     video_stream_links = []
     dialog = xbmcgui.DialogProgress()
@@ -256,7 +246,7 @@ def VIDEOLINKS(name, url):
     for child in soup.findChildren():
         if (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
                 if len(video_playlist_items) > 0:
-                    main.addPlayList(video_source_name, url,40, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
+                    main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
                     
                     video_source_id = video_source_id + 1
                     video_source[video_source_name] = video_playlist_items

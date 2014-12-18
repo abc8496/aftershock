@@ -1,0 +1,9 @@
+[B]Version v0.0.8[/B]
+- Moved all modes to Constants File
+
+[B]Version v0.0.7[/B]
+- Updated all icons to reflect the updated theme
+- Desi TV Shows performance improvements
+- UI Enhancements
+- Watch History Issue fixed
+

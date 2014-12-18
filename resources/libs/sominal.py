@@ -12,9 +12,9 @@ art = main.art
 baseUrl=settings.getSominalURL()
 prettyName='Somminal'
 
-def LISTMOVIES(murl,name, index, categoryURL,page):
-    turl = baseUrl + 'category/'+ categoryURL + '/feed'
-    
+def LISTMOVIES(murl,name, index, page=1):
+    turl = murl
+        
     totalMoviesToLoad = settings.getNoOfMoviesToLoad()
         
     dialogWait = xbmcgui.DialogProgress()
@@ -55,7 +55,7 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
                 if dialogWait.iscanceled(): return False   
             if dialogWait.iscanceled(): return False   
             if hindiMovie :
-                main.addDirX(name + quality, url,52,'',searchMeta=True,metaType='Movies',categoryURL=categoryURL, year=year)
+                main.addDirX(name + quality, url,constants.SOMINAL_LOADVIDEOS,'',searchMeta=True,metaType='Movies', year=year)
                 loadedLinks = loadedLinks + 1
                 percent = (loadedLinks * 100)/totalLinks
                 remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -66,14 +66,12 @@ def LISTMOVIES(murl,name, index, categoryURL,page):
     dialogWait.close()
     del dialogWait
     
-    main.addDir('[COLOR blue]Next[/COLOR]',murl,51,art+'/next.png',index=index, categoryURL=categoryURL,page=str(page))
+    main.addDir('[COLOR blue]Next[/COLOR]',murl,constants.SOMINAL_LISTMOVIES,art+'/next.png',index=index,page=str(page))
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
 
 def playNow(video_source, name):
     PlayNowPreferredOrder = ['mediaplaybox','desiflicks']
-    print '**********************************'
-    #print video_source
     
     preferredFound = False
     prefKey = ''
@@ -106,7 +104,7 @@ def LOADVIDEOS(url, name):
     for tag in tags:
         if re.search('^(Source|ONLINE|Server)', tag.getText(), re.IGNORECASE):
             if len(video_playlist_items) > 0:
-                main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
+                main.addPlayList(video_source_name, url,constants.SOMINAL_PLAY, video_source_id, video_playlist_items, name, '')
                 
                 video_source[video_source_name] = video_playlist_items
                 video_playlist_items = []
@@ -125,7 +123,7 @@ def LOADVIDEOS(url, name):
         if len(video_source) == 0 :
             video_source_id = video_source_id + 1
         print 'HERE >>>>>>>> ' + str(video_source_id)
-        main.addPlayList(video_source_name, url,53, video_source_id, video_playlist_items, name, '')
+        main.addPlayList(video_source_name, url,constants.SOMINAL_PLAY, video_source_id, video_playlist_items, name, '')
         video_source[video_source_name] = video_playlist_items
         
     playNow(video_source, name)
