@@ -2,7 +2,7 @@ import urllib,re,sys,os
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import main
 
-from resources.libs import settings 
+from resources.libs import settings, constants
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)
@@ -359,7 +359,7 @@ def PLAYB(name,murl):
         #WatchHistory
         if selfAddon.getSetting("whistory") == "true":
             from resources.universal import watchhistory
-            wh = watchhistory.WatchHistory('plugin.video.movie25')
+            wh = watchhistory.WatchHistory(addon_id)
             wh.add_item(hname+' '+'[COLOR green]Movie25[/COLOR]', sys.argv[0]+sys.argv[2], infolabels=infolabels, img=img, fanart=fanart, is_folder=False)
         player.KeepAlive()
         return ok

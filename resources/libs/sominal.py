@@ -4,7 +4,7 @@ import main
 import BeautifulSoup
 import simplejson as json
 
-from resources.libs import settings 
+from resources.libs import settings , constants
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)

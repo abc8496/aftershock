@@ -56,6 +56,8 @@ def MAIN():
             main.addDirHome('International',desirulezurl,constants.DESIRULEZ_CHANNELS,art+'/intl.png')
         elif index==13:
             main.addDirHome('Hindi Movies',sominalurl,constants.HINDI_MOVIES_MENU,art+'/hindimovies.png')
+        elif index==14:
+            main.addDirHome('Live TV',mainurl,constants.LIVETV_MENU,art+'/live.png')
         elif index==22:
             main.addDirHome('Kids Zone',mainurl,constants.KIDZONE_MENU,art+'/kidzone.png')
     main.addPlayc('Aftershock Settings',mainurl,constants.MAIN_SETTINGS,art+'/MashSettings.png','','','','','')
@@ -83,11 +85,9 @@ def HINDI_MOVIE_MENU(url, index=False):
         elif index==8:
             main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')
         elif index==9:
-            pass
-            #main.addDirHome('Genre',sominalurl,constants.MOVIE_GENRE,art+'/genre.png')
+            main.addDirHome('Genre',sominalurl,constants.SOMINAL_GENRE,art+'/genre.png')
         elif index==10:
-            pass
-            #main.addDirHome('By Year',sominalurl,constants.MOVIE_YEAR,art+'/year.png')
+            main.addDirHome('By Year',sominalurl,constants.SOMINAL_YEAR,art+'/year.png')
     main.VIEWSB()
 
     ##main.addDir('New Releases',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/new.png',categoryURL='2014',page=1)
@@ -120,12 +120,31 @@ def GENRE(url,index=False):
     main.addDir('War',mainurl + 'war/',constants.MOVIE25_LISTMOVIES,art+'/war.png',index=index)
     main.addDir('Western',mainurl + 'western/',constants.MOVIE25_LISTMOVIES,art+'/west.png',index=index)
     main.VIEWSB()
+    
+def SOMINAL_GENRE(url,index=False):
+    main.addDir('Action',sominalurl + 'category/action/feed',constants.SOMINAL_LISTMOVIES,art+'/act.png',index=index)
+    main.addDir('Comedy',sominalurl + 'category/comedy/feed',constants.SOMINAL_LISTMOVIES,art+'/com.png',index=index)
+    main.addDir('Crime',sominalurl + 'category/crime/feed',constants.SOMINAL_LISTMOVIES,art+'/cri.png',index=index)
+    main.addDir('Drama',sominalurl + 'category/drama/feed',constants.SOMINAL_LISTMOVIES,art+'/dra.png',index=index)
+    main.addDir('Horror',sominalurl + 'category/horror/feed',constants.SOMINAL_LISTMOVIES,art+'/hor.png',index=index)
+    main.addDir('Romance',sominalurl + 'category/romance/feed',constants.SOMINAL_LISTMOVIES,art+'/rom.png',index=index)
+    main.addDir('Social',sominalurl + 'category/social/feed',constants.SOMINAL_LISTMOVIES,art+'/soc.png',index=index)
+    main.addDir('Thriller',sominalurl + 'category/thriller/feed',constants.SOMINAL_LISTMOVIES,art+'/thr.png',index=index)
+    main.VIEWSB()
+
         
 def YEAR(index=False):
     for x in reversed(range(2003, 2016)):
         main.addDir(str(x),'http://www.movie25.so/search.php?year='+str(x)+'/',constants.MOVIE_YEARB,art+'/'+str(x)+'.png',index=index)
     main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
     main.VIEWSB()
+    
+def SOMINAL_YEAR(index=False):
+    for x in reversed(range(2003, 2016)):
+        main.addDir(str(x),sominalurl + 'category/'+str(x)+'/feed',constants.SOMINAL_LISTMOVIES,art+'/'+str(x)+'.png',index=index)
+    #main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
+    main.VIEWSB()
+
 def INT(url):
     logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
     main.addDir('Hindi Movies',url+'/forums/20-Latest-Exclusive-Movie-HQ',constants.DESIRULEZ_LISTSHOWS,art+'/hindimovies.png')
@@ -462,6 +481,20 @@ elif mode==constants.SOMINAL_PLAY:
     video_source = xbmc.getInfoLabel('ListItem.Label')
     if items :
         sominal.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
+elif mode==constants.SOMINAL_GENRE:
+    print ""+url
+    SOMINAL_GENRE(url, index)
+elif mode==constants.SOMINAL_YEAR:
+    print ""+url
+    SOMINAL_YEAR(index)
+elif mode==constants.LIVETV_MENU:
+    print ""+url
+    from resources.libs import livetv
+    livetv.LIVETV_MENU(url, name, index)
+elif mode==constants.LIVETV_PLAY:
+    from resources.libs import livetv
+    livetv.PLAY(url, name, index)
+    
 elif mode==constants.NATGEO_NGDIR:
     from resources.libs.adventure import nationalgeo
     print ""+url
