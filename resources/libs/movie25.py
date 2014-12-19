@@ -2,7 +2,7 @@ import urllib,re,sys,os
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import main
 
-from resources.libs import settings, constants
+from resources.libs import settings, constants, jsonutil, fileutil
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)

@@ -3,7 +3,7 @@ import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import BeautifulSoup
 import simplejson as json
 
-from resources.libs import main, settings , constants
+from resources.libs import main, settings, constants, jsonutil, fileutil
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)

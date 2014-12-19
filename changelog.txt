@@ -1,3 +1,6 @@
+[B]Version v0.0.9[/B]
+- Fixed constants file import errors
+
 [B]Version v0.0.8[/B]
 - Moved all modes to Constants File
 

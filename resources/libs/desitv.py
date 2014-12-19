@@ -1,12 +1,10 @@
 import urllib,re,sys,os, time
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
-import main
 import BeautifulSoup
 import simplejson as json
 
-import jsonutil, fileutil
+from resources.libs import main, settings, constants, jsonutil, fileutil
 
-import settings, constants
 addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)
