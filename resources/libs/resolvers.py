@@ -84,15 +84,15 @@ def resolve_url(url, filename = False):
                     try:url=url.split('com/v/')[1]
                     except:url=url.split('com/embed/')[1]
                 stream_url='plugin://plugin.video.youtube/?action=play_video&videoid=' +url
-            elif re.search('(desiserials|tellyserials|serialreview|[a-z]*).tv/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
+            elif re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
                 stream_url=resolve_dailymotion(url)
-            elif re.search('(flash.php|fp.php|wire.php|pw.php)', url, flags=re.I) or (re.search('(desiserials|tellyserials|serialreview|[a-z]*).tv/', url, flags=re.I) and re.search('flash', filename, flags=re.I)):
+            elif re.search('(flash.php|fp.php|wire.php|pw.php)', url, flags=re.I) or (re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/', url, flags=re.I) and re.search('flash', filename, flags=re.I)):
                 stream_url=resolve_playwire(url)
-            elif re.search('tellynews.tv|vh.php',url,flags=re.I) and re.search('videohut',filename,flags=re.I):
+            elif re.search('tvnewz.net|tellynews.tv|vh.php',url,flags=re.I) and re.search('videohut',filename,flags=re.I):
                 stream_url=resolve_videohut(url)
             elif re.search('vidto.php',url,flags=re.I):
                 stream_url=resolve_vidtophp(url)
-            elif re.search('tellynews.tv|vt.php',url,flags=re.I) and re.search('tanker',filename,flags=re.I):
+            elif re.search('tvnewz.net|tellynews.tv|vt.php',url,flags=re.I) and re.search('tanker',filename,flags=re.I):
                 stream_url=resolve_videotanker(url)
             elif re.search('cloud|cl.php',url,flags=re.I):
                 stream_url=resolve_cloud(url)

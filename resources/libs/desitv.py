@@ -242,18 +242,21 @@ def VIDEOLINKS(name, url):
         soup = soup.findChild('div', recursive=False)
     
     for child in soup.findChildren():
-        if (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
-                if len(video_playlist_items) > 0:
-                    main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
+        if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
+            continue
+        elif (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
+            if len(video_playlist_items) > 0:
+                main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
                     
-                    video_source_id = video_source_id + 1
-                    video_source[video_source_name] = video_playlist_items
-                    video_playlist_items = []
-                video_source_name = child.getText()
-                video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]')
-        elif (child.name =='a') and not child.getText() == 'registration' :
+                video_source_id = video_source_id + 1
+                video_source[video_source_name] = video_playlist_items
+                video_playlist_items = []
+            video_source_name = child.getText()
+            video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]')
+        elif (child.name =='a') and not child.getText() == 'registration':
             video_playlist_items.append(str(child['href']))
     playNow(video_source, name)
     
 def preparevideolink(video_url, video_source):
-    return main.resolve_url(video_url, video_source)
+    stream_url = main.resolve_url(video_url, video_source)
+    return stream_url
