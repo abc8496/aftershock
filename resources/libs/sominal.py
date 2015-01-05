@@ -28,7 +28,8 @@ def LISTMOVIES(murl,name, index, page=1):
     quality = None
     hindiMovie = False
     year = None
-    while (loadedLinks <= totalMoviesToLoad):
+    pagesScanned = 0
+    while ((pagesScanned < 5) and (loadedLinks <= totalMoviesToLoad)):
         purl = turl
         if int(page) > 1:
             purl = turl + "?paged=" + str(page)
@@ -54,20 +55,25 @@ def LISTMOVIES(murl,name, index, page=1):
                 if dialogWait.iscanceled(): return False   
             if dialogWait.iscanceled(): return False   
             if hindiMovie :
+                pagesScanned = 0
                 main.addDirX(name + quality, url,constants.SOMINAL_LOADVIDEOS,'',searchMeta=True,metaType='Movies', year=year)
                 loadedLinks = loadedLinks + 1
                 percent = (loadedLinks * 100)/totalLinks
                 remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
                 dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
+                if loadedLinks >= totalLinks : 
+                    print 'BREAKING'
+                    break
                 if dialogWait.iscanceled(): return False   
         if dialogWait.iscanceled(): return False   
         page = str(int(page) + 1)
+        pagesScanned = pagesScanned + 1
     dialogWait.close()
     del dialogWait
     
     main.addDir('[COLOR blue]Next[/COLOR]',murl,constants.SOMINAL_LISTMOVIES,art+'/next.png',index=index,page=str(page))
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-    main.VIEWS()
+    main.setSeasonView()
 
 def playNow(video_source, name):
     PlayNowPreferredOrder = ['mediaplaybox','desiflicks']

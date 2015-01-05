@@ -83,6 +83,7 @@ def buildCache(murl, channel, cacheFilePath, index):
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
             pastTVShowURL = MainUrl + url
         elif label == 'Movies':
+            name = name.replace('Watch Online / Download','')
             main.addDirX(name, MainUrl+url,constants.DESIRULEZ_VIDEOLINKS,'',searchMeta=True, metaType='Movies')
         else:
             tvShow['url'] = MainUrl + url
@@ -137,7 +138,10 @@ def LISTSHOWS(murl,channel, CachePath, index=False):
     else:
         loadFromCache(murl, channel, cacheFilePath)
     xbmcplugin.setContent(int(sys.argv[1]), label)
-    main.VIEWS()
+    if label == 'Movies' :
+        main.setSeasonView()
+    else: 
+        main.VIEWS()
 
 def LISTEPISODES(tvshowname,url):
     link=main.OPENURL(url)
@@ -169,7 +173,7 @@ def LISTEPISODES(tvshowname,url):
     dialogWait.close()
     del dialogWait
     xbmcplugin.setContent(int(sys.argv[1]), 'TV Shows')
-    main.VIEWS()
+    main.setEpisodeView()
 
 def getVideoSourceIcon(source_name):
     img_url=None

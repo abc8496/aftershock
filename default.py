@@ -69,32 +69,14 @@ def AtoZ(index):
 
 def HINDI_MOVIE_MENU(url, index=False):
     xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
-    d = settings.getHomeItems()
-    for index, value in sorted(enumerate(d), key=lambda x:x[1]):
-        if value==None: continue
-        if index==2:
-            pass
-            #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
-        elif index==3:
-            main.addDirHome('New Releases',sominalurl + 'category/2014/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
-        elif index==4:
-            main.addDirHome('Latest Added',sominalurl + 'category/hindi-movies/feed',constants.SOMINAL_LISTMOVIES,art+'/latest.png')
-        elif index==5:
-            pass
-            #main.addDirHome('Featured Movies',sominalurl + 'category/featured_movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
-        elif index==8:
-            main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')
-        elif index==9:
-            main.addDirHome('Genre',sominalurl,constants.SOMINAL_GENRE,art+'/genre.png')
-        elif index==10:
-            main.addDirHome('By Year',sominalurl,constants.SOMINAL_YEAR,art+'/year.png')
+    #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
+    main.addDirHome('New Releases',sominalurl + 'category/2014/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
+    main.addDirHome('Latest Added',sominalurl + 'category/hindi-movies/feed',constants.SOMINAL_LISTMOVIES,art+'/latest.png')
+    #main.addDirHome('Featured Movies',sominalurl + 'category/featured_movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
+    main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')
+    main.addDirHome('Genre',sominalurl,constants.SOMINAL_GENRE,art+'/genre.png')
+    main.addDirHome('By Year',sominalurl,constants.SOMINAL_YEAR,art+'/year.png')
     main.VIEWSB()
-
-    ##main.addDir('New Releases',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/new.png',categoryURL='2014',page=1)
-    ##main.addDir('Latest Added',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/latest.png',categoryURL='hindi-movies',page=1)
-    ##main.addDir('HD Releases',sominalurl,constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png',categoryURL='hindi-blurays',page=1)
-    #main.addDir('Genre',mainurl,51,art+'/genre.png')
-    #main.addDir('By Year',mainurl,51,art+'/year.png')
     
 def GENRE(url,index=False):
     main.addDir('Action',mainurl + 'action/',constants.MOVIE25_LISTMOVIES,art+'/act.png',index=index)

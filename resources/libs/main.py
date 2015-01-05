@@ -196,6 +196,14 @@ def VIEWSB():
         elif selfAddon.getSetting("home-view") == "1":
                 xbmc.executebuiltin("Container.SetViewMode(500)")
         return
+        
+def setSeasonView():
+    xbmc.executebuiltin("Container.SetViewMode(" + selfAddon.getSetting("seasons-view") + ")")
+    return
+    
+def setEpisodeView():
+    xbmc.executebuiltin("Container.SetViewMode(" + selfAddon.getSetting("episodes-view") + ")")
+    return
 
 def OPENURL(url, mobile = False, q = False, verbose = True, timeout = 10, cookie = None, data = None, cookiejar = False, log = True, headers = [], type = '',ua = False):
     import urllib2 

@@ -20,7 +20,7 @@
 		<setting id="seasons-view" type="number" label="Season View" default="504" enable="!eq(-2,false)"/>	
 		<setting id="episodes-view" type="number" label="Episode View" default="504" enable="!eq(-3,false)"/>
 		<setting id="choose-skin" type="bool"  label="[B]Xperience 1080 OFF  | Confluence ON[/B]" default="true" enable="!eq(-4,false)"/>
-      	<setting id="con-view"	type="enum" label="Confluence View" values="List|Big List|Thumbnail|Posters Wrap|Fanart|Media Info 1|Media Info 2|Media Info 3" default="3" enable="!eq(-1,false)+!eq(-5,false)"/>
+      	<setting id="con-view"	type="enum" label="Confluence View" values="List|Big List|Thumbnail|Posters Wrap|Fanart|Media Info 1|Media Info 2|Media Info 3" default="2" enable="!eq(-1,false)+!eq(-5,false)"/>
 		<setting id="xpr-view"	type="enum" label="Xperience 1080 View" values="List|Info List|Thumbnail|Posters|Landscape|Banner|Panel" default="3" enable="!eq(-2,true)+!eq(-6,false)"/>
 		<setting id="tube-proxy" type="bool" label="[B]proxy[/B]" default="false" visible="false"/>
 		<setting id="mindexer" type="text" label="[B]index[/B]" default="Movie25" visible="false"/>
