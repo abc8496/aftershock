@@ -240,7 +240,7 @@ def resolve_mediaplaybox(url):
     
     url = 'http://www.mediaplaybox.com/mobile?vinf=' + str(video_id)
     link = main.OPENURL(url)
-    video_file = re.compile('href="http://www.mediaplaybox.com/media/files_flv/(.+?)"').findall(link)[0]
+    video_file = re.compile('href="http://www.mediaplaybox.com.+?/media/files_flv/(.+?)"').findall(link)[0]
     stream_url = 'http://www.mediaplaybox.com/media/files_flv/' + video_file.replace('_ipod.mp4', '.flv')
     # TODO : Implement HD Resoolver
     #hd_video_link = 'http://www.mediaplaybox.com/media/files_flv/' + video_file.replace('_ipod.mp4', '_hd.mp4')

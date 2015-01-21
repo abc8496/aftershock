@@ -85,7 +85,7 @@ def playNow(video_source, name):
             if re.search(source_name, key, flags=re.I):
                 preferredFound = True
                 prefKey = key
-                print video_source[prefKey]
+                #print video_source[prefKey]
         if preferredFound :
             break
     
@@ -127,7 +127,7 @@ def LOADVIDEOS(url, name):
     if len(video_playlist_items) > 0 :
         if len(video_source) == 0 :
             video_source_id = video_source_id + 1
-        print 'HERE >>>>>>>> ' + str(video_source_id)
+        #print 'HERE >>>>>>>> ' + str(video_source_id)
         main.addPlayList(video_source_name, url,constants.SOMINAL_PLAY, video_source_id, video_playlist_items, name, '')
         video_source[video_source_name] = video_playlist_items
         
