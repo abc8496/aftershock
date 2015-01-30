@@ -33,7 +33,7 @@
 		<setting label="Customize your Home screen" type="lsep" />
 		<setting id="homeitems_1_enabled" type="bool" label="[B]Search (Movie25)[/B]" default="false"/>
 			<setting id="homeitems_1" type="number" label="     Order" default="10" visible="!eq(-1,false)"/>
-		<setting id="homeitems_2_enabled" type="bool" label="[B]Favorites[/B]" default="true"/>
+		<setting id="homeitems_2_enabled" type="bool" label="[B]Favorites[/B]" default="false"/>
 			<setting id="homeitems_2" type="number" label="     Order" default="20" visible="!eq(-1,false)"/>
 		<setting id="homeitems_3_enabled" type="bool" label="[B]A-Z (Movie25)[/B]" default="false"/>
 			<setting id="homeitems_3" type="number" label="     Order" default="30" visible="!eq(-1,false)"/>
@@ -59,9 +59,9 @@
 			<setting id="homeitems_13" type="number" label="     Order" default="130" visible="!eq(-1,false)"/>
         <setting id="homeitems_14_enabled" type="bool" label="[B]Hindi Movies[/B]" default="true"/>
 			<setting id="homeitems_14" type="number" label="     Order" default="140" visible="!eq(-1,false)"/>
-        <setting id="homeitems_15_enabled" type="bool" label="[B]Live TV[/B]" default="true"/>
+        <setting id="homeitems_15_enabled" type="bool" label="[B]Live TV[/B]" default="false"/>
 			<setting id="homeitems_15" type="number" label="     Order" default="150" visible="!eq(-1,false)"/>
-        <setting id="homeitems_23_enabled" type="bool" label="[B]Kids Zone[/B]" default="true"/>
+        <setting id="homeitems_23_enabled" type="bool" label="[B]Kids Zone[/B]" default="false"/>
 			<setting id="homeitems_23" type="number" label="     Order" default="230" visible="!eq(-1,false)"/>
    </category>
    
