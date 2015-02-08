@@ -1,3 +1,7 @@
+[B]Version v1.0.2[/B]
+- Fixed DesiRulez.net issue
+- Incorporated Movie25.cm changes
+
 [B]Version v1.0.1[/B]
 - Fixed www.mediaplaybox.com links
 

@@ -13,7 +13,8 @@ prettyName='Movie25'
 def LISTMOVIES(murl,index=False):
     link=main.OPENURL(murl)
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match = re.findall('movie_pic"><a href="([^"]+)"  target=".+?<img src="(.+?)".+?target="_self">([^<]+)</a>.+?>([^<]+)</a>.+?<br/>Views: <span>(.+?)</span>.+?(.+?)votes.*?<li class="current-rating" style="width:(\d+?)px',link)
+    #match = re.findall('movie_pic"><a href="([^"]+)"  target=".+?<img src="(.+?)".+?target="_self">([^<]+)</a>.+?>([^<]+)</a>.+?<br/>Views: <span>(.+?)</span>.+?(.+?)votes.*?<li class="current-rating" style="width:(\d+?)px',link)
+    match = re.findall('<div class="movie_pic"><a href="(.+?)"  target="_self" title="(.+?)">.+?<img src="(.+?)".+?alt=".+?".+?</a></div>',link)
     dialogWait = xbmcgui.DialogProgress()
     ret = dialogWait.create('Please wait until Movie list is cached.')
     totalLinks = len(match)
@@ -21,13 +22,12 @@ def LISTMOVIES(murl,index=False):
     remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    for url,thumb,name,genre,views,votes,rating in match:
-        votes=votes.replace('(','')
+    for url,name,thumb in match:
         name=name.replace('-','').replace('&','').replace('acute;','').strip()
         if index == 'True':
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',MainUrl+url,21,thumb,genre,'')
+            main.addInfo(name,MainUrl+url,21,thumb,'','')
         else:
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',MainUrl+url,constants.MOVIE25_VIDEOLINKS,thumb,genre,'')
+            main.addInfo(name,MainUrl+url,constants.MOVIE25_VIDEOLINKS,thumb,'','')
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -271,7 +271,9 @@ def VIDEOLINKS(name,url):
     quality = quality.replace("'","")
     name  = name.split('[COLOR blue]')[0]
     import collections
-    all=re.compile('<li class="link_name">\s*?([^<^\s]+?)\s*?</li>.+?<li class=".+?"><span><a href="([^"]+?)"').findall(link)
+    #all=re.compile('<li class="link_name">\s*?([^<^\s]+?)\s*?</li>.+?<li class=".+?"><span><a href="([^"]+?)"').findall(link)
+    all=re.compile('<li class="link_name">\s*?([^<^\s]+?)\s*?</li>.+?<li class="playing_button"><a href="([^"]+?)".+?>').findall(link)
+    #print all
     all_coll = collections.defaultdict(list)
     for d in all: all_coll[d[0]].append(d[1])
     all_coll = all_coll.items()
@@ -292,8 +294,12 @@ def GroupedHosts(name,url,thumb):
         
 def resolveM25URL(url):
     html=main.OPENURL(url)
-    match = re.search("location\.href='(.+?)'",html)
-    if match: return match.group(1)
+    #print html
+    #match = re.search("location\.href='(.+?)'",html)
+    match = re.compile('IFRAME SRC="(.+?)"').findall(html)
+    #print match
+    #if match: return match.group(1)
+    if match: return match[0]
     return
 
 def PLAY(name,murl):
