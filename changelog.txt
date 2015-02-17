@@ -1,3 +1,7 @@
+[B]Version v1.0.3[/B] - 17-Feb-2015
+- Fixed Movie25
+- Moved to DOM from standard search
+
 [B]Version v1.0.2[/B]
 - Fixed DesiRulez.net issue
 - Incorporated Movie25.cm changes

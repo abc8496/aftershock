@@ -10,6 +10,7 @@
         <setting id="sominal-url" type="text" label="[B]Sominal URL[/B]" default="http://www.playindiafilms.com/" visible="false"/>	
         <setting id="desirulez-url" type="text" label="[B]DesiRulez URL[/B]" default="http://www.desirulez.net/" visible="false"/>	
         <setting id="sominal-moviesPerPage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
+        <setting id="hide-download-instructions" type="boolean" default="true" visible="false"/>
 
    </category>
    

@@ -2,6 +2,8 @@ import urllib,re,sys,os
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import main
 
+import CommonFunctions as common
+
 from resources.libs import settings, constants, jsonutil, fileutil
 addon_id = settings.getAddOnID()
 
@@ -11,23 +13,30 @@ MainUrl='http://www.movie25.cm'
 prettyName='Movie25'
 
 def LISTMOVIES(murl,index=False):
-    link=main.OPENURL(murl)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    #match = re.findall('movie_pic"><a href="([^"]+)"  target=".+?<img src="(.+?)".+?target="_self">([^<]+)</a>.+?>([^<]+)</a>.+?<br/>Views: <span>(.+?)</span>.+?(.+?)votes.*?<li class="current-rating" style="width:(\d+?)px',link)
-    match = re.findall('<div class="movie_pic"><a href="(.+?)"  target="_self" title="(.+?)">.+?<img src="(.+?)".+?alt=".+?".+?</a></div>',link)
+    link = main.OPENURL(murl)
+    result = common.parseDOM(link, "div", attrs = { "class" : "movie_table" })[0]
+    result = common.parseDOM(result, "li")
+    
     dialogWait = xbmcgui.DialogProgress()
     ret = dialogWait.create('Please wait until Movie list is cached.')
-    totalLinks = len(match)
+    
+    totalLinks = len(result)
     loadedLinks = 0
     remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    for url,name,thumb in match:
-        name=name.replace('-','').replace('&','').replace('acute;','').strip()
+    
+    for item in result:
+        title = common.parseDOM(item, "a", ret="title")[0]
+        url = common.parseDOM(item, "a", ret="href")[0]
+        thumb = common.parseDOM(item, "img" , ret="src")[0]
+        
+        title = title.replace('-','').replace('&','').replace('acute;','').strip()
+        
         if index == 'True':
-            main.addInfo(name,MainUrl+url,21,thumb,'','')
+            main.addInfo(title,MainUrl+url,21,thumb,'','')
         else:
-            main.addInfo(name,MainUrl+url,constants.MOVIE25_VIDEOLINKS,thumb,'','')
+            main.addInfo(title,MainUrl+url,constants.MOVIE25_VIDEOLINKS,thumb,'','')
         loadedLinks = loadedLinks + 1
         percent = (loadedLinks * 100)/totalLinks
         remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
@@ -36,18 +45,18 @@ def LISTMOVIES(murl,index=False):
     dialogWait.close()
     del dialogWait
     
-    paginate=re.compile('</a><a href=\'([^<]+)\'>Next</a>').findall(link)
-    if paginate:
-#                 main.addDir('[COLOR red]Home[/COLOR]','',2000,art+'/home.png')
-        main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,constants.MOVIE25_GOTOPAGE,art+'/gotopage.png',index=index)
-        xurl=MainUrl+paginate[0]
-        r = re.findall('>Next</a><a href=\'/.+?/(\d+)\'>Last</a>',link)
-        pg= re.findall('/.+?/(\d+)',paginate[0])
-        pg=int(pg[0])-1
-        if r:
-            main.addDir('[COLOR blue]Page '+ str(pg)+' of '+r[0]+'[/COLOR]',xurl,constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
-        else:
-            main.addDir('[COLOR blue]Page '+ str(pg)+'[/COLOR]',xurl,constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
+    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
+    
+    paginate = common.parseDOM(link, "div", attrs = { "class" : "count_text" })[0]
+    href = common.parseDOM(paginate, "a", ret="href")
+    content = common.parseDOM(paginate, "a")
+    indx = 0
+    for i in content:
+        if i == "Next":
+            pageNo = re.findall('/.+?/(\d+)',href[indx])
+            pageNo=int(pageNo[0])
+            main.addDir('[COLOR blue]Page '+ str(pageNo)+'[/COLOR]',MainUrl+href[indx],constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
+        indx=indx+1
     
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
@@ -270,12 +279,17 @@ def VIDEOLINKS(name,url):
     quality = str(qual)
     quality = quality.replace("'","")
     name  = name.split('[COLOR blue]')[0]
+    
+    links = common.parseDOM(link, "div", attrs = { "class" : "links"})[0]
+    links = common.parseDOM(links, "ul")
     import collections
-    #all=re.compile('<li class="link_name">\s*?([^<^\s]+?)\s*?</li>.+?<li class=".+?"><span><a href="([^"]+?)"').findall(link)
-    all=re.compile('<li class="link_name">\s*?([^<^\s]+?)\s*?</li>.+?<li class="playing_button"><a href="([^"]+?)".+?>').findall(link)
-    #print all
     all_coll = collections.defaultdict(list)
-    for d in all: all_coll[d[0]].append(d[1])
+    
+    for item in links:
+        host = common.parseDOM(item, "li", attrs = { "class": "link_name" })[0]
+        url = common.parseDOM(item, "a", ret="href")[0]
+        all_coll[host].append(url)
+
     all_coll = all_coll.items()
     sortorder = "putlocker,sockshare,billionuploads,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,"
     sortorder = ','.join((sortorder.split(',')[::-1]))
@@ -290,18 +304,21 @@ def GroupedHosts(name,url,thumb):
         main.addLink("[COLOR red]For Download Options, Bring up Context Menu Over Selected Link.[/COLOR]",'','')
     urls = eval(url)
     for url in urls:
+        print url
         main.addDown2(name,MainUrl+url,constants.MOVIE25_PLAY,thumb,thumb)
         
 def resolveM25URL(url):
     html=main.OPENURL(url)
-    #print html
-    #match = re.search("location\.href='(.+?)'",html)
-    match = re.compile('IFRAME SRC="(.+?)"').findall(html)
-    #print match
-    #if match: return match.group(1)
-    if match: return match[0]
-    return
-
+    url = common.parseDOM(html, "iframe", ret="src")
+    url += common.parseDOM(html, "IFRAME", ret="SRC")
+    if len(url) == 0 :
+        url = common.parseDOM(html, "div", attrs = {"class":"left_body"})[0]
+        url = common.parseDOM(url, "input", ret="onclick")[0]
+    print url
+    url = re.compile('(http.+)').findall(url)[0]
+    url = url.replace("'","")
+    return url
+    
 def PLAY(name,murl):
     ok=True
     hname=name
@@ -309,6 +326,7 @@ def PLAY(name,murl):
     name  = name.split('[COLOR red]')[0]
     infoLabels = main.GETMETAT(name,'','','')
     murl = resolveM25URL(murl)
+    print murl
     if not murl: return False
     video_type='movie'
     season=''
