@@ -32,6 +32,7 @@ def LISTMOVIES(murl,index=False):
         thumb = common.parseDOM(item, "img" , ret="src")[0]
         
         title = title.replace('-','').replace('&','').replace('acute;','').strip()
+        title = title.encode('utf-8')
         
         if index == 'True':
             main.addInfo(title,MainUrl+url,21,thumb,'','')
@@ -51,13 +52,35 @@ def LISTMOVIES(murl,index=False):
     href = common.parseDOM(paginate, "a", ret="href")
     content = common.parseDOM(paginate, "a")
     indx = 0
+    pageNo = 0
+    lastPg = 0
+    pageIndx = 0
     for i in content:
         if i == "Next":
             pageNo = re.findall('/.+?/(\d+)',href[indx])
+            if len(pageNo) == 0:
+                pageNo = re.findall("search.php.?page=([^<]+)&year=.+?", href[indx])
+                href[indx] = "/" + href[indx]
             pageNo=int(pageNo[0])
-            main.addDir('[COLOR blue]Page '+ str(pageNo)+'[/COLOR]',MainUrl+href[indx],constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
+            pageIndx = indx
+        if i == "Last":
+            lastPg = re.findall('/.+?/(\d+)',href[indx])
+            if len(lastPg) == 0:
+                lastPg = re.findall("search.php.?page=([^<]+)&year=.+?", href[indx])
+                href[indx] = "/" + href[indx]
+            if len(lastPg) > 0 :
+                lastPg = int(lastPg[0])
+            else :
+                lastPg = 0
         indx=indx+1
     
+    searchPage = re.findall("search.php.?page=([^<]+)&year=.+?", href[pageIndx])
+    if not len(searchPage) > 0 and lastPg > 0 :
+        main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,constants.MOVIE25_GOTOPAGE,art+'/gotopage.png',index=index)
+    if lastPg > 0 :
+        main.addDir('[COLOR blue]Page '+ str(pageNo) + ' of ' + str(lastPg) +'[/COLOR]',MainUrl+href[pageIndx],constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
+    elif pageNo <> lastPg :
+        main.addDir('[COLOR blue]Page '+ str(pageNo)+'[/COLOR]',MainUrl+href[pageIndx],constants.MOVIE25_LISTMOVIES,art+'/next.png',index=index)
     xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
     main.VIEWS()
 
@@ -94,40 +117,7 @@ def SEARCH(murl = '',index=False):
     encode = main.updateSearchFile(murl,'Movies')
     if not encode: return False   
     surl=MainUrl+'/search.php?key='+encode+'&submit='
-    link=main.OPENURL(surl)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match=re.compile('<div class="movie_pic"><a href="([^"]+?)"[^>]+?>\s*?<img src="([^"]+?)"[^>]+?>.+?<a href[^>]+?>([^<]+?)</a></h1><div class=".+?">().*?Views: <span>(.+?)</span>.+?id=RateCount_.+?>(.+?)</span>.*?<li class="current-rating" style="width:(\d+?)px').findall(link)
-    dialogWait = xbmcgui.DialogProgress()
-    ret = dialogWait.create('Please wait until Movie list is cached.')
-    totalLinks = len(match)
-    loadedLinks = 0
-    remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-    dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
-    xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    for url,thumb,name,genre,views,votes,rating in match:
-        name=name.replace('-','').replace('&','').replace('acute;','')
-        furl= MainUrl+url
-        if index == 'True':
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,21,thumb,genre,'')
-        else:
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,constants.MOVIE25_VIDEOLINKS,thumb,genre,'')
-        loadedLinks = loadedLinks + 1
-        percent = (loadedLinks * 100)/totalLinks
-        remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-        dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
-        if dialogWait.iscanceled(): return False 
-    dialogWait.close()
-    del dialogWait
-    exist = re.findall("<a href='search.php.?page=.+?'>Next</a>",link)
-    if exist:
-        r = re.findall(""">Next</a><a href='search.php.?page=([^<]+)&key=.+?'>Last</a>""",link)
-        if r:
-            main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-        else:
-            main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&key='+encode,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-    xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-
-
+    LISTMOVIES(surl, index)
 
 def ENTYEAR(index=False):
     dialog = xbmcgui.Dialog()
@@ -135,11 +125,11 @@ def ENTYEAR(index=False):
     if d:
         encode=urllib.quote(d)
         if encode < '2015' and encode > '1900':
-            surl='http://www.movie25.so/search.php?year='+encode+'/'
-            YEARB(surl,index=index)
+            surl=MainUrl + '/search.php?year='+encode+'/'
+            LISTMOVIES(surl,index=index)
         else:
             dialog = xbmcgui.Dialog()
-            ret = dialog.ok('Wrong Entry', 'Must enter year in four digit format like 1999','Enrty must be between 1900 and 2014')
+            ret = dialog.ok('Wrong Entry', 'Must enter year in four digit format like 1999','Entry must be between 1900 and 2014')
         
 def GotoPage(url,index=False):
     link=main.OPENURL(url)
@@ -184,39 +174,7 @@ def GotoPageB(url,index=False):
         return False
 
 def YEARB(murl,index=False):
-    link=main.OPENURL(murl)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match=re.compile('<div class="movie_pic"><a href="(.+?)" target=".+?">    <img src="(.+?)" width=".+?" height=".+?" />.+?<a href=".+?" target=".+?">(.+?)</a></h1><div class=".+?">Genre:  <a href=".+?" target=\'.+?\'>(.+?)</a>.+?Release:.+?<br/>Views: <span>(.+?)</span>.+?id=RateCount_.+?>(.+?)</span> votes.*?<li class="current-rating" style="width:(\d+?)px').findall(link)
-    dialogWait = xbmcgui.DialogProgress()
-    ret = dialogWait.create('Please wait until Movie list is cached.')
-    totalLinks = len(match)
-    loadedLinks = 0
-    remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-    dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
-    for url,thumb,name,genre,views,votes,rating in match:
-        name=name.replace('-','').replace('&','').replace('acute;','')
-        furl= 'http://movie25.com/'+url
-        if index == 'True':
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,21,thumb,genre,'')
-        else:
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,constants.MOVIE25_VIDEOLINKS,thumb,genre,'')
-        loadedLinks = loadedLinks + 1
-        percent = (loadedLinks * 100)/totalLinks
-        remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-        dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
-        if dialogWait.iscanceled(): return False 
-    dialogWait.close()
-    del dialogWait
-    ye = murl[38:45]
-    r = re.findall("Next</a><a href='search.php.?page=([^<]+)&year=.+?'>Last</a>",link)
-    if r:
-        main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,constants.MOVIE25_GOTOPAGEB,art+'/gotopage.png',index=index)
-        main.addDir('[COLOR blue]Page 1 of '+r[0]+'[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)    
-    else:
-        main.addDir('[COLOR blue]Page 1[/COLOR]','http://www.movie25.so/search.php?page=2&year='+str(ye),constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-    
-    xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-    main.VIEWS()
+    LISTMOVIES(murl, index)
         
 def NEXTPAGE(murl,index=False):
     link=main.OPENURL(murl)

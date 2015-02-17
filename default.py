@@ -117,7 +117,7 @@ def SOMINAL_GENRE(url,index=False):
         
 def YEAR(index=False):
     for x in reversed(range(2003, 2016)):
-        main.addDir(str(x),'http://www.movie25.so/search.php?year='+str(x)+'/',constants.MOVIE_YEARB,art+'/'+str(x)+'.png',index=index)
+        main.addDir(str(x),mainurl + 'search.php?year='+str(x)+'/',constants.MOVIE25_LISTMOVIES,art+'/'+str(x)+'.png',index=index)
     main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
     main.VIEWSB()
     
@@ -405,11 +405,6 @@ elif mode==constants.MOVIE_ATOZ:
 
 elif mode==constants.MOVIE_YEAR:
     YEAR(index=index)
-
-elif mode==constants.MOVIE_YEARB:
-    from resources.libs import movie25
-    print ""+url
-    movie25.YEARB(url,index=index)
 
 elif mode==constants.MOVIE25_NEXTPAGE:
     from resources.libs import movie25

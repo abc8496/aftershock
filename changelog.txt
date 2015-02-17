@@ -1,3 +1,6 @@
+[B]Version v1.1.0[/B] - 18-Feb-2015
+- Fixed all english movie functions to use DOM
+
 [B]Version v1.0.3[/B] - 17-Feb-2015
 - Fixed Movie25
 - Moved to DOM from standard search
