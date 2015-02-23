@@ -205,7 +205,7 @@ def setEpisodeView():
     xbmc.executebuiltin("Container.SetViewMode(" + selfAddon.getSetting("episodes-view") + ")")
     return
 
-def OPENURL(url, mobile = False, q = False, verbose = True, timeout = 10, cookie = None, data = None, cookiejar = False, log = True, headers = [], type = '',ua = False):
+def OPENURL(url, mobile = False, q = False, verbose = True, timeout = 10, cookie = None, data = None, cookiejar = False, log = True, headers = [], type = '',ua = False, output = False):
     import urllib2 
     UserAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36'
     if ua: UserAgent = ua
@@ -244,7 +244,10 @@ def OPENURL(url, mobile = False, q = False, verbose = True, timeout = 10, cookie
             response = opener.open(url, timeout=timeout)
         if cookie and not cookiejar:
             cj.save(cookie_file,True)
-        link=response.read()
+        if output == 'geturl':
+            link = response.geturl()
+        else:
+            link=response.read()
         response.close()
         opener.close()
         link=link.replace('&#39;',"'").replace('&quot;','"').replace('&amp;',"&").replace("&#39;","'").replace('&lt;i&gt;','').replace("#8211;","-").replace('&lt;/i&gt;','').replace("&#8217;","'").replace('&amp;quot;','"').replace('&#215;','x').replace('&#038;','&').replace('&#8216;','').replace('&#8211;','').replace('&#8220;','').replace('&#8221;','').replace('&#8212;','')

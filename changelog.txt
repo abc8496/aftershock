@@ -1,3 +1,14 @@
+[B]Version v1.1.1[/B] - 23-Feb-2015
+- Moved desi sites to DOM implementation
+- Fixed desirulez scrapper
+- Fixed the following resolvers
+    - 180Upload
+    - Letwatch
+    - Movreel
+- Broken Resolvers
+    - HugeFiles
+- removed billionuploads
+
 [B]Version v1.1.0[/B] - 18-Feb-2015
 - Fixed all english movie functions to use DOM
 

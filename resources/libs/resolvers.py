@@ -3,6 +3,9 @@ import urllib,urllib2,re,cookielib,string,os
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 from t0mm0.common.net import Net as net
 import urlresolver
+import CommonFunctions as common
+import traceback
+import sys
 
 from resources.libs import settings, main 
 addon_id = settings.getAddOnID()
@@ -17,8 +20,35 @@ class ResolverError(Exception):
     def __str__(self):
         return repr(value,value2)
 
+def jsunpack(script):
+    def __itoa(num, radix):
+        result = ""
+        while num > 0:
+            result = "0123456789abcdefghijklmnopqrstuvwxyz"[num % radix] + result
+            num /= radix
+        return result
+
+    def __unpack(p, a, c, k, e, d):
+        while (c > 1):
+            c = c -1
+            if (k[c]):
+                p = re.sub('\\b' + str(__itoa(c, a)) +'\\b', k[c], p)
+        return p
+
+    aSplit = script.split(";',")
+    p = str(aSplit[0])
+    aSplit = aSplit[1].split(",")
+    a = int(aSplit[0])
+    c = int(aSplit[1])
+    k = aSplit[2].split(".")[0].replace("'", '').split('|')
+    e = ''
+    d = ''
+    sUnpacked = str(__unpack(p, a, c, k, e, d))
+    return sUnpacked.replace('\\', '')
+
 def resolve_url(url, filename = False):
     stream_url = False
+    
     if(url):
         try:
             url = url.split('"')[0]
@@ -28,10 +58,10 @@ def resolve_url(url, filename = False):
                 source = urlresolver.HostedMediaFile(host=match.group(1), media_id=match.group(2))
                 if source:
                     stream_url = source.resolve()
-            elif re.search('billionuploads',url,re.I):
-                stream_url=resolve_billionuploads(url, filename)
-            elif re.search('180upload',url,re.I):
+            elif re.search('180upload',url,re.I): #fixed
                 stream_url=resolve_180upload(url)
+            elif re.search('hugefiles',url,re.I):
+                stream_url=resolve_hugefiles(url)
             elif re.search('veehd',url,re.I):
                 stream_url=resolve_veehd(url)
             elif re.search('epicshare',url,re.I):
@@ -40,8 +70,6 @@ def resolve_url(url, filename = False):
                 stream_url=resolve_lemupload(url)
             elif re.search('mightyupload',url,re.I):
                 stream_url=resolve_mightyupload(url)               
-            elif re.search('hugefiles',url,re.I):
-                stream_url=resolve_hugefiles(url)
             elif re.search('megarelease',url,re.I):
                 stream_url=resolve_megarelease(url)
             elif re.search('movreel',url,re.I):
@@ -86,6 +114,8 @@ def resolve_url(url, filename = False):
                 stream_url='plugin://plugin.video.youtube/?action=play_video&videoid=' +url
             elif re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
                 stream_url=resolve_dailymotion(url)
+            elif re.search('bollyheaven.com',url,re.I) and re.search('letwatch', filename, flags=re.I):
+                stream_url=resolve_letwatch(url)
             elif re.search('(flash.php|fp.php|wire.php|pw.php)', url, flags=re.I) or (re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/', url, flags=re.I) and re.search('flash', filename, flags=re.I)):
                 stream_url=resolve_playwire(url)
             elif re.search('tvnewz.net|tellynews.tv|vh.php',url,flags=re.I) and re.search('videohut',filename,flags=re.I):
@@ -289,6 +319,22 @@ def resolve_dailymotion(url):
     stream_url = urlresolver.resolve(stream_url)
     print '>>>>> STREAM URL(dailymotion) >>>> ' + str(stream_url)
     return stream_url
+
+def resolve_letwatch(url):
+    print '>>>>>> INSIDE LETWATCH'
+    stream_url='http://letwatch.us/embed-'+str(getVideoID(url))+'-520x400.html'
+    
+    link = main.OPENURL(stream_url)
+    result = common.parseDOM(link, "script", attrs= {"type":"text/javascript"})
+    for item in result:
+        match = re.findall('file:"(.+?)",label:',item)
+        print match
+        if match:
+            stream_url = match[0]
+            break 
+    print '>>>>> STREAM URL(letwatch) >>>> ' + str(stream_url)
+    return stream_url
+
     
 def resolve_playwire(url):
     #NEED TO FIGURE OUT A WAY TO READ THIS FROM THE SIRE. RIGHT NOW THE URL IS HARDCODED
@@ -745,10 +791,8 @@ def resolve_yify(url):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        print link
         
         if 'captcha' in link:
-            print link
             captcha=re.search('{"captcha":(.+?),"k":"([^"]+)"}',link)
             curl='http://www.google.com/recaptcha/api/challenge?k='+captcha.group(2)+'&ajax=1&cachestop=0.7698786298278719'
             html = net().http_GET(curl).content
@@ -995,67 +1039,43 @@ def resolve_nowvideo(url):
 def resolve_movreel(url):
 
     try:
-
-
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock Movreel Link...')       
-        dialog.update(0)
-        
         print 'Aftershock Movreel - Requesting GET URL: %s' % url
-        html = net().http_GET(url).content
         
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving Aftershock MegaRelease Link...')
+        dialog.update(0)
+
+        
+        user = ''
+        password = ''
+        login = 'http://movreel.com/login.html'
+        post = {'op': 'login', 'login': user, 'password': password, 'redirect': url}
+        result = main.OPENURL(url)
+        result += main.OPENURL(login, data=post)
         dialog.update(33)
+
+        post = {}
+        f = common.parseDOM(result, "Form", attrs = { "name": "F1" })[-1]
+        k = common.parseDOM(f, "input", ret="name", attrs = { "type": "hidden" })
+        for i in k: post.update({i: common.parseDOM(f, "input", ret="value", attrs = { "name": i })[0]})
+        post.update({'method_free': '', 'method_premium': ''})
+        post = urllib.urlencode(post)
         
-        #Check page for any error msgs
-        if re.search('This server is in maintenance mode', html):
-            logerror('***** Aftershock Movreel - Site reported maintenance mode')
-            xbmc.executebuiltin("XBMC.Notification(File is currently unavailable on the host,Movreel in maintenance,2000)")
-
-        #Set POST data values
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="(submit|hidden)" name="method_free" (style=".*?" )*value="(.*?)">', html).group(3)
-        method_premium = re.search('<input type="(hidden|submit)" name="method_premium" (style=".*?" )*value="(.*?)">', html).group(3)
-        
-
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        data = {'op': op, 'id': postid, 'referer': url, 'rand': rand, 'method_premium': method_premium}
-        
-        print 'Aftershock Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net().http_POST(url, data).content
-
-        #Only do next post if Free account, skip to last page for download link if Premium
-        if method_free:
-            #Check for download limit error msg
-            if re.search('<p class="err">.+?</p>', html):
-                logerror('***** Download limit reached')
-                errortxt = re.search('<p class="err">(.+?)</p>', html).group(1)
-                xbmc.executebuiltin("XBMC.Notification("+errortxt+",Movreel,2000)")
-    
-            dialog.update(66)
-            
-            #Set POST data values
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-    
-            if r:
-                for name, value in r:
-                    data[name] = value
-            else:
-                logerror('***** Aftershock Movreel - Cannot find data values')
-                xbmc.executebuiltin("XBMC.Notification(Unable to resolve Movreel Link,Movreel,2000)") 
-
-            print 'Aftershock Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
-            html = net().http_POST(url, data).content
-
-        #Get download link
-        dialog.update(100)
-        link = re.search('<a href="(.+)">Download Link</a>', html)
-        if link:
-            return link.group(1)
-        else:
-            xbmc.executebuiltin("XBMC.Notification(Unable to find final link,Movreel,2000)")
+        import time
+        request = urllib2.Request(url, post)
+        dialog.update(66)
+        for i in range(0, 5):
+            try:
+                response = urllib2.urlopen(request, timeout=5)
+                result = response.read()
+                response.close()
+                url = re.compile('(<a .+?</a>)').findall(result)
+                url = [i for i in url if 'Download Link' in i][-1]
+                url = common.parseDOM(url, "a", ret="href")[0]
+                return url
+            except:
+                print traceback.format_exc()
+                time.sleep(1)
 
     except Exception, e:
         logerror('**** Aftershock Movreel Error occured: %s' % e)
@@ -1175,371 +1195,32 @@ def resolve_veehd(url):
         logerror('**** Aftershock VeeHD Error occured: %s' % e)
         raise ResolverError(str(e),"VeeHD")
 
-def resolve_billionuploads(url, filename):
-    try:        
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock BillionUploads Link...')  
-        dialog.update(0)
-        url = re.sub('(?i)^(.*?\.com/.+?)/.*','\\1',url)
-        print 'Aftershock BillionUploads - Requesting GET URL: %s' % url
-                   
-        cookie_file = os.path.join(os.path.join(datapath,'Cookies'), 'billionuploads.cookies')
-        
-        cj = cookielib.LWPCookieJar()
-        if os.path.exists(cookie_file):
-            try: cj.load(cookie_file,True)
-            except: cj.save(cookie_file,True)
-        else: cj.save(cookie_file,True)
-
-        normal = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        headers = [
-            ('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0'),
-            ('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'),
-            ('Accept-Language', 'en-US,en;q=0.5'),
-            ('Accept-Encoding', ''),
-            ('DNT', '1'),
-            ('Connection', 'keep-alive'),
-            ('Pragma', 'no-cache'),
-            ('Cache-Control', 'no-cache')
-        ]
-        normal.addheaders = headers
-        class NoRedirection(urllib2.HTTPErrorProcessor):
-            # Stop Urllib2 from bypassing the 503 page.
-            def http_response(self, request, response):
-                code, msg, hdrs = response.code, response.msg, response.info()
-                return response
-            https_response = http_response
-        opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
-        opener.addheaders = normal.addheaders
-        response = opener.open(url).read()
-        decoded = re.search('(?i)var z="";var b="([^"]+?)"', response)
-        if decoded:
-            decoded = decoded.group(1)
-            z = []
-            for i in range(len(decoded)/2):
-                z.append(int(decoded[i*2:i*2+2],16))
-            decoded = ''.join(map(unichr, z))
-            incapurl = re.search('(?i)"GET","(/_Incapsula_Resource[^"]+?)"', decoded)
-            if incapurl:
-                incapurl = 'http://billionuploads.com'+incapurl.group(1)
-                opener.open(incapurl)
-                cj.save(cookie_file,True)
-                response = opener.open(url).read()
-        captcha = re.search('(?i)<iframe src="(/_Incapsula_Resource[^"]+?)"', response)
-        if captcha:
-            captcha = 'http://billionuploads.com'+captcha.group(1)
-            opener.addheaders.append(('Referer', url))
-            response = opener.open(captcha).read()
-            formurl = 'http://billionuploads.com'+re.search('(?i)<form action="(/_Incapsula_Resource[^"]+?)"', response).group(1)
-            resource = re.search('(?i)src=" (/_Incapsula_Resource[^"]+?)"', response)
-            if resource:
-                import random
-                resourceurl = 'http://billionuploads.com'+resource.group(1) + str(random.random())
-                opener.open(resourceurl)
-            recaptcha = re.search('(?i)<script type="text/javascript" src="(https://www.google.com/recaptcha/api[^"]+?)"', response)
-            if recaptcha:
-                response = opener.open(recaptcha.group(1)).read()
-                challenge = re.search('''(?i)challenge : '([^']+?)',''', response)
-                if challenge:
-                    challenge = challenge.group(1)
-                    captchaimg = 'https://www.google.com/recaptcha/api/image?c=' + challenge
-#                     site = re.search('''(?i)site : '([^']+?)',''', response).group(1)
-#                     reloadurl = 'https://www.google.com/recaptcha/api/reload?c=' + challenge + '&' + site + '&reason=[object%20MouseEvent]&type=image&lang=en'
-                    img = xbmcgui.ControlImage(550,15,300,57,captchaimg)
-                    wdlg = xbmcgui.WindowDialog()
-                    wdlg.addControl(img)
-                    wdlg.show()
-                    
-                    kb = xbmc.Keyboard('', 'Please enter the text in the image', False)
-                    kb.doModal()
-                    capcode = kb.getText()
-                    if (kb.isConfirmed()):
-                        userInput = kb.getText()
-                        if userInput != '': capcode = kb.getText()
-                        elif userInput == '':
-                            logerror('BillionUploads - Image-Text not entered')
-                            xbmc.executebuiltin("XBMC.Notification(Image-Text not entered.,BillionUploads,2000)")              
-                            return None
-                    else: return None
-                    wdlg.close()
-                    captchadata = {}
-                    captchadata['recaptcha_challenge_field'] = challenge
-                    captchadata['recaptcha_response_field'] = capcode
-                    opener.addheaders = headers
-                    opener.addheaders.append(('Referer', captcha))
-                    resultcaptcha = opener.open(formurl,urllib.urlencode(captchadata)).info()
-                    opener.addheaders = headers
-                    response = opener.open(url).read()
-                    
-        ga = re.search('(?i)"text/javascript" src="(/ga[^"]+?)"', response)
-        if ga:
-            jsurl = 'http://billionuploads.com'+ga.group(1)
-            p  = "p=%7B%22appName%22%3A%22Netscape%22%2C%22platform%22%3A%22Win32%22%2C%22cookies%22%3A1%2C%22syslang%22%3A%22en-US%22"
-            p += "%2C%22userlang%22%3A%22en-US%22%2C%22cpu%22%3A%22WindowsNT6.1%3BWOW64%22%2C%22productSub%22%3A%2220100101%22%7D"
-            opener.open(jsurl, p)
-            response = opener.open(url).read()
-#         pid = re.search('(?i)PID=([^"]+?)"', response)
-#         if pid:
-#             normal.addheaders += [('Cookie','D_UID='+pid.group(1)+';')]
-#             opener.addheaders = normal.addheaders
-        if re.search('(?i)url=/distil_r_drop.html', response) and filename:
-            url += '/' + filename
-            response = normal.open(url).read()
-        jschl=re.compile('name="jschl_vc" value="(.+?)"/>').findall(response)
-        if jschl:
-            jschl = jschl[0]    
-            maths=re.compile('value = (.+?);').findall(response)[0].replace('(','').replace(')','')
-            domain_url = re.compile('(https?://.+?/)').findall(url)[0]
-            domain = re.compile('https?://(.+?)/').findall(domain_url)[0]
-            final= normal.open(domain_url+'cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s'%(jschl,eval(maths)+len(domain))).read()
-            html = normal.open(url).read()
-        else: html = response
-        
-        if dialog.iscanceled(): return None
-        dialog.update(25)
-        
-        #Check page for any error msgs            
-        if re.search('This server is in maintenance mode', html):
-            logerror('***** BillionUploads - Site reported maintenance mode')
-            xbmc.executebuiltin("XBMC.Notification(File is currently unavailable,BillionUploads in maintenance,2000)")                                
-            return None
-        if re.search('File Not Found', html, re.I):
-            logerror('***** BillionUploads - File Not Found')
-            xbmc.executebuiltin("XBMC.Notification(File Not Found,BillionUploads,2000)")
-            return False
-
-        data = {}
-        r = re.findall(r'type="hidden" name="(.+?)" value="(.*?)">', html)
-        for name, value in r: data[name] = value
-        if not data:
-            logerror('Aftershock: Resolve BillionUploads - No Data Found')
-            xbmc.executebuiltin("XBMC.Notification(No Data Found,BillionUploads,2000)")               
-            return None
-        
-        if dialog.iscanceled(): return None
-        
-        captchaimg = re.search('<img src="((?:http://|www\.)?BillionUploads.com/captchas/.+?)"', html)            
-        if captchaimg:
-
-            img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
-            wdlg = xbmcgui.WindowDialog()
-            wdlg.addControl(img)
-            wdlg.show()
-            
-            kb = xbmc.Keyboard('', 'Please enter the text in the image', False)
-            kb.doModal()
-            capcode = kb.getText()
-            if (kb.isConfirmed()):
-                userInput = kb.getText()
-                if userInput != '': capcode = kb.getText()
-                elif userInput == '':
-                    showpopup('BillionUploads','[B]You must enter the text from the image to access video[/B]',5000, elogo)
-                    return None
-            else: return None
-            wdlg.close()
-            
-            data.update({'code':capcode})
-        
-        if dialog.iscanceled(): return None
-        dialog.update(50)
-        
-        data.update({'submit_btn':''})
-        enc_input = re.compile('decodeURIComponent\("(.+?)"\)').findall(html)
-        if enc_input:
-            dec_input = urllib2.unquote(enc_input[0])
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.*?)">', dec_input)
-            for name, value in r:
-                data[name] = value
-        extradata = re.compile("append\(\$\(document.createElement\('input'\)\).attr\('type','hidden'\).attr\('name','(.*?)'\).val\((.*?)\)").findall(html)
-        if extradata:
-            for attr, val in extradata:
-                if 'source="self"' in val:
-                    val = re.compile('<textarea[^>]*?source="self"[^>]*?>([^<]*?)<').findall(html)[0]
-                data[attr] = val.strip("'")
-        r = re.findall("""'input\[name="([^"]+?)"\]'\)\.remove\(\)""", html)
-        
-        for name in r: del data[name]
-        
-        normal.addheaders.append(('Referer', url))
-        html = normal.open(url, urllib.urlencode(data)).read()
-        cj.save(cookie_file,True)
-        
-        if dialog.iscanceled(): return None
-        dialog.update(75)
-        
-        def custom_range(start, end, step):
-            while start <= end:
-                yield start
-                start += step
-
-        def checkwmv(e):
-            s = ""
-            i=[]
-            u=[[65,91],[97,123],[48,58],[43,44],[47,48]]
-            for z in range(0, len(u)):
-                for n in range(u[z][0],u[z][1]):
-                    i.append(chr(n))
-            t = {}
-            for n in range(0, 64): t[i[n]]=n
-            for n in custom_range(0, len(e), 72):
-                a=0
-                h=e[n:n+72]
-                c=0
-                for l in range(0, len(h)):            
-                    f = t.get(h[l], 'undefined')
-                    if f == 'undefined': continue
-                    a = (a<<6) + f
-                    c = c + 6
-                    while c >= 8:
-                        c = c - 8
-                        s = s + chr( (a >> c) % 256 )
-            return s
-
-        dll = re.compile('<input type="hidden" id="dl" value="(.+?)">').findall(html)
-        if dll:
-            dl = dll[0].split('GvaZu')[1]
-            dl = checkwmv(dl);
-            dl = checkwmv(dl);
-        else:
-            alt = re.compile('<source src="([^"]+?)"').findall(html)
-            if alt:
-                dl = alt[0]
-            else:
-                logerror('Aftershock: Resolve BillionUploads - No Video File Found')
-                xbmc.executebuiltin("XBMC.Notification(No Video File Found,BillionUploads,2000)")
-                return None
-        
-        if dialog.iscanceled(): return None
-        dialog.update(100)                    
-
-        return dl
-        
-    except Exception, e:
-        logerror('BillionUploads - Exception occured: %s' % e)
-        raise ResolverError(str(e),"BillionUploads")
-        return None
-    finally:
-        dialog.close()
-
-
 def resolve_180upload(url):
-
     try:
         dialog = xbmcgui.DialogProgress()
         dialog.create('Resolving', 'Resolving Aftershock 180Upload Link...')
         dialog.update(0)
         
-        url=url.replace('180upload.nl','180upload.com')
-        print 'Aftershock 180Upload - Requesting GET URL: %s' % url
-        html = net().http_GET(url).content
+        url = re.compile('//.+?/([\w]+)').findall(url)[0]
+        url = 'http://180upload.com/embed-%s.html' % url
+        result = main.OPENURL(url)
         
-        if ">File Not Found" in html:
-            logerror('Aftershock: Resolve 180Upload - File Not Found')
-            xbmc.executebuiltin("XBMC.Notification(File Not Found,180Upload,2000)")
-            return False
-        if re.search('\.(rar|zip)</b>', html, re.I):
-            logerror('Aftershock: Resolve 180Upload - No Video File Found')
-            xbmc.executebuiltin("XBMC.Notification(No Video File Found,180Upload,2000)")
-            return False
-        if dialog.iscanceled(): return False
-        dialog.update(50)
-                
-        data = {}
-        r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-
-        if r:
-            for name, value in r:
-                data[name] = value
-        else:
-            raise Exception('Unable to resolve 180Upload Link')
+        post = {}
+        f = common.parseDOM(result, "form", attrs = { "id": "captchaForm" })[0]
+        k = common.parseDOM(f, "input", ret="name", attrs = { "type": "hidden" })
+        for i in k: post.update({i: common.parseDOM(f, "input", ret="value", attrs = { "name": i })[0]})
         
-        #Check for SolveMedia Captcha image
-        solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-        recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-        numeric = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
-
-        if solvemedia:
-            captcha=solvemedia.group(1)
-            image = os.path.join(datapath, "solve_puzzle.png")
-            html = net().http_GET(captcha).content
-            challenge = re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
-
-            try: puzzle = re.search('<div><iframe src="(/papi/media.+?)"', html).group(1)
-            except: puzzle = re.search('<img src="(/papi/media.+?)"', html).group(1)
-            puzzle = "http://api.solvemedia.com%s" % puzzle
-
-            file = open(image, 'wb')
-            file.write(net().http_GET(puzzle).content)
-            file.close()
-
-            if image:
-                img = xbmcgui.ControlImage(450,15,400,130, image)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-            
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        xbmc.executebuiltin("XBMC.Notification(You must enter text in the image to access video,2000)")
-                        return False
-                else:
-                       return False
-            data['adcopy_challenge'] = challenge
-            data['adcopy_response'] = solution
-        elif recaptcha:
-            captcha=recaptcha.group(1)
-            html = net().http_GET(captcha).content
-            challenge = re.search("challenge \: \\'(.+?)\\'", html).group(1)
-            image = 'http://www.google.com/recaptcha/api/image?c=' + challenge
-            if image:
-                img = xbmcgui.ControlImage(450,15,400,130, image)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-            
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        xbmc.executebuiltin("XBMC.Notification(You must enter text in the image to access video,2000)")
-                        return False
-                else:
-                       return False
-            data['recaptcha_challenge_field'] = challenge
-            data['recaptcha_response_field'] = solution
-        elif numeric:
-            captcha=numeric
-            result = sorted(captcha, key=lambda ltr: int(ltr[0]))
-            solution = ''.join(str(int(num[1])-48) for num in result)
-            data['code'] = solution
-        else:
-               return False
-               
-        print 'Aftershock 180Upload - Requesting POST URL: %s' % url
-        html = net().http_POST(url, data).content
-        print html
-        if dialog.iscanceled(): return False
-        dialog.update(100)
+        result = main.OPENURL(url, data=post)
         
-        link = re.search('id="lnk_download" href="([^"]+)', html)
-        if link:
-            print 'Aftershock 180Upload Link Found: %s' % link.group(1)
-            return link.group(1)
-        else:
-            raise Exception('Unable to resolve 180Upload Link')
+        result = re.compile('(eval.*?\)\)\))').findall(result)[-1]
+        result = jsunpack(result)
 
+        url = re.compile("'file' *, *'(.+?)'").findall(result)
+        url += re.compile("file *: *[\'|\"](.+?)[\'|\"]").findall(result)
+        url += common.parseDOM(result, "embed", ret="src")
+        url = 'http://' + url[-1].split('://', 1)[-1]
+        
+        return url
     except Exception, e:
         logerror('**** Aftershock 180Upload Error occured: %s' % e)
         raise ResolverError(str(e),"180Upload") 
@@ -1738,125 +1419,96 @@ def resolve_lemupload(url):
         raise ResolverError(str(e),"LemUpload") 
     finally:
         dialog.close()
-        
-def resolve_hugefiles(url):
-    from resources.libs import jsunpack
+def captcha(data):
     try:
-        import time
-        puzzle_img = os.path.join(datapath, "hugefiles_puzzle.png")
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock HugeFiles Link...')       
-        dialog.update(0)
-        html = net().http_GET(url).content
-        r = re.findall('File Not Found',html)
-        if r:
-            xbmc.log('Aftershock: Resolve HugeFiles - File Not Found or Removed', xbmc.LOGERROR)
-            xbmc.executebuiltin("XBMC.Notification(File Not Found or Removed,HugeFiles,2000)")
-            return False
-        data = {}
-        r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
-        for name, value in r:
-            data[name] = value
-            data.update({'method_free':'Free Download'})
-        if data['fname'] and re.search('\.(rar|zip)$', data['fname'], re.I):
-            dialog.update(100)
-            logerror('Aftershock: Resolve HugeFiles - No Video File Found')
-            xbmc.executebuiltin("XBMC.Notification(No Video File Found,HugeFiles,2000)")
-            return False
-        if dialog.iscanceled(): return False
-        dialog.update(33)
-        #Check for SolveMedia Captcha image
-        solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-        recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-    
-        if solvemedia:
-            html = net().http_GET(solvemedia.group(1)).content
-            hugekey=re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
-            open(puzzle_img, 'wb').write(net().http_GET("http://api.solvemedia.com%s" % re.search('img src="(.+?)"', html).group(1)).content)
-            img = xbmcgui.ControlImage(450,15,400,130, puzzle_img)
-            wdlg = xbmcgui.WindowDialog()
-            wdlg.addControl(img)
-            wdlg.show()
-            
-            xbmc.sleep(3000)
-    
-            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-            kb.doModal()
-            capcode = kb.getText()
-       
-            if (kb.isConfirmed()):
-                userInput = kb.getText()
-                if userInput != '':
-                    solution = kb.getText()
-                elif userInput == '':
-                    xbmc.executebuiltin("XBMC.Notification(No text entered, You must enter text in the image to access video,2000)")
-                    return False
-            else:
-                return False
-                   
-            wdlg.close()
-            dialog.update(66)
-            if solution:
-                data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
+        captcha = {}
 
-        elif recaptcha:
-            html = net().http_GET(recaptcha.group(1)).content
-            part = re.search("challenge \: \\'(.+?)\\'", html)
-            captchaimg = 'http://www.google.com/recaptcha/api/image?c='+part.group(1)
-            img = xbmcgui.ControlImage(450,15,400,130,captchaimg)
-            wdlg = xbmcgui.WindowDialog()
-            wdlg.addControl(img)
-            wdlg.show()
-        
-            time.sleep(3)
-        
-            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-            kb.doModal()
-            capcode = kb.getText()
-        
-            if (kb.isConfirmed()):
-                userInput = kb.getText()
-                if userInput != '':
-                    solution = kb.getText()
-                elif userInput == '':
-                    raise Exception ('You must enter text in the image to access video')
-            else:
-                raise Exception ('Captcha Error')
-            wdlg.close()
-            dialog.update(66)
-            data.update({'recaptcha_challenge_field':part.group(1),'recaptcha_response_field':solution})
+        def get_response(response):
+            try:
+                dataPath = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo("profile"))
+                i = os.path.join(dataPath.decode("utf-8"),'img')
+                f = xbmcvfs.File(i, 'w')
+                f.write(getUrl(response).result)
+                f.close()
+                f = xbmcgui.ControlImage(450,5,375,115, i)
+                d = xbmcgui.WindowDialog()
+                d.addControl(f)
+                xbmcvfs.delete(i)
+                d.show()
+                xbmc.sleep(3000)
+                t = 'Type the letters in the image'
+                c = common.getUserInput(t, '')
+                d.close()
+                return c
+            except:
+                return
 
-        else:
-            captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
-            result = sorted(captcha, key=lambda ltr: int(ltr[0]))
-            solution = ''.join(str(int(num[1])-48) for num in result)
-            dialog.update(66)
-            data.update({'code':solution})
-        html = net().http_POST(url, data).content
-        if dialog.iscanceled(): return False
-        if 'reached the download-limit' in html:
-            logerror('Aftershock: Resolve HugeFiles - Daily Limit Reached, Cannot Get The File\'s Url')
-            xbmc.executebuiltin("XBMC.Notification(Daily Limit Reached,HugeFiles,2000)")
-            return False
-        r = re.findall('var fileUrl = "([^"]+)"', html, re.DOTALL + re.IGNORECASE)
-        if r:
-            dialog.update(100)
-            return r[0]
-        if not r:
-            sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-            jpack = re.findall(sPattern, html, re.DOTALL|re.I)
-            if jpack:
-                dialog.update(100)
-                sUnpacked = jsunpack.unpack(jpack[0])
-                sUnpacked = sUnpacked.replace("\\'","")
-                r = re.findall('file,(.+?)\)\;s1',sUnpacked)
-                if not r:
-                  r = re.findall('"src"value="(.+?)"/><embed',sUnpacked)
-                return r[0]
-            else:
-                logerror('***** HugeFiles - Cannot find final link')
-                raise Exception('Unable to resolve HugeFiles Link')
-    except Exception, e:
-        logerror('Aftershock: Resolve HugeFiles Error - '+str(e))
-        raise ResolverError(str(e),"HugeFiles")   
+        solvemedia = common.parseDOM(data, "iframe", ret="src")
+        solvemedia = [i for i in solvemedia if 'api.solvemedia.com' in i]
 
+        if len(solvemedia) > 0:
+            url = solvemedia[0]
+            result = getUrl(url).result
+            challenge = common.parseDOM(result, "input", ret="value", attrs = { "id": "adcopy_challenge" })[0]
+            response = common.parseDOM(result, "iframe", ret="src")
+            response += common.parseDOM(result, "img", ret="src")
+            response = [i for i in response if '/papi/media' in i][0]
+            response = 'http://api.solvemedia.com' + response
+            response = get_response(response)
+            captcha.update({'adcopy_challenge': challenge, 'adcopy_response': response})
+            return captcha
+
+        recaptcha = []
+        if data.startswith('http://www.google.com'): recaptcha += [data]
+        recaptcha += common.parseDOM(data, "script", ret="src", attrs = { "type": "text/javascript" })
+        recaptcha = [i for i in recaptcha if 'http://www.google.com' in i]
+
+        if len(recaptcha) > 0:
+            url = recaptcha[0]
+            result = getUrl(url).result
+            challenge = re.compile("challenge\s+:\s+'(.+?)'").findall(result)[0]
+            response = 'http://www.google.com/recaptcha/api/image?c=' + challenge
+            response = get_response(response)
+            captcha.update({'recaptcha_challenge_field': challenge, 'recaptcha_challenge': challenge, 'recaptcha_response_field': response, 'recaptcha_response': response})
+            return captcha
+
+        numeric = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(data)
+
+        if len(numeric) > 0:
+            result = sorted(numeric, key=lambda ltr: int(ltr[0]))
+            response = ''.join(str(int(num[1])-48) for num in result)
+            captcha.update({'code': response})
+            return captcha
+
+    except:
+        return captcha
+
+def resolve_hugefiles(url):
+    print ">>>>>>>>> INSIDE HUGEFILES"
+    try:
+        result = main.OPENURL(url)
+        post = {}
+        f = common.parseDOM(result, "Form", attrs = { "action": "" })
+        k = common.parseDOM(f, "input", ret="name", attrs = { "type": "hidden" })
+        for i in k: post.update({i: common.parseDOM(f, "input", ret="value", attrs = { "name": i })[0]})
+        post.update({'method_free': 'Free Download'})
+        post.update(captcha(result))
+        
+        #post = urllib.urlencode(post)
+
+        result = main.OPENURL(url, data=post)
+
+        post = {}
+        f = common.parseDOM(result, "Form", attrs = { "action": "" })
+        k = common.parseDOM(f, "input", ret="name", attrs = { "type": "hidden" })
+        for i in k: post.update({i: common.parseDOM(f, "input", ret="value", attrs = { "name": i })[0]})
+        post.update({'method_free': 'Free Download'})
+        
+        print post
+        #post = urllib.urlencode(post)
+
+        u = main.OPENURL(url, output='geturl', data=post)
+        print ">>>>>>>>>>>>>> U " + str(u)
+        if not url == u: return u
+    except:
+        return

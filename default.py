@@ -406,11 +406,6 @@ elif mode==constants.MOVIE_ATOZ:
 elif mode==constants.MOVIE_YEAR:
     YEAR(index=index)
 
-elif mode==constants.MOVIE25_NEXTPAGE:
-    from resources.libs import movie25
-    print ""+url
-    movie25.NEXTPAGE(url,index=index)
-    
 elif mode==constants.LIST_GLOBAL_FAV:
     from resources.libs import movie25
     ListglobalFavM25()

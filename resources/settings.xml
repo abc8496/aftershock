@@ -65,10 +65,11 @@
         <setting id="homeitems_23_enabled" type="bool" label="[B]Kids Zone[/B]" default="false"/>
 			<setting id="homeitems_23" type="number" label="     Order" default="230" visible="!eq(-1,false)"/>
    </category>
-   
-   <category label="Video Quality">
+   <!--
+   <category label="Video Quality" visible="false">
 		<setting id="bit-disc"	type="enum" label="[B]Discovery Bitrate[/B]" values="3500k|1500k|600k" default="0"/>
 		<setting id="disj-qua"	type="enum" label="[B]DisneyJr. & MLB Bitrate[/B]" values="High|Medium|Low" default="0"/>
 		<setting id="espn-qua" type="select" label="[B]ESPN Bitrate[/B]" values="272p30_448k|324p30_948k|360p30_1464k|432p30_2096k|720p30_2896k" default="720p30_2896k"/>
    </category>
+   -->
 </settings>

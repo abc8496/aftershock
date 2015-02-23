@@ -2,7 +2,7 @@ import urllib,re,sys,os, time
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 import BeautifulSoup
 import simplejson as json
-
+import CommonFunctions as common
 from resources.libs import main, settings, constants, jsonutil, fileutil
 
 addon_id = settings.getAddOnID()
@@ -54,6 +54,7 @@ def checkCache(murl, channel, cacheFilePath):
             except Exception, e:
                 refreshCache = True
     print '>>>>>>>>>> RESRESH CACHE : ' + str(refreshCache)
+    
     return refreshCache
 
 def buildCache(murl, channel, cacheFilePath, index):
@@ -64,20 +65,31 @@ def buildCache(murl, channel, cacheFilePath, index):
     tvShow = {}
     pastTVShowURL = ''
     link=main.OPENURL(murl)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match = re.findall('<div class="titleline"><h2 class="forumtitle"><a href="(.+?)">(.+?)</a></h2></div>',link)
+    link = link.decode('iso-8859-1').encode('utf-8')
+    result = common.parseDOM(link, "h2", attrs = {"class" : "forumtitle"})
     label='TV Shows'
-    if not len(match) > 0:
-        match = re.findall('<h3 class="threadtitle">.+?<a class=".+?" href="(.+?)" id=".+?">(.+?)</a></h3>', link)
+    if len(result) <= 0:
         label = 'Movies'
+        result = common.parseDOM(link, "h3", attrs = {"class":"threadtitle"})
+
     dialogWait = xbmcgui.DialogProgress()
     ret = dialogWait.create('Please wait until ' + label + ' Show list is cached.')
-    totalLinks = len(match)
+    totalLinks = len(result)
     loadedLinks = 0
     remaining_display = label + ' loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    for url,name in match:
+    
+    
+    for item in result:
+        name = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"})
+        if not name:
+            name = common.parseDOM(item, "a", attrs = {"class":"title"})[0]
+        else :
+            name = name[0]
+        url = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"}, ret="href")
+        if not url:
+            url = common.parseDOM(item, "a", attrs = {"class":"title"}, ret="href")[0]
         if "color" in name:
             name=name.replace('<b><font color=red>','[COLOR red]').replace('</font></b>','[/COLOR]')
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
@@ -98,8 +110,6 @@ def buildCache(murl, channel, cacheFilePath, index):
         if dialogWait.iscanceled(): return False   
     dialogWait.close()
     del dialogWait
-    
-    
     
     # Writing data to JSON File
     jsonChannelData = jsonutil.readJson(cacheFilePath)
@@ -145,16 +155,21 @@ def LISTSHOWS(murl,channel, CachePath, index=False):
 
 def LISTEPISODES(tvshowname,url):
     link=main.OPENURL(url)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match = re.findall('<a class=".+?" href="(.+?)" id=".+?">(.+?)</a>',link)
+    link=link.decode('iso-8859-1').encode('utf-8')
+    result = common.parseDOM(link, "h3", attrs = {"class":"threadtitle"})
+    
     dialogWait = xbmcgui.DialogProgress()
     ret = dialogWait.create('Please wait until ['+tvshowname+'] Episodes are cached.')
-    totalLinks = len(match)
+    totalLinks = len(result)
     loadedLinks = 0
     remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    for url,name in match:
+    
+    for item in result:
+        name = common.parseDOM(item, "a", attrs = {"class":"title"})[0]
+        url = common.parseDOM(item, "a", ret="href")[0]
+    
         if "Online" not in name: continue
         name=name.replace(tvshowname,'').replace('Watch Online','')
         name=main.removeNonASCII(name)
@@ -164,12 +179,13 @@ def LISTEPISODES(tvshowname,url):
         remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
         dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
         if dialogWait.iscanceled(): return False   
-    match=re.findall('<div id="above_threadlist" class="above_threadlist">(.+?)</div>',link)
-    for string in match:
-        match1=re.findall('<a href="(.+?)" title=".+?">([0-9]+?)</a>', string)
-        for url, page in match1:
-            if not re.search('javascript',url,re.I):
-                main.addTVInfo('-> Page ' + str(page),MainUrl+url,constants.DESIRULEZ_LISTEPISODES,'',tvshowname,'')
+    result = common.parseDOM(link, "div", attrs = {"class":"threadpagenav"})[0]
+    result = common.parseDOM(result, "span")
+    for item in result:
+        name = common.parseDOM(item, "a")[0]
+        url = common.parseDOM(item, "a", ret="href")[0]
+        if not re.search('javascript',url,re.I):
+            main.addTVInfo('-> Page ' + str(name),MainUrl+url,constants.DESIRULEZ_LISTEPISODES,'',tvshowname,'')
     dialogWait.close()
     del dialogWait
     xbmcplugin.setContent(int(sys.argv[1]), 'TV Shows')
@@ -215,7 +231,7 @@ def PLAY(name, items, episodeName, video_source):
         playbackengine.PlayAllInPL(episodeName, video_stream_links, img=getVideoSourceIcon(video_source))
 
 def playNow(video_source, name):
-    PlayNowPreferredOrder = ['Flash Player [COLOR red][HD][/COLOR]','Flash Player [COLOR blue][DVD][/COLOR]','Flash Player','dailymotion','PlayCineFlix']
+    PlayNowPreferredOrder = ['Flash Player [COLOR red][HD][/COLOR]','Flash Player [COLOR blue][DVD][/COLOR]','Flash Player','dailymotion','PlayCineFlix', 'Letwatch']
     
     preferredFound = False
     prefKey = ''
@@ -230,6 +246,8 @@ def playNow(video_source, name):
     PLAY(prefKey, video_source[prefKey],name, prefKey)
 
 def VIDEOLINKS(name, url):
+    supportedHosts = ['flash player', 'dailymotion','letwatch','videotanker','videohut','cloudy','videoweed']
+    allHosts = ['flash player', 'dailymotion','letwatch','videotanker','videohut','vshare','cloudy','nowvideo','videoweed','movshare','novamov','single']
     video_source_id = 1
     video_source_name = None
     video_playlist_items = []
@@ -250,13 +268,14 @@ def VIDEOLINKS(name, url):
             continue
         elif (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
             if len(video_playlist_items) > 0:
-                main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
-                    
+                if video_source_name.lower() in supportedHosts:
+                    main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
                 video_source_id = video_source_id + 1
                 video_source[video_source_name] = video_playlist_items
                 video_playlist_items = []
             video_source_name = child.getText()
-            video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]')
+            video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]').strip()
+            print video_source_name
         elif (child.name =='a') and not child.getText() == 'registration':
             video_playlist_items.append(str(child['href']))
     playNow(video_source, name)

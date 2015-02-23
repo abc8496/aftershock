@@ -99,20 +99,6 @@ def Searchhistory(index=False):
             seahis=seahis.replace('%20',' ')
             main.addDir(seahis,url,constants.MOVIE25_SEARCH,thumb,index=index)
             
-def superSearch(encode,type):
-    try:
-        returnList=[]
-        surl=MainUrl+'/search.php?key='+encode+'&submit='
-        link=main.OPENURL(surl,verbose=False)
-        link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-        match=re.compile('<div class="movie_pic"><a href="([^"]+?)"[^>]+?>\s*?<img src="([^"]+?)"[^>]+?>.+?<a href[^>]+?>([^<]+?)</a></h1><div class=".+?">().*?Views: <span>(.+?)</span>.+?id=RateCount_.+?>(.+?)</span>.*?<li class="current-rating" style="width:(\d+?)px').findall(link)
-        for url,thumb,name,genre,views,votes,rating in match:
-            url= MainUrl+url
-            name=name.replace('  ','')
-            returnList.append((name,prettyName,url,thumb,3,True))
-        return returnList
-    except: return []
-
 def SEARCH(murl = '',index=False):
     encode = main.updateSearchFile(murl,'Movies')
     if not encode: return False   
@@ -151,85 +137,9 @@ def GotoPage(url,index=False):
         xbmcplugin.endOfDirectory(int(sys.argv[1]), False, False)
         return False
 
-def GotoPageB(url,index=False):
-    link=main.OPENURL(url)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    r = re.findall('>Next</a><a href=\'search.php.?page=(.+?)&year=.+?\'>Last</a>',link)
-    dialog = xbmcgui.Dialog()
-    d = dialog.numeric(0, 'Section Last Page = '+r[0])
-    if d:
-        pagelimit=int(r[0])
-        if int(d) <= pagelimit:
-            encode=urllib.quote(d)
-            year  = url.split('year=')
-            url  = url.split('year=')
-            url  = url[0].split('page=')
-            surl=url[0]+'page='+encode+'&year='+year[1]
-            NEXTPAGE(surl,index=index)
-        else:
-            dialog = xbmcgui.Dialog()
-            ret = dialog.ok('Wrong Entry', 'The page number you entered does not exist.',' This sections page limit is '+str(pagelimit) )
-    else:
-        xbmcplugin.endOfDirectory(int(sys.argv[1]), False, False)
-        return False
-
 def YEARB(murl,index=False):
     LISTMOVIES(murl, index)
         
-def NEXTPAGE(murl,index=False):
-    link=main.OPENURL(murl)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','')
-    match=re.compile('<div class="movie_pic"><a href="(.+?)" target=".+?">    <img src="(.+?)" width=".+?" height=".+?" />.+?<a href=".+?" target=".+?">(.+?)</a></h1><div class=".+?">Genre:  <a href=".+?" target=\'.+?\'>(.+?)</a>.+?Release:.+?<br/>Views: <span>(.+?)</span>.+?id=RateCount_.+?>(.+?)</span> votes.*?<li class="current-rating" style="width:(\d+?)px').findall(link)
-    dialogWait = xbmcgui.DialogProgress()
-    ret = dialogWait.create('Please wait until Movie list is cached.')
-    totalLinks = len(match)
-    loadedLinks = 0
-    remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-    dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
-    for url,thumb,name,genre,views,votes,rating in match:
-        name=name.replace('-','').replace('&','').replace('acute;','')
-        furl= MainUrl+url
-        if index == 'True':
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,21,thumb,genre,'')
-        else:
-            main.addInfo(name+'[COLOR blue] Views: '+views+'[/COLOR] [COLOR red]Votes: '+votes+'[/COLOR] [COLOR green]Rating: '+rating+'/100[/COLOR]',furl,constants.MOVIE25_VIDEOLINKS,thumb,genre,'')
-        loadedLinks = loadedLinks + 1
-        percent = (loadedLinks * 100)/totalLinks
-        remaining_display = 'Movies loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
-        dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
-        if dialogWait.iscanceled(): return False
-    dialogWait.close()
-    del dialogWait
-    
-    matchx=re.compile('http://www.movie25.so/search.php.+?page=(.+?)&year=(.+?)').findall(murl)
-    if len(matchx)>0:
-        durl = murl + '/'
-        paginate=re.compile('http://www.movie25.so/search.php.+?page=(.+?)&year=(.+?)/').findall(durl)
-        for page, yearb in paginate:
-            pgs = int(page)+1
-            jurl='http://www.movie25.so/search.php?page='+str(pgs)+'&year='+str(yearb)
-#                 main.addDir('[COLOR red]Home[/COLOR]','',0,art+'/home.png')
-        r = re.findall("Next</a><a href='search.php.?page=([^<]+)&year=.+?'>Last</a>",link)
-        if r:
-            main.addDir('[COLOR red]Enter Page #[/COLOR]',murl,constants.MOVIE25_GOTOPAGEB,art+'/gotopage.png',index=index)
-            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-        else:
-            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-        xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-        main.VIEWS()                
-    else:
-        durl = murl + '/'
-        paginate=re.compile('http://www.movie25.so/search.php.+?page=(.+?)&key=(.+?)/').findall(durl)
-        for page, search in paginate:
-            pgs = int(page)+1
-            jurl='http://www.movie25.so/search.php?page='+str(pgs)+'&key='+str(search)
-#                 main.addDir('[COLOR red]Home[/COLOR]','',0,art+'/home.png')
-        r = re.findall(""">Next</a><a href='search.php.?page=([^<]+)&key=.+?'>Last</a>""",link)
-        if r:
-            main.addDir('[COLOR blue]Page '+str(page)+' of '+r[0]+'[/COLOR]',jurl,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-        else:
-            main.addDir('[COLOR blue]Page '+str(page)+'[/COLOR]',jurl,constants.MOVIE25_NEXTPAGE,art+'/next.png',index=index)
-
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
     link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
@@ -249,7 +159,9 @@ def VIDEOLINKS(name,url):
         all_coll[host].append(url)
 
     all_coll = all_coll.items()
-    sortorder = "putlocker,sockshare,billionuploads,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,"
+    fixed = "180upload, movreel"
+    broken = "hugefiles"
+    sortorder = "putlocker,sockshare,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,"
     sortorder = ','.join((sortorder.split(',')[::-1]))
     all_coll = sorted(all_coll, key=lambda word: sortorder.find(word[0].lower())*-1)
     for host,urls in all_coll:
@@ -262,7 +174,6 @@ def GroupedHosts(name,url,thumb):
         main.addLink("[COLOR red]For Download Options, Bring up Context Menu Over Selected Link.[/COLOR]",'','')
     urls = eval(url)
     for url in urls:
-        print url
         main.addDown2(name,MainUrl+url,constants.MOVIE25_PLAY,thumb,thumb)
         
 def resolveM25URL(url):
@@ -272,7 +183,6 @@ def resolveM25URL(url):
     if len(url) == 0 :
         url = common.parseDOM(html, "div", attrs = {"class":"left_body"})[0]
         url = common.parseDOM(url, "input", ret="onclick")[0]
-    print url
     url = re.compile('(http.+)').findall(url)[0]
     url = url.replace("'","")
     return url
@@ -284,7 +194,6 @@ def PLAY(name,murl):
     name  = name.split('[COLOR red]')[0]
     infoLabels = main.GETMETAT(name,'','','')
     murl = resolveM25URL(murl)
-    print murl
     if not murl: return False
     video_type='movie'
     season=''
@@ -298,8 +207,6 @@ def PLAY(name,murl):
         xbmc.executebuiltin("XBMC.Notification(Please Wait!,Resolving Link,3000)")
         stream_url = main.resolve_url(murl)
         
-        print 'INDIDE PLAY : ' + stream_url
-
         infoL={'Title': infoLabels['metaName'], 'Plot': infoLabels['plot'], 'Genre': infoLabels['genre']}
         # play with bookmark
         from resources.universal import playbackengine
