@@ -22,6 +22,7 @@ def getShowImage(channelName, showName, retry):
     try:
         link = main.OPENURL(url)
         results = json.loads(link)['responseData']['results']
+        results = ''
         for image_info in results:
             iconImage = image_info['unescapedUrl']
             break
@@ -80,16 +81,37 @@ def buildCache(murl, channel, cacheFilePath, index):
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
     
-    
     for item in result:
         name = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"})
+        
         if not name:
-            name = common.parseDOM(item, "a", attrs = {"class":"title"})[0]
+            name = common.parseDOM(item, "a", attrs = {"class":"title"})
+            if name:
+                name = name[0]
+            else :
+                name = common.parseDOM(item, "a")
+                if len(name) > 1 :
+                    name = name[1]
+                else :
+                    name = name[0]
+        elif len(name) > 1 :
+            name = name[1]
         else :
             name = name[0]
+        print name
+        
         url = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"}, ret="href")
+        url = common.parseDOM(item, "a", ret="href")
+        
         if not url:
-            url = common.parseDOM(item, "a", attrs = {"class":"title"}, ret="href")[0]
+            url = common.parseDOM(item, "a", attrs = {"class":"title"}, ret="href")
+            if url :
+                url = url[0]
+        elif len(url) > 1 :
+            url = url[1]
+        else :
+            url = url[0]
+        
         if "color" in name:
             name=name.replace('<b><font color=red>','[COLOR red]').replace('</font></b>','[/COLOR]')
             name=name.replace('<b><font color="red">','[COLOR red]').replace('</font></b>','[/COLOR]')
@@ -156,7 +178,8 @@ def LISTSHOWS(murl,channel, CachePath, index=False):
 def LISTEPISODES(tvshowname,url):
     link=main.OPENURL(url)
     link=link.decode('iso-8859-1').encode('utf-8')
-    result = common.parseDOM(link, "h3", attrs = {"class":"threadtitle"})
+    result = common.parseDOM(link, "h3", attrs = {"class":"title threadtitle_unread"})
+    result += common.parseDOM(link, "h3", attrs = {"class":"threadtitle"})
     
     dialogWait = xbmcgui.DialogProgress()
     ret = dialogWait.create('Please wait until ['+tvshowname+'] Episodes are cached.')
@@ -166,12 +189,18 @@ def LISTEPISODES(tvshowname,url):
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
     
+    
     for item in result:
-        name = common.parseDOM(item, "a", attrs = {"class":"title"})[0]
-        url = common.parseDOM(item, "a", ret="href")[0]
+        name = common.parseDOM(item, "a", attrs = {"class":"title"})
+        name += common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"})
+        if name:
+            name = name[0]
+        url = common.parseDOM(item, "a", ret="href")
+        if url: 
+            url = url[0]
     
         if "Online" not in name: continue
-        name=name.replace(tvshowname,'').replace('Watch Online','')
+        name=name.replace(tvshowname,'').replace('Watch Online','').replace('Video','')
         name=main.removeNonASCII(name)
         main.addTVInfo(name,MainUrl+url,constants.DESIRULEZ_VIDEOLINKS,'',tvshowname,'') 
         loadedLinks = loadedLinks + 1
@@ -179,11 +208,17 @@ def LISTEPISODES(tvshowname,url):
         remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
         dialogWait.update(percent,'[B]Will load instantly from now on[/B]',remaining_display)
         if dialogWait.iscanceled(): return False   
-    result = common.parseDOM(link, "div", attrs = {"class":"threadpagenav"})[0]
+    result = common.parseDOM(link, "div", attrs = {"class":"threadpagenav"})
+    if result:
+        result = result[0]
     result = common.parseDOM(result, "span")
     for item in result:
-        name = common.parseDOM(item, "a")[0]
-        url = common.parseDOM(item, "a", ret="href")[0]
+        name = common.parseDOM(item, "a")
+        if name :
+            name = name[0]
+        url = common.parseDOM(item, "a", ret="href")
+        if url:
+            url = url[0]
         if not re.search('javascript',url,re.I):
             main.addTVInfo('-> Page ' + str(name),MainUrl+url,constants.DESIRULEZ_LISTEPISODES,'',tvshowname,'')
     dialogWait.close()
