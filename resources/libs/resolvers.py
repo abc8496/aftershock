@@ -112,7 +112,7 @@ def resolve_url(url, filename = False):
                     try:url=url.split('com/v/')[1]
                     except:url=url.split('com/embed/')[1]
                 stream_url='plugin://plugin.video.youtube/?action=play_video&videoid=' +url
-            elif re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
+            elif re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com|net)/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
                 stream_url=resolve_dailymotion(url)
             elif re.search('bollyheaven.com',url,re.I) and re.search('letwatch', filename, flags=re.I):
                 stream_url=resolve_letwatch(url)
