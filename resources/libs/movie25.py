@@ -142,20 +142,36 @@ def YEARB(murl,index=False):
         
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
-    link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
+    #link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
     qual = re.compile('<h1 >Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
     quality = str(qual)
     quality = quality.replace("'","")
     name  = name.split('[COLOR blue]')[0]
     
-    links = common.parseDOM(link, "div", attrs = { "class" : "links"})[0]
+    links = common.parseDOM(link, "div", attrs = { "class" : "links"})
+    if len(links) > 0:
+        links = links[0]
+    else :
+        links = common.parseDOM(link, "div", attrs = { "id" : "links"})[0]
+
     links = common.parseDOM(links, "ul")
     import collections
     all_coll = collections.defaultdict(list)
     
     for item in links:
-        host = common.parseDOM(item, "li", attrs = { "class": "link_name" })[0]
-        url = common.parseDOM(item, "a", ret="href")[0]
+        host = common.parseDOM(item, "li", attrs = { "class": "link_name" })
+        if len(host) > 0:
+            host = host[0]
+        else :
+            host = common.parseDOM(item, "li", attrs = { "id": "link_name" })[0]
+        url = common.parseDOM(item, "a", ret="href")
+        if len(url) > 0: 
+            url = url[0]
+        else :
+            #url = re.findall(',\'(.+?)\'.;',item)[0] # Gets the direct URL
+            url = common.parseDOM(item,"li", attrs = {"id" : "download"}, ret="onclick")[0]
+            url = re.findall('open\(\'(.+?)\'\)', url)[0]
+        
         all_coll[host].append(url)
 
     all_coll = all_coll.items()

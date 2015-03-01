@@ -22,7 +22,6 @@ def getShowImage(channelName, showName, retry):
     try:
         link = main.OPENURL(url)
         results = json.loads(link)['responseData']['results']
-        results = ''
         for image_info in results:
             iconImage = image_info['unescapedUrl']
             break

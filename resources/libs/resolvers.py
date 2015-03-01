@@ -112,7 +112,7 @@ def resolve_url(url, filename = False):
                     try:url=url.split('com/v/')[1]
                     except:url=url.split('com/embed/')[1]
                 stream_url='plugin://plugin.video.youtube/?action=play_video&videoid=' +url
-            elif re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com|net)/',url,re.I) and re.search('dailymotion', filename, flags=re.I):
+            elif re.search('dm(\d*).php', url, re.I) or (re.search('([a-z]*).(me|tv|com|net)/',url,re.I) and re.search('dailymotion', filename, flags=re.I)):
                 stream_url=resolve_dailymotion(url)
             elif re.search('bollyheaven.com',url,re.I) and re.search('letwatch', filename, flags=re.I):
                 stream_url=resolve_letwatch(url)
@@ -122,7 +122,7 @@ def resolve_url(url, filename = False):
                 stream_url=resolve_videohut(url)
             elif re.search('vidto.php',url,flags=re.I):
                 stream_url=resolve_vidtophp(url)
-            elif re.search('tvnewz.net|tellynews.tv|vt.php',url,flags=re.I) and re.search('tanker',filename,flags=re.I):
+            elif re.search('videotanker.php', url, re.I) or (re.search('([a-z]*).(me|tv|com|net)',url,flags=re.I) and re.search('tanker',filename,flags=re.I)):
                 stream_url=resolve_videotanker(url)
             elif re.search('cloud|cl.php',url,flags=re.I):
                 stream_url=resolve_cloud(url)
@@ -1042,7 +1042,7 @@ def resolve_movreel(url):
         print 'Aftershock Movreel - Requesting GET URL: %s' % url
         
         dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock MegaRelease Link...')
+        dialog.create('Resolving', 'Resolving Aftershock Movreel Link...')
         dialog.update(0)
 
         
