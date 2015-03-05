@@ -9,7 +9,7 @@ addon_id = settings.getAddOnID()
 
 selfAddon = xbmcaddon.Addon(id=addon_id)
 art = main.art
-MainUrl='http://www.movie25.cm'
+MainUrl='http://www.movie25.cm/'
 prettyName='Movie25'
 
 def LISTMOVIES(murl,index=False):
@@ -199,6 +199,8 @@ def resolveM25URL(url):
     if len(url) == 0 :
         url = common.parseDOM(html, "div", attrs = {"class":"left_body"})[0]
         url = common.parseDOM(url, "input", ret="onclick")[0]
+    elif len(url) == 1:
+        url = url[0]
     url = re.compile('(http.+)').findall(url)[0]
     url = url.replace("'","")
     return url
