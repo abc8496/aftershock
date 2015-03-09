@@ -155,13 +155,16 @@ def VIDEOLINKS(name,url):
         links = links[0]
     else :
         links = common.parseDOM(link, "div", attrs = { "id" : "links"})[0]
-
-    links = common.parseDOM(links, "ul")
+    
+    tmplinks = common.parseDOM(links, "ul")
+    tmplinks += common.parseDOM(links, "ul", attrs = {"class": "hidden"})
+    links = tmplinks
     import collections
     all_coll = collections.defaultdict(list)
     
     for item in links:
         host = common.parseDOM(item, "li", attrs = { "class": "link_name" })
+        
         if len(host) > 0:
             host = host[0]
         else :
@@ -173,13 +176,13 @@ def VIDEOLINKS(name,url):
             #url = re.findall(',\'(.+?)\'.;',item)[0] # Gets the direct URL
             url = common.parseDOM(item,"li", attrs = {"id" : "download"}, ret="onclick")[0]
             url = re.findall('open\(\'(.+?)\'\)', url)[0]
-        
         all_coll[host].append(url)
 
     all_coll = all_coll.items()
     fixed = "180upload, movreel"
     broken = "hugefiles"
-    sortorder = "putlocker,sockshare,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,"
+    notsupported = "realvid, thevideo,  cloudyvideos,beststreams, vidzi"
+    sortorder = "putlocker,sockshare,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,vodlocker, streamin, letwatch,  "
     sortorder = ','.join((sortorder.split(',')[::-1]))
     all_coll = sorted(all_coll, key=lambda word: sortorder.find(word[0].lower())*-1)
     for host,urls in all_coll:

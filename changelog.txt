@@ -1,3 +1,6 @@
+[B]Version v1.1.7[/B] - 8-Mar-2015
+- Updated English Sources
+
 [B]Version v1.1.6[/B] - 7-Mar-2015
 - Fixed Sources 
 
