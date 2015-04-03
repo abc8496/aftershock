@@ -116,7 +116,7 @@ def resolve_url(url, filename = False):
                 stream_url=resolve_dailymotion(url)
             elif re.search('bollyheaven.com',url,re.I) and re.search('letwatch', filename, flags=re.I):
                 stream_url=resolve_letwatch(url)
-            elif re.search('(flash.php|fp.php|wire.php|pw.php)', url, flags=re.I) or (re.search('(bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(tv|com)/', url, flags=re.I) and re.search('flash', filename, flags=re.I)):
+            elif re.search('(flash.php|fp.php|wire.php|pw.php)', url, flags=re.I) or (re.search('(bestarticles|bigbangreviews|desiserials|tellyserials|serialreview|[a-z]*).(me|tv|com)/', url, flags=re.I) and re.search('flash', filename, flags=re.I)):
                 stream_url=resolve_playwire(url)
             elif re.search('tvnewz.net|tellynews.tv|vh.php',url,flags=re.I) and re.search('videohut',filename,flags=re.I):
                 stream_url=resolve_videohut(url)

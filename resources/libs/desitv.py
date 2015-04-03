@@ -97,7 +97,6 @@ def buildCache(murl, channel, cacheFilePath, index):
             name = name[1]
         else :
             name = name[0]
-        print name
         
         url = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"}, ret="href")
         url = common.parseDOM(item, "a", ret="href")
@@ -187,7 +186,6 @@ def LISTEPISODES(tvshowname,url):
     remaining_display = 'Episodes loaded :: [B]'+str(loadedLinks)+' / '+str(totalLinks)+'[/B].'
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
-    
     
     for item in result:
         name = common.parseDOM(item, "a", attrs = {"class":"title"})
@@ -280,7 +278,7 @@ def playNow(video_source, name):
     PLAY(prefKey, video_source[prefKey],name, prefKey)
 
 def VIDEOLINKS(name, url):
-    supportedHosts = ['flash player', 'dailymotion','letwatch','videotanker','videohut','cloudy','videoweed']
+    supportedHosts = ['flash player', 'dailymotion','letwatch','video tanker','video hut','cloudy','video weed']
     allHosts = ['flash player', 'dailymotion','letwatch','videotanker','videohut','vshare','cloudy','nowvideo','videoweed','movshare','novamov','single']
     video_source_id = 1
     video_source_name = None
@@ -297,12 +295,17 @@ def VIDEOLINKS(name, url):
     if soup.has_key('div'):
         soup = soup.findChild('div', recursive=False)
     
+    print soup
     for child in soup.findChildren():
         if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
             continue
         elif (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
             if len(video_playlist_items) > 0:
-                if video_source_name.lower() in supportedHosts:
+                tmp_video_source = video_source_name.lower()
+                indx = tmp_video_source.find('[')
+                if indx > 0 :
+                    tmp_video_source = tmp_video_source[:indx-1]
+                if tmp_video_source in supportedHosts:
                     main.addPlayList(video_source_name, url,constants.DESIRULEZ_PLAY, video_source_id, video_playlist_items, name, getVideoSourceIcon(video_source_name))
                 video_source_id = video_source_id + 1
                 video_source[video_source_name] = video_playlist_items
