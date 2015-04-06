@@ -23,7 +23,7 @@
   </extension>
 </addon>
 
-<addon id="repository.aftershock" name="Aftershock addons" version="1.1" provider-name="vineegu">
+<addon id="repository.aftershock" name="Aftershock addons" version="1.2" provider-name="vineegu">
 	<extension point="xbmc.addon.repository" name="Innovate add-on repository">
 		<info compressed="false">http://raw.github.com/vineegu/aftershock-repo/master/addons.xml</info>
 		<checksum>http://raw.github.com/vineegu/aftershock-repo/master/addons.xml.md5</checksum>
