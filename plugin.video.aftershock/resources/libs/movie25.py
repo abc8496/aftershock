@@ -26,7 +26,6 @@ def LISTMOVIES(murl,index=False):
     dialogWait.update(0, '[B]Will load instantly from now on[/B]',remaining_display)
     xbmc.executebuiltin("XBMC.Dialog.Close(busydialog,true)")
     
-    print result
     for item in result:
         title = common.parseDOM(item, "a", ret="title")[0]
         url = common.parseDOM(item, "a", ret="href")[0]
@@ -143,7 +142,6 @@ def YEARB(murl,index=False):
         
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
-    #print link
     #link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
     qual = re.compile('<h1>Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
     quality = str(qual)

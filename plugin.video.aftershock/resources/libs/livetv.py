@@ -50,7 +50,6 @@ def LIVETV_MENU(murl, name, index):
     #9X Jalwa -> http://yamgo.com/#9x-jalwa
     
 def PLAY(murl, name, index):
-    print '>>>>>>>> INSIDE PLAY'
     ok=True
     hname=name
     # WORKING
@@ -73,7 +72,6 @@ def PLAY(murl, name, index):
         xbmc.executebuiltin("XBMC.Notification(Please Wait!,Resolving Link,3000)")
         stream_url = murl
         import urlresolver
-        print 'INDIDE PLAY >>>>>>>>>>>>>>>>>>>>>: ' + stream_url
         stream_url = prepareVideoLink(stream_url)
         print 'INDIDE PLAY >>>>>>>>>>>>>>>>>>>>>: ' + stream_url
 

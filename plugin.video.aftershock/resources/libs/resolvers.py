@@ -328,7 +328,6 @@ def resolve_letwatch(url):
     result = common.parseDOM(link, "script", attrs= {"type":"text/javascript"})
     for item in result:
         match = re.findall('file:"(.+?)",label:',item)
-        print match
         if match:
             stream_url = match[0]
             break 

@@ -295,7 +295,6 @@ def VIDEOLINKS(name, url):
     if soup.has_key('div'):
         soup = soup.findChild('div', recursive=False)
     
-    print soup
     for child in soup.findChildren():
         if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
             continue
@@ -312,7 +311,6 @@ def VIDEOLINKS(name, url):
                 video_playlist_items = []
             video_source_name = child.getText()
             video_source_name = video_source_name.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','[COLOR red][HD][/COLOR]').replace('DVD','[COLOR blue][DVD][/COLOR]').strip()
-            print video_source_name
         elif (child.name =='a') and not child.getText() == 'registration':
             video_playlist_items.append(str(child['href']))
     playNow(video_source, name)
