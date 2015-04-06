@@ -505,8 +505,10 @@ def updateSearchFile(searchQuery,searchType,defaultValue = '###',searchMsg = '')
                 except: pass
     return searchQuery
 def Clearhistory(path):
+    print path
     if os.path.exists(path):
         os.remove(path)
+        xbmc.executebuiltin("XBMC.Container.Refresh")
 def removeNonASCII(text):
     return re.sub(r'[^\x00-\x7F]','-', text)
     

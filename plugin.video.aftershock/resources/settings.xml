@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 
-   <category label="General">
-		<setting id="meta-view" type="bool" label="[B]Metadata (Movies)[/B]" default="true"/>
-		<setting id="meta-view-tv" type="bool" label="[B]Metadata (TV Shows)[/B]" default="false"/>
-		<setting id="groupfavs" type="bool" label="[B]Group Favorites[/B]" default="false"/>
-  		<setting id="whistory" type="bool" label="[B]Watch History[/B]" default="true"/>
+   
+   <category label="Auto View">
+		<setting id="auto-view" type="bool" label="[B]Auto View[/B]" default="true"/>
+		<setting id="home-view"	type="enum" label="Main Menu View" values="List|Thumbnail" default="1" enable="!eq(-1,false)"/>
+		<setting id="seasons-view" type="number" label="Season View" default="504" enable="!eq(-2,false)" visible="false"/>	
+		<setting id="episodes-view" type="number" label="Episode View" default="504" enable="!eq(-3,false)" visible="false"/>
+		<setting id="choose-skin" type="bool"  label="[B]Xperience 1080 OFF  | Confluence ON[/B]" default="true" enable="!eq(-4,false)" visible="false"/>
+      	<setting id="con-view"	type="enum" label="Confluence View" values="List|Big List|Thumbnail|Posters Wrap|Fanart|Media Info 1|Media Info 2|Media Info 3" default="2" enable="!eq(-1,false)+!eq(-5,false)" visible="false"/>
+		<setting id="xpr-view"	type="enum" label="Xperience 1080 View" values="List|Info List|Thumbnail|Posters|Landscape|Banner|Panel" default="3" enable="!eq(-2,true)+!eq(-6,false)" visible="false"/>
+   		<setting id="meta-view" type="bool" label="[B]Metadata (Movies)[/B]" default="true" visible="false"/>
+		<setting id="meta-view-tv" type="bool" label="[B]Metadata (TV Shows)[/B]" default="false" visible="false"/>
+		<setting id="groupfavs" type="bool" label="[B]Group Favorites[/B]" default="false" visible="false"/>
+  		<setting id="whistory" type="bool" label="[B]Watch History[/B]" default="true" visible="false" />
         <setting id="movie25-url" type="text" label="[B]Movie25 URL[/B]" default="http://www.movie25.cm/" visible="false"/>	
         <setting id="sominal-url" type="text" label="[B]Sominal URL[/B]" default="http://www.playindiafilms.com/" visible="false"/>	
         <setting id="desirulez-url" type="text" label="[B]DesiRulez URL[/B]" default="http://www.desirulez.net/" visible="false"/>	
         <setting id="sominal-moviesPerPage" type="number" label="[B]Sominal - Movies Per Page[/B]" default="25" visible="false"/>	
         <setting id="hide-download-instructions" type="boolean" default="true" visible="false"/>
 
-   </category>
-   
-   <category label="Auto View">
-		<setting id="auto-view" type="bool" label="[B]Auto View[/B]" default="true"/>
-		<setting id="home-view"	type="enum" label="Main Menu View" values="List|Thumbnail" default="1" enable="!eq(-1,false)"/>
-		<setting id="sub-view"	type="enum" label="Sub Menu View" values="List|Thumbnail" default="0" enable="!eq(-1,false)"/>
-		<setting id="seasons-view" type="number" label="Season View" default="504" enable="!eq(-2,false)"/>	
-		<setting id="episodes-view" type="number" label="Episode View" default="504" enable="!eq(-3,false)"/>
-		<setting id="choose-skin" type="bool"  label="[B]Xperience 1080 OFF  | Confluence ON[/B]" default="true" enable="!eq(-4,false)"/>
-      	<setting id="con-view"	type="enum" label="Confluence View" values="List|Big List|Thumbnail|Posters Wrap|Fanart|Media Info 1|Media Info 2|Media Info 3" default="2" enable="!eq(-1,false)+!eq(-5,false)"/>
-		<setting id="xpr-view"	type="enum" label="Xperience 1080 View" values="List|Info List|Thumbnail|Posters|Landscape|Banner|Panel" default="3" enable="!eq(-2,true)+!eq(-6,false)"/>
-		<setting id="tube-proxy" type="bool" label="[B]proxy[/B]" default="false" visible="false"/>
-		<setting id="mindexer" type="text" label="[B]index[/B]" default="Movie25" visible="false"/>
-		<setting id="tindexer" type="text" label="[B]index[/B]" default="WatchSeries" visible="false"/>
-		<setting id="tzname" type="text" label="[B]TimeZone[/B]" default="(GMT) Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London" visible="false"/>
-		<setting id="tztime" type="text" label="[B]TimeZone(gmt)[/B]" default="0" visible="false"/>	
    </category>
    
    <category label="Home Layout">
@@ -60,16 +52,5 @@
 			<setting id="homeitems_13" type="number" label="     Order" default="130" visible="!eq(-1,false)"/>
         <setting id="homeitems_14_enabled" type="bool" label="[B]Hindi Movies[/B]" default="true"/>
 			<setting id="homeitems_14" type="number" label="     Order" default="140" visible="!eq(-1,false)"/>
-        <setting id="homeitems_15_enabled" type="bool" label="[B]Live TV[/B]" default="false"/>
-			<setting id="homeitems_15" type="number" label="     Order" default="150" visible="!eq(-1,false)"/>
-        <setting id="homeitems_23_enabled" type="bool" label="[B]Kids Zone[/B]" default="false"/>
-			<setting id="homeitems_23" type="number" label="     Order" default="230" visible="!eq(-1,false)"/>
    </category>
-   <!--
-   <category label="Video Quality" visible="false">
-		<setting id="bit-disc"	type="enum" label="[B]Discovery Bitrate[/B]" values="3500k|1500k|600k" default="0"/>
-		<setting id="disj-qua"	type="enum" label="[B]DisneyJr. & MLB Bitrate[/B]" values="High|Medium|Low" default="0"/>
-		<setting id="espn-qua" type="select" label="[B]ESPN Bitrate[/B]" values="272p30_448k|324p30_948k|360p30_1464k|432p30_2096k|720p30_2896k" default="720p30_2896k"/>
-   </category>
-   -->
 </settings>

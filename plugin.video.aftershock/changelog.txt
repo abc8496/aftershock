@@ -1,3 +1,6 @@
+[B]Version v1.2.0[/B] - TBD
+- Updated Desi TV Sources
+
 [B]Version v1.1.8[/B] - 3-Apr-2015
 - Updated Desi TV Sources
 

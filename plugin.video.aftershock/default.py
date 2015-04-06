@@ -259,7 +259,7 @@ def History():
     whprofile = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
     whdb=os.path.join(whprofile,'Universal','watch_history.db')
     if  os.path.exists(whdb):
-        main.addPlayc('Clear Watch History',whdb,414,art+'/cleahis.png','','','','','')
+        main.addPlayc('Clear Watch History',whdb,constants.MAIN_CLEAR_HISTORY,art+'/cleahis.png','','','','','')
     from resources.universal import watchhistory
     wh = watchhistory.WatchHistory(addon_id)
     if selfAddon.getSetting("whistory") == "true":
