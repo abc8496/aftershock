@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.aftershock" name="Aftershock addons" version="1.2" provider-name="vineegu">
+<addon id="repository.aftershock" name="Aftershock addons" version="1.2.1" provider-name="vineegu">
 	<extension point="xbmc.addon.repository" name="Innovate add-on repository">
 		<info compressed="false">https://cdn.rawgit.com/vineegu/aftershock-repo/master/addons.xml</info>
 		<checksum>https://cdn.rawgit.com/vineegu/aftershock-repo/master/addons.xml.md5</checksum>
