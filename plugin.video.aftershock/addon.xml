@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.aftershock"
+       name="Aftershock"
+       version="1.1.8"
+       provider-name="Innovate-Dev">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.urlresolver"  version="2.6.0"/>
+		<import addon="script.module.t0mm0.common" version="1.1.0"/>
+		<import addon="script.module.metahandler"  version="1.0.2"/>
+        <import addon="script.module.parsedom" version="2.5.2"/>
+		<import addon="script.module.beautifulsoup"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Watch Hindi / English Movies &amp; TV Shows</summary>
+    <description lang="en">Browse and play a wide selection of Hindi / English movies and TV Shows</description>
+    <platform>all</platform>
+  </extension>
+</addon>
