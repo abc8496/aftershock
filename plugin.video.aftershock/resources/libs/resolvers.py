@@ -261,6 +261,8 @@ def resolve_desiflicks(url):
     elif re.search('iframe src=', link):
         stream_url = re.findall('<iframe src="(.+?)"',link)[0]
         stream_url = stream_url.replace('preview','edit')
+    if re.search('docs.google',stream_url,re.I):
+        stream_url = resolve_url(stream_url)
     print '>>>>> STREAM URL(desiflicks) >>>> ' + str(stream_url)
     return stream_url
     
@@ -576,42 +578,39 @@ def resolve_picasaWeb(url):
         return urllist[int(answer)]
     
 def resolve_googleDocs(url):
-    namelist=[]
-    urllist=[]
-    dialog = xbmcgui.DialogProgress()
-    dialog.create('Resolving', 'Resolving Aftershock GoogleDoc Link...')       
-    dialog.update(0)
-    print 'Aftershock GoogleDoc - Requesting GET URL: %s' % url
-    html = net().http_GET(url).content
-    dialog.update(100)
-    link2=unescapes(html)
-    match= re.compile('url_encoded_fmt_stream_map":"(.+?),"').findall(link2)[0]
-    if match:
-        streams_map = str(match)
-    else:
-        streams_map = str(link2)
-    stream= re.compile('url=(.+?)&type=.+?&quality=(.+?),').findall(streams_map)
-    for stream_url,stream_quality in stream:
-        stream_url = stream_url
-        stream_url = unescapes(stream_url)
-        urllist.append(stream_url)
-        stream_qlty = stream_quality.upper()
-        if (stream_qlty == 'hd1080'):
-            stream_qlty = 'HD-1080p'
-        elif (stream_qlty == 'hd720'):
-            stream_qlty = 'HD-720p'
-        elif (stream_qlty == 'latge'):
-            stream_qlty = 'SD-480p'
-        elif (stream_qlty == 'medium'):
-            stream_qlty = 'SD-360p'
-        namelist.append(stream_qlty)
-    dialog = xbmcgui.Dialog()
-    answer =dialog.select("Quality Select", namelist)
-    if answer==-1:
-        return
-    else:
-        return urllist[int(answer)]
+    try:
+        if re.search('preview',url,re.I):
+            url = url.split('/preview', 1)[0]
 
+        result = main.OPENURL(url)
+        
+        result = re.compile('"fmt_stream_map",(".+?")').findall(result)[0]
+        import json
+        u = json.loads(result)
+        u = [i.split('|')[-1] for i in u.split(',')]
+        
+        url = []
+        for i in u: url += google(i)
+        
+        
+        if url == []: return
+        return url[0]['url']
+    except:
+        return
+
+def google(url):
+    quality = re.compile('itag=(\d*)').findall(url)
+    quality += re.compile('=m(\d*)$').findall(url)
+    try: quality = quality[0]
+    except: return []
+
+    if quality in ['37', '137', '299', '96', '248', '303', '46']:
+        return [{'quality': '1080p', 'url': url}]
+    elif quality in ['22', '84', '136', '298', '120', '95', '247', '302', '45', '102']:
+        return [{'quality': 'HD', 'url': url}]
+    else:
+        return []
+        
 def resolve_firedrive(url):
     try:
         url=url.replace('putlocker.com','firedrive.com').replace('putlocker.to','firedrive.com')
