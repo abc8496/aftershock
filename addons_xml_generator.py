@@ -4,6 +4,7 @@ import os
 import md5
 
 
+
 class Generator:
     """
         Generates a new addons.xml file from each addons addon.xml file
@@ -14,8 +15,61 @@ class Generator:
         # generate files
         self._generate_addons_file()
         self._generate_md5_file()
+        self._generate_zip_file()
         # notify user
-        print "Finished updating addons xml and md5 files"
+        print "Finished updating addons xml and md5 files and created the release"
+        
+    def _generate_zip_file( self ):
+        from xml.dom import minidom
+        import shutil
+        import zipfile
+        # addon list
+        addons = os.listdir( "." )
+        
+        for addon in addons:
+            try:
+                # skip any file
+                if ( addon == "releases" ) : continue
+                if ( not os.path.isdir( addon ) or addon == ".svn" or addon == ".git" ) : continue
+                
+                # create path
+                _path = os.path.join ( addon, "addon.xml" )
+                
+                # parse addon.xml to retrieve the version 
+                xmldoc = minidom.parse(_path)
+                itemlist = xmldoc.getElementsByTagName('addon')
+                version = itemlist[0].attributes['version'].value
+                
+                
+                
+                # create the directories if they dont already exist
+                _releasePath = os.path.join ( "releases", addon )
+                
+                try :
+                    os.makedirs( _releasePath )
+                except Exception, e:
+                    var = "DoNothing"
+                    
+                # copy the addon.xml to releases
+                _releasePathAddonFile = os.path.join(_releasePath, "addon.xml" )
+                shutil.copy(_path, _releasePathAddonFile)
+                
+                # create the zipFile
+                _zipFileName = addon + "-" + version + ".zip"
+                _zipFileName = os.path.join(_releasePath, _zipFileName) 
+                
+                zip = zipfile.ZipFile(_zipFileName, 'w')
+                
+                for root, dirs, files in os.walk(addon):
+                    for file in files:
+                        zip.write(os.path.join(root, file))
+                
+                zip.close()
+                print _zipFileName
+                
+            except Exception, e:
+                # missing or poorly formatted addon.xml
+                print "Excluding %s for %s" % ( _path, e, )
 
     def _generate_addons_file( self ):
         # addon list
@@ -26,7 +80,8 @@ class Generator:
         for addon in addons:
             try:
                 # skip any file or .svn folder
-                if ( not os.path.isdir( addon ) or addon == ".svn" ): continue
+                if ( addon == "releases" ) : continue
+                if ( not os.path.isdir( addon ) or addon == ".svn" or addon == ".git" ): continue
                 # create path
                 _path = os.path.join( addon, "addon.xml" )
                 # split lines for stripping
