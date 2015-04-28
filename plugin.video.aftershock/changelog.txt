@@ -1,4 +1,7 @@
-[B]Version v1.2.0[/B] - TBD
+[B]Version v1.2.1[/B] - 4/27/2015
+- Updated English Movies Scraper
+
+[B]Version v1.2.0[/B] - 8-Apr-2015
 - Updated Desi TV Sources
 
 [B]Version v1.1.8[/B] - 3-Apr-2015

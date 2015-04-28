@@ -52,86 +52,41 @@ def resolve_url(url, filename = False):
     if(url):
         try:
             url = url.split('"')[0]
-            match = re.search('xoxv(.+?)xoxe(.+?)xoxc',url)
-            print "host "+url
-            if(match):
-                source = urlresolver.HostedMediaFile(host=match.group(1), media_id=match.group(2))
-                if source:
-                    stream_url = source.resolve()
-            elif re.search('180upload',url,re.I): #fixed
-                stream_url=resolve_180upload(url)
-            elif re.search('hugefiles',url,re.I):
-                stream_url=resolve_hugefiles(url)
-            elif re.search('veehd',url,re.I):
-                stream_url=resolve_veehd(url)
-            elif re.search('epicshare',url,re.I):
-                stream_url=resolve_epicshare(url)
-            elif re.search('lemuploads',url,re.I):
-                stream_url=resolve_lemupload(url)
-            elif re.search('mightyupload',url,re.I):
-                stream_url=resolve_mightyupload(url)               
-            elif re.search('megarelease',url,re.I):
-                stream_url=resolve_megarelease(url)
-            elif re.search('movreel',url,re.I):
-                stream_url=resolve_movreel(url)
-            elif re.search('bayfiles',url,re.I):
-                stream_url=resolve_bayfiles(url)
-            elif re.search('nowvideo',url,re.I):
-                stream_url=resolve_nowvideo(url)
-            elif re.search('novamov',url,re.I):
-                stream_url=resolve_novamov(url)
-            elif re.search('vidspot',url,re.I):
-                stream_url=resolve_vidspot(url)
-            elif re.search('videomega',url,re.I):
-                stream_url=resolve_videomega(url)
-            elif re.search('youwatch',url,re.I):
-                stream_url=resolve_youwatch(url)
-            elif re.search('vk.com',url,re.I):
-                stream_url=resolve_VK(url)
-            elif re.search('(?i)(firedrive|putlocker)',url):
-                stream_url=resolve_firedrive(url)               
-            elif re.search('project-free-upload',url,re.I):
-                stream_url=resolve_projectfreeupload(url)
-            elif re.search('yify.tv',url,re.I):
-                stream_url=resolve_yify(url)
-            elif re.search('mail.ru',url,re.I):
-                stream_url=resolve_mailru(url)
-            elif re.search('g2g.fm',url,re.I):
-                stream_url=resolve_g2g(url)
-            elif re.search('docs.google',url,re.I):
-                stream_url=resolve_googleDocs(url)
-            elif re.search('mrfile',url,re.I):
-                stream_url=resolve_mrfile(url)
-            elif re.search('sockshare',url,re.I):
-                stream_url=resolve_sockshare(url)
-            elif re.search('picasaweb.google',url,re.I):
-                stream_url=resolve_picasaWeb(url)
+            print "host (resolve_url) "+url
+            if re.search('180upload',url,re.I):       stream_url=resolve_180upload(url)
+            elif re.search('hugefiles',url,re.I):       stream_url=resolve_hugefiles(url)
+            elif re.search('veehd',url,re.I):           stream_url=resolve_veehd(url)
+            elif re.search('lemuploads',url,re.I):      stream_url=resolve_lemupload(url)
+            elif re.search('mightyupload',url,re.I):    stream_url=resolve_mightyupload(url)               
+            elif re.search('megarelease',url,re.I):     stream_url=resolve_megarelease(url)
+            elif re.search('movreel',url,re.I):         stream_url=resolve_movreel(url)
+            elif re.search('nowvideo',url,re.I):        stream_url=resolve_nowvideo(url)
+            elif re.search('novamov',url,re.I):         stream_url=resolve_novamov(url)
+            elif re.search('vidspot',url,re.I):         stream_url=resolve_vidspot(url)
+            elif re.search('videomega',url,re.I):       stream_url=resolve_videomega(url)
+            elif re.search('youwatch',url,re.I):        stream_url=resolve_youwatch(url)
+            elif re.search('vk.com',url,re.I):          stream_url=resolve_VK(url)
+            elif re.search('(?i)(firedrive|putlocker)',url):    stream_url=resolve_firedrive(url)               
+            elif re.search('yify.tv',url,re.I):         stream_url=resolve_yify(url)
+            elif re.search('docs.google',url,re.I):     stream_url=resolve_googleDocs(url)
+            elif re.search('mrfile',url,re.I):          stream_url=resolve_mrfile(url)
+            elif re.search('sockshare',url,re.I):       stream_url=resolve_sockshare(url)
             elif re.search('youtube',url,re.I):
                 try:url=url.split('watch?v=')[1]
                 except:
                     try:url=url.split('com/v/')[1]
                     except:url=url.split('com/embed/')[1]
                 stream_url='plugin://plugin.video.youtube/?action=play_video&videoid=' +url
-            elif re.search('dailymotion', filename, flags=re.I):
-                stream_url=resolve_dailymotion(url)
-            elif re.search('letwatch', filename, flags=re.I):
-                stream_url=resolve_letwatch(url)
-            elif re.search('flash', filename, flags=re.I):
-                stream_url=resolve_playwire(url)
-            elif re.search('videohut',filename,flags=re.I):
-                stream_url=resolve_videohut(url)
-            elif re.search('vidto.php',url,flags=re.I):
-                stream_url=resolve_vidtophp(url)
-            elif re.search('tanker',filename,flags=re.I):
-                stream_url=resolve_videotanker(url)
-            elif re.search('cloud|cl.php',url,flags=re.I):
-                stream_url=resolve_cloud(url)
-            elif re.search('weed|vw.php',url,flags=re.I):
-                stream_url=resolve_weed(url)
-            elif re.search('mediaplaybox',url,flags=re.I):
-                stream_url = resolve_mediaplaybox(url)
-            elif re.search('desiflicks',url,flags=re.I):
-                stream_url = resolve_desiflicks(url)
+            elif re.search('dailymotion', filename, flags=re.I): stream_url=resolve_dailymotion(url)
+            elif re.search('letwatch', filename, flags=re.I):    stream_url=resolve_letwatch(url)
+            elif re.search('flash', filename, flags=re.I):       stream_url=resolve_playwire(url)
+            elif re.search('videohut',filename,flags=re.I):      stream_url=resolve_videohut(url)
+            elif re.search('vidto.php',url,flags=re.I):          stream_url=resolve_vidtophp(url)
+            elif re.search('tanker',filename,flags=re.I):        stream_url=resolve_videotanker(url)
+            elif re.search('cloud|cl.php',url,flags=re.I):       stream_url=resolve_cloud(url)
+            elif re.search('weed|vw.php',url,flags=re.I):        stream_url=resolve_weed(url)
+            elif re.search('mediaplaybox',url,flags=re.I):       stream_url = resolve_mediaplaybox(url)
+            elif re.search('desiflicks',url,flags=re.I):         stream_url = resolve_desiflicks(url)
             else:
                 print "host "+url
                 source = urlresolver.HostedMediaFile(url)
@@ -148,10 +103,7 @@ def resolve_url(url, filename = False):
             except:
                 pass
         except ResolverError as e:
-            #logerror(str(e))
-            #showpopup('[COLOR=FF67cc33]Aftershock URLresolver Error[/COLOR] ' + e.value2,'[B][COLOR red]'+e.value+'[/COLOR][/B]',5000, elogo)
             try:
-                #import urlresolver
                 source = urlresolver.HostedMediaFile(url)
                 if source:
                     stream_url = source.resolve()
@@ -181,69 +133,7 @@ def logerror(log):
 def showpopup(title='', msg='', delay=5000, image=''):
     xbmc.executebuiltin('XBMC.Notification("%s","%s",%d,"%s")' % (title, msg, delay, image))
     
-def grab_cloudflare(url):
 
-    class NoRedirection(urllib2.HTTPErrorProcessor):
-        # Stop Urllib2 from bypassing the 503 page.    
-        def http_response(self, request, response):
-            code, msg, hdrs = response.code, response.msg, response.info()
-
-            return response
-        https_response = http_response
-
-    cj = cookielib.CookieJar()
-    
-    opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
-    opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
-    response = opener.open(url).read()
-        
-    jschl=re.compile('name="jschl_vc" value="(.+?)"/>').findall(response)
-    if jschl:
-        import time
-        jschl = jschl[0]    
-    
-        maths=re.compile('value = (.+?);').findall(response)[0].replace('(','').replace(')','')
-
-        domain_url = re.compile('(https?://.+?/)').findall(url)[0]
-        domain = re.compile('https?://(.+?)/').findall(domain_url)[0]
-        
-        time.sleep(5)
-        
-        normal = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        normal.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
-        final= normal.open(domain_url+'cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s'%(jschl,eval(maths)+len(domain))).read()
-        
-        response = normal.open(url).read()
-
-    return response
-
-def millis():
-      import time as time_
-      return int(round(time_.time() * 1000))
-    
-def load_json(data):
-      def to_utf8(dct):
-            rdct = {}
-            for k, v in dct.items() :
-                  if isinstance(v, (str, unicode)) :
-                        rdct[k] = v.encode('utf8', 'ignore')
-                  else :
-                        rdct[k] = v
-            return rdct
-      try :        
-            from lib import simplejson
-            json_data = simplejson.loads(data, object_hook=to_utf8)
-            return json_data
-      except:
-            try:
-                  import json
-                  json_data = json.loads(data, object_hook=to_utf8)
-                  return json_data
-            except:
-                  import sys
-                  for line in sys.exc_info():
-                        print "%s" % line
-      return None
 def getVideoID(url):
     return re.compile('(id|url|v|si|data-config)=(.+?)/').findall(url + '/')[0][1]
 def resolve_desiflicks(url):
@@ -360,69 +250,6 @@ def resolve_playwire(url):
     print '>>>>> STREAM URL >>>> ' + stream_url
     return stream_url
     
-def resolve_realdebrid(url):
-    try:
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock Real-Debrid Link...')       
-        dialog.update(0)
-        import main
-        cookie_file = os.path.join(os.path.join(main.datapath,'Cookies'), 'realdebrid.cookies')
-        cookieExpired = False
-        if os.path.exists(cookie_file):
-            try:
-                cookie = open(cookie_file).read()
-                expire = re.search('expires="(.*?)"',cookie, re.I)
-                if expire:
-                    expire = str(expire.group(1))
-                    import time
-                    if time.time() > time.mktime(time.strptime(expire, '%Y-%m-%d %H:%M:%SZ')):
-                       cookieExpired = True
-            except: cookieExpired = True 
-        if not os.path.exists(cookie_file) or cookieExpired:
-            import hashlib
-            login_data = urllib.urlencode({'user' : xbmcaddon.Addon(id='script.module.urlresolver').getSetting('RealDebridResolver_username'),
-                                            'pass' : hashlib.md5(xbmcaddon.Addon(id='script.module.urlresolver').getSetting('RealDebridResolver_password')).hexdigest()})
-            surl = 'https://real-debrid.com/ajax/login.php?' + login_data
-            source = main.OPENURL(surl,verbose=False,cookie='realdebrid',log=False)
-            dialog.update(50)
-            if re.search('OK', source): print "Real Debrid Login Successful"
-            if dialog.iscanceled(): return None
-        url = 'https://real-debrid.com/ajax/unrestrict.php?link=%s' % url
-        source = main.OPENURL(url,cookie='realdebrid',verbose=False,log=False)
-        if dialog.iscanceled(): return None
-        dialog.update(100)
-        dialog.close()
-        del dialog
-        import json
-        jsonresult = json.loads(source)
-        if 'generated_links' in jsonresult :
-            generated_links = jsonresult['generated_links']
-            if len(generated_links) == 1:
-                return generated_links[0][2].encode('utf-8')
-            line = []
-            for link in generated_links :
-                extension = link[0].split('.')[-1]
-                line.append(extension.encode('utf-8'))
-            result = dialog.select('Choose the link', line)
-            if result != -1 :
-                link = generated_links[result][2]
-                return link.encode('utf-8')
-            else :
-                return False
-        elif 'main_link' in jsonresult :
-            return jsonresult['main_link'].encode('utf-8')
-        else :
-            if 'message' in jsonresult :
-                logerror('**** Real Debrid Error occured: %s' % jsonresult['message'].encode('utf-8'))
-                showpopup(title='[B][COLOR white]Aftershock REAL-DEBRID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % jsonresult['message'].encode('utf-8'), delay=5000, image=elogo)
-                main.removeFile(cookie_file)
-                return False
-            else: return False
-    except Exception, e:
-        logerror('**** Real-Debrid Error occured: %s' % e)
-        xbmc.executebuiltin('[B][COLOR white]Real-Debrid[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
-
-
 def resolve_sockshare(url):
         try:
             html = net().http_GET(url).content
@@ -496,87 +323,6 @@ def resolve_mrfile(url):
         logerror('**** MR.File Error occured: %s' % e)
         xbmc.executebuiltin('[B][COLOR white]MR.File[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
 
-  
-
-def resolve_g2g(url):
-    html3 = net().http_GET(url).content 
-    url2 = re.findall('(?sim)<iframe src="(http://g2g.fm/pasmov3p.php.+?)"', html3)[0]
-    req = urllib2.Request(url2)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-    req.add_header('Referer', url)
-    response = urllib2.urlopen(req)
-    html=response.read()
-    response.close()
-    phpUrl = re.findall('(?sim)<iframe id="ggplayer" src="(.+?php)"', html)[0]
-    req = urllib2.Request(phpUrl)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-    req.add_header('Referer', url)   
-    response = urllib2.urlopen(req)
-    html2=response.read()
-    response.close()
-    googleUrl = re.findall('(?sim)<iframe src="(.+?preview)"', html2)[0]
-    return resolve_googleDocs(googleUrl)
-     
-def unescapes(text):
-    if text:
-        rep = {"\u003d":"=","\u0026":"&","u003d":"=","u0026":"&","%26":"&","&#38;":"&","&amp;":"&","&#044;": ",","&nbsp;": " ","\n": "","\t": "","\r": "","%5B": "[","%5D": "]",
-               "%3a": ":","%3A":":","%2f":"/","%2F":"/","%3f":"?","%3F":"?","%3d":"=","%3D":"=","%2C":",","%2c":",","%3C":"<",
-               "%20":" ","%22":'"',"%3D":"=","%3A":":","%2F":"/","%3E":">","%3B":",","%27":"'","%0D":"","%0A":"","%92":"'",
-               "&lt;": "<","&gt;": ">","&quot": '"',"&rsquo;": "'","&acute;": "'"}
-        for s, r in rep.items():
-            text = text.replace(s, r) 
-    #except TypeError: pass
-    return text
-
-def resolve_picasaWeb(url):
-    run = net().http_GET(url)
-    cjList=[]
-    cj = cookielib.CookieJar()
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj), urllib2.HTTPHandler())
-    req = urllib2.Request(url)
-    f = opener.open(req)
-    html = f.read()
-    for cookie in cj:
-            cjList.append(str(cookie).replace('<Cookie ','').replace(' for picasaweb.google.com/>','').replace('for .google.com/>',''))
-    Lid=re.search('https://picasaweb.google.com/(.+?)/.+?authkey=(.+?)#([^<]+)',url)
-    url='https://picasaweb.google.com/data/entry/base/user/'+Lid.group(1)+'/photoid/'+Lid.group(3)+'?alt=rss&authkey='+Lid.group(2)
-    namelist=[]
-    urllist=[]
-    dialog = xbmcgui.DialogProgress()
-    dialog.create('Resolving', 'Resolving Aftershock Picassa Link...')       
-    dialog.update(0)
-    print 'Aftershock GoogleDoc - Requesting GET URL: %s' % url
-    req = urllib2.Request(url)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36')
-    req.add_header('cookie', 'xnfo=1; PREF=ID=85556f1a24007f7a:U=dc2692c0a6061b26:FF=0:LD=en:TM=1373784453:LM=1389395973:GM=1:S=qR9eOdnLEbmW_TLb; HSID=A20CRcfWXDjH2t8pM; SSID=AT-HtXZJKl-_80o2K; APISID=Oxz2q50wC6cLlo6-/AGZzvI9THf_52xvSO; SAPISID=kF1H8rjAwWjKPFU6/AjxdPvG1MVo2oU8aT; lh=DQAAAM4AAACjRFpk1gWTm8hUwNXV8b4iTC6-IIL6RsAD8urndnSZYTYKgkuDD4aOktLrRQXWX4--37oGvyHC4c07ooRuZ0AxVdGINz5UCX5n4-63PwQDpKnqvJnFiv4SaS3UQlLrlXsoeSPDs2-bWOpBNn9b7BCfQr9XJXC5OJrpiDFlKOJ3XIjJ8Kh3M0Z2K84u2k3pb7l2ODvIFGjk38GLmn-gPSHENZEmCgV-KsqpgDTQ0EnPU-h03OHch9xEmof7HD4TzzV71YS5X9hNGbYzp3ux5asE;  '+cjList[1]+'; noRedirect=1; SID=DQAAAMwAAABwVBj_2BKoFX1DvzaYSC2Vd7ieIUcNRpOHAmwDkKE4KEmzBiIUPoGedSnY91jnlOUk7wysRSWIaT_NiI6SfpFHRS9FA59wG7XETqInr0vUA2si8J1IefoooMj6i3JBxdsc6wZ-XUYu57czbICcBshac3_al7xJLQJnGd1kz-2Zxn3IVi3c5sDL21pCc_1SegSDBFughkCAY7p7T8prVX6XLqf_JGv34RIx6pPYZ_emGzjEOVbbjswVvX-9uKLvARvYgsjXseS5k3_TMHNLYQWp; '+cjList[0])
-    
-    response = urllib2.urlopen(req)
-    html=response.read()
-    response.close()
-    dialog.update(100)
-    link2=unescapes(html)
-    streams_map = str(link2)
-    stream= re.compile("url='(http://redirector.googlevideo.com[^']+)' height='([^']+)'").findall(streams_map)
-    for stream_url,stream_quality in reversed(stream):
-        stream_url = unescapes(stream_url)
-        urllist.append(stream_url)
-        stream_qlty = stream_quality.upper()
-        if (stream_qlty == '720'):
-            stream_qlty = 'HD-720p'
-        elif (stream_qlty == '480'):
-            stream_qlty = 'SD-480p'
-        elif (stream_qlty == '360'):
-            stream_qlty = 'SD-360p'
-        elif (stream_qlty == '240'):
-            stream_qlty = 'SD-240p'
-        namelist.append(stream_qlty)
-    dialog = xbmcgui.Dialog()
-    answer =dialog.select("Quality Select", namelist)
-    if answer==-1:
-        return
-    else:
-        return urllist[int(answer)]
-    
 def resolve_googleDocs(url):
     try:
         if re.search('preview',url,re.I):
@@ -706,71 +452,6 @@ def resolve_mightyupload(url):
         logerror('Aftershock: Resolve MightyUpload Error - '+str(e))
         raise ResolverError(str(e),"MightyUpload")       
         
-def resolve_bayfiles(url):
-    try:
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock Bayfiles Link...')       
-        dialog.update(0)
-        print 'Aftershock Bayfiles - Requesting GET URL: %s' % url
-        html = net().http_GET(url).content
-        try: vfid = re.compile('var vfid = ([^;]+);').findall(html)[0]
-        except:pass
-        try:urlpremium='http://'+ re.compile('<a class="highlighted-btn" href="http://(.+?)">Premium Download</a>').findall(html)[0]
-        except:urlpremium=[]
-        if urlpremium:
-                return urlpremium
-        else:
-                try:
-                    delay = re.compile('var delay = ([^;]+);').findall(html)[0]
-                    delay = int(delay)
-                except: delay = 300
-                t = millis()
-                html2 = net().http_GET("http://bayfiles.net/ajax_download?_=%s&action=startTimer&vfid=%s"%(t,vfid)).content
-                datajson=load_json(html2)
-                if datajson['set']==True:
-                    token=datajson['token']
-                    url_ajax = 'http://bayfiles.net/ajax_download'
-                    post = "action=getLink&vfid=%s&token=%s" %(vfid,token)
-                    finaldata=net().http_GET(url_ajax + '?' + post).content
-                    patron = 'onclick="javascript:window.location.href = \'(.+?)\''
-                    matches = re.compile(patron,re.DOTALL).findall(finaldata)
-                    return matches[0] #final url mp4
-    except:
-        html = net().http_GET(url).content
-        try:
-                match2=re.compile('<div id="content-inner">\n\t\t\t\t<center><strong style="color:#B22B13;">Your IP (.+?) has recently downloaded a file. Upgrade to premium or wait (.+?) min.</strong>').findall(html)[0]
-                raise ResolverError('You recently downloaded a file. Upgrade to premium or wait',"Bayfiles")
-                return
-        except:
-                match3=re.compile('<div id="content-inner">\n\t\t\t\t<center><strong style="color:#B22B13;">Your IP (.+?) is already downloading. Upgrade to premium or wait.</strong>').findall(html)
-                raise ResolverError('You are already downloading. Upgrade to premium or wait.',"Bayfiles")
-                return
-
-def resolve_mailru(url):
-    try:
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock MailRU Link...')       
-        dialog.update(0)
-        print 'Aftershock MailRU - Requesting GET URL: %s' % url
-        link = net().http_GET(url).content
-        match=re.compile('videoSrc = "(.+?)",',re.DOTALL).findall(link)
-        cj = cookielib.CookieJar()
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj), urllib2.HTTPHandler())
-        req = urllib2.Request(url)
-        f = opener.open(req)
-        html = f.read()
-        for cookie in cj:
-            cookie=str(cookie)
-
-        rcookie=cookie.replace('<Cookie ','').replace(' for .video.mail.ru/>','')
-
-        vlink=match[0]+'&Cookie='+rcookie
-        return vlink
-    except Exception, e:
-        logerror('**** MailRU Error occured: %s' % e)
-        xbmc.executebuiltin('[B][COLOR white]MailRU[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
-
-
 def resolve_yify(url):
     try:
         referer = url
@@ -894,34 +575,6 @@ def resolve_youwatch(url):
         xbmc.executebuiltin('[B][COLOR white]Youwatch[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
 
 
-def resolve_projectfreeupload(url):
-    try:
-        import jsunpack
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock Project Free Link...')       
-        dialog.update(0)
-        print 'Aftershock Project Free - Requesting GET URL: %s' % url
-        html = net().http_GET(url).content
-        r = re.findall(r'\"hidden\"\sname=\"?(.+?)\"\svalue=\"?(.+?)\"\>', html, re.I)
-        post_data = {}
-        for name, value in r:
-            post_data[name] = value
-        post_data['referer'] = url
-        post_data['method_premium']=''
-        post_data['method_free']=''
-        html = net().http_POST(url, post_data).content
-        embed=re.findall('<IFRAME SRC="(.+?)"',html)
-        html = net().http_GET(embed[0]).content
-        r = re.findall(r'(eval\(function\(p,a,c,k,e,d\)\{while.+?)</script>',html,re.M|re.DOTALL)
-        try:unpack=jsunpack.unpack(r[1])
-        except:unpack=jsunpack.unpack(r[0])
-        stream_url=re.findall('<param name="src"value="(.+?)"/>',unpack)[0]
-        return stream_url
-        if dialog.iscanceled(): return None
-    except Exception, e:
-        logerror('**** Project Free Error occured: %s' % e)
-        xbmc.executebuiltin('[B][COLOR white]Project Free[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
-
 def resolve_videomega(url):
     try:
         dialog = xbmcgui.DialogProgress()
@@ -930,19 +583,18 @@ def resolve_videomega(url):
         print 'Aftershock Videomega - Requesting GET URL: %s' % url
         try:
             mediaID = re.findall('http://videomega.tv/.?ref=([^<]+)', url)[0]
-            url='http://videomega.tv/iframe.php?ref='+mediaID
+            url='http://videomega.tv/view.php?ref='+mediaID
         except:url=url
-        html = net().http_GET(url).content
-        try:
-                encodedurl=re.compile('unescape.+?"(.+?)"').findall(html)
-        except:
-                raise ResolverError('This file is not available on',"VideoMega")
-        url2=urllib.unquote(encodedurl[0])
-        stream_url=re.compile('file: "(.+?)"').findall(url2)[0]
+        
+        result = main.OPENURL(url, mobile=True)
+        print result
+        stream_url = common.parseDOM(result, "source", attrs = { "type": "video.+?" })[0]
         return stream_url
     except Exception, e:
         logerror('**** Videomega Error occured: %s' % e)
-        xbmc.executebuiltin('[B][COLOR white]Videomega[/COLOR][/B]','[COLOR red]%s[/COLOR]' % e, 5000, elogo)
+        raise ResolverError(str(e),"Videomega")
+        import traceback
+        traceback.print_exc()
     
 def resolve_vidspot(url):
     try:
@@ -1280,91 +932,6 @@ def resolve_vidto(url):
     except Exception, e:
         logerror('Aftershock: Resolve Vidto Error - '+str(e))
         raise ResolverError(str(e),"Vidto") 
-    finally:
-        dialog.close()
-
-def resolve_epicshare(url):
-    try:
-        puzzle_img = os.path.join(datapath, "epicshare_puzzle.png")
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving Aftershock EpicShare Link...')
-        dialog.update(0)
-        
-        print 'EpicShare - Aftershock Requesting GET URL: %s' % url
-        html = net().http_GET(url).content
-        if dialog.iscanceled(): return False
-        dialog.update(50)
-        
-        #Check page for any error msgs
-        if re.search('This server is in maintenance mode', html):
-            logerror('***** EpicShare - Site reported maintenance mode')
-            xbmc.executebuiltin("XBMC.Notification(File is currently unavailable,EpicShare in maintenance,2000)")  
-            return False
-        if re.search('<b>File Not Found</b>', html):
-            logerror('***** EpicShare - File not found')
-            xbmc.executebuiltin("XBMC.Notification(File Not Found,EpicShare,2000)")
-            return False
-
-        data = {}
-        r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-
-        if r:
-            for name, value in r:
-                data[name] = value
-        else:
-            logerror('***** EpicShare - Cannot find data values')
-            raise Exception('Unable to resolve EpicShare Link')
-        
-        #Check for SolveMedia Captcha image
-        solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-
-        if solvemedia:
-           dialog.close()
-           html = net().http_GET(solvemedia.group(1)).content
-           hugekey=re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
-           open(puzzle_img, 'wb').write(net().http_GET("http://api.solvemedia.com%s" % re.search('<img src="(.+?)"', html).group(1)).content)
-           img = xbmcgui.ControlImage(450,15,400,130, puzzle_img)
-           wdlg = xbmcgui.WindowDialog()
-           wdlg.addControl(img)
-           wdlg.show()
-        
-           kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-           kb.doModal()
-           capcode = kb.getText()
-   
-           if (kb.isConfirmed()):
-               userInput = kb.getText()
-               if userInput != '':
-                   solution = kb.getText()
-               elif userInput == '':
-                   Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
-                   return False
-           else:
-               return False
-               
-           wdlg.close()
-           dialog.create('Resolving', 'Resolving Aftershock EpicShare Link...') 
-           dialog.update(50)
-           if solution:
-               data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
-
-        print 'EpicShare - Aftershock Requesting POST URL: %s' % url
-        html = net().http_POST(url, data).content
-        if dialog.iscanceled(): return False
-        dialog.update(100)
-        
-        link = re.search('<a id="lnk_download"  href=".+?product_download_url=(.+?)">', html)
-        if link:
-            print 'Aftershock EpicShare Link Found: %s' % link.group(1)
-            return link.group(1)
-        else:
-            logerror('***** EpicShare - Cannot find final link')
-            raise Exception('Unable to resolve EpicShare Link')
-        
-    except Exception, e:
-        logerror('**** EpicShare Aftershock Error occured: %s' % e)
-        raise ResolverError(str(e),"EpicShare") 
     finally:
         dialog.close()
 

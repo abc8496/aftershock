@@ -143,7 +143,9 @@ def YEARB(murl,index=False):
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
     #link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
-    qual = re.compile('<h1>Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
+    print link
+    qual = re.compile('<h1 >Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
+    print qual
     quality = str(qual)
     quality = quality.replace("'","")
     name  = name.split('[COLOR blue]')[0]
@@ -177,10 +179,7 @@ def VIDEOLINKS(name,url):
         all_coll[host].append(url)
 
     all_coll = all_coll.items()
-    fixed = "180upload, movreel"
-    broken = "hugefiles"
-    notsupported = "realvid, thevideo,  cloudyvideos,beststreams, vidzi"
-    sortorder = "putlocker,sockshare,hugefiles,mightyupload,movreel,lemuploads,180upload,megarelease,filenuke,flashx,gorillavid,bayfiles,veehd,vidto,epicshare,2gbhosting,alldebrid,allmyvideos,castamp,cheesestream,clicktoview,crunchyroll,cyberlocker,daclips,dailymotion,divxstage,donevideo,ecostream,entroupload,facebook,filebox,hostingbulk,hostingcup,jumbofiles,limevideo,movdivx,movpod,movshare,movzap,muchshare,nolimitvideo,nosvideo,novamov,nowvideo,ovfile,play44_net,played,playwire,premiumize_me,primeshare,promptfile,purevid,rapidvideo,realdebrid,rpnet,seeon,sharefiles,sharerepo,sharesix,skyload,stagevu,stream2k,streamcloud,thefile,tubeplus,tunepk,ufliq,upbulk,uploadc,uploadcrazynet,veoh,vidbull,vidcrazynet,video44,videobb,videofun,videotanker,videoweed,videozed,videozer,vidhog,vidpe,vidplay,vidstream,vidup_org,vidx,vidxden,vidzur,vimeo,vureel,watchfreeinhd,xvidstage,yourupload,youtube,youwatch,zalaa,zooupload,zshare,vodlocker, streamin, letwatch,  "
+    sortorder = "vk, gvideo, muchmovies, sweflix, yify, enithusan, movreel, 180upload, vidplay, uptobox, mrfile, mightyupload, hugefiles, filecloud, uploadrocket, kingfiles, ororo, putlocker,sockshare,lemuploads,megarelease,filenuke,flashx,veehd,vidto,allmyvideos,dailymotion,movshare,nosvideo,novamov,nowvideo,played,playwire,sharerepo,sharesix,streamcloud,thefile,vidbull,videotanker,videoweed,vidxden,xvidstage,youtube,youwatch,vodlocker, streamin, letwatch,uploaddc, vidbux, grifthost, putstream, bestreams, oboom, tusfiles, realvid, noslocker, vid, plocker, video, netu, vshare, rocvideo, cloudyvideos, filehoot, exashare, shared, divxpress, vidlockers, goodvideohost, junkyvideo, cloudtime, yourvideohost, thevideo, vidspot, zettahost, videomega"
     sortorder = ','.join((sortorder.split(',')[::-1]))
     all_coll = sorted(all_coll, key=lambda word: sortorder.find(word[0].lower())*-1)
     for host,urls in all_coll:
