@@ -1,3 +1,6 @@
+[B]Version v1.2.2[/B] - 5/19/2015
+- Added Movie Information in Context Menu
+
 [B]Version v1.2.1[/B] - 4/27/2015
 - Updated English Movies Scraper
 

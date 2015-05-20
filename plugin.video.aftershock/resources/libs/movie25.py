@@ -143,7 +143,8 @@ def YEARB(murl,index=False):
 def VIDEOLINKS(name,url):
     link=main.OPENURL(url)
     #link=link.replace('\r','').replace('\n','').replace('\t','').replace('&nbsp;','').replace('\\','')
-    qual = re.compile('<h1 >Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
+    print link
+    qual = re.compile('<h1*>Links - Quality\s*?([^\s]+?)\s*?</h1>').findall(link)
     quality = str(qual)
     quality = quality.replace("'","")
     name  = name.split('[COLOR blue]')[0]

@@ -88,6 +88,7 @@ def addDirX(name,url,mode,iconimage,plot='',fanart='',dur=0,genre='',year='',imd
             Commands.append(('Refresh Metadata', 'XBMC.RunPlugin(%s?mode=778&name=%s&url=%s&iconimage=%s)' % (sys.argv[0], cname, 'movie',imdb_id)))
     else:
         infoLabels={ "Title": name, "Plot": plot, "Duration": dur, "Year": year ,"Genre": genre,"OriginalTitle" : removeColoredText(name) }
+    Commands.append(("Movie Information", 'Action(Info)'))
     if id != None: infoLabels["count"] = id
     Commands.append(('Watch History','XBMC.Container.Update(%s?name=None&mode=222&url=None&iconimage=None)'% (sys.argv[0])))
     
@@ -365,6 +366,7 @@ def GETMETAT(mname,genre,fan,thumb,plot='',imdb='',tmdb=''):
           'plot': meta['plot'],'title': meta['title'],'writer': meta['writer'],'cover_url': meta['cover_url'],'overlay':meta['overlay'],
           'director': meta['director'],'cast': meta['cast'],'backdrop_url': meta['backdrop_url'],'tmdb_id': meta['tmdb_id'],'year': meta['year'],
           'imdb_id' : meta['imdb_id']}
+        #'trailer': '%s?action=trailer&name=%s' % (sys.argv[0], sysname)
         if infoLabels['genre']=='':
             infoLabels['genre']=genre
         if infoLabels['cover_url']=='':
