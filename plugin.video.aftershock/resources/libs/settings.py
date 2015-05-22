@@ -12,13 +12,13 @@ def getAddOnID():
     d=addon_id
     return d
     
-def getHomeItems():
+def getHomeItems(getSetting):
     d=[]
     for x in range(40): 
         d.append(None);
         itemid = str(x + 1)
-        if selfAddon.getSetting("homeitems_" +itemid+ "_enabled")== "true":
-            d[x]=int(selfAddon.getSetting("homeitems_" + itemid))
+        if getSetting("homeitems_" +itemid+ "_enabled")== "true":
+            d[x]=int(getSetting("homeitems_" + itemid))
     return d
 def getMovie25URL():
     return selfAddon.getSetting("movie25-url")

@@ -23,44 +23,265 @@ mainurl = settings.getMovie25URL()
 sominalurl = settings.getSominalURL()
 desirulezurl = settings.getDesiRulezURL()
 
+
+
+################################# START NEW IMPL ################################################################
+import base64
+action              = None
+getSetting          = xbmcaddon.Addon().getSetting
+language            = xbmcaddon.Addon().getLocalizedString
+addonName           = xbmcaddon.Addon().getAddonInfo("name")
+addonVersion        = xbmcaddon.Addon().getAddonInfo("version")
+addonId             = xbmcaddon.Addon().getAddonInfo("id")
+addonPath           = xbmcaddon.Addon().getAddonInfo("path")
+addonDesc           = "My Addon"
+dataPath            = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo("profile")).decode("utf-8")
+addonSources        = os.path.join(dataPath,'sources.db')
+addonCache          = os.path.join(dataPath,'cache.db')
+
+class Main:
+    def __init__(self):
+        global action
+        params = {}
+        splitparams = sys.argv[2][sys.argv[2].find('?') + 1:].split('&')
+        for param in splitparams:
+            if (len(param) > 0):
+                splitparam = param.split('=')
+                key = splitparam[0]
+                try:    value = splitparam[1].encode("utf-8")
+                except: value = splitparam[1]
+                params[key] = value
+
+        try:        action = urllib.unquote_plus(params["action"])
+        except:     action = None
+        try:        name = urllib.unquote_plus(params["name"])
+        except:     name = None
+        try:        title = urllib.unquote_plus(params["title"])
+        except:     title = None
+        try:        year = urllib.unquote_plus(params["year"])
+        except:     year = None
+        try:        imdb = urllib.unquote_plus(params["imdb"])
+        except:     imdb = None
+        try:        tvdb = urllib.unquote_plus(params["tvdb"])
+        except:     tvdb = None
+        try:        season = urllib.unquote_plus(params["season"])
+        except:     season = None
+        try:        episode = urllib.unquote_plus(params["episode"])
+        except:     episode = None
+        try:        show = urllib.unquote_plus(params["show"])
+        except:     show = None
+        try:        show_alt = urllib.unquote_plus(params["show_alt"])
+        except:     show_alt = None
+        try:        date = urllib.unquote_plus(params["date"])
+        except:     date = None
+        try:        genre = urllib.unquote_plus(params["genre"])
+        except:     genre = None
+        try:        url = urllib.unquote_plus(params["url"])
+        except:     url = None
+        try:        image = urllib.unquote_plus(params["image"])
+        except:     image = None
+        try:        meta = urllib.unquote_plus(params["meta"])
+        except:     meta = None
+        try:        query = urllib.unquote_plus(params["query"])
+        except:     query = None
+        try:        source = urllib.unquote_plus(params["source"])
+        except:     source = None
+        try:        provider = urllib.unquote_plus(params["provider"])
+        except:     provider = None
+        
+        print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] season [%s] episode [%s] show [%s] show_alt [%s] date [%s] genre [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, image, meta, query, source, provider)
+        
+        if action == None: Menu().getHomeItems()
+
+        print "Main Initialized"
+    def dummy():
+        print "hello"
+class Menu:
+    def __init__(self):
+        print "Menu Initialized"
+    def dummy():
+        print "hello"
+    def getHomeItems(self):
+        d = settings.getHomeItems(getSetting)
+        homeItems = []
+        for index, value in sorted(enumerate(d), key=lambda x:x[1]):
+            if value==None: continue
+            if index==0:
+                homeItems.append({'name':90100, 'image': 'search.png', 'action': 'home_search'})
+            elif index==1:
+                homeItems.append({'name':90101, 'image': 'favsu.png', 'action': 'home_fav'})
+            elif index==2:
+                homeItems.append({'name':90102, 'image': 'az.png', 'action': 'home_az'})
+            elif index==3:
+                homeItems.append({'name':90103, 'image': 'new.png', 'action': 'home_newreleases', 'url': Links().eng_new_releases})
+            elif index==4:
+                homeItems.append({'name':90104, 'image': 'latest.png', 'action': 'home_latest', 'url': Links().eng_latest_added})
+            elif index==5:
+                homeItems.append({'name':90105, 'image': 'feat.png', 'action': 'home_featured', 'url': Links().eng_featured})
+            elif index==6:
+                homeItems.append({'name':90106, 'image': 'view.png', 'action': 'home_mostviewed', 'url': Links().eng_popular})
+            elif index==7:
+                homeItems.append({'name':90107, 'image': 'vote.png', 'action': 'home_mostvoted', 'url': Links().eng_most_voted})
+            elif index==8:
+                homeItems.append({'name':90108, 'image': 'dvd2hd.png', 'action': 'home_hd', 'url': Links().eng_hd})
+            elif index==9:
+                homeItems.append({'name':90109, 'image': 'genre.png', 'action': 'home_genre'})
+            elif index==10:
+                homeItems.append({'name':90110, 'image': 'year.png', 'action': 'home_year'})
+            elif index==11:
+                homeItems.append({'name':90111, 'image': 'whistory.png', 'action': 'home_history'})
+            elif index==12:
+                homeItems.append({'name':90112, 'image': 'intl.png', 'action': 'home_international'})
+            elif index==13:
+                homeItems.append({'name':90113, 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
+            elif index==14:
+                homeItems.append({'name':90114, 'image': 'live.png', 'action': 'home_livetv'})
+            elif index==22:
+                homeItems.append({'name':90115, 'image': 'kidzone.png', 'action': 'home_kids'})
+        Index().homeList(homeItems)
+        #main.addPlayc('Aftershock Settings',mainurl,constants.MAIN_SETTINGS,art+'/MashSettings.png','','','','','')
+
+class Index:
+    def __init__(self):
+        print "Initialized"
+    def addonArt(self, image):
+        art = os.path.join(addonPath, 'resources/art')
+        image = os.path.join(art, image)
+        return image
+    
+    def homeList(self, homeList):
+        if homeList == None or len(homeList) == 0: return
+        
+        total = len(homeList)
+        for i in homeList:
+            try:
+                print i
+                try: name = language(i['name']).encode("utf-8")
+                except: name = i['name']
+                
+                action = i['action']
+                try: image = self.addonArt(i['image'])
+                except: image = i['image']
+
+                u = '%s?action=%s' % (sys.argv[0], action)
+                try: u += '&url=%s' % urllib.quote_plus(i['url'])
+                except: pass
+
+                cm = []
+                replaceItems = False
+
+                item = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=image)
+                item.setInfo(type="Video", infoLabels={"Label": name, "Title": name, "Plot": addonDesc})
+                item.setProperty("Fanart_Image", image)
+                print name
+                
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
+                print name
+                
+            except:
+                import traceback
+                traceback.print_exc()
+                pass
+
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+
+class Links:
+    def __init__(self):
+        #self.imdb_base = 'http://www.imdb.com'
+        #self.imdb_mobile = 'http://m.imdb.com'
+        #self.imdb_genre = 'http://www.imdb.com/genre/'
+        #self.imdb_language = 'http://www.imdb.com/language/'
+        #self.imdb_title = 'http://www.imdb.com/title/tt%s/'
+        #self.imdb_info = 'http://www.imdbapi.com/?t=%s&y=%s'
+        #self.imdb_media = 'http://ia.media-imdb.com'
+        #self.imdb_seasons = 'http://www.imdb.com/title/tt%s/episodes'
+        #self.imdb_episodes = 'http://www.imdb.com/title/tt%s/episodes?season=%s'
+        #self.imdb_genres = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&genres=%s'
+        #self.imdb_certificates = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&certificates=us:%s'
+        #self.imdb_languages = 'http://www.imdb.com/search/title?languages=%s|1&title_type=feature,tv_movie&sort=moviemeter,asc&count=25&start=1'
+        #self.imdb_years = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&year=%s,%s'
+        #self.imdb_popular = 'http://www.imdb.com/search/title?groups=top_1000&sort=moviemeter,asc&count=25&start=1'
+        #self.imdb_boxoffice = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us,desc&count=25&start=1'
+        #self.imdb_views = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=num_votes,desc&count=25&start=1'
+        #self.imdb_oscars = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&groups=oscar_best_picture_winners&sort=year,desc&count=25&start=1'
+        #self.imdb_tv_genres = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1&genres=%s'
+        #self.imdb_tv_certificates = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1&certificates=us:%s'
+        #self.imdb_tv_popular = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1'
+        #self.imdb_tv_rating = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=5000,&sort=user_rating,desc&count=25&start=1'
+        #self.imdb_tv_views = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=num_votes,desc&count=25&start=1'
+        #self.imdb_tv_active = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&production_status=active&sort=moviemeter,asc&count=25&start=1'
+        #self.imdb_search = 'http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=%s'
+        #self.imdb_people_search = 'http://www.imdb.com/search/name?count=100&name=%s'
+        #self.imdb_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=feature,tv_movie&start=1&role=nm%s'
+        #self.imdb_tv_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=tv_series,mini_series&start=1&role=nm%s'
+        #self.imdb_userlists = 'http://www.imdb.com/user/ur%s/lists?tab=all&sort=modified:desc&filter=titles'
+        #self.imdb_watchlist ='http://www.imdb.com/user/ur%s/watchlist'
+        #self.imdb_list = 'http://www.imdb.com/list/%s/?view=detail&sort=title:asc&title_type=feature,short,tv_movie,tv_special,video,documentary,game&start=1'
+        #self.imdb_tv_list = 'http://www.imdb.com/list/%s/?view=detail&sort=title:asc&title_type=tv_series,mini_series&start=1'
+        #self.imdb_user = getSetting("imdb_user").replace('ur', '')
+
+        self.tmdb_base = 'http://api.themoviedb.org'
+        self.tmdb_key = base64.urlsafe_b64decode('MTdmMjI3YmVjNTdkOTQ4OGJiYzgyNzYyZmMxNDQ0NmM=') ## using my key kodi-plugin-aftershock 17f227bec57d9488bbc82762fc14446c
+        self.tmdb_info = 'http://api.themoviedb.org/3/movie/tt%s?language=en&api_key=%s'
+        self.tmdb_info2 = 'http://api.themoviedb.org/3/movie/%s?language=en&api_key=%s'
+        #self.tmdb_theaters = 'http://api.themoviedb.org/3/movie/now_playing?api_key=%s&page=1'
+        self.tmdb_image = 'http://image.tmdb.org/t/p/original'
+        self.tmdb_image2 = 'http://image.tmdb.org/t/p/w500'
+
+        self.tvdb_base = 'http://thetvdb.com'
+        self.tvdb_key = base64.urlsafe_b64decode('OUZDQkM2MjlEQzgyRjA4Qw==') ## using my key kodi-plugin-aftershock	9FCBC629DC82F08C
+        self.tvdb_search = 'http://thetvdb.com/api/GetSeriesByRemoteID.php?imdbid=tt%s&language=en'
+        self.tvdb_search2 = 'http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=en'
+        self.tvdb_info = 'http://thetvdb.com/api/%s/series/%s/all/en.zip'
+        self.tvdb_info2 = 'http://thetvdb.com/api/%s/series/%s/en.xml'
+        self.tvdb_image = 'http://thetvdb.com/banners/'
+        self.tvdb_image2 = 'http://thetvdb.com/banners/_cache/'
+
+        self.eng_base = 'http://www.movie25.ag'
+        self.eng_link_1 = 'http://www.movie25.ag'
+        self.eng_link_2 = 'http://translate.googleusercontent.com/translate_c?anno=2&hl=en&sl=mt&tl=en&u=http://www.movie25.ag'
+        self.eng_link_3 = 'https://movie25.unblocked.pw'
+        self.eng_new_releases = self.eng_base + '/new-releases/'
+        self.eng_latest_added = self.eng_base + '/latest-added/'
+        self.eng_featured = self.eng_base + '/featured-movies/'
+        self.eng_popular = self.eng_base + '/most-viewed/'
+        self.eng_most_voted = self.eng_base + '/most-voted/'
+        self.eng_hd = self.eng_base + '/latest-hd-movies/'
+       
+class Trailer:
+    def __init__(self):
+        print "Trailer Initialized"
+    def dummy():
+        print "hello"
+class International:
+    def __init__(self):
+        print "Initialized Initialized"
+    def dummy():
+        print "hello"
+class HindiMovies:
+    def __init__(self):
+        print "HindiMovies Initialized"
+    def dummy():
+        print "hello"
+
+class FileUtils:
+    def __init__(self):
+        print "FileUtils Initialized"
+    def dummy():
+        print "hello"
+
+Main()
+#Menu()
+#Trailer()
+#International()
+#HindiMovies()
+#FileUtils()
+
+################################# START NEW IMPL ################################################################
+        
 def MAIN():
     xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
-    d = settings.getHomeItems()
-    for index, value in sorted(enumerate(d), key=lambda x:x[1]):
-        if value==None: continue
-        if index==0:
-            main.addDirHome('Search',mainurl,constants.MOVIE25_SEARCH_HISTORY,art+'/search.png')
-        elif index==1:
-            main.addDirHome("All Fav's",mainurl,constants.MAIN_GLOBALFAV,art+'/favsu.png')
-        elif index==2:
-            main.addDirHome('A-Z',mainurl,constants.MOVIE_ATOZ,art+'/az.png')
-        elif index==3:
-            main.addDirHome('New Releases',mainurl + 'new-releases/',constants.MOVIE25_LISTMOVIES,art+'/new.png')
-        elif index==4:
-            main.addDirHome('Latest Added',mainurl + 'latest-added/',constants.MOVIE25_LISTMOVIES,art+'/latest.png')
-        elif index==5:
-            main.addDirHome('Featured Movies',mainurl + 'featured-movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
-        elif index==6:
-            main.addDirHome('Most Viewed',mainurl + 'most-viewed/',constants.MOVIE25_LISTMOVIES,art+'/view.png')
-        elif index==7:
-            main.addDirHome('Most Voted',mainurl + 'most-voted/',constants.MOVIE25_LISTMOVIES,art+'/vote.png')
-        elif index==8:
-            main.addDirHome('HD Releases',mainurl + 'latest-hd-movies/',constants.MOVIE25_LISTMOVIES,art+'/dvd2hd.png')
-        elif index==9:
-            main.addDirHome('Genre',mainurl,constants.MOVIE_GENRE,art+'/genre.png')
-        elif index==10:
-            main.addDirHome('By Year',mainurl,constants.MOVIE_YEAR,art+'/year.png')
-        elif index==11:
-            main.addDirHome('Watch History','history',constants.MAIN_HISTORY,art+'/whistory.png')
-        elif index==12:
-            main.addDirHome('International',desirulezurl,constants.DESIRULEZ_CHANNELS,art+'/intl.png')
-        elif index==13:
-            main.addDirHome('Hindi Movies',sominalurl,constants.HINDI_MOVIES_MENU,art+'/hindimovies.png')
-        elif index==14:
-            main.addDirHome('Live TV',mainurl,constants.LIVETV_MENU,art+'/live.png')
-        elif index==22:
-            main.addDirHome('Kids Zone',mainurl,constants.KIDZONE_MENU,art+'/kidzone.png')
-    main.addPlayc('Aftershock Settings',mainurl,constants.MAIN_SETTINGS,art+'/MashSettings.png','','','','','')
+    
 
 def AtoZ(index):
     main.addDir('0-9',mainurl + '0-9/',constants.MOVIE25_LISTMOVIES,art+'/09.png')
@@ -539,4 +760,4 @@ elif mode == constants.REFRESH_METADATA: #REFRESH METADATA
 elif mode == constants.MAIN_SETTINGS:
     settings.openSettings()
 
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+#xbmcplugin.endOfDirectory(int(sys.argv[1]))

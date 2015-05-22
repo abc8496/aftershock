@@ -1,3 +1,6 @@
+[B]Version v2.0.0[/B] - TBD
+- Complete Re-write
+
 [B]Version v1.2.2[/B] - 5/19/2015
 - Added Movie Information in Context Menu
 

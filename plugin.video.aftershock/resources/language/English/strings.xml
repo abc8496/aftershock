@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- Settings -->
+	<string id="90000">Settings</string>
+    
+    <!-- Home Items -->
+    <string id="90100">Search</string>
+    <string id="90101">Favourites</string>
+    <string id="90102">A-Z</string>
+    <string id="90103">New Releases</string>
+    <string id="90104">Latest Added</string>
+    <string id="90105">Featured</string>
+    <string id="90106">Most Viewed</string>
+    <string id="90107">Most Voted</string>
+    <string id="90108">HD Releases</string>
+    <string id="90109">Genre</string>
+    <string id="90110">By Year</string>
+    <string id="90111">Watch History</string>
+    <string id="90112">International</string>
+    <string id="90113">Hindi Movies</string>
+    <string id="90114">Live TV</string>
+    <string id="90115">Kids Zone</string>
+    
+	<string id="30621">[B]SETTINGS[/B] : General</string>
+	<string id="30622">[B]SETTINGS[/B] : Accounts</string>
+	<string id="30623">[B]SETTINGS[/B] : Playback</string>
+	<string id="30624">[B]SETTINGS[/B] : Subtitles</string>
+	<string id="30625">[B]SOURCES[/B] : Movies</string>
+	<string id="30626">[B]SOURCES[/B] : TV</string>
+	<string id="30627">[B]HOSTS[/B] : HD Priority</string>
+	<string id="30628">[B]HOSTS[/B] : SD Priority</string>
+	<string id="30629">[B]GENESIS[/B] : Clear sources...</string>
+	<string id="30630">[B]GENESIS[/B] : Clear cache...</string>
+	<string id="30631">[B]GENESIS[/B] : Downloads</string>
+	<string id="30632">[B]GENESIS[/B] : Library</string>
+	<string id="30640">[B]LIBRARY[/B] : Settings</string>
+	<string id="30641">[B]GENESIS[/B] : Update folders...</string>
+	<string id="30642">[B]GENESIS[/B] : Movie folder...</string>
+	<string id="30643">[B]GENESIS[/B] : TV folder...</string>
+	<string id="30644">[B]TRAKT[/B] : Import Collection...</string>
+	<string id="30645">[B]TRAKT[/B] : Import TV Collection...</string>
+	<string id="30646">[B]TRAKT[/B] : Import Watchlist...</string>
+	<string id="30647">[B]TRAKT[/B] : Import TV Watchlist...</string>
+	<string id="30648">[B]IMDB[/B] : Import Watchlist...</string>
+	<string id="30649">[B]IMDB[/B] : Import TV Watchlist...</string>
+</strings>
