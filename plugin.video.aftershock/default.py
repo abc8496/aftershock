@@ -26,7 +26,13 @@ desirulezurl = settings.getDesiRulezURL()
 
 
 ################################# START NEW IMPL ################################################################
-import base64
+import base64, urlparse
+import CommonFunctions as common
+try:
+    import json
+except:
+    import simplejson as json
+
 action              = None
 getSetting          = xbmcaddon.Addon().getSetting
 language            = xbmcaddon.Addon().getLocalizedString
@@ -92,70 +98,157 @@ class Main:
         print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] season [%s] episode [%s] show [%s] show_alt [%s] date [%s] genre [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, image, meta, query, source, provider)
         
         if action == None: Menu().getHomeItems()
+        elif action == 'home_az': Menu().getAtoZItems()
+        elif action == 'home_genre': Menu().getHomeGenre() 
+        elif action == 'home_year' : Menu().getHomeYear() 
+        elif action == 'home_featured' : Movies().featured(url)
+        
 
-        print "Main Initialized"
-    def dummy():
-        print "hello"
+class getUrl(object):
+    def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
+        print "URL : " + str(url)
+        handlers = []
+        if not proxy == None:
+            handlers += [urllib2.ProxyHandler({'http':'%s' % (proxy)}), urllib2.HTTPHandler]
+            opener = urllib2.build_opener(*handlers)
+            opener = urllib2.install_opener(opener)
+        if output == 'cookie' or not close == True:
+            import cookielib
+            cookies = cookielib.LWPCookieJar()
+            handlers += [urllib2.HTTPHandler(), urllib2.HTTPSHandler(), urllib2.HTTPCookieProcessor(cookies)]
+            opener = urllib2.build_opener(*handlers)
+            opener = urllib2.install_opener(opener)
+        try:
+            if sys.version_info < (2, 7, 9): raise Exception()
+            import ssl; ssl_context = ssl.create_default_context()
+            ssl_context.check_hostname = False
+            ssl_context.verify_mode = ssl.CERT_NONE
+            handlers += [urllib2.HTTPSHandler(context=ssl_context)]
+            opener = urllib2.build_opener(*handlers)
+            opener = urllib2.install_opener(opener)
+        except:
+            pass
+        try: headers.update(headers)
+        except: headers = {}
+        if 'User-Agent' in headers:
+            pass
+        elif not mobile == True:
+            headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; rv:34.0) Gecko/20100101 Firefox/34.0'
+        else:
+            headers['User-Agent'] = 'Apple-iPhone/701.341'
+        if 'referer' in headers:
+            pass
+        elif referer == None:
+            headers['referer'] = url
+        else:
+            headers['referer'] = referer
+        if not 'Accept-Language' in headers:
+            headers['Accept-Language'] = 'en-US'
+        if 'cookie' in headers:
+            pass
+        elif not cookie == None:
+            headers['cookie'] = cookie
+        request = urllib2.Request(url, data=post, headers=headers)
+        response = urllib2.urlopen(request, timeout=int(timeout))
+        if output == 'cookie':
+            result = []
+            for c in cookies: result.append('%s=%s' % (c.name, c.value))
+            result = "; ".join(result)
+        elif output == 'geturl':
+            result = response.geturl()
+        else:
+            result = response.read()
+        if close == True:
+            response.close()
+        self.result = result
+
 class Menu:
     def __init__(self):
         print "Menu Initialized"
-    def dummy():
-        print "hello"
     def getHomeItems(self):
         d = settings.getHomeItems(getSetting)
         homeItems = []
         for index, value in sorted(enumerate(d), key=lambda x:x[1]):
             if value==None: continue
             if index==0:
-                homeItems.append({'name':90100, 'image': 'search.png', 'action': 'home_search'})
+                homeItems.append({'name':language(90100).encode("utf-8"), 'image': 'search.png', 'action': 'home_search'})
             elif index==1:
-                homeItems.append({'name':90101, 'image': 'favsu.png', 'action': 'home_fav'})
+                homeItems.append({'name':language(90101).encode("utf-8"), 'image': 'favsu.png', 'action': 'home_fav'})
             elif index==2:
-                homeItems.append({'name':90102, 'image': 'az.png', 'action': 'home_az'})
+                homeItems.append({'name':language(90102).encode("utf-8"), 'image': 'az.png', 'action': 'home_az'})
             elif index==3:
-                homeItems.append({'name':90103, 'image': 'new.png', 'action': 'home_newreleases', 'url': Links().eng_new_releases})
+                homeItems.append({'name':language(90103).encode("utf-8"), 'image': 'new.png', 'action': 'home_newreleases', 'url': Links().eng_new_releases})
             elif index==4:
-                homeItems.append({'name':90104, 'image': 'latest.png', 'action': 'home_latest', 'url': Links().eng_latest_added})
+                homeItems.append({'name':language(90104).encode("utf-8"), 'image': 'latest.png', 'action': 'home_latest', 'url': Links().eng_latest_added})
             elif index==5:
-                homeItems.append({'name':90105, 'image': 'feat.png', 'action': 'home_featured', 'url': Links().eng_featured})
+                homeItems.append({'name':language(90105).encode("utf-8"), 'image': 'feat.png', 'action': 'home_featured', 'url': Links().eng_featured})
             elif index==6:
-                homeItems.append({'name':90106, 'image': 'view.png', 'action': 'home_mostviewed', 'url': Links().eng_popular})
+                homeItems.append({'name':language(90106).encode("utf-8"), 'image': 'view.png', 'action': 'home_mostviewed', 'url': Links().eng_popular})
             elif index==7:
-                homeItems.append({'name':90107, 'image': 'vote.png', 'action': 'home_mostvoted', 'url': Links().eng_most_voted})
+                homeItems.append({'name':language(90107).encode("utf-8"), 'image': 'vote.png', 'action': 'home_mostvoted', 'url': Links().eng_most_voted})
             elif index==8:
-                homeItems.append({'name':90108, 'image': 'dvd2hd.png', 'action': 'home_hd', 'url': Links().eng_hd})
+                homeItems.append({'name':language(90108).encode("utf-8"), 'image': 'dvd2hd.png', 'action': 'home_hd', 'url': Links().eng_hd})
             elif index==9:
-                homeItems.append({'name':90109, 'image': 'genre.png', 'action': 'home_genre'})
+                homeItems.append({'name':language(90109).encode("utf-8"), 'image': 'genre.png', 'action': 'home_genre'})
             elif index==10:
-                homeItems.append({'name':90110, 'image': 'year.png', 'action': 'home_year'})
+                homeItems.append({'name':language(90110).encode("utf-8"), 'image': 'year.png', 'action': 'home_year'})
             elif index==11:
-                homeItems.append({'name':90111, 'image': 'whistory.png', 'action': 'home_history'})
+                homeItems.append({'name':language(90111).encode("utf-8"), 'image': 'whistory.png', 'action': 'home_history'})
             elif index==12:
-                homeItems.append({'name':90112, 'image': 'intl.png', 'action': 'home_international'})
+                homeItems.append({'name':language(90112).encode("utf-8"), 'image': 'intl.png', 'action': 'home_international'})
             elif index==13:
-                homeItems.append({'name':90113, 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
+                homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
             elif index==14:
-                homeItems.append({'name':90114, 'image': 'live.png', 'action': 'home_livetv'})
+                homeItems.append({'name':language(90114).encode("utf-8"), 'image': 'live.png', 'action': 'home_livetv'})
             elif index==22:
-                homeItems.append({'name':90115, 'image': 'kidzone.png', 'action': 'home_kids'})
+                homeItems.append({'name':language(90115).encode("utf-8"), 'image': 'kidzone.png', 'action': 'home_kids'})
+        homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'settings_home'})
         Index().homeList(homeItems)
-        #main.addPlayc('Aftershock Settings',mainurl,constants.MAIN_SETTINGS,art+'/MashSettings.png','','','','','')
+        
+    def getAtoZItems(self) :
+        listItems = []
+        listItems.append({'name':'0-9', 'image':'09.png', 'action':'movie_list', 'url':Links().getUrl('0-9')})
+        for i in string.ascii_uppercase:
+            listItems.append({'name':i, 'image':i.lower()+'.png', 'action':'movie_list', 'url':Links().getUrl(i.lower())})
+        Index().homeList(listItems)  
+        
+    def getHomeGenre(self) :
+        listItems = []
+        genres = ['Action','Adventure','Animation','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Music','Musical','Mystery','Romance','Sci-Fi','Short','Sport','Thriller','War','Western']
+        
+        for i in genres:
+            listItems.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movie_list', 'url':Links().getUrl(i.lower()+'/')})
+        Index().homeList(listItems)    
+        
+    def getHomeYear(self) :
+        listItems = []
+        for i in reversed(range(2003, 2016)):
+            listItems.append({'name':str(i), 'image':str(i)+'.png', 'action':'movie_list', 'url':Links().getUrl('search.php?year='+str(i))})
+        listItems.append({'name':'Enter Year', 'image':'enteryear.png', 'action':'movie_list'})    
+        Index().homeList(listItems)    
 
 class Index:
     def __init__(self):
         print "Initialized"
+
     def addonArt(self, image):
         art = os.path.join(addonPath, 'resources/art')
         image = os.path.join(art, image)
         return image
-    
+        
+    def setContainerView(self, contentType, view=None):
+        if contentType == 'HOME':
+            view = 500
+        elif contentType == 'MOVIES':
+            view = 500
+        xbmc.executebuiltin('Container.SetViewMode(%s)' % view)
+        
     def homeList(self, homeList):
         if homeList == None or len(homeList) == 0: return
         
         total = len(homeList)
         for i in homeList:
             try:
-                print i
                 try: name = language(i['name']).encode("utf-8")
                 except: name = i['name']
                 
@@ -173,16 +266,73 @@ class Index:
                 item = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=image)
                 item.setInfo(type="Video", infoLabels={"Label": name, "Title": name, "Plot": addonDesc})
                 item.setProperty("Fanart_Image", image)
-                print name
                 
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
-                print name
                 
             except:
                 import traceback
                 traceback.print_exc()
                 pass
+        self.setContainerView('HOME')
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+    def movieList(self, movieList):
+        if movieList == None or len(movieList) == 0: return
+        
+        addonPoster = self.addonArt('movie_poster.png')
+        addonFanart = self.addonArt('fanart.jpg')
+        
+        total = len(movieList)
+        for i in movieList:
+            try:
+                name, title, year, imdb, genre, url, poster, fanart, studio, duration, rating, votes, mpaa, director, plot, plotoutline, tagline = i['name'], i['title'], i['year'], i['imdb'], i['genre'], i['url'], i['poster'], i['fanart'], i['studio'], i['duration'], i['rating'], i['votes'], i['mpaa'], i['director'], i['plot'], i['plotoutline'], i['tagline']
 
+                if poster == '0': poster = addonPoster
+                if fanart == '0': fanart = addonFanart
+                if duration == '0': duration == '120'
+
+                sysname, systitle, sysyear, sysimdb, sysurl, sysimage = urllib.quote_plus(name), urllib.quote_plus(title), urllib.quote_plus(year), urllib.quote_plus(imdb), urllib.quote_plus(url), urllib.quote_plus(poster)
+
+                meta = {'title': title, 'year': year, 'imdb_id' : 'tt' + imdb, 'genre' : genre, 'poster' : poster, 'fanart' : fanart, 'studio' : studio, 'duration' : duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'plot': plot, 'plotoutline': plotoutline, 'tagline': tagline, 'trailer': '%s?action=trailer&name=%s' % (sys.argv[0], sysname)}
+                meta = dict((k,v) for k, v in meta.iteritems() if not v == '0')
+                sysmeta = urllib.quote_plus(json.dumps(meta))
+
+                u = '%s?action=get_host&name=%s&title=%s&year=%s&imdb=%s&url=%s&meta=%s' % (sys.argv[0], sysname, systitle, sysyear, sysimdb, sysurl, sysmeta)
+                isFolder = True
+                
+                cm = []
+                cm.append(('Movie Information', 'Action(Info)'))
+                item = xbmcgui.ListItem(label=name, iconImage="DefaultVideo.png", thumbnailImage=poster)
+                try: item.setArt({'poster': poster, 'banner': poster})
+                except: pass
+                item.setProperty("Fanart_Image", fanart)
+                item.setInfo(type="Video", infoLabels = meta)
+                item.setProperty("Video", "true")
+                item.setProperty("IsPlayable", "true")
+                item.addContextMenuItems(cm, replaceItems=True)
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=isFolder)
+            except:
+                import traceback
+                traceback.print_exc()
+                pass
+
+        try:
+            next = movieList[0]['next']
+            if next == '': raise Exception()
+            name, url, image = 'Next', next, self.addonArt('next.png')
+            if getSetting("appearance") == '-': image = 'DefaultFolder.png'
+            u = '%s?action=movies&url=%s' % (sys.argv[0], urllib.quote_plus(url))
+            item = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=image)
+            item.setInfo( type="Video", infoLabels={ "Label": name, "Title": name, "Plot": addonDesc } )
+            item.setProperty("Fanart_Image", addonFanart)
+            item.addContextMenuItems([], replaceItems=False)
+            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,isFolder=True)
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
+        xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+        self.setContainerView('MOVIES')
         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
 
 class Links:
@@ -191,7 +341,7 @@ class Links:
         #self.imdb_mobile = 'http://m.imdb.com'
         #self.imdb_genre = 'http://www.imdb.com/genre/'
         #self.imdb_language = 'http://www.imdb.com/language/'
-        #self.imdb_title = 'http://www.imdb.com/title/tt%s/'
+        self.imdb_title = 'http://www.imdb.com/title/tt%s/'
         #self.imdb_info = 'http://www.imdbapi.com/?t=%s&y=%s'
         #self.imdb_media = 'http://ia.media-imdb.com'
         #self.imdb_seasons = 'http://www.imdb.com/title/tt%s/episodes'
@@ -210,7 +360,7 @@ class Links:
         #self.imdb_tv_rating = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=5000,&sort=user_rating,desc&count=25&start=1'
         #self.imdb_tv_views = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=num_votes,desc&count=25&start=1'
         #self.imdb_tv_active = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&production_status=active&sort=moviemeter,asc&count=25&start=1'
-        #self.imdb_search = 'http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=%s'
+        self.imdb_search = 'http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=%s'
         #self.imdb_people_search = 'http://www.imdb.com/search/name?count=100&name=%s'
         #self.imdb_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=feature,tv_movie&start=1&role=nm%s'
         #self.imdb_tv_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=tv_series,mini_series&start=1&role=nm%s'
@@ -247,7 +397,10 @@ class Links:
         self.eng_popular = self.eng_base + '/most-viewed/'
         self.eng_most_voted = self.eng_base + '/most-voted/'
         self.eng_hd = self.eng_base + '/latest-hd-movies/'
-       
+        
+    def getUrl(self, url):
+        return self.eng_base + '/' + url
+
 class Trailer:
     def __init__(self):
         print "Trailer Initialized"
@@ -270,6 +423,243 @@ class FileUtils:
     def dummy():
         print "hello"
 
+class Movies:
+    def __init__(self):
+        self.list = []
+        print "Movies Initialized"
+    def featured(self, url):
+        print "Inside Movies Featured"
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def cleantitle_movie(self, title):
+        title = re.sub('\n|([[].+?[]])|([(].+?[)])|\s(vs|v[.])\s|(:|;|-|"|,|\'|\.|\?)|\s', '', title).lower()
+        return title    
+    def scn_list(self, url):
+        try:
+            result = ''
+            try: url = re.compile('//.+?(/.+)').findall(url)[0]
+            except: pass
+            links = [Links().eng_link_1, Links().eng_link_2, Links().eng_link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + url).result
+                except: result = ''
+                if 'movie_table' in result: break
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            movies = common.parseDOM(result, "div", attrs = { "class": "movie_table" })
+        except:
+            return
+        
+        try:
+            next = common.parseDOM(result, "div", attrs = { "class": "count_text" })[0]
+            next = re.compile('(<a.+?</a>)').findall(next)
+            next = [i for i in next if '>Next<' in i][-1]
+            next = re.compile('href=(.+?)>').findall(next)[-1]
+            next = re.sub('\'|\"','', next)
+            next = common.replaceHTMLCodes(next)
+            try: next = urlparse.parse_qs(urlparse.urlparse(next).query)['u'][0]
+            except: pass
+            next = urlparse.urljoin(Links().eng_base, next)
+            next = next.encode('utf-8')
+        except:
+            next = ''
+            
+        for movie in movies:
+            
+            try:
+                title = common.parseDOM(movie, "a", ret="title")[0]
+                title = re.compile('(.+?) [(]\d{4}[)]$').findall(title)[0]
+                title = common.replaceHTMLCodes(title)
+                title = title.encode('utf-8')
+
+                year = common.parseDOM(movie, "a", ret="title")[0]
+                year = re.compile('.+? [(](\d{4})[)]$').findall(year)[0]
+                year = year.encode('utf-8')
+
+                name = '%s (%s)' % (title, year)
+                try: name = name.encode('utf-8')
+                except: pass
+
+                url = common.parseDOM(movie, "a", ret="href")[0]
+                url = common.replaceHTMLCodes(url)
+                try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
+                except: pass
+                url = urlparse.urljoin(Links().eng_base, url)
+                url = url.encode('utf-8')
+
+                poster = '0'
+                try: poster = common.parseDOM(movie, "img", ret="src")[0]
+                except: pass
+                poster = common.replaceHTMLCodes(poster)
+                try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
+                except: pass
+                poster = poster.encode('utf-8')
+
+                genre = common.parseDOM(movie, "div", attrs = { "class": "movie_about_genre" })
+                genre = common.parseDOM(genre, "a")
+                genre = " / ".join(genre)
+                if genre == '': genre = '0'
+                genre = common.replaceHTMLCodes(genre)
+                genre = genre.encode('utf-8')
+
+                self.list.append({'name': name, 'title': title, 'year': year, 'imdb': '0000000', 'tvdb': '0', 'season': '0', 'episode': '0', 'show': '0', 'show_alt': '0', 'date': '0', 'genre': genre, 'url': '0', 'poster': poster, 'fanart': '0', 'studio': '0', 'duration': '0', 'rating': '0', 'votes': '0', 'mpaa': '0', 'director': '0', 'plot': '0', 'plotoutline': '0', 'tagline': '0', 'next': next})
+            except:
+                pass
+        
+        threads = []
+        for i in range(0, len(self.list)): threads.append(Thread(self.imdb_info, i))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+        
+        
+        self.list = [i for i in self.list if not i['imdb'] == '0000000']
+
+        threads = []
+        for i in range(0, len(self.list)): threads.append(Thread(self.tmdb_info, i))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+        
+        return self.list
+    def imdb_info(self, i):
+        try:
+            match = []
+            title = self.list[i]['title']
+            year = self.list[i]['year']
+            url = Links().imdb_search % urllib.quote_plus(title)
+            result = getUrl(url, timeout='30').result
+            result = common.replaceHTMLCodes(result)
+            result = json.loads(result)
+            for x in result.keys(): match += result[x]
+
+            title = self.cleantitle_movie(title)
+            years = [str(year), str(int(year)+1), str(int(year)-1)]
+            match = [x for x in match if title == self.cleantitle_movie(x['title'])]
+            match = [x for x in match if any(x['title_description'].startswith(y) for y in years)][0]
+
+            title = match['title']
+            if title == '' or title == None: title = '0'
+            title = common.replaceHTMLCodes(title)
+            title = title.encode('utf-8')
+            if not title == '0': self.list[i].update({'title': title})
+
+            year = match['title_description']
+            year = re.sub('[^0-9]', '', str(year))[:4]
+            self.list[i].update({'year': year})
+
+            name = '%s (%s)' % (self.list[i]['title'], self.list[i]['year'])
+            try: name = name.encode('utf-8')
+            except: pass
+            self.list[i].update({'name': name})
+
+            imdb = match['id']
+            imdb = re.sub('[^0-9]', '', str(imdb))
+            imdb = imdb.encode('utf-8')
+            self.list[i].update({'imdb': imdb})
+
+            url = Links().imdb_title % imdb
+            url = common.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
+            self.list[i].update({'url': url})
+        except:
+            import traceback
+            traceback.print_exc()
+
+            pass
+    def tmdb_info(self, i):
+        try:
+            url = Links().tmdb_info % (self.list[i]['imdb'], Links().tmdb_key)
+            result = getUrl(url, timeout='10').result
+            result = json.loads(result)
+
+            title = result['title']
+            if title == '' or title == None: title = '0'
+            title = common.replaceHTMLCodes(title)
+            title = title.encode('utf-8')
+            if not title == '0': self.list[i].update({'title': title})
+
+            try: year = str(result['release_date'])
+            except: year = '0000'
+            year = re.compile('(\d{4})').findall(year)[0]
+            year = year.encode('utf-8')
+            if not year == '0000': self.list[i].update({'year': year})
+
+            poster = result['poster_path']
+            if poster == '' or poster == None: poster = '0'
+            if not poster == '0': poster = '%s%s' % (Links().tmdb_image2, poster)
+            poster = common.replaceHTMLCodes(poster)
+            poster = poster.encode('utf-8')
+            if not poster == '0': self.list[i].update({'poster': poster})
+
+            fanart = result['backdrop_path']
+            if fanart == '' or fanart == None: fanart = '0'
+            if not fanart == '0': fanart = '%s%s' % (Links().tmdb_image, fanart)
+            fanart = common.replaceHTMLCodes(fanart)
+            fanart = fanart.encode('utf-8')
+            if not fanart == '0': self.list[i].update({'fanart': fanart})
+
+            genre = result['genres']
+            try: genre = [x['name'] for x in genre]
+            except: genre = '0'
+            if genre == '' or genre == None or genre == []: genre = '0'
+            genre = " / ".join(genre)
+            genre = common.replaceHTMLCodes(genre)
+            genre = genre.encode('utf-8')
+            if not genre == '0': self.list[i].update({'genre': genre})
+
+            studio = result['production_companies']
+            try: studio = [x['name'] for x in studio][0]
+            except: studio = '0'
+            if studio == '' or studio == None: studio = '0'
+            studio = common.replaceHTMLCodes(studio)
+            studio = studio.encode('utf-8')
+            if not studio == '0': self.list[i].update({'studio': studio})
+
+            try: duration = str(result['runtime'])
+            except: duration = '0'
+            if duration == '' or duration == None or not self.list[i]['duration'] == '0': duration = '0'
+            duration = common.replaceHTMLCodes(duration)
+            duration = duration.encode('utf-8')
+            if not duration == '0': self.list[i].update({'duration': duration})
+
+            rating = str(result['vote_average'])
+            if rating == '' or rating == None or not self.list[i]['rating'] == '0': rating = '0'
+            rating = common.replaceHTMLCodes(rating)
+            rating = rating.encode('utf-8')
+            if not rating == '0': self.list[i].update({'rating': rating})
+
+            votes = str(result['vote_count'])
+            try: votes = str(format(int(votes),',d'))
+            except: pass
+            if votes == '' or votes == None or not self.list[i]['votes'] == '0': votes = '0'
+            votes = common.replaceHTMLCodes(votes)
+            votes = votes.encode('utf-8')
+            if not votes == '0': self.list[i].update({'votes': votes})
+
+            plot = result['overview']
+            if plot == '' or plot == None: plot = '0'
+            plot = common.replaceHTMLCodes(plot)
+            plot = plot.encode('utf-8')
+            if not plot == '0': self.list[i].update({'plot': plot})
+
+            tagline = result['tagline']
+            if (tagline == '' or tagline == None) and not plot == '0': tagline = plot.split('.', 1)[0]
+            elif tagline == '' or tagline == None: tagline = '0'
+            tagline = common.replaceHTMLCodes(tagline)
+            tagline = tagline.encode('utf-8')
+            if not tagline == '0': self.list[i].update({'tagline': tagline})
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
+class Thread(threading.Thread):
+    def __init__(self, target, *args):
+        self._target = target
+        self._args = args
+        threading.Thread.__init__(self)
+    def run(self):
+        self._target(*self._args)
+
 Main()
 #Menu()
 #Trailer()
@@ -277,17 +667,8 @@ Main()
 #HindiMovies()
 #FileUtils()
 
-################################# START NEW IMPL ################################################################
+################################# END NEW IMPL ################################################################
         
-def MAIN():
-    xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
-    
-
-def AtoZ(index):
-    main.addDir('0-9',mainurl + '0-9/',constants.MOVIE25_LISTMOVIES,art+'/09.png')
-    for i in string.ascii_uppercase:
-            main.addDir(i,mainurl+i.lower()+'/',constants.MOVIE25_LISTMOVIES,art+'/'+i.lower()+'.png')
-
 def HINDI_MOVIE_MENU(url, index=False):
     xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
     #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
@@ -521,24 +902,7 @@ def KIDZone(murl):
 ################################################################################ Modes ##########################################################################################################
 
 
-def get_params():
-    param=[]
-    paramstring=sys.argv[2]
-    if len(paramstring)>=2:
-        params=sys.argv[2]
-        cleanedparams=params.replace('?','')
-        if (params[len(params)-1]=='/'):
-            params=params[0:len(params)-2]
-        pairsofparams=cleanedparams.split('&')
-        param={}
-        for i in range(len(pairsofparams)):
-            splitparams={}
-            splitparams=pairsofparams[i].split('=')
-            if (len(splitparams))==2:
-                param[splitparams[0]]=splitparams[1]
-    return param
-              
-params=get_params()
+params=None
 
 url=None
 name=None
@@ -590,14 +954,10 @@ except: pass
 try: page=urllib.unquote_plus(params["page"])
 except: pass
 
-print "Mode: "+str(mode)
-print "URL: "+str(url)
-print "Name: "+str(name)
-print "Thumb: "+str(iconimage)
-
 if mode==None or url==None or len(url)<1:
-    MAIN()
-    main.VIEWSB()        
+    print "Hello Nothing Here"
+    #MAIN()
+    #main.VIEWSB()        
    
 elif mode==constants.MOVIE25_LISTMOVIES:
     from resources.libs import movie25
