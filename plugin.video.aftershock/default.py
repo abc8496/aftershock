@@ -101,7 +101,13 @@ class Main:
         elif action == 'home_az': Menu().getAtoZItems()
         elif action == 'home_genre': Menu().getHomeGenre() 
         elif action == 'home_year' : Menu().getHomeYear() 
-        elif action == 'home_featured' : Movies().featured(url)
+        elif action == 'home_featured' : Movies().featured()
+        elif action == 'home_hd' : Movies().hd()
+        elif action == 'home_latest' : Movies().latestAdded()
+        elif action == 'home_newreleases' : Movies().newReleases()
+        elif action == 'home_mostviewed' : Movies().mostViewed()
+        elif action == 'home_mostvoted' : Movies().mostVoted()
+        elif action == 'movie_list' : Movies().moviesList(url)
         
 
 class getUrl(object):
@@ -177,17 +183,17 @@ class Menu:
             elif index==2:
                 homeItems.append({'name':language(90102).encode("utf-8"), 'image': 'az.png', 'action': 'home_az'})
             elif index==3:
-                homeItems.append({'name':language(90103).encode("utf-8"), 'image': 'new.png', 'action': 'home_newreleases', 'url': Links().eng_new_releases})
+                homeItems.append({'name':language(90103).encode("utf-8"), 'image': 'new.png', 'action': 'home_newreleases'})
             elif index==4:
-                homeItems.append({'name':language(90104).encode("utf-8"), 'image': 'latest.png', 'action': 'home_latest', 'url': Links().eng_latest_added})
+                homeItems.append({'name':language(90104).encode("utf-8"), 'image': 'latest.png', 'action': 'home_latest'})
             elif index==5:
-                homeItems.append({'name':language(90105).encode("utf-8"), 'image': 'feat.png', 'action': 'home_featured', 'url': Links().eng_featured})
+                homeItems.append({'name':language(90105).encode("utf-8"), 'image': 'feat.png', 'action': 'home_featured'})
             elif index==6:
-                homeItems.append({'name':language(90106).encode("utf-8"), 'image': 'view.png', 'action': 'home_mostviewed', 'url': Links().eng_popular})
+                homeItems.append({'name':language(90106).encode("utf-8"), 'image': 'view.png', 'action': 'home_mostviewed'})
             elif index==7:
-                homeItems.append({'name':language(90107).encode("utf-8"), 'image': 'vote.png', 'action': 'home_mostvoted', 'url': Links().eng_most_voted})
+                homeItems.append({'name':language(90107).encode("utf-8"), 'image': 'vote.png', 'action': 'home_mostvoted'})
             elif index==8:
-                homeItems.append({'name':language(90108).encode("utf-8"), 'image': 'dvd2hd.png', 'action': 'home_hd', 'url': Links().eng_hd})
+                homeItems.append({'name':language(90108).encode("utf-8"), 'image': 'dvd2hd.png', 'action': 'home_hd'})
             elif index==9:
                 homeItems.append({'name':language(90109).encode("utf-8"), 'image': 'genre.png', 'action': 'home_genre'})
             elif index==10:
@@ -207,9 +213,9 @@ class Menu:
         
     def getAtoZItems(self) :
         listItems = []
-        listItems.append({'name':'0-9', 'image':'09.png', 'action':'movie_list', 'url':Links().getUrl('0-9')})
+        listItems.append({'name':'0-9', 'image':'09.png', 'action':'movie_list', 'url':'/0-9/'})
         for i in string.ascii_uppercase:
-            listItems.append({'name':i, 'image':i.lower()+'.png', 'action':'movie_list', 'url':Links().getUrl(i.lower())})
+            listItems.append({'name':i, 'image':i.lower()+'.png', 'action':'movie_list', 'url':'/'+i.lower()+'/'})
         Index().homeList(listItems)  
         
     def getHomeGenre(self) :
@@ -217,7 +223,7 @@ class Menu:
         genres = ['Action','Adventure','Animation','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Music','Musical','Mystery','Romance','Sci-Fi','Short','Sport','Thriller','War','Western']
         
         for i in genres:
-            listItems.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movie_list', 'url':Links().getUrl(i.lower()+'/')})
+            listItems.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movie_list', 'url':'/' + i.lower()+'/'})
         Index().homeList(listItems)    
         
     def getHomeYear(self) :
@@ -320,7 +326,7 @@ class Index:
             if next == '': raise Exception()
             name, url, image = 'Next', next, self.addonArt('next.png')
             if getSetting("appearance") == '-': image = 'DefaultFolder.png'
-            u = '%s?action=movies&url=%s' % (sys.argv[0], urllib.quote_plus(url))
+            u = '%s?action=movie_list&url=%s' % (sys.argv[0], urllib.quote_plus(url))
             item = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=image)
             item.setInfo( type="Video", infoLabels={ "Label": name, "Title": name, "Plot": addonDesc } )
             item.setProperty("Fanart_Image", addonFanart)
@@ -391,12 +397,12 @@ class Links:
         self.eng_link_1 = 'http://www.movie25.ag'
         self.eng_link_2 = 'http://translate.googleusercontent.com/translate_c?anno=2&hl=en&sl=mt&tl=en&u=http://www.movie25.ag'
         self.eng_link_3 = 'https://movie25.unblocked.pw'
-        self.eng_new_releases = self.eng_base + '/new-releases/'
-        self.eng_latest_added = self.eng_base + '/latest-added/'
-        self.eng_featured = self.eng_base + '/featured-movies/'
-        self.eng_popular = self.eng_base + '/most-viewed/'
-        self.eng_most_voted = self.eng_base + '/most-voted/'
-        self.eng_hd = self.eng_base + '/latest-hd-movies/'
+        self.eng_new_releases = '/new-releases/'
+        self.eng_latest_added = '/latest-added/'
+        self.eng_featured = '/featured-movies/'
+        self.eng_popular = '/most-viewed/'
+        self.eng_most_voted = '/most-voted/'
+        self.eng_hd = '/latest-hd-movies/'
         
     def getUrl(self, url):
         return self.eng_base + '/' + url
@@ -427,8 +433,31 @@ class Movies:
     def __init__(self):
         self.list = []
         print "Movies Initialized"
-    def featured(self, url):
-        print "Inside Movies Featured"
+    def featured(self):
+        url = Links().eng_featured
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def hd(self):
+        url = Links().eng_hd
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def latestAdded(self):
+        url = Links().eng_latest_added
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def newReleases(self):
+        url = Links().eng_new_releases
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def mostViewed(self):
+        url = Links().eng_popular
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def mostVoted(self):
+        url = Links().eng_most_voted
+        self.list = self.scn_list(url)
+        Index().movieList(self.list)
+    def moviesList(self, url):
         self.list = self.scn_list(url)
         Index().movieList(self.list)
     def cleantitle_movie(self, title):
