@@ -28,6 +28,7 @@ desirulezurl = settings.getDesiRulezURL()
 ################################# START NEW IMPL ################################################################
 import base64, urlparse
 import CommonFunctions as common
+import commonsources
 try:
     import json
 except:
@@ -101,18 +102,25 @@ class Main:
         elif action == 'home_az': Menu().getAtoZItems()
         elif action == 'home_genre': Menu().getHomeGenre() 
         elif action == 'home_year' : Menu().getHomeYear() 
+        elif action == 'home_hindimovie' : Menu().getDesiHomeItems() 
         elif action == 'home_featured' : Movies().featured()
-        elif action == 'home_hd' : Movies().hd()
+        elif action == 'home_hd' : Movies().HD()
         elif action == 'home_latest' : Movies().latestAdded()
         elif action == 'home_newreleases' : Movies().newReleases()
         elif action == 'home_mostviewed' : Movies().mostViewed()
         elif action == 'home_mostvoted' : Movies().mostVoted()
         elif action == 'movie_list' : Movies().moviesList(url)
-        
+        elif action == 'desi_home_newreleases' : Movies().desiNewReleases()
+        elif action == 'desi_home_az' : Menu().getDesiAtoZItems()
+        elif action == 'desi_home_latest' : Movies().desiLatestAdded()
+        elif action == 'desi_home_hd' : Movies().desiHD()
+        elif action == 'desi_home_genre' : Menu().getDesiGenre()
+        elif action == 'desi_home_year' : Menu().getDesiYear()
+        elif action == 'desi_movie_list' : Movies().desi_movie_list(url)
+        elif action == 'get_host' : resolver().get_host(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta)
 
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
-        print "URL : " + str(url)
         handlers = []
         if not proxy == None:
             handlers += [urllib2.ProxyHandler({'http':'%s' % (proxy)}), urllib2.HTTPHandler]
@@ -210,6 +218,24 @@ class Menu:
                 homeItems.append({'name':language(90115).encode("utf-8"), 'image': 'kidzone.png', 'action': 'home_kids'})
         homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'settings_home'})
         Index().homeList(homeItems)
+    def getDesiHomeItems(self):
+        d = settings.getHomeItems(getSetting)
+        homeItems = []
+        for index, value in sorted(enumerate(d), key=lambda x:x[1]):
+            if value==None: continue
+            if index==0:
+                homeItems.append({'name':language(90100).encode("utf-8"), 'image': 'search.png', 'action': 'desi_home_search'})
+            elif index==3:
+                homeItems.append({'name':language(90103).encode("utf-8"), 'image': 'new.png', 'action': 'desi_home_newreleases'})
+            elif index==4:
+                homeItems.append({'name':language(90104).encode("utf-8"), 'image': 'latest.png', 'action': 'desi_home_latest'})
+            elif index==8:
+                homeItems.append({'name':language(90108).encode("utf-8"), 'image': 'dvd2hd.png', 'action': 'desi_home_hd'})
+            elif index==9:
+                homeItems.append({'name':language(90109).encode("utf-8"), 'image': 'genre.png', 'action': 'desi_home_genre'})
+            elif index==10:
+                homeItems.append({'name':language(90110).encode("utf-8"), 'image': 'year.png', 'action': 'desi_home_year'})
+        Index().homeList(homeItems)
         
     def getAtoZItems(self) :
         listItems = []
@@ -230,12 +256,30 @@ class Menu:
         listItems = []
         for i in reversed(range(2003, 2016)):
             listItems.append({'name':str(i), 'image':str(i)+'.png', 'action':'movie_list', 'url':Links().getUrl('search.php?year='+str(i))})
-        listItems.append({'name':'Enter Year', 'image':'enteryear.png', 'action':'movie_list'})    
+        listItems.append({'name':'Enter Year', 'image':'enteryear.png', 'action':'movie_enter_year'})    
+        Index().homeList(listItems)    
+        
+    def getDesiGenre(self) :
+        listItems = []
+        genres = ['Action','Comedy','Crime','Drama','Horror','Romance','Thriller']
+        
+        for i in genres:
+            listItems.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'desi_movie_list', 'url':'/category/' + i.lower()+'/feed'})
+        Index().homeList(listItems)    
+        
+    def getDesiYear(self) :
+        listItems = []
+        for i in reversed(range(2003, 2016)):
+            listItems.append({'name':str(i), 'image':str(i)+'.png', 'action':'desi_movie_list', 'url':'/category/'+str(i)+'/feed'})
+        listItems.append({'name':'Enter Year', 'image':'enteryear.png', 'action':'desi_enter_year'})    
         Index().homeList(listItems)    
 
 class Index:
     def __init__(self):
         print "Initialized"
+    def infoDialog(self, str, header=addonName, time=3000):
+        try: xbmcgui.Dialog().notification(header, str, self.addonArt('icon.png'), time, sound=False)
+        except: xbmc.executebuiltin("Notification(%s,%s, %s, %s)" % (header, str, time, self.addonArt('icon.png')))
 
     def addonArt(self, image):
         art = os.path.join(addonPath, 'resources/art')
@@ -276,12 +320,10 @@ class Index:
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
                 
             except:
-                import traceback
-                traceback.print_exc()
                 pass
         self.setContainerView('HOME')
         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
-    def movieList(self, movieList):
+    def movieList(self, movieList, nextAction=None):
         if movieList == None or len(movieList) == 0: return
         
         addonPoster = self.addonArt('movie_poster.png')
@@ -312,8 +354,8 @@ class Index:
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
                 item.setInfo(type="Video", infoLabels = meta)
-                item.setProperty("Video", "true")
-                item.setProperty("IsPlayable", "true")
+                #item.setProperty("Video", "true")
+                #item.setProperty("IsPlayable", "true")
                 item.addContextMenuItems(cm, replaceItems=True)
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=isFolder)
             except:
@@ -322,11 +364,12 @@ class Index:
                 pass
 
         try:
+            if nextAction == None: nextAction = 'movie_list'
             next = movieList[0]['next']
             if next == '': raise Exception()
             name, url, image = 'Next', next, self.addonArt('next.png')
             if getSetting("appearance") == '-': image = 'DefaultFolder.png'
-            u = '%s?action=movie_list&url=%s' % (sys.argv[0], urllib.quote_plus(url))
+            u = '%s?action=%s&url=%s' % (sys.argv[0], str(nextAction), urllib.quote_plus(url))
             item = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=image)
             item.setInfo( type="Video", infoLabels={ "Label": name, "Title": name, "Plot": addonDesc } )
             item.setProperty("Fanart_Image", addonFanart)
@@ -340,7 +383,35 @@ class Index:
         xbmcplugin.setContent(int(sys.argv[1]), 'movies')
         self.setContainerView('MOVIES')
         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+    def moviesourceList(self, sourceList, name, imdb, tvdb, meta):
+        if sourceList == None or len(sourceList) == 0: return
 
+        total = len(sourceList)
+        for i in sourceList:
+            try:
+                url, source, provider, quality = i['url'], i['source'], i['provider'], i['quality']
+                poster, fanart = meta['poster'], meta['fanart']
+
+                sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
+
+                u = '%s?action=play_moviehost&name=%s&imdb=%s&tvdb=%s&url=%s&source=%s&provider=%s' % (sys.argv[0], sysname, sysimdb, systvdb, sysurl, syssource, sysprovider)
+
+                cm = []
+                cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
+
+                item = xbmcgui.ListItem('[COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                try: item.setArt({'poster': poster, 'banner': poster})
+                except: pass
+                item.setProperty("Fanart_Image", fanart)
+                item.setInfo(type="Video", infoLabels = meta)
+                item.setProperty("Video", "true")
+                item.setProperty("IsPlayable", "true")
+                item.addContextMenuItems(cm, replaceItems=True)
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=False)
+            except:
+                pass
+
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
 class Links:
     def __init__(self):
         #self.imdb_base = 'http://www.imdb.com'
@@ -404,6 +475,14 @@ class Links:
         self.eng_most_voted = '/most-voted/'
         self.eng_hd = '/latest-hd-movies/'
         
+        self.desi_base = 'http://www.playindiafilms.com'
+        self.desi_link_1 = 'http://www.playindiafilms.com'
+        self.desi_link_2 = ''
+        self.desi_link_3 = ''
+        self.desi_new_releases = '/category/2015/feed'
+        self.desi_latest_added = '/category/hindi-movies/feed'
+        self.desi_hd = '/category/hindi-blurays/feed'
+        
     def getUrl(self, url):
         return self.eng_base + '/' + url
 
@@ -417,17 +496,6 @@ class International:
         print "Initialized Initialized"
     def dummy():
         print "hello"
-class HindiMovies:
-    def __init__(self):
-        print "HindiMovies Initialized"
-    def dummy():
-        print "hello"
-
-class FileUtils:
-    def __init__(self):
-        print "FileUtils Initialized"
-    def dummy():
-        print "hello"
 
 class Movies:
     def __init__(self):
@@ -437,7 +505,7 @@ class Movies:
         url = Links().eng_featured
         self.list = self.scn_list(url)
         Index().movieList(self.list)
-    def hd(self):
+    def HD(self):
         url = Links().eng_hd
         self.list = self.scn_list(url)
         Index().movieList(self.list)
@@ -463,6 +531,22 @@ class Movies:
     def cleantitle_movie(self, title):
         title = re.sub('\n|([[].+?[]])|([(].+?[)])|\s(vs|v[.])\s|(:|;|-|"|,|\'|\.|\?)|\s', '', title).lower()
         return title    
+    def desiNewReleases(self):
+        url = Links().desi_new_releases
+        self.list = self.desi_full_list(url)
+        Index().movieList(self.list, 'desi_movie_list')
+    def desiLatestAdded(self):
+        url = Links().desi_latest_added
+        self.list = self.desi_full_list(url)
+        Index().movieList(self.list,'desi_movie_list')
+    def desiHD(self):
+        url = Links().desi_hd
+        self.list = self.desi_full_list(url)
+        Index().movieList(self.list,'desi_movie_list')
+
+    def desi_movie_list(self, url):
+        self.list = self.desi_full_list(url)
+        Index().movieList(self.list,'desi_movie_list')
     def scn_list(self, url):
         try:
             result = ''
@@ -549,6 +633,108 @@ class Movies:
         [i.join() for i in threads]
         
         return self.list
+    def desi_full_list(self, url):
+        tmpList = []
+        turl = url 
+        pagesScanned = 0
+        while((len(tmpList) < 15) and (pagesScanned < 10)):
+            tmpList = self.desi_list(turl)
+            try : url =  re.compile('(.+)\?paged=.+').findall(turl)[0]
+            except : 
+                pass
+            try: pageNo =  re.compile('paged=(.+)').findall(turl)[0]
+            except: 
+                pageNo = 1
+                pass
+            pageNo = int(pageNo) + 1
+            turl = url + '?paged=' + str(pageNo)
+            pagesScanned = pagesScanned + 1
+        self.list[0].update({'next':url + '?paged='+str(pageNo)})
+        self.list = tmpList 
+        return self.list
+        
+    def desi_list(self, url):
+        try:
+            result = ''
+            try: url = re.compile('//.+?(/.+)').findall(url)[0]
+            except: pass
+            links = [Links().desi_link_1, Links().desi_link_2, Links().desi_link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + url).result
+                except: result = ''
+                if 'item' in result: break
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            movies = common.parseDOM(result, "item")
+        except:
+            return
+        
+        next = ''
+        for movie in movies:
+            try:
+                title = common.parseDOM(movie, "title")[0]
+                title = re.compile('(.+?) [(]\d{4}[)]$').findall(title)[0]
+                title = common.replaceHTMLCodes(title)
+                title = title.encode('utf-8')
+
+                year = common.parseDOM(movie, "title")[0]
+                year = re.compile('.+? [(](\d{4})[)]$').findall(year)[0]
+                year = year.encode('utf-8')
+
+                name = '%s (%s)' % (title, year)
+                try: name = name.encode('utf-8')
+                except: pass
+
+                url = common.parseDOM(movie, "link")[0]
+                url = common.replaceHTMLCodes(url)
+                try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
+                except: pass
+                url = urlparse.urljoin(Links().eng_base, url)
+                url = url.encode('utf-8')
+                
+                poster = '0'
+                try: poster = common.parseDOM(movie, "img", ret="src")[0]
+                except: pass
+                poster = common.replaceHTMLCodes(poster)
+                try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
+                except: pass
+                poster = poster.encode('utf-8')
+
+                genre = common.parseDOM(movie, "div", attrs = { "class": "movie_about_genre" })
+                genre = common.parseDOM(genre, "a")
+                genre = " / ".join(genre)
+                if genre == '': genre = '0'
+                genre = common.replaceHTMLCodes(genre)
+                genre = genre.encode('utf-8')
+                
+                hindiMovie = False
+                categories = []
+                try: categories = common.parseDOM(movie, "category")
+                except : 
+                    hindiMovie = True
+                    pass
+                
+                for category in categories:
+                    if re.search('Hindi', category, flags= re.I):
+                        hindiMovie = True
+                if hindiMovie :
+                    self.list.append({'name': name, 'title': title, 'year': year, 'imdb': '0000000', 'tvdb': '0', 'season': '0', 'episode': '0', 'show': '0', 'show_alt': '0', 'date': '0', 'genre': genre, 'url': '0', 'poster': poster, 'fanart': '0', 'studio': '0', 'duration': '0', 'rating': '0', 'votes': '0', 'mpaa': '0', 'director': '0', 'plot': '0', 'plotoutline': '0', 'tagline': '0', 'next': next})
+            except:
+                pass
+        
+        threads = []
+        for i in range(0, len(self.list)): threads.append(Thread(self.imdb_info, i))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+        
+        
+        self.list = [i for i in self.list if not i['imdb'] == '0000000']
+
+        threads = []
+        for i in range(0, len(self.list)): threads.append(Thread(self.tmdb_info, i))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+        return self.list
     def imdb_info(self, i):
         try:
             match = []
@@ -590,9 +776,6 @@ class Movies:
             url = url.encode('utf-8')
             self.list[i].update({'url': url})
         except:
-            import traceback
-            traceback.print_exc()
-
             pass
     def tmdb_info(self, i):
         try:
@@ -677,8 +860,6 @@ class Movies:
             tagline = tagline.encode('utf-8')
             if not tagline == '0': self.list[i].update({'tagline': tagline})
         except:
-            import traceback
-            traceback.print_exc()
             pass
 
 class Thread(threading.Thread):
@@ -689,6 +870,118 @@ class Thread(threading.Thread):
     def run(self):
         self._target(*self._args)
 
+class resolver:
+    def __init__(self):
+        self.sources = []
+        self.hosthdfullDict = []
+        self.hostsdfullDict = []
+        self.hostlocDict = []
+        
+    def get_host(self, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta):
+        try:
+            if show == None: content = 'movie'
+            else: content = 'episode'
+
+            self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre)
+            if self.sources == []: raise Exception()
+            #self.sources = self.sources_filter()
+
+            meta = json.loads(meta)
+
+            if content == 'movie': 
+                Index().moviesourceList(self.sources, name, imdb, '0', meta)
+            else:
+                Index().tvsourceList(self.sources, name, imdb, tvdb, meta)
+        except:
+            import traceback
+            traceback.print_exc()
+            Index().infoDialog(language(30308).encode("utf-8"))
+            return
+    def sources_get(self, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre):
+        import inspect
+        sourceDict = inspect.getmembers(commonsources, inspect.isclass)
+        sourceDict = [i for i in sourceDict if hasattr(i[1], 'get_sources')]
+        
+        if show == None: content = 'movie'
+        else: content = 'episode'
+
+        if content == 'movie':
+            sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_movie')]
+            sourceDict = [(i, 'true') for i in sourceDict]
+        else:
+            sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_show')]
+            try: sourceDict = [(i, getSetting(i + '_tv')) for i in sourceDict]
+            except: sourceDict = [(i, 'true') for i in sourceDict]
+
+        global global_sources
+        global_sources = []
+        
+        threads = []
+        sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
+        
+        if content == 'movie':
+            title = self.normaltitle(title)
+            for source in sourceDict: threads.append(Thread(self.sources_movie, name, title, year, imdb, source))
+        else:
+            show, show_alt = self.normaltitle(show), self.normaltitle(show_alt)
+            season, episode = episodes().tvrage_redirect(title, year, imdb, tvdb, season, episode, show, date, genre)
+            for source in sourceDict: threads.append(Thread(self.sources_tv, name, title, year, imdb, tvdb, date, season, episode, show, show_alt, source))
+
+
+        #timeout = int(getSetting("sources_timeout_beta"))
+        timeout = 10
+        
+        [i.start() for i in threads]
+
+        for i in range(0, timeout * 2):
+            is_alive = [x.is_alive() for x in threads]
+            if all(x == False for x in is_alive): break
+            time.sleep(0.5)
+
+        for i in range(0, 5 * 2):
+            is_alive = len([i for i in threads if i.is_alive() == True])
+            if is_alive < 10: break
+            time.sleep(0.5)
+
+
+        self.sources = global_sources
+        return self.sources
+    
+    def sources_movie(self, name, title, year, imdb, source):
+        try:
+            commonsource = getattr(commonsources, source)()
+            url = None
+            if url == None: url = commonsource.get_movie(imdb, title, year)
+            if url == None: raise Exception()
+        except:
+            pass
+
+        try:
+            sources = []
+            
+            sources = commonsource.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict)
+            if sources == None: sources = []
+            global_sources.extend(sources)
+        except:
+            import traceback
+            traceback.print_exc()    
+            pass
+    def normaltitle(self, title):
+        try:
+            try: return title.decode('ascii').encode("utf-8")
+            except: pass
+
+            import unicodedata
+            t = ''
+            for i in title:
+                c = unicodedata.normalize('NFKD',unicode(i,"ISO-8859-1"))
+                c = c.encode("ascii","ignore").strip()
+                if i == ' ': c = i
+                t += c
+
+            return t.encode("utf-8")
+        except:
+            return title
 Main()
 #Menu()
 #Trailer()
@@ -698,66 +991,6 @@ Main()
 
 ################################# END NEW IMPL ################################################################
         
-def HINDI_MOVIE_MENU(url, index=False):
-    xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
-    #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
-    main.addDirHome('New Releases',sominalurl + 'category/2014/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
-    main.addDirHome('Latest Added',sominalurl + 'category/hindi-movies/feed',constants.SOMINAL_LISTMOVIES,art+'/latest.png')
-    #main.addDirHome('Featured Movies',sominalurl + 'category/featured_movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
-    main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')
-    main.addDirHome('Genre',sominalurl,constants.SOMINAL_GENRE,art+'/genre.png')
-    main.addDirHome('By Year',sominalurl,constants.SOMINAL_YEAR,art+'/year.png')
-    main.VIEWSB()
-    
-def GENRE(url,index=False):
-    main.addDir('Action',mainurl + 'action/',constants.MOVIE25_LISTMOVIES,art+'/act.png',index=index)
-    main.addDir('Adventure',mainurl + 'adventure/',constants.MOVIE25_LISTMOVIES,art+'/adv.png',index=index)
-    main.addDir('Animation',mainurl + 'animation/',constants.MOVIE25_LISTMOVIES,art+'/ani.png',index=index)
-    main.addDir('Biography',mainurl + 'biography/',constants.MOVIE25_LISTMOVIES,art+'/bio.png',index=index)
-    main.addDir('Comedy',mainurl + 'comedy/',constants.MOVIE25_LISTMOVIES,art+'/com.png',index=index)
-    main.addDir('Crime',mainurl + 'crime/',constants.MOVIE25_LISTMOVIES,art+'/cri.png',index=index)
-    main.addDir('Documentary',mainurl + 'documentary/',constants.MOVIE25_LISTMOVIES,art+'/doc.png',index=index)
-    main.addDir('Drama',mainurl + 'drama/',constants.MOVIE25_LISTMOVIES,art+'/dra.png',index=index)
-    main.addDir('Family',mainurl + 'family/',constants.MOVIE25_LISTMOVIES,art+'/fam.png',index=index)
-    main.addDir('Fantasy',mainurl + 'fantasy/',constants.MOVIE25_LISTMOVIES,art+'/fant.png',index=index)
-    main.addDir('History',mainurl + 'history/',constants.MOVIE25_LISTMOVIES,art+'/history.png',index=index)
-    main.addDir('Horror',mainurl + 'horror/',constants.MOVIE25_LISTMOVIES,art+'/hor.png',index=index)
-    main.addDir('Music',mainurl + 'music/',constants.MOVIE25_LISTMOVIES,art+'/mus.png',index=index)
-    main.addDir('Musical',mainurl + 'musical/',constants.MOVIE25_LISTMOVIES,art+'/mucl.png',index=index)
-    main.addDir('Mystery',mainurl + 'mystery/',constants.MOVIE25_LISTMOVIES,art+'/mys.png',index=index)
-    main.addDir('Romance',mainurl + 'romance/',constants.MOVIE25_LISTMOVIES,art+'/rom.png',index=index)
-    main.addDir('Sci-Fi',mainurl + 'sci-fi/',constants.MOVIE25_LISTMOVIES,art+'/sci.png',index=index)
-    main.addDir('Short',mainurl + 'short/',constants.MOVIE25_LISTMOVIES,art+'/sho.png',index=index)
-    main.addDir('Sport',mainurl + 'sport/',constants.MOVIE25_LISTMOVIES,art+'/spo.png',index=index)
-    main.addDir('Thriller',mainurl + 'thriller/',constants.MOVIE25_LISTMOVIES,art+'/thr.png',index=index)
-    main.addDir('War',mainurl + 'war/',constants.MOVIE25_LISTMOVIES,art+'/war.png',index=index)
-    main.addDir('Western',mainurl + 'western/',constants.MOVIE25_LISTMOVIES,art+'/west.png',index=index)
-    main.VIEWSB()
-    
-def SOMINAL_GENRE(url,index=False):
-    main.addDir('Action',sominalurl + 'category/action/feed',constants.SOMINAL_LISTMOVIES,art+'/act.png',index=index)
-    main.addDir('Comedy',sominalurl + 'category/comedy/feed',constants.SOMINAL_LISTMOVIES,art+'/com.png',index=index)
-    main.addDir('Crime',sominalurl + 'category/crime/feed',constants.SOMINAL_LISTMOVIES,art+'/cri.png',index=index)
-    main.addDir('Drama',sominalurl + 'category/drama/feed',constants.SOMINAL_LISTMOVIES,art+'/dra.png',index=index)
-    main.addDir('Horror',sominalurl + 'category/horror/feed',constants.SOMINAL_LISTMOVIES,art+'/hor.png',index=index)
-    main.addDir('Romance',sominalurl + 'category/romance/feed',constants.SOMINAL_LISTMOVIES,art+'/rom.png',index=index)
-    main.addDir('Social',sominalurl + 'category/social/feed',constants.SOMINAL_LISTMOVIES,art+'/soc.png',index=index)
-    main.addDir('Thriller',sominalurl + 'category/thriller/feed',constants.SOMINAL_LISTMOVIES,art+'/thr.png',index=index)
-    main.VIEWSB()
-
-        
-def YEAR(index=False):
-    for x in reversed(range(2003, 2016)):
-        main.addDir(str(x),mainurl + 'search.php?year='+str(x)+'/',constants.MOVIE25_LISTMOVIES,art+'/'+str(x)+'.png',index=index)
-    main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
-    main.VIEWSB()
-    
-def SOMINAL_YEAR(index=False):
-    for x in reversed(range(2003, 2016)):
-        main.addDir(str(x),sominalurl + 'category/'+str(x)+'/feed',constants.SOMINAL_LISTMOVIES,art+'/'+str(x)+'.png',index=index)
-    #main.addDir('Enter Year','http://www.movie25.com',constants.MOVIE25_ENTERYEAR,art+'/enteryear.png',index=index)
-    main.VIEWSB()
-
 def INT(url):
     logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
     main.addDir('Hindi Movies',url+'forums/20-Latest-Exclusive-Movie-HQ',constants.DESIRULEZ_LISTSHOWS,art+'/hindimovies.png')
@@ -919,15 +1152,6 @@ def History():
             item_isfolder = item['isfolder']
             item_title=item_title.replace('[COLOR green]','[COLOR=FF67cc33]')
             main.addLink(item_title,item_url,item_image)
-def KIDZone(murl):
-    main.addDir('Disney Jr.','djk',107,art+'/disjr.png')
-    #main.addDir('National Geographic Kids','ngk',71,art+'/ngk.png')
-    #main.addDir('WB Kids','wbk',77,art+'/wb.png')
-    #main.addDir('Youtube Kids','wbk',84,art+'/youkids.png')
-    #main.addDir('Staael1982 Animated Movies','https://github.com/Coolstreams/bobbyelvis/raw/master/kids%20%26%20animation.xml',236,art+'/kidzone2.png')
-            
-    main.VIEWSB()
-    
 ################################################################################ Modes ##########################################################################################################
 
 
