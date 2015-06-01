@@ -195,13 +195,16 @@ def GroupedHosts(name,url,thumb):
         
 def resolveM25URL(url):
     html=main.OPENURL(url)
+    #print html
     url = common.parseDOM(html, "iframe", ret="src")
     url += common.parseDOM(html, "IFRAME", ret="SRC")
+    
     if len(url) == 0 :
         url = common.parseDOM(html, "div", attrs = {"class":"left_body"})[0]
         url = common.parseDOM(url, "input", ret="onclick")[0]
-    elif len(url) == 1:
-        url = url[0]
+    elif len(url) > 1:
+        url = url[len(url)-1]
+        
     url = re.compile('(http.+)').findall(url)[0]
     url = url.replace("'","")
     return url

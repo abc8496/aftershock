@@ -1,3 +1,6 @@
+[B]Version v1.2.3[/B] - 6/1/2015
+- Fixed english movies
+
 [B]Version v1.2.2[/B] - 5/19/2015
 - Added Movie Information in Context Menu
 
