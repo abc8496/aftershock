@@ -40,7 +40,7 @@ def LISTMOVIES(murl,name, index, page=1):
             hindiMovie = False
             year = ''
             
-            name=item.title.text
+            name=item.title.text.encode("utf-8")
             url = item.comments.text.replace('#comments','')
             for category in item.findAll('category'):
                 if category.text == 'Hindi Movies':

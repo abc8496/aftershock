@@ -70,7 +70,7 @@ def AtoZ(index):
 def HINDI_MOVIE_MENU(url, index=False):
     xbmcgui.Window(10000).clearProperty('AFTERSHOCK_SSR_TYPE')
     #main.addDirHome('A-Z',sominalurl,constants.MOVIE_ATOZ,art+'/az.png')
-    main.addDirHome('New Releases',sominalurl + 'category/2014/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
+    main.addDirHome('New Releases',sominalurl + 'category/2015/feed',constants.SOMINAL_LISTMOVIES,art+'/new.png')
     main.addDirHome('Latest Added',sominalurl + 'category/hindi-movies/feed',constants.SOMINAL_LISTMOVIES,art+'/latest.png')
     #main.addDirHome('Featured Movies',sominalurl + 'category/featured_movies/',constants.MOVIE25_LISTMOVIES,art+'/feat.png')
     main.addDirHome('HD Releases',sominalurl + 'category/hindi-blurays/feed',constants.SOMINAL_LISTMOVIES,art+'/dvd2hd.png')

@@ -1,3 +1,6 @@
+[B]Version v1.2.4[/B] - 8/17/2015
+- Fixed Hindi movie name encoding errors
+
 [B]Version v1.2.3[/B] - 6/1/2015
 - Fixed english movies
 
