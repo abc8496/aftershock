@@ -29,6 +29,7 @@ desirulezurl = settings.getDesiRulezURL()
 import base64, urlparse
 import CommonFunctions as common
 import commonsources
+from operator import itemgetter
 try:
     import json
 except:
@@ -43,6 +44,7 @@ addonId             = xbmcaddon.Addon().getAddonInfo("id")
 addonPath           = xbmcaddon.Addon().getAddonInfo("path")
 addonDesc           = "My Addon"
 dataPath            = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo("profile")).decode("utf-8")
+addonSettings       = os.path.join(dataPath,'settings.db')
 addonSources        = os.path.join(dataPath,'sources.db')
 addonCache          = os.path.join(dataPath,'cache.db')
 
@@ -118,6 +120,7 @@ class Main:
         elif action == 'desi_home_year' : Menu().getDesiYear()
         elif action == 'desi_movie_list' : Movies().desi_movie_list(url)
         elif action == 'get_host' : resolver().get_host(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta)
+        elif action == 'play_moviehost' : resolver().play_host('movie', name, imdb, tvdb, url, source, provider)
 
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
@@ -399,7 +402,7 @@ class Index:
                 cm = []
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
 
-                item = xbmcgui.ListItem('[COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                item = xbmcgui.ListItem(name + ' [COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
@@ -584,7 +587,7 @@ class Movies:
                 title = re.compile('(.+?) [(]\d{4}[)]$').findall(title)[0]
                 title = common.replaceHTMLCodes(title)
                 title = title.encode('utf-8')
-
+                
                 year = common.parseDOM(movie, "a", ret="title")[0]
                 year = re.compile('.+? [(](\d{4})[)]$').findall(year)[0]
                 year = year.encode('utf-8')
@@ -675,7 +678,8 @@ class Movies:
                 title = common.parseDOM(movie, "title")[0]
                 title = re.compile('(.+?) [(]\d{4}[)]$').findall(title)[0]
                 title = common.replaceHTMLCodes(title)
-                title = title.encode('utf-8')
+                try : title = title.encode('utf-8')
+                except: pass
 
                 year = common.parseDOM(movie, "title")[0]
                 year = re.compile('.+? [(](\d{4})[)]$').findall(year)[0]
@@ -720,6 +724,8 @@ class Movies:
                 if hindiMovie :
                     self.list.append({'name': name, 'title': title, 'year': year, 'imdb': '0000000', 'tvdb': '0', 'season': '0', 'episode': '0', 'show': '0', 'show_alt': '0', 'date': '0', 'genre': genre, 'url': '0', 'poster': poster, 'fanart': '0', 'studio': '0', 'duration': '0', 'rating': '0', 'votes': '0', 'mpaa': '0', 'director': '0', 'plot': '0', 'plotoutline': '0', 'tagline': '0', 'next': next})
             except:
+                import traceback
+                traceback.print_exc()
                 pass
         
         threads = []
@@ -776,6 +782,8 @@ class Movies:
             url = url.encode('utf-8')
             self.list[i].update({'url': url})
         except:
+            import traceback
+            traceback.print_exc()
             pass
     def tmdb_info(self, i):
         try:
@@ -884,7 +892,7 @@ class resolver:
 
             self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre)
             if self.sources == []: raise Exception()
-            #self.sources = self.sources_filter()
+            self.sources = self.sources_filter() #For only displaying supported sources
 
             meta = json.loads(meta)
 
@@ -966,6 +974,19 @@ class resolver:
             import traceback
             traceback.print_exc()    
             pass
+    
+    def sources_filter(self):
+        supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos']
+
+        for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
+        self.sources = sorted(self.sources, key=itemgetter('source'))
+        
+        filter = []
+        for host in supportedDict: filter += [i for i in self.sources if i['source'] == host.lower()]
+        self.sources = filter
+
+        return self.sources
+
     def normaltitle(self, title):
         try:
             try: return title.decode('ascii').encode("utf-8")
@@ -982,6 +1003,234 @@ class resolver:
             return t.encode("utf-8")
         except:
             return title
+    def play_host(self, content, name, imdb, tvdb, url, source, provider):
+        try:
+            url = self.sources_resolve(url, provider)
+            if url == None: raise Exception()
+
+            if getSetting("playback_info") == 'true':
+                Index().infoDialog(source, header=name)
+
+            player().run(content, name, url, imdb, tvdb)
+            return url
+        except:
+            Index().infoDialog(language(30308).encode("utf-8"))
+            return
+    def sources_resolve(self, url, provider):
+        try:
+            provider = provider.lower()
+            commonsource = getattr(commonsources, provider)()
+            url = commonsource.resolve(url)
+            return url
+        except:
+            return
+class player(xbmc.Player):
+    def __init__ (self):
+        self.folderPath = xbmc.getInfoLabel('Container.FolderPath')
+        self.loadingStarting = time.time()
+        xbmc.Player.__init__(self)
+        
+    def run(self, content, name, url, imdb, tvdb):
+        self.video_info(content, name, imdb, tvdb)
+        self.resume_info()
+
+        if self.folderPath.startswith(sys.argv[0]) or PseudoTV == 'True':
+            item = xbmcgui.ListItem(path=url)
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        else:
+            try:
+                if self.content == 'movie':
+                    meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "year", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "plot", "plotoutline", "tagline", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
+                    meta = unicode(meta, 'utf-8', errors='ignore')
+                    meta = json.loads(meta)['result']['movies']
+                    self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
+
+                    meta = {'title': self.meta['title'], 'originaltitle': self.meta['originaltitle'], 'year': self.meta['year'], 'genre': str(" / ".join(self.meta['genre'])), 'studio' : str(" / ".join(self.meta['studio'])), 'country' : str(" / ".join(self.meta['country'])), 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'votes': self.meta['votes'], 'mpaa': self.meta['mpaa'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot'], 'plotoutline': self.meta['plotoutline'], 'tagline': self.meta['tagline']}
+
+                    thumb = self.meta['thumbnail']
+                    poster = thumb
+
+                elif self.content == 'episode':
+                    meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"filter":{"and": [{"field": "season", "operator": "is", "value": "%s"}, {"field": "episode", "operator": "is", "value": "%s"}]}, "properties": ["title", "season", "episode", "showtitle", "firstaired", "runtime", "rating", "director", "writer", "plot", "thumbnail", "file"]}, "id": 1}' % (self.season, self.episode))
+                    meta = unicode(meta, 'utf-8', errors='ignore')
+                    meta = json.loads(meta)['result']['episodes']
+                    self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
+
+                    meta = {'title': self.meta['title'], 'season' : self.meta['season'], 'episode': self.meta['episode'], 'tvshowtitle': self.meta['showtitle'], 'premiered' : self.meta['firstaired'], 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot']}
+
+                    thumb = self.meta['thumbnail']
+
+                    poster = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter": {"field": "title", "operator": "is", "value": "%s"}, "properties": ["thumbnail"]}, "id": 1}' % self.meta['showtitle'])
+                    poster = unicode(poster, 'utf-8', errors='ignore')
+                    poster = json.loads(poster)['result']['tvshows'][0]['thumbnail']
+
+            except:
+                poster, thumb, meta = '', '', {'title': self.name}
+
+            item = xbmcgui.ListItem(path=url, iconImage="DefaultVideo.png", thumbnailImage=thumb)
+            try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
+            except: pass
+            item.setInfo(type="Video", infoLabels = meta)
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+
+        for i in range(0, 240):
+            if self.isPlayingVideo(): break
+            xbmc.sleep(1000)
+        while self.isPlayingVideo():
+            try: self.totalTime = self.getTotalTime()
+            except: pass
+            try: self.currentTime = self.getTime()
+            except: pass
+            xbmc.sleep(1000)
+        time.sleep(5)
+        
+    def video_info(self, content, name, imdb, tvdb):
+        try:
+            self.name = name
+            self.content = content
+            self.totalTime = 0
+            self.currentTime = 0
+            self.file = self.name + '.strm'
+            self.file = self.file.translate(None, '\/:*?"<>|').strip('.')
+            self.imdb = re.sub('[^0-9]', '', imdb)
+            if tvdb == None: tvdb = '0'
+            self.tvdb = tvdb
+
+            if self.content == 'movie':
+                self.title, self.year = re.compile('(.+?) [(](\d{4})[)]$').findall(self.name)[0]
+
+            elif self.content == 'episode':
+                self.show, self.season, self.episode = re.compile('(.+?) S(\d*)E(\d*)$').findall(self.name)[0]
+                self.season, self.episode = '%01d' % int(self.season), '%01d' % int(self.episode)
+        except:
+            pass
+    
+    def resume_info(self):
+        try:
+            self.offset = '0'
+            if not getSetting("resume_playback") == 'true': return
+
+            import hashlib
+            n = (hashlib.md5())
+            n.update(str(self.name))
+            n = str(n.hexdigest())
+            i = 'tt' + self.imdb
+            dbcon = database.connect(addonSettings)
+            dbcur = dbcon.cursor()
+            dbcur.execute("SELECT * FROM points WHERE name = '%s' AND imdb_id = '%s'" % (n, i))
+            match = dbcur.fetchone()
+            self.offset = str(match[2])
+            dbcon.commit()
+        except:
+            pass
+
+        try:
+            if self.offset == '0': return
+
+            minutes, seconds = divmod(float(self.offset), 60)
+            hours, minutes = divmod(minutes, 60)
+            offset_time = '%02d:%02d:%02d' % (hours, minutes, seconds)
+
+            yes = index().yesnoDialog('%s %s' % (language(30342).encode("utf-8"), offset_time), '', self.name, language(30343).encode("utf-8"), language(30344).encode("utf-8"))
+            if not yes: self.offset = '0'
+        except:
+            pass
+
+    def change_watched(self):
+        if self.content == 'movie':
+            try:
+                if self.folderPath.startswith(sys.argv[0]): raise Exception()
+                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : %s, "playcount" : 1 }, "id": 1 }' % str(self.meta['movieid']))
+                index().container_refresh()
+            except:
+                pass
+
+            try:
+                if not self.folderPath.startswith(sys.argv[0]): raise Exception()
+                from metahandler import metahandlers
+                metaget = metahandlers.MetaData(preparezip=False)
+                metaget.get_meta('movie', self.title ,year=self.year)
+                metaget.change_watched(self.content, '', self.imdb, season='', episode='', year='', watched=7)
+            except:
+                pass
+
+            
+        elif self.content == 'episode':
+            try:
+                if self.folderPath.startswith(sys.argv[0]): raise Exception()
+                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "playcount" : 1 }, "id": 1 }' % str(self.meta['episodeid']))
+                index().container_refresh()
+            except:
+                pass
+
+            try:
+                if not self.folderPath.startswith(sys.argv[0]): raise Exception()
+                from metahandler import metahandlers
+                metaget = metahandlers.MetaData(preparezip=False)
+                metaget.get_meta('tvshow', self.show, imdb_id=self.imdb)
+                metaget.get_episode_meta(self.show, self.imdb, self.season, self.episode)
+                metaget.change_watched(self.content, '', self.imdb, season=self.season, episode=self.episode, year='', watched=7)
+            except:
+                pass
+
+            
+    def onPlayBackStarted(self):
+        try:
+			if self.offset == '0': raise Exception()
+			seekTime = float(self.offset)
+			self.seekTime(seekTime)
+        except:
+			pass
+
+        if getSetting("playback_info") == 'true':
+            elapsedTime = '%s %s seconds' % (language(30309).encode("utf-8"), int((time.time() - self.loadingStarting)))     
+            index().infoDialog(elapsedTime, header=self.name)
+
+    def onPlayBackStopped(self):
+
+        try:
+            import hashlib
+            n = (hashlib.md5())
+            n.update(str(self.name))
+            n = str(n.hexdigest())
+            i = 'tt' + self.imdb
+            r = str(self.currentTime)
+            dbcon = database.connect(addonSettings)
+            dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS points (""name TEXT, ""imdb_id TEXT, ""resume_point TEXT, ""UNIQUE(name, imdb_id)"");")
+            dbcur.execute("DELETE FROM points WHERE name = '%s' AND imdb_id = '%s'" % (n, i))
+            ok = int(self.currentTime) > 180 and (self.currentTime / self.totalTime) <= .92
+            if ok: dbcur.execute("INSERT INTO points Values (?, ?, ?)", (n, i, r))
+            dbcon.commit()
+        except:
+            pass
+
+        try:
+            ok = self.currentTime / self.totalTime >= .9
+            if ok: self.change_watched()
+        except:
+            pass
+
+    def onPlayBackEnded(self):
+
+        try:
+            import hashlib
+            n = (hashlib.md5())
+            n.update(str(self.name))
+            n = str(n.hexdigest())
+            i = 'tt' + self.imdb
+            dbcon = database.connect(addonSettings)
+            dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS points (""name TEXT, ""imdb_id TEXT, ""resume_point TEXT, ""UNIQUE(name, imdb_id)"");")
+            dbcur.execute("DELETE FROM points WHERE name = '%s' AND imdb_id = '%s'" % (n, i))
+            dbcon.commit()
+        except:
+            pass
+
+        try:
+            self.change_watched()
+        except:
+            pass
 Main()
 #Menu()
 #Trailer()

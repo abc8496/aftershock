@@ -43,4 +43,6 @@
 	<string id="30647">[B]TRAKT[/B] : Import TV Watchlist...</string>
 	<string id="30648">[B]IMDB[/B] : Import Watchlist...</string>
 	<string id="30649">[B]IMDB[/B] : Import TV Watchlist...</string>
+    
+    <string id="30308">No stream available</string>
 </strings>

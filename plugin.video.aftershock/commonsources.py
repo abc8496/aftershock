@@ -162,8 +162,11 @@ class movie25:
             quality = quality.strip()
             
             links = common.parseDOM(result, "div", attrs = { "id": "links" })[0]
-            links = common.parseDOM(links, "ul")
-
+            tLinks = common.parseDOM(links, "ul")
+            tLinks = common.parseDOM(links, "ul", attrs = {"class": "hidden"})
+            
+            links = tLinks
+            
             for i in links:
                 try:
                     host = common.parseDOM(i, "li", attrs = { "id": "link_name" })[-1]
@@ -184,7 +187,8 @@ class movie25:
                     sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url})
                 except:
                     pass
-
+            
+            print sources
             return sources
         except:
             return sources
@@ -212,7 +216,173 @@ class movie25:
             except: pass
 
             import commonresolvers
+            if url.startswith('external.php'):
+                url = url.replace('external.php?url=','')
+                url = base64.b64decode(url)
+            print 'PRE-T RESOLVED URL %s' % (url)
             url = commonresolvers.get(url).result
+            print 'POST RESOLVED URL %s' % (url)
             return url
         except:
+            import traceback
+            traceback.print_exc()    
+            return
+
+class playindiafilms:
+    def __init__(self):
+        self.base_link = 'http://www.playindiafilms.com'
+        self.link_1 = 'http://www.playindiafilms.com'
+        self.link_2 = 'http://www.playindiafilms.com'
+        self.link_3 = 'http://www.playindiafilms.com'
+        self.search_link = '/?s=%s&submit=Search'
+
+    def get_movie(self, imdb, title, year):
+        try:
+            query = self.search_link % urllib.quote_plus(title)
+
+            result = ''
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + query).result
+                except: result = ''
+                if 'class=\'inner\'' in result: break
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = common.parseDOM(result, "div", attrs = { "class": "inner" })
+            
+            url = ''
+            
+            title = cleantitle().movie(title)
+            years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
+            
+            print 'TITLE [%s] YEAR [%s]' % (title, year) 
+            #print result
+            #for i in result:
+            #    print i
+            #    print common.parseDOM(i, "a", ret="href")[0]
+            #    print common.parseDOM(i, "img", ret="alt")[0]
+                
+            result = [(common.parseDOM(i, "a", ret="href")[0], common.parseDOM(i, "img", ret="alt")[0]) for i in result]
+            
+            for item in result: 
+                if title + '(' + year + ')' == item[1]:
+                    url = item[0]
+                    break
+                    
+            print url
+            #result = [i for i in result if any(x in i[1] for x in years)]
+
+            #result = [(common.replaceHTMLCodes(i[0]), i[1]) for i in result]
+            #try: result = [(urlparse.parse_qs(urlparse.urlparse(i[0]).query)['u'][0], i[1]) for i in result]
+            #except: pass
+            #result = [(urlparse.urlparse(i[0]).path, i[1]) for i in result]
+
+            #match = [i[0] for i in result if title == cleantitle().movie(i[1])]
+
+            #match2 = [i[0] for i in result]
+            #match2 = uniqueList(match2).list
+            #if match2 == []: return
+
+            #for i in match2[:10]:
+            #    try:
+            #        if len(match) > 0:
+            #            url = match[0]
+            #            break
+            #        result = getUrl(base_link + i).result
+            #        if str('tt' + imdb) in result:
+            #            url = i
+            #            break
+            #    except:
+            #        pass
+
+            #url = url.encode('utf-8')
+           
+            return url
+        except:
+            import traceback
+            traceback.print_exc()    
+            return
+
+    def get_sources(self, url, hosthdDict, hostDict, locDict):
+        try:
+            sources = []
+
+            result = ''
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + url).result
+                except: result = ''
+                if 'link_name' in result: break
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = result.replace('\n','')
+
+            quality = re.compile('>Links - Quality(.+?)<').findall(result)[0]
+            quality = quality.strip()
+            
+            links = common.parseDOM(result, "div", attrs = { "id": "links" })[0]
+            tLinks = common.parseDOM(links, "ul")
+            tLinks = common.parseDOM(links, "ul", attrs = {"class": "hidden"})
+            
+            links = tLinks
+            
+            for i in links:
+                try:
+                    host = common.parseDOM(i, "li", attrs = { "id": "link_name" })[-1]
+                    try: host = common.parseDOM(host, "span", attrs = { "class": "google-src-text" })[0]
+                    except: pass
+                    host = host.strip().lower()
+                    #if not host in hostDict: raise Exception() ## UNCOMMENT TO ENABLE SUPPORTED HOSTS ONLY
+                    host = common.replaceHTMLCodes(host)
+                    host = host.encode('utf-8')
+
+                    url = common.parseDOM(i, "a", ret="href")[0]
+                    url = common.replaceHTMLCodes(url)
+                    try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
+                    except: pass
+                    if not url.startswith('http'): url = urlparse.urljoin(self.base_link, url)
+                    url = url.encode('utf-8')
+
+                    sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url})
+                except:
+                    pass
+            
+            print sources
+            return sources
+        except:
+            return sources
+
+    def resolve(self, url):
+        try:
+            url = urlparse.urlparse(url).path
+
+            result = ''
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + url).result
+                except: result = ''
+                if 'showvideo' in result: break
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+
+            url = common.parseDOM(result, "div", attrs = { "id": "showvideo" })[0]
+            url = url.replace('<IFRAME', '<iframe').replace(' SRC=', ' src=')
+            url = common.parseDOM(url, "iframe", ret="src")[0]
+            url = common.replaceHTMLCodes(url)
+            try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
+            except: pass
+            try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['url'][0]
+            except: pass
+
+            import commonresolvers
+            if url.startswith('external.php'):
+                url = url.replace('external.php?url=','')
+                url = base64.b64decode(url)
+            print 'PRE-T RESOLVED URL %s' % (url)
+            url = commonresolvers.get(url).result
+            print 'POST RESOLVED URL %s' % (url)
+            return url
+        except:
+            import traceback
+            traceback.print_exc()    
             return
