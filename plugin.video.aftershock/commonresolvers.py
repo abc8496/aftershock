@@ -30,10 +30,11 @@ class get(object):
             u = urlparse.urlparse(url).netloc
             u = u.replace('www.', '').replace('embed.', '')
             u = u.lower()
-
+            
             import sys, inspect
             r = inspect.getmembers(sys.modules[__name__], inspect.isclass)
             r = [i for i in r if hasattr(i[1], 'info') and u in eval(i[0])().info()['netloc']][0][0]
+            
             r = eval(r)().resolve(url)
 
             if r == None: return r
@@ -1983,4 +1984,59 @@ class zettahost:
         except:
             return
 
+class mediaplaybox:
+    def info(self):
+        return {
+            'netloc': ['mediaplaybox.com'],
+            'host': ['mediaplaybox'],
+            'quality': 'High',
+            'captcha': False,
+            'a/c': False
+        }
 
+    def resolve(self, url):
+        try:
+            url = url + '#'
+            url = re.compile('http://www.mediaplaybox.com/video/(.+?)#').findall(url)
+            url = 'http://www.mediaplaybox.com/mobile?vinf=%s' % url
+
+            result = getUrl(url).result
+            
+            url = common.parseDOM(result, "div", attrs = {"class":"divider"})[0]
+            url = common.parseDOM(url, "a", ret = "href")
+            url = url[0]
+            url = url.replace('_ipod.mp4', '.flv') 
+            
+            return url
+        except:
+            import traceback
+            traceback.print_exc()
+            return
+
+class desiflicks:
+    def info(self):
+        return {
+            'netloc': ['media.desiflicks.com'],
+            'host': ['desiflicks'],
+            'quality': 'High',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            from resources.universal import EnkDekoder
+            result = getUrl(url).result
+            dek = EnkDekoder.dekode(result)
+            
+            url = common.parseDOM(dek, "param", attrs={ "name":"flashvars"}, ret = "value")[0]
+            
+            if re.search(';video_url',url):
+                url = re.findall(';video_url=(.+?)&amp',url)[0]
+                url = url.replace('_ipod.mp4', '.flv')
+            elif re.search('iframe src=', url):
+                url = re.findall('<iframe src="(.+?)"',url)[0]
+                url = stream_url.replace('preview','edit')
+            return url
+        except:
+            return

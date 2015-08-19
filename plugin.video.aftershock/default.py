@@ -42,7 +42,7 @@ addonName           = xbmcaddon.Addon().getAddonInfo("name")
 addonVersion        = xbmcaddon.Addon().getAddonInfo("version")
 addonId             = xbmcaddon.Addon().getAddonInfo("id")
 addonPath           = xbmcaddon.Addon().getAddonInfo("path")
-addonDesc           = "My Addon"
+addonDesc           = "Aftershock Addon"
 dataPath            = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo("profile")).decode("utf-8")
 addonSettings       = os.path.join(dataPath,'settings.db')
 addonSources        = os.path.join(dataPath,'sources.db')
@@ -394,15 +394,20 @@ class Index:
             try:
                 url, source, provider, quality = i['url'], i['source'], i['provider'], i['quality']
                 poster, fanart = meta['poster'], meta['fanart']
-
+                
+                if not type(url) is str :
+                    url = ",".join(url)
                 sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
 
                 u = '%s?action=play_moviehost&name=%s&imdb=%s&tvdb=%s&url=%s&source=%s&provider=%s' % (sys.argv[0], sysname, sysimdb, systvdb, sysurl, syssource, sysprovider)
-
+                
                 cm = []
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
-
-                item = xbmcgui.ListItem(name + ' [COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                
+                if not quality or quality == '':
+                    item = xbmcgui.ListItem(name + ' [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                else :
+                    item = xbmcgui.ListItem(name + ' [COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
@@ -412,6 +417,8 @@ class Index:
                 item.addContextMenuItems(cm, replaceItems=True)
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=False)
             except:
+                import traceback
+                traceback.print_exc()    
                 pass
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
@@ -492,11 +499,6 @@ class Links:
 class Trailer:
     def __init__(self):
         print "Trailer Initialized"
-    def dummy():
-        print "hello"
-class International:
-    def __init__(self):
-        print "Initialized Initialized"
     def dummy():
         print "hello"
 
@@ -782,8 +784,6 @@ class Movies:
             url = url.encode('utf-8')
             self.list[i].update({'url': url})
         except:
-            import traceback
-            traceback.print_exc()
             pass
     def tmdb_info(self, i):
         try:
@@ -950,24 +950,28 @@ class resolver:
             is_alive = len([i for i in threads if i.is_alive() == True])
             if is_alive < 10: break
             time.sleep(0.5)
-
-
         self.sources = global_sources
         return self.sources
     
     def sources_movie(self, name, title, year, imdb, source):
+        quality = ''
         try:
             commonsource = getattr(commonsources, source)()
             url = None
             if url == None: url = commonsource.get_movie(imdb, title, year)
             if url == None: raise Exception()
+            if type(url) is dict:
+                quality = url['quality']
+                url = url['url']
         except:
+            import traceback
+            traceback.print_exc()
             pass
-
+        
         try:
             sources = []
             
-            sources = commonsource.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict)
+            sources = commonsource.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict, quality=quality)
             if sources == None: sources = []
             global_sources.extend(sources)
         except:
@@ -976,15 +980,22 @@ class resolver:
             pass
     
     def sources_filter(self):
-        supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos']
+        try :
+            supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos']
 
-        for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
-        self.sources = sorted(self.sources, key=itemgetter('source'))
-        
-        filter = []
-        for host in supportedDict: filter += [i for i in self.sources if i['source'] == host.lower()]
-        self.sources = filter
-
+            for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
+            self.sources = sorted(self.sources, key=itemgetter('source'))
+            
+            filter = []
+            for host in supportedDict: 
+                filter += [i for i in self.sources if i['source'] == host.lower()]
+            filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
+            self.sources = filter
+            
+        except:
+            import traceback
+            traceback.print_exc()    
+            pass
         return self.sources
 
     def normaltitle(self, title):
@@ -1031,58 +1042,116 @@ class player(xbmc.Player):
         xbmc.Player.__init__(self)
         
     def run(self, content, name, url, imdb, tvdb):
-        self.video_info(content, name, imdb, tvdb)
-        self.resume_info()
+        try :
+            print 'Content [%s] Name [%s] url [%s] imdb [%s] tvdb [%s]' % (content, name, url, imdb, tvdb)
+            self.video_info(content, name, imdb, tvdb)
+            self.resume_info()
 
-        if self.folderPath.startswith(sys.argv[0]) or PseudoTV == 'True':
-            item = xbmcgui.ListItem(path=url)
-            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-        else:
-            try:
-                if self.content == 'movie':
-                    meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "year", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "plot", "plotoutline", "tagline", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
-                    meta = unicode(meta, 'utf-8', errors='ignore')
-                    meta = json.loads(meta)['result']['movies']
-                    self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
+            if self.folderPath.startswith(sys.argv[0]):
+                if type(url) is str:
+                    tUrl = url.split(',')
+                    if len(tUrl) > 0:
+                        url = tUrl
+                    else:
+                        url = [url]
+                try :
+                    if self.content == 'movie':
+                            meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "year", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "plot", "plotoutline", "tagline", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
+                            meta = unicode(meta, 'utf-8', errors='ignore')
+                            meta = json.loads(meta)['result']['movies']
+                            self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
 
-                    meta = {'title': self.meta['title'], 'originaltitle': self.meta['originaltitle'], 'year': self.meta['year'], 'genre': str(" / ".join(self.meta['genre'])), 'studio' : str(" / ".join(self.meta['studio'])), 'country' : str(" / ".join(self.meta['country'])), 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'votes': self.meta['votes'], 'mpaa': self.meta['mpaa'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot'], 'plotoutline': self.meta['plotoutline'], 'tagline': self.meta['tagline']}
+                            meta = {'title': self.meta['title'], 'originaltitle': self.meta['originaltitle'], 'year': self.meta['year'], 'genre': str(" / ".join(self.meta['genre'])), 'studio' : str(" / ".join(self.meta['studio'])), 'country' : str(" / ".join(self.meta['country'])), 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'votes': self.meta['votes'], 'mpaa': self.meta['mpaa'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot'], 'plotoutline': self.meta['plotoutline'], 'tagline': self.meta['tagline']}
 
-                    thumb = self.meta['thumbnail']
-                    poster = thumb
+                            thumb = self.meta['thumbnail']
+                            poster = thumb
+                except :
+                    poster, thumb, meta = '', '', {'title': self.name}
+                
+                playList = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+                playList.clear()
+                
+                i = 0
+                for urlItem in url:
+                    i = i+1
+                    item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)
+                    try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
+                    except: pass
+                    meta['title'] = item.getLabel()
+                    item.setInfo(type="Video", infoLabels = meta)
+                    playList.add(urlItem, item)
+                
+                xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+                self.play(playList)   
+                xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+            else:
+                try:
+                    if self.content == 'movie':
+                        meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "year", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "plot", "plotoutline", "tagline", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
+                        meta = unicode(meta, 'utf-8', errors='ignore')
+                        meta = json.loads(meta)['result']['movies']
+                        self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
 
-                elif self.content == 'episode':
-                    meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"filter":{"and": [{"field": "season", "operator": "is", "value": "%s"}, {"field": "episode", "operator": "is", "value": "%s"}]}, "properties": ["title", "season", "episode", "showtitle", "firstaired", "runtime", "rating", "director", "writer", "plot", "thumbnail", "file"]}, "id": 1}' % (self.season, self.episode))
-                    meta = unicode(meta, 'utf-8', errors='ignore')
-                    meta = json.loads(meta)['result']['episodes']
-                    self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
+                        meta = {'title': self.meta['title'], 'originaltitle': self.meta['originaltitle'], 'year': self.meta['year'], 'genre': str(" / ".join(self.meta['genre'])), 'studio' : str(" / ".join(self.meta['studio'])), 'country' : str(" / ".join(self.meta['country'])), 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'votes': self.meta['votes'], 'mpaa': self.meta['mpaa'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot'], 'plotoutline': self.meta['plotoutline'], 'tagline': self.meta['tagline']}
 
-                    meta = {'title': self.meta['title'], 'season' : self.meta['season'], 'episode': self.meta['episode'], 'tvshowtitle': self.meta['showtitle'], 'premiered' : self.meta['firstaired'], 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot']}
+                        thumb = self.meta['thumbnail']
+                        poster = thumb
 
-                    thumb = self.meta['thumbnail']
+                    elif self.content == 'episode':
+                        meta = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": {"filter":{"and": [{"field": "season", "operator": "is", "value": "%s"}, {"field": "episode", "operator": "is", "value": "%s"}]}, "properties": ["title", "season", "episode", "showtitle", "firstaired", "runtime", "rating", "director", "writer", "plot", "thumbnail", "file"]}, "id": 1}' % (self.season, self.episode))
+                        meta = unicode(meta, 'utf-8', errors='ignore')
+                        meta = json.loads(meta)['result']['episodes']
+                        self.meta = [i for i in meta if i['file'].endswith(self.file)][0]
 
-                    poster = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter": {"field": "title", "operator": "is", "value": "%s"}, "properties": ["thumbnail"]}, "id": 1}' % self.meta['showtitle'])
-                    poster = unicode(poster, 'utf-8', errors='ignore')
-                    poster = json.loads(poster)['result']['tvshows'][0]['thumbnail']
+                        meta = {'title': self.meta['title'], 'season' : self.meta['season'], 'episode': self.meta['episode'], 'tvshowtitle': self.meta['showtitle'], 'premiered' : self.meta['firstaired'], 'duration' : self.meta['runtime'], 'rating': self.meta['rating'], 'director': str(" / ".join(self.meta['director'])), 'writer': str(" / ".join(self.meta['writer'])), 'plot': self.meta['plot']}
 
-            except:
-                poster, thumb, meta = '', '', {'title': self.name}
+                        thumb = self.meta['thumbnail']
 
-            item = xbmcgui.ListItem(path=url, iconImage="DefaultVideo.png", thumbnailImage=thumb)
-            try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
-            except: pass
-            item.setInfo(type="Video", infoLabels = meta)
-            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+                        poster = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter": {"field": "title", "operator": "is", "value": "%s"}, "properties": ["thumbnail"]}, "id": 1}' % self.meta['showtitle'])
+                        poster = unicode(poster, 'utf-8', errors='ignore')
+                        poster = json.loads(poster)['result']['tvshows'][0]['thumbnail']
 
-        for i in range(0, 240):
-            if self.isPlayingVideo(): break
-            xbmc.sleep(1000)
-        while self.isPlayingVideo():
-            try: self.totalTime = self.getTotalTime()
-            except: pass
-            try: self.currentTime = self.getTime()
-            except: pass
-            xbmc.sleep(1000)
-        time.sleep(5)
+                except:
+                    poster, thumb, meta = '', '', {'title': self.name}
+
+                tUrl = url.split(',')
+                if len(tUrl) > 0:
+                    url = tUrl
+                else:
+                    url = [url]
+                
+                playList = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+                playList.clear()
+                
+                i = 0
+                for urlItem in url:
+                    i = i+1
+                    item = xbmcgui.ListItem(path=urlItem, iconImage="DefaultVideo.png", thumbnailImage=thumb)
+                    try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
+                    except: pass
+                    if len(url) > 1:
+                        meta['title'] = meta['title'] + ' Part #' + str(i)
+                    item.setInfo(type="Video", infoLabels = meta)
+                    playList.add(urlItem, item)
+                
+                xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+                self.play(playList)   
+
+            for i in range(0, 240):
+                if self.isPlayingVideo(): break
+                xbmc.sleep(1000)
+            while self.isPlayingVideo():
+                try: self.totalTime = self.getTotalTime()
+                except: pass
+                try: self.currentTime = self.getTime()
+                except: pass
+                xbmc.sleep(1000)
+            time.sleep(5)
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
         
     def video_info(self, content, name, imdb, tvdb):
         try:
