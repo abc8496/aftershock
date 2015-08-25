@@ -20,25 +20,6 @@ def getHomeItems(getSetting):
         if getSetting("homeitems_" +itemid+ "_enabled")== "true":
             d[x]=int(getSetting("homeitems_" + itemid))
     return d
-def getMovie25URL():
-    return selfAddon.getSetting("movie25-url")
-    
-def getSominalURL():
-    return selfAddon.getSetting("sominal-url")
-def getDesiRulezURL():
-    return selfAddon.getSetting("desirulez-url")
-def getNoOfMoviesToLoad():
-    return int(selfAddon.getSetting("sominal-moviesPerPage"))
-    
-def getRefreshRequiredSettings():
-    s=[]
-    s.append(selfAddon.getSetting("meta-view"))
-    s.append(selfAddon.getSetting("meta-view-tv"))
-    s.append(selfAddon.getSetting("groupfavs"))
-    s.append(selfAddon.getSetting("con-view"))
-    s.append(selfAddon.getSetting("xpr-view"))
-    return s
-
 def openSettings():
     d = getHomeItems()
     s = getRefreshRequiredSettings()
@@ -48,14 +29,5 @@ def openSettings():
     if d != dnew or s != snew:
         ClearDir(os.path.join(xbmc.translatePath(selfAddon.getAddonInfo('profile')),'Temp'))
         xbmc.executebuiltin("XBMC.Container.Refresh")  
-
-def ClearDir(dir):
-    if os.path.exists(dir):
-        if os.path.isfile(dir): os.remove(dir)
-        else:
-            for the_file in os.listdir(dir):
-                file_path = os.path.join(dir, the_file)
-                try:os.unlink(file_path)
-                except Exception, e: print str(e)
 
 if  __name__ == "__main__": openSettings()

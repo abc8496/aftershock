@@ -142,8 +142,8 @@ class movie25:
                 url = url.encode('utf-8')
             return url
         except:
-            import traceback
-            traceback.print_exc()    
+            #import traceback
+            #traceback.print_exc()    
             return
 
     def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
@@ -175,7 +175,6 @@ class movie25:
                     try: host = common.parseDOM(host, "span", attrs = { "class": "google-src-text" })[0]
                     except: pass
                     host = host.strip().lower()
-                    #if not host in hostDict: raise Exception() ## UNCOMMENT TO ENABLE SUPPORTED HOSTS ONLY
                     host = common.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
 
@@ -240,6 +239,7 @@ class playindiafilms:
             query = self.search_link % urllib.quote_plus(title)
 
             result = ''
+            url = ''
             quality = 'CAM'
             links = [self.link_1, self.link_2, self.link_3]
             for base_link in links:
@@ -250,9 +250,11 @@ class playindiafilms:
             result = result.decode('iso-8859-1').encode('utf-8')
             result = common.parseDOM(result, "item")
             
+            title = cleantitle().movie(title)
             for item in result:
                 searchTitle = common.parseDOM(item, "title")[0]
-                if title in searchTitle:
+                searchTitle = cleantitle().movie(searchTitle)
+                if title == searchTitle:
                     url = common.parseDOM(item, "link")[0]
                     categories = common.parseDOM(item, "category")
                     for category in categories :
@@ -296,7 +298,7 @@ class playindiafilms:
                     if len(common.parseDOM(tag, "span", attrs= {"class":"btn btn-custom btn-custom-large btn-black "})) > 0:
                         link = common.parseDOM(tag, "strong")
                         if len(urls) > 0 :
-                            sources.append({'source': host, 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
+                            sources.append({'source': host + ' | Parts [' + str(len(urls)) + ']', 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
                             urls = []
                     else :
                         link = common.parseDOM(tag, "a", attrs= {"class":"btn btn-custom btn-medium btn-red btn-red "}, ret="href")
@@ -304,7 +306,7 @@ class playindiafilms:
                             host = re.compile('\.(.+?)\.').findall(link[0])[0]
                             urls.append(link[0])
                 if len(urls) > 0:
-                    sources.append({'source': host, 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
+                    sources.append({'source': host + ' | Parts [' + str(len(urls)) + ']', 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
             except:
                 import traceback
                 traceback.print_exc()    
@@ -331,4 +333,220 @@ class playindiafilms:
         except:
             import traceback
             traceback.print_exc()    
+            return
+            
+class desirulez:
+    def __init__(self):
+        self.base_link = 'http://www.desirulez.net'
+        self.link_1 = 'http://www.desirulez.me'
+        self.link_2 = 'http://www.desirulez.net'
+        self.link_3 = 'http://www.desirulez.net'
+        self.search_link = '/feed/?s=%s&submit=Search'
+
+    def get_shows(self, name, url):
+        try:
+            result = ''
+            shows = []
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + '/' + url).result
+                except: result = ''
+                if 'forumtitle' in result: break
+            
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = common.parseDOM(result, "h2", attrs = {"class" : "forumtitle"})
+            
+            for item in result:
+                title = ''
+                url = ''
+                title = common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"})
+                
+                if not title:
+                    title = common.parseDOM(item, "a", attrs = {"class":"title"})
+                    if title:
+                        title = title[0]
+                    else :
+                        title = common.parseDOM(item, "a")
+                
+                if type(title) is list and len(title) > 0:
+                    title = str(title[0])
+                url = common.parseDOM(item, "a", ret="href")
+                
+                if not url:
+                    url = common.parseDOM(item, "a", attrs = {"class":"title"}, ret="href")
+                    
+                if type(url) is list and len(url) > 0:
+                    url = str(url[0])
+                
+                shows.append({'channel':name, 'title':title, 'url':url, 'year': '0', 'imdb': '0', 'tvdb': '0', 'genre': '0', 'poster': '0', 'banner': '0', 'fanart': '0', 'studio': '0', 'premiered': '0', 'duration': '0', 'rating': '0', 'mpaa': '0', 'plot': '0', 'next': '0', 'provider':'desirulez'})
+        
+            return shows
+        except:
+            import traceback
+            traceback.print_exc()    
+            return
+    def get_show(self, name, url):
+        return 
+    def get_episodes(self, show, url):
+        try :
+            episodes = []
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try:
+                    result = getUrl(base_link + '/' + url).result
+                except: result = ''
+                if 'threadtitle' in result: break
+            
+            
+            rawResult = result.decode('iso-8859-1').encode('utf-8')
+            
+            result = common.parseDOM(rawResult, "h3", attrs = {"class" : "title threadtitle_unread"})
+            result += common.parseDOM(rawResult, "h3", attrs = {"class" : "threadtitle"})
+            
+            for item in result:
+                name = common.parseDOM(item, "a", attrs = {"class":"title"})
+                name += common.parseDOM(item, "a", attrs = {"class":"title threadtitle_unread"})
+                if type(name) is list:
+                    name = name[0]
+                url = common.parseDOM(item, "a", ret="href")
+                if type(url) is list: 
+                    url = url[0]
+                if "Online" not in name: continue    
+                name = name.replace(show, '').replace('Online','').replace('Watch','').replace('Video','')
+                name = name.strip()
+                episodes.append({'show':show, 'title':name, 'url' : url, 'provider':'desirulez'})
+            return episodes
+        except:
+            import traceback
+            traceback.print_exc()    
+            return    
+    def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
+        try:
+            if quality is None:
+                quality = ''
+            sources = []
+
+            result = ''
+            links = [self.link_1, self.link_2, self.link_3]
+            for base_link in links:
+                try: result = getUrl(base_link + '/' + url).result
+                except: result = ''
+                if 'blockquote' in result: break
+            
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = result.replace('\n','')
+            
+            ### DIRTY Implementation
+            import BeautifulSoup
+            soup = BeautifulSoup.BeautifulSoup(result).findAll('blockquote', {'class':re.compile(r'\bpostcontent\b')})[0]
+            
+            
+            for e in soup.findAll('br'):
+                e.extract()
+            if soup.has_key('div'):
+                soup = soup.findChild('div', recursive=False)
+            urls = []
+            for child in soup.findChildren():
+                if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
+                    continue
+                elif (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
+                    if len(urls) > 0:
+                        tmpHost = host.lower()
+                        indx = host.find('[')
+                        if indx > 0 :
+                            tmpHost = tmpHost[:indx-1]
+                        sources.append({'source':host+ ' | Parts [' + str(len(urls)) + ']', 'quality':quality,'provider':'DesiRulez','url':urls})
+                        urls = []
+                    host = child.getText()
+                    host = host.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD',' [COLOR red][HD][/COLOR]').replace('DVD',' [COLOR blue][DVD][/COLOR]').strip()
+                elif (child.name =='a') and not child.getText() == 'registration':
+                    urls.append(str(child['href']) + '###' + host)
+            return sources
+        except:
+            import traceback
+            traceback.print_exc()    
+            return
+
+    def resolve(self, url):
+        try:
+            tUrl = url.split(',')
+            if len(tUrl) > 0:
+                url = tUrl
+            else :
+                url = urlparse.urlparse(url).path
+            
+            import commonresolvers
+            links = []
+            for item in url:
+                vidLink = commonresolvers.get(item).result
+                links.append(vidLink)
+            url = links
+            return url
+        except:
+            import traceback
+            traceback.print_exc()    
+            return
+            
+class einthusan:
+    def __init__(self):
+        self.base_link = 'http://www.einthusan.com'
+        self.search_link = '/search/?search_query=%s&lang=%s'
+
+
+    def get_movie(self, imdb, title, year):
+        try:
+            search = 'http://www.omdbapi.com/?i=tt%s' % imdb
+            search = client.source(search)
+            search = json.loads(search)
+            country = [i.strip() for i in search['Country'].split(',')]
+            if not 'India' in country: return
+
+            languages = ['hindi']
+            language = [i.strip().lower() for i in search['Language'].split(',')]
+            language = [i for i in language if any(x == i for x in languages)][0]
+
+            query = self.search_link % (urllib.quote_plus(title), language)
+            query = urlparse.urljoin(self.base_link, query)
+
+            result = client.source(query)
+            result = client.parseDOM(result, "div", attrs = { "class": "search-category" })
+            result = [i for i in result if 'Movies' in client.parseDOM(i, "p")[0]][0]
+            result = client.parseDOM(result, "li")
+
+            title = cleantitle.movie(title)
+            years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
+            result = [(client.parseDOM(i, "a", ret="href")[0], client.parseDOM(i, "a")[0]) for i in result]
+            r = [i for i in result if any(x in i[1] for x in years)]
+            if not len(r) == 0: result = r
+            result = [i[0] for i in result if title == cleantitle.movie(i[1])][0]
+
+            try: url = re.compile('//.+?(/.+)').findall(result)[0]
+            except: url = result
+            url = url.replace('../', '/')
+            url = client.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
+            return url
+        except:
+            return
+
+
+    def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
+        try:
+            sources = []
+
+            if url == None: return sources
+
+            url = urlparse.urljoin(self.base_link, url)
+            sources.append({'source': 'Einthusan', 'quality': 'HD', 'provider': 'Einthusan', 'url': url})
+            return sources
+        except:
+            return sources
+
+
+    def resolve(self, url):
+        try:
+            result = client.request(url)
+            url = re.compile("'file': '(.+?)'").findall(result)[0]
+            return url
+        except:
             return

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import urllib,urllib2,urlparse,re,os,sys,xbmc,xbmcgui,xbmcaddon,xbmcvfs
-
 try:
     import CommonFunctions as common
 except:
@@ -10,7 +9,6 @@ try:
     import json
 except:
     import simplejson as json
-
 
 class get(object):
     def __init__(self, url):
@@ -22,6 +20,8 @@ class get(object):
             if not pz == None: return pz
             rd = realdebrid().resolve(url)
             if not rd == None: return rd
+            dstv = desirulez().resolve(url)
+            if not dstv == None: return dstv
 
             if url.startswith('rtmp'):
                 if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
@@ -49,8 +49,7 @@ class get(object):
             return r
         except:
             return url
-
-
+            
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
         handlers = []
@@ -353,7 +352,6 @@ class js:
         url = 'http://' + url[-1].split('://', 1)[-1]
         return url
 
-
 class premiumize:
     def __init__(self):
         self.user = xbmcaddon.Addon().getSetting("premiumize_user")
@@ -450,7 +448,6 @@ class realdebrid:
             return url
         except:
             return
-
 
 class _180upload:
     def info(self):
@@ -1984,6 +1981,171 @@ class zettahost:
         except:
             return
 
+class desirulez:
+    def info(self):
+        return {
+            'netloc': ['xpressvids.info', 'bestarticles.me', 'www.embedupload.com', 'tellysony.com', ''],
+            'host': ['cloudy', 'dailymotion', 'embedupload','flashplayer','letwatch','vidgg','vidto','vodlocker'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            items = url.split('###')
+            url = items[0].strip()
+            host = items[1].split('[')[0]
+            host = host.lower().strip()
+            
+            import sys, inspect
+            r = inspect.getmembers(sys.modules[__name__], inspect.isclass)
+            r = [i for i in r if hasattr(i[1], 'info') and host in eval(i[0])().info()['netloc']][0][0]
+            
+            r = eval(r)().resolve(url)
+
+            if r == None: return r
+            elif type(r) == list: return r
+            elif not r.startswith('http'): return r
+
+            try: h = dict(urlparse.parse_qsl(r.rsplit('|', 1)[1]))
+            except: h = dict('')
+            h.update({'Referer': url, 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; rv:34.0) Gecko/20100101 Firefox/34.0'})
+
+            r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
+            
+            return r
+            
+        except:
+            return
+
+    def getVideoID(self, url):
+        try :
+            return re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url + '/')[0][1]
+        except:
+            return 
+    
+class cloudy:
+    def info(self):
+        return {
+            'netloc': ['cloudy'],
+            'host': ['xpressvids.info'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        import urlresolver
+        try:
+            url = 'http://www.cloudy.ec/embed.php?id=' + str(desirulez().getVideoID(url))
+            return urlresolver.resolve(url)
+        except:
+            return
+
+class dailymotion:
+    def info(self):
+        return {
+            'netloc': ['dailymotion'],
+            'host': ['bestarticles.me', 'tellycolors.me'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        import urlresolver
+        try:
+            url = 'http://www.dailymotion.com/embed/video/' + str(desirulez().getVideoID(url))
+            return urlresolver.resolve(url)
+        except:
+            return
+
+class playwire:
+    def info(self):
+        return {
+            'netloc': ['flash player'],
+            'host': ['bestarticles.me'],
+            'quality': 'HD',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            url = url.split('###')[0]
+            result = getUrl(url).result
+            url = common.parseDOM(result, 'script', attrs = {'src': '//cdn.playwire.com/bolt/js/zeus/embed.js'}, ret = 'data-config')[0]
+            
+            result = getUrl(url).result
+            data = json.loads(result)
+            url = data['content']['media']['f4m']
+            result = getUrl(url).result
+            baseUrl = common.parseDOM(result, 'baseURL')[0]
+            mediaUrl = common.parseDOM(result, 'media', ret = 'url')[0]
+            
+            url = baseUrl + '/' + mediaUrl
+            return url
+        except:
+            return
+
+class letwatch:
+    def info(self):
+        return {
+            'netloc': ['letwatch'],
+            'host': ['tellysony.com'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        import urlresolver
+        try:
+            url = 'http://letwatch.us/embed-'+str(desirulez().getVideoID(url))+'-520x400.html'
+            return urlresolver.resolve(url)
+        except:
+            return
+
+class dr_vidto:
+    def info(self):
+        return {
+            'netloc': ['vidto'],
+            'host': ['xpressvids.info'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            url = 'http://vidto.me/embed-%s.html' % str(desirulez().getVideoID(url))
+            url = vidto().resolve(url)
+            return url 
+        except:
+            return
+
+class dr_vodlocker:
+    def info(self):
+        return {
+            'netloc': ['vodlocker'],
+            'host': ['xpressvids.info'],
+            'quality': 'Medium',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            print '0-URL %s' %url
+            url = 'http://vodlocker.com/embed-%s.html' % str(desirulez().getVideoID(url))
+            print '1-URL %s' %url
+            url = vodlocker().resolve(url)
+            print '2-URL %s' %url
+            return url 
+        except:
+            return
+            
 class mediaplaybox:
     def info(self):
         return {
@@ -2009,8 +2171,6 @@ class mediaplaybox:
             
             return url
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 class desiflicks:
@@ -2025,7 +2185,7 @@ class desiflicks:
 
     def resolve(self, url):
         try:
-            from resources.universal import EnkDekoder
+            from resources.libs import EnkDekoder
             result = getUrl(url).result
             dek = EnkDekoder.dekode(result)
             

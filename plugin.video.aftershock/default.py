@@ -1,31 +1,7 @@
 import xbmc,xbmcgui, xbmcaddon, xbmcplugin
 import urllib,re,string,os,time,threading
 import urllib2
-
-import pickle
-
-try:
-    from resources.libs import main,settings, constants, fileutil
-except Exception, e:
-    elogo = xbmc.translatePath('special://home/addons/plugin.video.aftershock/resources/art/bigx.png')
-    dialog = xbmcgui.Dialog()
-    ok=dialog.ok('[B][COLOR=FF67cc33]Aftershock Import Error[/COLOR][/B]','Failed To Import Needed Modules',str(e),'Report missing Module at [COLOR=FF67cc33]https://code.google.com/p/innovate-dev/issues/list[/COLOR] to Fix')
-    xbmc.log('Aftershock ERROR - Importing Modules: '+str(e), xbmc.LOGERROR)
-
-addon_id = settings.getAddOnID()
-selfAddon = xbmcaddon.Addon(id=addon_id)
-
-art = main.art
-################################################################################ Directories ##########################################################################################################
-fileutil.createDefaultDataDir(main.datapath)
-
-mainurl = settings.getMovie25URL()
-sominalurl = settings.getSominalURL()
-desirulezurl = settings.getDesiRulezURL()
-
-
-
-################################# START NEW IMPL ################################################################
+from resources.libs import settings
 import base64, urlparse
 import CommonFunctions as common
 import commonsources
@@ -111,6 +87,7 @@ class Main:
         elif action == 'home_newreleases' : Movies().newReleases()
         elif action == 'home_mostviewed' : Movies().mostViewed()
         elif action == 'home_mostvoted' : Movies().mostVoted()
+        elif action == 'home_settings' : settings().openSettings()
         elif action == 'movie_list' : Movies().moviesList(url)
         elif action == 'desi_home_newreleases' : Movies().desiNewReleases()
         elif action == 'desi_home_az' : Menu().getDesiAtoZItems()
@@ -118,9 +95,13 @@ class Main:
         elif action == 'desi_home_hd' : Movies().desiHD()
         elif action == 'desi_home_genre' : Menu().getDesiGenre()
         elif action == 'desi_home_year' : Menu().getDesiYear()
+        elif action == 'home_international' : Menu().getInternationalTV()
         elif action == 'desi_movie_list' : Movies().desi_movie_list(url)
+        elif action == 'desi_tv_channel' : Shows().getShows(url, name, provider)
+        elif action == 'episodes' : Shows().getEpisodes(url, show, provider)
         elif action == 'get_host' : resolver().get_host(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta)
         elif action == 'play_moviehost' : resolver().play_host('movie', name, imdb, tvdb, url, source, provider)
+        elif action == 'play_tvhost' : resolver().play_host('tv', name, imdb, tvdb, url, source, provider)
 
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
@@ -189,8 +170,6 @@ class Menu:
             if value==None: continue
             if index==0:
                 homeItems.append({'name':language(90100).encode("utf-8"), 'image': 'search.png', 'action': 'home_search'})
-            elif index==1:
-                homeItems.append({'name':language(90101).encode("utf-8"), 'image': 'favsu.png', 'action': 'home_fav'})
             elif index==2:
                 homeItems.append({'name':language(90102).encode("utf-8"), 'image': 'az.png', 'action': 'home_az'})
             elif index==3:
@@ -209,17 +188,11 @@ class Menu:
                 homeItems.append({'name':language(90109).encode("utf-8"), 'image': 'genre.png', 'action': 'home_genre'})
             elif index==10:
                 homeItems.append({'name':language(90110).encode("utf-8"), 'image': 'year.png', 'action': 'home_year'})
-            elif index==11:
-                homeItems.append({'name':language(90111).encode("utf-8"), 'image': 'whistory.png', 'action': 'home_history'})
             elif index==12:
                 homeItems.append({'name':language(90112).encode("utf-8"), 'image': 'intl.png', 'action': 'home_international'})
             elif index==13:
                 homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
-            elif index==14:
-                homeItems.append({'name':language(90114).encode("utf-8"), 'image': 'live.png', 'action': 'home_livetv'})
-            elif index==22:
-                homeItems.append({'name':language(90115).encode("utf-8"), 'image': 'kidzone.png', 'action': 'home_kids'})
-        homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'settings_home'})
+        #homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
         Index().homeList(homeItems)
     def getDesiHomeItems(self):
         d = settings.getHomeItems(getSetting)
@@ -276,6 +249,31 @@ class Menu:
             listItems.append({'name':str(i), 'image':str(i)+'.png', 'action':'desi_movie_list', 'url':'/category/'+str(i)+'/feed'})
         listItems.append({'name':'Enter Year', 'image':'enteryear.png', 'action':'desi_enter_year'})    
         Index().homeList(listItems)    
+    
+    def getInternationalTV(self):
+        listItems = []
+        logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
+        listItems.append({'provider':'desirulez', 'name':language(90200).encode("utf-8"), 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=42'})
+        listItems.append({'provider':'desirulez', 'name':language(90201).encode("utf-8"), 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=73'})
+        listItems.append({'provider':'desirulez', 'name':language(90202).encode("utf-8"), 'image': logoBaseURL+'/zz/zindagi_tv_pk.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
+        listItems.append({'provider':'desirulez', 'name':language(90203).encode("utf-8"), 'image': logoBaseURL+'/ss/set_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=63'})
+        listItems.append({'provider':'desirulez', 'name':language(90204).encode("utf-8"), 'image': logoBaseURL+'/ss/sony_pal_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
+        listItems.append({'provider':'desirulez', 'name':language(90205).encode("utf-8"), 'image': logoBaseURL+'/ll/life_ok_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1375'})
+        listItems.append({'provider':'desirulez', 'name':language(90206).encode("utf-8"), 'image': logoBaseURL+'/ss/sahara_one.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=134'})
+        listItems.append({'provider':'desirulez', 'name':language(90207).encode("utf-8"), 'image': logoBaseURL+'/ss/star_jalsha.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=667'})
+        listItems.append({'provider':'desirulez', 'name':language(90208).encode("utf-8"), 'image': logoBaseURL+'/cc/colors_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=176'})
+        listItems.append({'provider':'desirulez', 'name':language(90209).encode("utf-8"), 'image': logoBaseURL+'/ss/sony_sab_tv.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=254'})
+        listItems.append({'provider':'desirulez', 'name':language(90210).encode("utf-8"), 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1138'})
+        listItems.append({'provider':'desirulez', 'name':language(90211).encode("utf-8"), 'image': logoBaseURL+'/zz/zee_zing_asia.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
+        listItems.append({'provider':'desirulez', 'name':language(90212).encode("utf-8"), 'image': logoBaseURL+'/mm/mtv_india.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=339'})
+        listItems.append({'provider':'desirulez', 'name':language(90213).encode("utf-8"), 'image': logoBaseURL+'/cc/channel_v_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=633'})
+        listItems.append({'provider':'desirulez', 'name':language(90214).encode("utf-8"), 'image': logoBaseURL+'/uu/utv_bindass.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=504'})
+        listItems.append({'provider':'desirulez', 'name':language(90215).encode("utf-8"), 'image': logoBaseURL+'/uu/utv_stars.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1274'})
+        listItems.append({'provider':'desirulez', 'name':language(90216).encode("utf-8"), 'image': logoBaseURL+'/pp/pogo.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=500'})
+        listItems.append({'provider':'desirulez', 'name':language(90217).encode("utf-8"), 'image': logoBaseURL+'/dd/disney_channel_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=479'})
+        listItems.append({'provider':'desirulez', 'name':language(90218).encode("utf-8"), 'image': logoBaseURL+'/hh/hungama.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=472'})
+        listItems.append({'provider':'desirulez', 'name':language(90219).encode("utf-8"), 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=509'})
+        Index().homeList(listItems)
 
 class Index:
     def __init__(self):
@@ -285,6 +283,8 @@ class Index:
         except: xbmc.executebuiltin("Notification(%s,%s, %s, %s)" % (header, str, time, self.addonArt('icon.png')))
 
     def addonArt(self, image):
+        if image.startswith('http'):
+            return image
         art = os.path.join(addonPath, 'resources/art')
         image = os.path.join(art, image)
         return image
@@ -294,6 +294,8 @@ class Index:
             view = 500
         elif contentType == 'MOVIES':
             view = 500
+        elif contentType == 'TVSHOWS' :
+            view = 502
         xbmc.executebuiltin('Container.SetViewMode(%s)' % view)
         
     def homeList(self, homeList):
@@ -312,7 +314,13 @@ class Index:
                 u = '%s?action=%s' % (sys.argv[0], action)
                 try: u += '&url=%s' % urllib.quote_plus(i['url'])
                 except: pass
-
+                
+                try: u += '&provider=%s' % urllib.quote_plus(i['provider'])
+                except: pass
+                
+                try: u += '&name=%s' % urllib.quote_plus(i['name'])
+                except: pass
+                
                 cm = []
                 replaceItems = False
 
@@ -351,7 +359,7 @@ class Index:
                 isFolder = True
                 
                 cm = []
-                cm.append(('Movie Information', 'Action(Info)'))
+                cm.append((language(30412).encode('utf-8'), 'Action(Info)'))
                 item = xbmcgui.ListItem(label=name, iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
@@ -422,46 +430,136 @@ class Index:
                 pass
 
         xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
+    def showList(self, showList) :
+        if showList == None or len(showList) == 0: return
+        total = len(showList)
+        addonPoster = ''
+        addonBanner = ''
+        addonFanart = ''
+        for i in showList:
+            try:
+                name, title, year, imdb, tvdb, genre, url, poster, banner, fanart, studio, premiered, duration, rating, mpaa, plot = i['title'],  i['title'], i['year'], i['imdb'], i['tvdb'], i['genre'], i['url'], i['poster'], i['banner'], i['fanart'], i['studio'], i['premiered'], i['duration'], i['rating'], i['mpaa'], i['plot']
+
+                if poster == '0': poster = addonPoster
+                if banner == '0': banner = addonBanner
+                if fanart == '0' or not getSetting("fanart") == 'true': fanart = addonFanart
+                if duration == '0': duration = '30'
+
+                systitle, sysyear, sysimdb, systvdb, sysurl, sysimage = urllib.quote_plus(title), urllib.quote_plus(year), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(poster)
+
+                meta = {'title': title, 'tvshowtitle': title, 'year': year, 'imdb_id' : 'tt' + imdb, 'tvdb_id': tvdb, 'genre' : genre, 'studio': studio, 'premiered': premiered, 'duration' : duration, 'rating' : rating, 'mpaa' : mpaa, 'plot': plot, 'trailer': '%s?action=trailer&name=%s' % (sys.argv[0], systitle)}
+                meta = dict((k,v) for k, v in meta.iteritems() if not v == '0')
+
+                u = '%s?action=episodes&show=%s&year=%s&imdb=%s&tvdb=%s&url=%s' % (sys.argv[0], systitle, sysyear, sysimdb, systvdb, sysurl)
+                try: u += '&provider=%s' % urllib.quote_plus(i['provider'])
+                except: pass
+                
+                try:
+                    match = [i for i in indicators if str(i['show']['ids']['tvdb']) == tvdb][0]
+                    num_1 = 0
+                    for i in range(0, len(match['seasons'])): num_1 += len(match['seasons'][i]['episodes'])
+                    num_2 = int(match['show']['aired_episodes'])
+                    if num_1 >= num_2: meta.update({'playcount': 1, 'overlay': 7})
+                except:
+                    pass
+
+                cm = []
+                cm.append((language(30413).encode("utf-8"), 'Action(Info)'))
+                cm.append((language(30403).encode("utf-8"), 'RunPlugin(%s?action=unwatched_shows&name=%s&year=%s&imdb=%s&tvdb=%s)' % (sys.argv[0], systitle, sysyear, sysimdb, systvdb)))
+                cm.append((language(30404).encode("utf-8"), 'RunPlugin(%s?action=watched_shows&name=%s&year=%s&imdb=%s&tvdb=%s)' % (sys.argv[0], systitle, sysyear, sysimdb, systvdb)))
+
+                item = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=poster)
+                try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster, 'banner': banner, 'tvshow.banner': banner, 'season.banner': banner})
+                except: pass
+                item.setProperty("Fanart_Image", fanart)
+                item.setInfo(type="Video", infoLabels = meta)
+                item.addContextMenuItems(cm, replaceItems=True)
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
+            except:
+                pass
+
+        xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
+        for i in range(0, 200):
+            if xbmc.getCondVisibility('Container.Content(tvshows)'):
+                return Index().setContainerView('TVSHOWS', {'skin.confluence' : 500})
+            xbmc.sleep(100)
+    def episodeList(self, episodeList) :
+        if episodeList == None or len(episodeList) == 0: return
+        total = len(episodeList)
+        
+        for i in episodeList:
+            try:
+                show, title, url= i['show'], i['title'], i['url']
+
+                duration = '30'
+
+                sysshow, systitle, sysurl = urllib.quote_plus(show), urllib.quote_plus(title), urllib.quote_plus(url)
+
+                meta = {'title': title, 'tvshowtitle': show, 'duration' : duration}
+                meta = dict((k,v) for k, v in meta.iteritems() if not v == '0')
+
+                u = '%s?action=get_host&show=%s&title=%s&url=%s' % (sys.argv[0], sysshow, systitle, sysurl)
+                
+                item = xbmcgui.ListItem(title, iconImage="DefaultVideo.png", thumbnailImage="DefaultVideo.png")
+                item.setInfo(type="Video", infoLabels = meta)
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
+            except:
+                import traceback
+                traceback.print_exc()  
+                pass
+
+        xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
+        for i in range(0, 200):
+            if xbmc.getCondVisibility('Container.Content(tvshows)'):
+                return Index().setContainerView('TVSHOWS', {'skin.confluence' : 500})
+            xbmc.sleep(100)
+    def tvsourceList(self, sourceList, name, imdb, tvdb, meta):
+        if sourceList == None or len(sourceList) == 0: return
+
+        total = len(sourceList)
+        imdb, tvdb = '', ''
+        for i in sourceList:
+            try:
+                url, source, provider = i['url'], i['source'], i['provider']
+                if not type(url) is str :
+                    url = ",".join(url)
+                if meta :
+                    poster, banner, thumb, fanart = meta['poster'], meta['banner'], meta['thumb'], meta['fanart']
+                else :
+                    poster, banner, thumb, fanart = 'DefaultVideo.png','DefaultVideo.png','DefaultVideo.png','DefaultVideo.png'
+                sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
+
+                u = '%s?action=play_tvhost&name=%s&imdb=%s&tvdb=%s&url=%s&source=%s&provider=%s' % (sys.argv[0], sysname, sysimdb, systvdb, sysurl, syssource, sysprovider)
+
+                item = xbmcgui.ListItem(source, iconImage="DefaultVideo.png", thumbnailImage=thumb)
+                try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster, 'banner': banner, 'tvshow.banner': banner, 'season.banner': banner})
+                except: 
+                    import traceback
+                    traceback.print_exc()  
+                    pass
+                item.setProperty("Fanart_Image", fanart)
+                item.setInfo(type="Video", infoLabels = meta)
+                item.setProperty("Video", "true")
+                item.setProperty("IsPlayable", "true")
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=False)
+            except:
+                import traceback
+                traceback.print_exc()  
+                pass
+
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
+
 class Links:
     def __init__(self):
-        #self.imdb_base = 'http://www.imdb.com'
-        #self.imdb_mobile = 'http://m.imdb.com'
-        #self.imdb_genre = 'http://www.imdb.com/genre/'
-        #self.imdb_language = 'http://www.imdb.com/language/'
         self.imdb_title = 'http://www.imdb.com/title/tt%s/'
-        #self.imdb_info = 'http://www.imdbapi.com/?t=%s&y=%s'
-        #self.imdb_media = 'http://ia.media-imdb.com'
-        #self.imdb_seasons = 'http://www.imdb.com/title/tt%s/episodes'
-        #self.imdb_episodes = 'http://www.imdb.com/title/tt%s/episodes?season=%s'
-        #self.imdb_genres = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&genres=%s'
-        #self.imdb_certificates = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&certificates=us:%s'
-        #self.imdb_languages = 'http://www.imdb.com/search/title?languages=%s|1&title_type=feature,tv_movie&sort=moviemeter,asc&count=25&start=1'
-        #self.imdb_years = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us&count=25&start=1&year=%s,%s'
-        #self.imdb_popular = 'http://www.imdb.com/search/title?groups=top_1000&sort=moviemeter,asc&count=25&start=1'
-        #self.imdb_boxoffice = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=boxoffice_gross_us,desc&count=25&start=1'
-        #self.imdb_views = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&sort=num_votes,desc&count=25&start=1'
-        #self.imdb_oscars = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&groups=oscar_best_picture_winners&sort=year,desc&count=25&start=1'
-        #self.imdb_tv_genres = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1&genres=%s'
-        #self.imdb_tv_certificates = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1&certificates=us:%s'
-        #self.imdb_tv_popular = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=moviemeter,asc&count=25&start=1'
-        #self.imdb_tv_rating = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&num_votes=5000,&sort=user_rating,desc&count=25&start=1'
-        #self.imdb_tv_views = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&sort=num_votes,desc&count=25&start=1'
-        #self.imdb_tv_active = 'http://www.imdb.com/search/title?title_type=tv_series,mini_series&production_status=active&sort=moviemeter,asc&count=25&start=1'
         self.imdb_search = 'http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=%s'
-        #self.imdb_people_search = 'http://www.imdb.com/search/name?count=100&name=%s'
-        #self.imdb_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=feature,tv_movie&start=1&role=nm%s'
-        #self.imdb_tv_people = 'http://www.imdb.com/search/title?count=25&sort=year,desc&title_type=tv_series,mini_series&start=1&role=nm%s'
-        #self.imdb_userlists = 'http://www.imdb.com/user/ur%s/lists?tab=all&sort=modified:desc&filter=titles'
-        #self.imdb_watchlist ='http://www.imdb.com/user/ur%s/watchlist'
-        #self.imdb_list = 'http://www.imdb.com/list/%s/?view=detail&sort=title:asc&title_type=feature,short,tv_movie,tv_special,video,documentary,game&start=1'
-        #self.imdb_tv_list = 'http://www.imdb.com/list/%s/?view=detail&sort=title:asc&title_type=tv_series,mini_series&start=1'
-        #self.imdb_user = getSetting("imdb_user").replace('ur', '')
 
         self.tmdb_base = 'http://api.themoviedb.org'
         self.tmdb_key = base64.urlsafe_b64decode('MTdmMjI3YmVjNTdkOTQ4OGJiYzgyNzYyZmMxNDQ0NmM=') ## using my key kodi-plugin-aftershock 17f227bec57d9488bbc82762fc14446c
         self.tmdb_info = 'http://api.themoviedb.org/3/movie/tt%s?language=en&api_key=%s'
         self.tmdb_info2 = 'http://api.themoviedb.org/3/movie/%s?language=en&api_key=%s'
-        #self.tmdb_theaters = 'http://api.themoviedb.org/3/movie/now_playing?api_key=%s&page=1'
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_image2 = 'http://image.tmdb.org/t/p/w500'
 
@@ -870,6 +968,171 @@ class Movies:
         except:
             pass
 
+class Shows:
+    def __init__(self):
+        self.list = []
+        
+    def cleantitle_tv(self, title):
+        title = re.sub('\n|\s(|[(])(UK|US|AU|\d{4})(|[)])$|\s(vs|v[.])\s|(:|;|-|"|,|\'|\.|\?)|\s', '', title).lower()
+        return title
+
+    
+    def getShows(self, url, name, provider):
+        try :
+            commonsource = getattr(commonsources, provider)()
+            self.list = commonsource.get_shows(name, url)
+            
+            threads = []
+            for i in range(0, len(self.list)): threads.append(Thread(self.tvdb_info, i))
+            
+            [i.start() for i in threads]
+            [i.join() for i in threads]
+
+            Index().showList(self.list)
+            return self.list
+        except:
+            import traceback
+            traceback.print_exc()  
+            return 
+    
+    def getEpisodes(self, url, show, provider):
+        try :
+            commonsource = getattr(commonsources, provider)()
+            self.list = commonsource.get_episodes(show, url)
+            Index().episodeList(self.list)
+            return self.list
+        except:
+            import traceback
+            traceback.print_exc()  
+            return 
+    def tvdb_info(self, i):
+
+        try:
+            try: sid = self.list[i]['tvdb']
+            except: sid = '0'
+            
+            if sid == '0':
+                url = Links().tvdb_search % self.list[i]['imdb']
+                result = getUrl(url, timeout='10').result
+
+                try: name = common.parseDOM(result, "SeriesName")[0]
+                except: name = '0'
+                dupe = re.compile('[***]Duplicate (\d*)[***]').findall(name)
+
+                year = self.list[i]['year']
+                years = [str(year), str(int(year)+1), str(int(year)-1)]
+
+                if len(dupe) > 0:
+                    sid = str(dupe[0])
+                elif name == '0':
+                    show = self.list[i]['title']
+                    title = self.cleantitle_tv(show)
+                    url = Links().tvdb_search2 % urllib.quote_plus(show)
+                    result = getUrl(url, timeout='10').result
+                    result = common.replaceHTMLCodes(result)
+                    result = common.parseDOM(result, "Series")
+                    if result :
+                        result = [x for x in result if title == self.cleantitle_tv(common.parseDOM(x, "SeriesName")[0])]
+                        result = [x for x in result if any(y in common.parseDOM(x, "FirstAired")[0] for y in years)][0]
+                
+                if result:
+                    sid = common.parseDOM(result, "seriesid")[0]
+
+
+            url = Links().tvdb_info2 % (Links().tvdb_key, sid)
+            
+            result = getUrl(url, timeout='10').result
+
+            tvdb = common.parseDOM(result, "id")[0]
+            if tvdb == '': tvdb = '0'
+            tvdb = common.replaceHTMLCodes(tvdb)
+            tvdb = tvdb.encode('utf-8')
+            if not tvdb == '0': self.list[i].update({'tvdb': tvdb})
+
+            try: poster = common.parseDOM(result, "poster")[0]
+            except: poster = ''
+            if not poster == '': poster = Links().tvdb_image + poster
+            else: poster = '0'
+            poster = common.replaceHTMLCodes(poster)
+            poster = poster.encode('utf-8')
+
+            try: banner = common.parseDOM(result, "banner")[0]
+            except: banner = ''
+            if not banner == '': banner = Links().tvdb_image + banner
+            else: banner = '0'
+            banner = common.replaceHTMLCodes(banner)
+            banner = banner.encode('utf-8')
+
+            try: fanart = common.parseDOM(result, "fanart")[0]
+            except: fanart = ''
+            if not fanart == '': fanart = Links().tvdb_image + fanart
+            else: fanart = '0'
+            fanart = common.replaceHTMLCodes(fanart)
+            fanart = fanart.encode('utf-8')
+            if not fanart == '0': self.list[i].update({'fanart': fanart})
+
+            if not poster == '0': self.list[i].update({'poster': poster})
+            elif not fanart == '0': self.list[i].update({'poster': fanart})
+            elif not banner == '0': self.list[i].update({'poster': banner})
+
+            if not banner == '0': self.list[i].update({'banner': banner})
+            elif not fanart == '0': self.list[i].update({'banner': fanart})
+            elif not poster == '0': self.list[i].update({'banner': poster})
+
+            try: genre = common.parseDOM(result, "Genre")[0]
+            except: genre = ''
+            genre = [x for x in genre.split('|') if not x == '']
+            genre = " / ".join(genre)
+            if genre == '': genre = '0'
+            genre = common.replaceHTMLCodes(genre)
+            genre = genre.encode('utf-8')
+            if not genre == '0': self.list[i].update({'genre': genre})
+
+            try: studio = common.parseDOM(result, "Network")[0]
+            except: studio = ''
+            if studio == '': studio = '0'
+            studio = common.replaceHTMLCodes(studio)
+            studio = studio.encode('utf-8')
+            if not studio == '0': self.list[i].update({'studio': studio})
+
+            try: premiered = common.parseDOM(result, "FirstAired")[0]
+            except: premiered = ''
+            if premiered == '': premiered = '0'
+            premiered = common.replaceHTMLCodes(premiered)
+            premiered = premiered.encode('utf-8')
+            if not premiered == '0': self.list[i].update({'premiered': premiered})
+
+            try: duration = common.parseDOM(result, "Runtime")[0]
+            except: duration = ''
+            if duration == '': duration = '0'
+            duration = common.replaceHTMLCodes(duration)
+            duration = duration.encode('utf-8')
+            if not duration == '0': self.list[i].update({'duration': duration})
+
+            try: rating = common.parseDOM(result, "Rating")[0]
+            except: rating = ''
+            if rating == '' or not self.list[i]['rating'] == '0': rating = '0'
+            rating = common.replaceHTMLCodes(rating)
+            rating = rating.encode('utf-8')
+            if not rating == '0': self.list[i].update({'rating': rating})
+
+            try: mpaa = common.parseDOM(result, "ContentRating")[0]
+            except: mpaa = ''
+            if mpaa == '': mpaa = '0'
+            mpaa = common.replaceHTMLCodes(mpaa)
+            mpaa = mpaa.encode('utf-8')
+            if not mpaa == '0': self.list[i].update({'mpaa': mpaa})
+
+            try: plot = common.parseDOM(result, "Overview")[0]
+            except: plot = ''
+            if plot == '': plot = '0'
+            plot = common.replaceHTMLCodes(plot)
+            plot = plot.encode('utf-8')
+            if not plot == '0': self.list[i].update({'plot': plot})
+        except:
+            pass
+
+
 class Thread(threading.Thread):
     def __init__(self, target, *args):
         self._target = target
@@ -890,68 +1153,69 @@ class resolver:
             if show == None: content = 'movie'
             else: content = 'episode'
 
-            self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre)
+            self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url)
             if self.sources == []: raise Exception()
             self.sources = self.sources_filter() #For only displaying supported sources
-
-            meta = json.loads(meta)
+            if meta : meta = json.loads(meta)
 
             if content == 'movie': 
                 Index().moviesourceList(self.sources, name, imdb, '0', meta)
             else:
-                Index().tvsourceList(self.sources, name, imdb, tvdb, meta)
+                Index().tvsourceList(self.sources, title, imdb, tvdb, meta)
         except:
             import traceback
             traceback.print_exc()
             Index().infoDialog(language(30308).encode("utf-8"))
             return
-    def sources_get(self, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre):
-        import inspect
-        sourceDict = inspect.getmembers(commonsources, inspect.isclass)
-        sourceDict = [i for i in sourceDict if hasattr(i[1], 'get_sources')]
+    def sources_get(self, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url):
+        try :
+            import inspect
+            sourceDict = inspect.getmembers(commonsources, inspect.isclass)
+            sourceDict = [i for i in sourceDict if hasattr(i[1], 'get_sources')]
+            if show == None: content = 'movie'
+            else: content = 'episode'
+
+            if content == 'movie':
+                sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_movie')]
+                sourceDict = [(i, 'true') for i in sourceDict]
+            else:
+                sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_show')]
+                sourceDict = [(i, 'true') for i in sourceDict]
+            
+            global global_sources
+            global_sources = []
+            
+            threads = []
+            sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
+            
+            if content == 'movie':
+                title = self.normaltitle(title)
+                for source in sourceDict: threads.append(Thread(self.sources_movie, name, title, year, imdb, source))
+            else:
+                for source in sourceDict: threads.append(Thread(self.sources_tv, name, title, url, source))
+
+
+            timeout = 10
+            
+            [i.start() for i in threads]
+
+            for i in range(0, timeout * 2):
+                is_alive = [x.is_alive() for x in threads]
+                if all(x == False for x in is_alive): break
+                time.sleep(0.5)
+
+            for i in range(0, 5 * 2):
+                is_alive = len([i for i in threads if i.is_alive() == True])
+                if is_alive < 10: break
+                time.sleep(0.5)
+            self.sources = global_sources
+            return self.sources
+        except:
+            import traceback
+            traceback.print_exc()
+            Index().infoDialog(language(30308).encode("utf-8"))
+            return
         
-        if show == None: content = 'movie'
-        else: content = 'episode'
-
-        if content == 'movie':
-            sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_movie')]
-            sourceDict = [(i, 'true') for i in sourceDict]
-        else:
-            sourceDict = [str(i[0]) for i in sourceDict if hasattr(i[1], 'get_show')]
-            try: sourceDict = [(i, getSetting(i + '_tv')) for i in sourceDict]
-            except: sourceDict = [(i, 'true') for i in sourceDict]
-
-        global global_sources
-        global_sources = []
-        
-        threads = []
-        sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
-        
-        if content == 'movie':
-            title = self.normaltitle(title)
-            for source in sourceDict: threads.append(Thread(self.sources_movie, name, title, year, imdb, source))
-        else:
-            show, show_alt = self.normaltitle(show), self.normaltitle(show_alt)
-            season, episode = episodes().tvrage_redirect(title, year, imdb, tvdb, season, episode, show, date, genre)
-            for source in sourceDict: threads.append(Thread(self.sources_tv, name, title, year, imdb, tvdb, date, season, episode, show, show_alt, source))
-
-
-        #timeout = int(getSetting("sources_timeout_beta"))
-        timeout = 10
-        
-        [i.start() for i in threads]
-
-        for i in range(0, timeout * 2):
-            is_alive = [x.is_alive() for x in threads]
-            if all(x == False for x in is_alive): break
-            time.sleep(0.5)
-
-        for i in range(0, 5 * 2):
-            is_alive = len([i for i in threads if i.is_alive() == True])
-            if is_alive < 10: break
-            time.sleep(0.5)
-        self.sources = global_sources
-        return self.sources
     
     def sources_movie(self, name, title, year, imdb, source):
         quality = ''
@@ -978,18 +1242,50 @@ class resolver:
             import traceback
             traceback.print_exc()    
             pass
+    def sources_tv(self, name, title, url, source):
+        quality = ''
+        try:
+            commonsource = getattr(commonsources, source)()
+            if url == None: url = commonsource.get_show(imdb, title, year)
+            if url == None: raise Exception()
+            if type(url) is dict:
+                quality = url['quality']
+                url = url['url']
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+        
+        try:
+            sources = []
+            
+            sources = commonsource.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict, quality=quality)
+            if sources == None: sources = []
+            global_sources.extend(sources)
+        except:
+            import traceback
+            traceback.print_exc()    
+            pass
     
     def sources_filter(self):
         try :
             supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos']
-
-            for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
+            excludeDict = ['embed upload', 'vidgg']
+            for i in range(len(self.sources)): 
+                if not self.sources[i]['provider'].lower() == 'DesiRulez'.lower():
+                    self.sources[i]['source'] = self.sources[i]['source'].lower()
             self.sources = sorted(self.sources, key=itemgetter('source'))
             
             filter = []
             for host in supportedDict: 
                 filter += [i for i in self.sources if i['source'] == host.lower()]
             filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
+            filter += [i for i in self.sources if i['provider'].lower() == 'DesiRulez'.lower()]
+            
+            for i in filter:
+                for j in excludeDict:
+                    if i['provider'].lower() == 'DesiRulez'.lower() and j in i['source'].lower() :
+                        filter.pop(filter.index(i))
             self.sources = filter
             
         except:
@@ -1046,7 +1342,8 @@ class player(xbmc.Player):
             print 'Content [%s] Name [%s] url [%s] imdb [%s] tvdb [%s]' % (content, name, url, imdb, tvdb)
             self.video_info(content, name, imdb, tvdb)
             self.resume_info()
-
+            thumb = ''
+            
             if self.folderPath.startswith(sys.argv[0]):
                 if type(url) is str:
                     tUrl = url.split(',')
@@ -1077,8 +1374,11 @@ class player(xbmc.Player):
                     item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)
                     try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
                     except: pass
-                    meta['title'] = item.getLabel()
-                    item.setInfo(type="Video", infoLabels = meta)
+                    try :
+                        meta['title'] = item.getLabel()
+                        item.setInfo(type="Video", infoLabels = meta)
+                    except : 
+                        pass
                     playList.add(urlItem, item)
                 
                 xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
@@ -1301,394 +1601,3 @@ class player(xbmc.Player):
         except:
             pass
 Main()
-#Menu()
-#Trailer()
-#International()
-#HindiMovies()
-#FileUtils()
-
-################################# END NEW IMPL ################################################################
-        
-def INT(url):
-    logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
-    main.addDir('Hindi Movies',url+'forums/20-Latest-Exclusive-Movie-HQ',constants.DESIRULEZ_LISTSHOWS,art+'/hindimovies.png')
-    main.addDir('Star Plus',url+'forumdisplay.php?f=42',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_plus.jpg')
-    main.addDir('Zee TV',url+'forumdisplay.php?f=73',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zee_tv.jpg')
-    main.addDir('Zindagi TV',url+'forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zindagi_tv_pk.png')
-    main.addDir('Sony TV',url+'forumdisplay.php?f=63',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/set_in.jpg')
-    main.addDir('Sony Pal',url+'forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sony_pal_in.png')
-    main.addDir('Life OK',url+'forumdisplay.php?f=1375',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ll/life_ok_in.jpg')
-    main.addDir('Sahara One',url+'forumdisplay.php?f=134',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sahara_one.jpg')
-    main.addDir('Star Jalsha',url+'forumdisplay.php?f=667',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_jalsha.jpg')
-    main.addDir('Colors TV',url+'forumdisplay.php?f=176',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/colors_in.jpg')
-    main.addDir('Sab TV',url+'forumdisplay.php?f=254',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/sony_sab_tv.jpg')
-    main.addDir('Star Pravah',url+'forumdisplay.php?f=1138',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/ss/star_pravah.png')
-    main.addDir('Zing TV',url+'forumdisplay.php?f=00',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/zz/zee_zing_asia.png')
-    main.addDir('MTV',url+'forumdisplay.php?f=339',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/mm/mtv_india.jpg')
-    main.addDir('Channel [V]',url+'forumdisplay.php?f=633',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/channel_v_in.jpg')
-    main.addDir('Bindass TV',url+'forumdisplay.php?f=504',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/uu/utv_bindass.jpg')
-    main.addDir('UTV Stars',url+'forumdisplay.php?f=1274',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/uu/utv_stars.jpg')
-    main.addDir('POGO',url+'forumdisplay.php?f=500',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/pp/pogo.jpg')
-    main.addDir('Disney',url+'forumdisplay.php?f=479',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/dd/disney_channel_in.jpg')
-    main.addDir('Hungama TV',url+'forumdisplay.php?f=472',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/hh/hungama.jpg')
-    main.addDir('Cartoon Network',url+'/orumdisplay.php?f=509',constants.DESIRULEZ_LISTSHOWS,logoBaseURL+'/cc/cartoon_network_in.jpg')
-    main.VIEWSB()
-
-def getFavorites(section_title = None):
-    from resources.universal import favorites
-    fav = favorites.Favorites(addon_id, sys.argv)
-    
-    if(section_title):
-        fav_items = fav.get_my_favorites(section_title=section_title, item_mode='addon')
-    else:
-        fav_items = fav.get_my_favorites(item_mode='addon')
-    
-    if len(fav_items) > 0:
-    
-        for fav_item in fav_items:
-            if (fav_item['isfolder'] == 'false'):
-                if (fav_item['section_addon_title'] == "iWatchOnline Fav's" or 
-                    fav_item['section_addon_title'] == "Movie Fav's"):
-                    main.addPlayM(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "TV Show Fav's"):
-                    main.addPlayT(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "TV Episode Fav's"):
-                    main.addPlayTE(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Misc. Fav's"):
-                    main.addPlayMs(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Live Fav's"):
-                    main.addPlayL(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Movie25 Fav's"):
-                    main.addInfo(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('genre',''), fav_item['infolabels'].get('year',''))
-            else:
-                if (fav_item['section_addon_title'] == "iWatchOnline Fav's" or 
-                    fav_item['section_addon_title'] == "Movie Fav's"):
-                    main.addDirM(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "TV Show Fav's"):
-                    main.addDirT(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "TV Episode Fav's"):
-                    main.addDirTE(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Misc. Fav's"):
-                    main.addDirMs(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Live Fav's"):
-                    main.addDirL(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('plot',''), fav_item['fanart_url'],
-                        fav_item['infolabels'].get('duration',''), fav_item['infolabels'].get('genre',''),
-                        fav_item['infolabels'].get('year',''))
-                elif (fav_item['section_addon_title'] == "Movie25 Fav's"):
-                    main.addInfo(fav_item['title'],fav_item['infolabels'].get('item_url',''),  
-                        fav_item['infolabels'].get('item_mode',''), fav_item['image_url'], 
-                        fav_item['infolabels'].get('genre',''), fav_item['infolabels'].get('year',''))
-    else:
-            xbmc.executebuiltin("XBMC.Notification([B][COLOR=FF67cc33]Aftershock Up[/COLOR][/B],[B]You Have No Saved Favourites[/B],5000,"")")
-    return
-
-def ListglobalFavALL():
-    getFavorites()
-    xbmcplugin.setContent(int(sys.argv[1]), 'Movies')
-
-def GlobalFav():
-    if selfAddon.getSetting("groupfavs") == "true":
-        ListglobalFavALL()
-    else:
-        main.addLink("[COLOR red]Aftershock Fav's can also be favorited under XBMC favorites[/COLOR]",'','')
-        #main.addDir("Downloaded Content",'Aftershock',241,art+'/downloadlog.png')
-        main.addDir("Movie Fav's",'http://www.movie25.so/',641,art+'/fav.png')
-        main.addDir("TV Show Fav's",'http://www.movie25.so/',640,art+'/fav.png')
-        #main.addDir("TV Episode Fav's",'http://www.movie25.so/',651,art+'/fav.png')
-        #main.addDir("Live Fav's",'http://www.movie25.so/',648,art+'/fav.png')
-        #main.addDir("Misc. Fav's",'http://www.movie25.so/',650,art+'/fav.png')
-def History():
-    whprofile = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
-    whdb=os.path.join(whprofile,'Universal','watch_history.db')
-    if  os.path.exists(whdb):
-        main.addPlayc('Clear Watch History',whdb,constants.MAIN_CLEAR_HISTORY,art+'/cleahis.png','','','','','')
-    from resources.universal import watchhistory
-    wh = watchhistory.WatchHistory(addon_id)
-    if selfAddon.getSetting("whistory") == "true":
-        history_items = wh.get_my_watch_history()
-        for item in history_items:
-            item_title = item['title']
-            item_url = item['url']
-            item_image = item['image_url']
-            item_fanart = item['fanart_url']
-            item_infolabels = item['infolabels']
-            item_isfolder = item['isfolder']
-            if item_image =='':
-                item_image= art+'/noimage.png'
-            item_title=item_title.replace('[COLOR green]','[COLOR=FF67cc33]')
-            main.addLink(item_title,item_url,item_image)
-    else:
-        dialog = xbmcgui.Dialog()
-        ok=dialog.ok('[B]Aftershock History[/B]', 'Watch history is disabled' ,'To enable go to addon settings','and enable Watch History')
-        history_items = wh.get_my_watch_history()
-        for item in history_items:
-            item_title = item['title']
-            item_url = item['url']
-            item_image = item['image_url']
-            item_fanart = item['fanart_url']
-            item_infolabels = item['infolabels']
-            item_isfolder = item['isfolder']
-            item_title=item_title.replace('[COLOR green]','[COLOR=FF67cc33]')
-            main.addLink(item_title,item_url,item_image)
-################################################################################ Modes ##########################################################################################################
-
-
-params=None
-
-url=None
-name=None
-mode=None
-iconimage=None
-fanart=None
-plot=None
-genre=None
-title=None
-season=None
-episode=None
-location=None
-path=None
-index=None
-#categoryURL=None
-page=None
-
-
-try: name=urllib.unquote_plus(params["name"])
-except: pass
-try: url=urllib.unquote_plus(params["url"])
-except: pass
-try: mode=int(params["mode"])
-except: pass
-try:
-    iconimage=urllib.unquote_plus(params["iconimage"])
-    iconimage = iconimage.replace(' ','%20')
-except: pass
-try: plot=urllib.unquote_plus(params["plot"])
-except: pass
-try:
-    fanart=urllib.unquote_plus(params["fanart"])
-    fanart = fanart.replace(' ','%20')
-except: pass
-try: genre=urllib.unquote_plus(params["genre"])
-except: pass
-try: title=urllib.unquote_plus(params["title"])
-except: pass
-try: episode=int(params["episode"])
-except: pass
-try: season=int(params["season"])
-except: pass
-try: location=urllib.unquote_plus(params["location"])
-except: pass
-try: path=urllib.unquote_plus(params["path"])
-except: pass
-try: index=urllib.unquote_plus(params["index"])
-except: pass
-try: page=urllib.unquote_plus(params["page"])
-except: pass
-
-if mode==None or url==None or len(url)<1:
-    print "Hello Nothing Here"
-    #MAIN()
-    #main.VIEWSB()        
-   
-elif mode==constants.MOVIE25_LISTMOVIES:
-    from resources.libs import movie25
-    movie25.LISTMOVIES(url,index=index)
-    
-elif mode==constants.MOVIE_GENRE:
-    print ""+url
-    GENRE(url,index=index)
-
-elif mode==constants.MOVIE25_VIDEOLINKS:
-    from resources.libs import movie25
-    print ""+url
-    movie25.VIDEOLINKS(name,url)
-
-elif mode==constants.MOVIE25_SEARCH:
-    from resources.libs import movie25
-    print ""+url
-    movie25.SEARCH(url,index=index)
-elif mode==constants.MOVIE25_PLAY:
-    from resources.libs import movie25
-    print ""+url
-    movie25.PLAY(name,url)
-
-elif mode==constants.MOVIE_ATOZ:
-    AtoZ(index=index)
-
-elif mode==constants.MOVIE_YEAR:
-    YEAR(index=index)
-
-elif mode==constants.LIST_GLOBAL_FAV:
-    from resources.libs import movie25
-    ListglobalFavM25()
-
-elif mode==constants.MOVIE25_GROUPED_HOSTS:
-    from resources.libs import movie25
-    print ""+url
-    movie25.GroupedHosts(name,url,iconimage)
-
-elif mode==constants.MOVIE25_ENTERYEAR:
-    from resources.libs import movie25
-    movie25.ENTYEAR(index=index)
-elif mode==constants.DESIRULEZ_CHANNELS:
-    print ""+url
-    INT(url)
-elif mode==constants.DESIRULEZ_LISTSHOWS:
-    from resources.libs import desitv
-    print ""+url
-    desitv.LISTSHOWS(url, name, fileutil.getPath(main.datapath, constants.CACHE_FILENAME))
-elif mode==constants.DESIRULEZ_LISTEPISODES: # International LIST EPISODES
-    from resources.libs import desitv
-    print ""+url
-    desitv.LISTEPISODES(genre,url)
-elif mode==constants.DESIRULEZ_VIDEOLINKS: # International - MOVIE LINKS
-    from resources.libs import desitv
-    print ""+url
-    desitv.VIDEOLINKS(name,url)
-elif mode==constants.DESIRULEZ_PLAY: # Play all videos in the list
-    from resources.libs import desitv
-    items = xbmc.getInfoLabel('ListItem.Property("videosList")')
-    video_source = xbmc.getInfoLabel('ListItem.Label')
-    if items :
-        desitv.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
-elif mode==constants.HINDI_MOVIES_MENU:
-    HINDI_MOVIE_MENU(url, index)
-elif mode==constants.SOMINAL_LISTMOVIES:
-    from resources.libs import sominal
-    sominal.LISTMOVIES(url, name, index, page=page)
-elif mode==constants.SOMINAL_LOADVIDEOS:
-    from resources.libs import sominal
-    sominal.LOADVIDEOS(url, name)
-elif mode==constants.SOMINAL_PLAY:
-    from resources.libs import sominal
-    items = xbmc.getInfoLabel('ListItem.Property("videosList")')
-    video_source = xbmc.getInfoLabel('ListItem.Label')
-    if items :
-        sominal.PLAY(name, pickle.loads(items), xbmc.getInfoLabel('ListItem.Property("episodeName")'), video_source)
-elif mode==constants.SOMINAL_GENRE:
-    print ""+url
-    SOMINAL_GENRE(url, index)
-elif mode==constants.SOMINAL_YEAR:
-    print ""+url
-    SOMINAL_YEAR(index)
-elif mode==constants.LIVETV_MENU:
-    print ""+url
-    from resources.libs import livetv
-    livetv.LIVETV_MENU(url, name, index)
-elif mode==constants.LIVETV_PLAY:
-    from resources.libs import livetv
-    livetv.PLAY(url, name, index)
-    
-elif mode==constants.NATGEO_NGDIR:
-    from resources.libs.adventure import nationalgeo
-    print ""+url
-    nationalgeo.NGDir(url)
-elif mode==constants.NATGEO_LISTNG:
-    from resources.libs.adventure import nationalgeo
-    print ""+url
-    nationalgeo.LISTNG(url)
-
-elif mode==constants.NATGEO_LISTNG2:
-    from resources.libs.adventure import nationalgeo
-    print ""+url
-    nationalgeo.LISTNG2(url)
-
-elif mode==constants.NATGEO_LINKNG:
-    from resources.libs.adventure import nationalgeo
-    print ""+url
-    nationalgeo.LINKNG(name,url)
-
-elif mode==constants.NATGEO_LINKNG2:
-    from resources.libs.adventure import nationalgeo
-    print ""+url
-    nationalgeo.LINKNG2(name,url)
-
-elif mode==constants.KIDZONE_MENU:
-    print ""+url
-    KIDZone(url)
-elif mode==constants.DISNEYJR:
-    from resources.libs.kids import disneyjr
-    disneyjr.DISJR()
-        
-elif mode==constants.DISNEYJR_LIST:
-    from resources.libs.kids import disneyjr
-    disneyjr.DISJRList(url)
-
-elif mode==constants.DISNEYJR_LIST2:
-    from resources.libs.kids import disneyjr
-    disneyjr.DISJRList2(url)
-        
-elif mode==constants.DISNEYJR_LINK:
-    from resources.libs.kids import disneyjr
-    disneyjr.DISJRLink(name,url,iconimage)       
-elif mode==constants.MAIN_CLEAR_HISTORY:
-    main.Clearhistory(url)
-elif mode==constants.MAIN_HISTORY:
-    print ""+url
-    History()
-
-elif mode==constants.MOVIE25_SEARCH_HISTORY:
-    from resources.libs import movie25
-    print ""+url
-    movie25.Searchhistory(index=index)
-elif mode==constants.MOVIE25_GOTOPAGE:
-    from resources.libs import movie25
-    print ""+url
-    movie25.GotoPage(url,index=index)
-
-elif mode==constants.MOVIE25_GOTOPAGEB:
-    from resources.libs import movie25
-    print ""+url
-    movie25.GotoPageB(url,index=index)
-
-elif mode==constants.MAIN_GLOBALFAV:
-    print ""+url
-    GlobalFav()
-elif mode == constants.TOGGLE_WATCHED: #TOGGLE WATCHED
-    main.ChangeWatched(iconimage, url, name, '', '')
-elif mode == constants.REFRESH_METADATA: #REFRESH METADATA
-    main.refresh_movie(name,iconimage)
-elif mode == constants.MAIN_SETTINGS:
-    settings.openSettings()
-
-#xbmcplugin.endOfDirectory(int(sys.argv[1]))

@@ -21,6 +21,34 @@
     <string id="90114">Live TV</string>
     <string id="90115">Kids Zone</string>
     
+    logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
+    <string id="90200">Star Plus</string>
+    <string id="90201">Zee TV</string>
+    <string id="90202">Zindagi TV</string>
+    <string id="90203">Sony TV</string>
+    <string id="90204">Sony Pal</string>
+    <string id="90205">Life OK</string>
+    <string id="90206">Sahara One</string>
+    <string id="90207">Star Jalsha</string>
+    <string id="90208">Colors TV</string>
+    <string id="90209">Sab TV</string>
+    <string id="90210">Star Pravah</string>
+    <string id="90211">Zing TV</string>
+    <string id="90212">MTV</string>
+    <string id="90213">Channel [V]</string>
+    <string id="90214">Bindass TV</string>
+    <string id="90215">UTV Stars</string>
+    <string id="90216">POGO</string>
+    <string id="90217">Disney</string>
+    <string id="90218">Hungama TV</string>
+    <string id="90219">Cartoon Network</string>
+    
+    <string id="30412">Movie information</string>
+    <string id="30413">TV show information</string>
+  	<string id="30403">Mark as unwatched</string>
+	<string id="30404">Mark as watched</string>
+
+    
 	<string id="30621">[B]SETTINGS[/B] : General</string>
 	<string id="30622">[B]SETTINGS[/B] : Accounts</string>
 	<string id="30623">[B]SETTINGS[/B] : Playback</string>
