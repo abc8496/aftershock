@@ -21,13 +21,6 @@ def getHomeItems(getSetting):
             d[x]=int(getSetting("homeitems_" + itemid))
     return d
 def openSettings():
-    d = getHomeItems()
-    s = getRefreshRequiredSettings()
-    selfAddon.openSettings()
-    dnew = getHomeItems()
-    snew = getRefreshRequiredSettings()
-    if d != dnew or s != snew:
-        ClearDir(os.path.join(xbmc.translatePath(selfAddon.getAddonInfo('profile')),'Temp'))
-        xbmc.executebuiltin("XBMC.Container.Refresh")  
+    xbmc.executebuiltin('Addon.OpenSettings(%s)' % addon_id)
 
 if  __name__ == "__main__": openSettings()

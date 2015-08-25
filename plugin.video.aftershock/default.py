@@ -28,8 +28,11 @@ class Main:
     def __init__(self):
         global action
         params = {}
+        print sys.argv[0], sys.argv[1], sys.argv[2]
         splitparams = sys.argv[2][sys.argv[2].find('?') + 1:].split('&')
+        print 'splitparams %s' % splitparams
         for param in splitparams:
+            print 'params %s length %s' % (param, len(param))
             if (len(param) > 0):
                 splitparam = param.split('=')
                 key = splitparam[0]
@@ -192,7 +195,7 @@ class Menu:
                 homeItems.append({'name':language(90112).encode("utf-8"), 'image': 'intl.png', 'action': 'home_international'})
             elif index==13:
                 homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
-        #homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
+        homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
         Index().homeList(homeItems)
     def getDesiHomeItems(self):
         d = settings.getHomeItems(getSetting)
@@ -413,9 +416,9 @@ class Index:
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
                 
                 if not quality or quality == '':
-                    item = xbmcgui.ListItem(name + ' [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem(name + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 else :
-                    item = xbmcgui.ListItem(name + ' [COLOR red] [' + quality.upper() + '] [/COLOR][COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem(name + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
@@ -1269,7 +1272,7 @@ class resolver:
     
     def sources_filter(self):
         try :
-            supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos']
+            supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
             excludeDict = ['embed upload', 'vidgg']
             for i in range(len(self.sources)): 
                 if not self.sources[i]['provider'].lower() == 'DesiRulez'.lower():

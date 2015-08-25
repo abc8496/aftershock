@@ -86,6 +86,231 @@ class cleantitle:
         title = re.sub('\n|\s(|[(])(UK|US|AU|\d{4})(|[)])$|\s(vs|v[.])\s|(:|;|-|"|,|\'|\_|\.|\?)|\s', '', title).lower()
         return title
 
+class wso:
+    def __init__(self):
+        self.base_link = 'http://watchmovies-online.ch'
+        self.tvbase_link = 'http://watchseries-online.ch'
+        self.search_link = '/?s=%s'
+
+    def get_movie(self, imdb, title, year):
+        try:
+            query = self.base_link + self.search_link % (urllib.quote_plus(title))
+
+            result = getUrl(query).result
+            result = common.parseDOM(result, "div", attrs = { "class": "Post-body" })
+
+            title = cleantitle().movie(title)
+            years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
+            result = [(common.parseDOM(i, "a", ret="href"), common.parseDOM(i, "a")) for i in result]
+            result = [(i[0][0], i[1][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0]
+            result = [i for i in result if title == cleantitle().movie(i[1])]
+            result = [i[0] for i in result if any(x in i[1] for x in years)][0]
+
+            try: url = re.compile('//.+?(/.+)').findall(result)[0]
+            except: url = result
+            url = common.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
+            return url
+        except:
+            return
+
+    def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
+        try:
+            sources = []
+
+            content = re.compile('/\d{4}/\d{2}/').findall(url)
+            if len(content) > 0: url = self.tvbase_link + url 
+            else: url = self.base_link + url
+
+            result = getUrl(url).result
+            links = common.parseDOM(result, "td", attrs = { "class": "even tdhost" })
+            links += common.parseDOM(result, "td", attrs = { "class": "odd tdhost" })
+
+            q = re.compile('<label>Quality</label>(.+?)<').findall(result)
+            if len(q) > 0: q = q[0]
+            else: q = ''
+
+            if q.endswith(('CAM', 'TS')): quality = 'CAM'
+            else: quality = 'SD'
+
+            for i in links:
+                try:
+                    host = common.parseDOM(i, "a")[0]
+                    host = host.split('<', 1)[0]
+                    host = host.rsplit('.', 1)[0].split('.', 1)[-1]
+                    host = host.strip().lower()
+                    #if not host in hostDict: raise Exception()
+                    host = common.replaceHTMLCodes(host)
+                    host = host.encode('utf-8')
+
+                    url = common.parseDOM(i, "a", ret="href")[0]
+                    url = common.replaceHTMLCodes(url)
+                    url = url.encode('utf-8')
+
+                    sources.append({'source': host, 'quality': quality, 'provider': 'WSO', 'url': url})
+                except:
+                    import traceback
+                    traceback.print_exc()
+                    pass
+            return sources
+        except:
+            import traceback
+            traceback.print_exc()
+            return sources
+
+    def resolve(self, url):
+        try:
+            result = getUrl(url).result
+
+            try: url = common.parseDOM(result, "a", ret="href", attrs = { "class": "wsoButton" })[0]
+            except: pass
+
+            import commonresolvers
+            url = commonresolvers.get(url).result
+            return url
+        except:
+            return
+            
+class yify:
+    def __init__(self):
+        self.base_link = 'http://yify.tv'
+        self.search_link = '/wp-admin/admin-ajax.php'
+        self.pk_link = '/player/pk/pk/plugins/player_p2.php'
+
+    def get_movie(self, imdb, title, year):
+        try:
+            query = self.base_link + self.search_link
+            post = urllib.urlencode({'action': 'ajaxy_sf', 'sf_value': title})
+
+            result = getUrl(query, post=post).result
+            result = result.replace('&#8211;','-').replace('&#8217;','\'')
+            result = json.loads(result)
+            result = result['post']['all']
+
+            title = cleantitle().movie(title)
+            result = [i['post_link'] for i in result if title == cleantitle().movie(i['post_title'])][0]
+
+            check = getUrl(result).result
+            if not str('tt' + imdb) in check: raise Exception()
+
+            try: url = re.compile('//.+?(/.+)').findall(result)[0]
+            except: url = result
+            url = common.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
+            return url
+        except:
+            return
+
+    def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
+        try:
+            sources = []
+
+            base = self.base_link + url
+            result = getUrl(base).result
+            result = common.parseDOM(result, "script", attrs = { "type": "text/javascript" })
+            result = ''.join(result)
+
+            links = re.compile('pic=([^&]+)').findall(result)
+            links = uniqueList(links).list
+
+            import commonresolvers
+
+            for i in links:
+                try:
+                    url = self.base_link + self.pk_link
+                    post = urllib.urlencode({'url': i, 'fv': '16'})
+                    result = getUrl(url, post=post).result
+                    result = json.loads(result)
+
+                    try: sources.append({'source': 'GVideo', 'quality': '1080p', 'provider': 'YIFY', 'url': [i['url'] for i in result if i['width'] == 1920 and 'google' in i['url']][0]})
+                    except: pass
+                    try: sources.append({'source': 'GVideo', 'quality': 'HD', 'provider': 'YIFY', 'url': [i['url'] for i in result if i['width'] == 1280 and 'google' in i['url']][0]})
+                    except: pass
+
+                    try: sources.append({'source': 'YIFY', 'quality': '1080p', 'provider': 'YIFY', 'url': [i['url'] for i in result if i['width'] == 1920 and not 'google' in i['url']][0]})
+                    except: pass
+                    try: sources.append({'source': 'YIFY', 'quality': 'HD', 'provider': 'YIFY', 'url': [i['url'] for i in result if i['width'] == 1280 and not 'google' in i['url']][0]})
+                    except: pass
+                except:
+                    pass
+
+            return sources
+        except:
+            return sources
+
+    def resolve(self, url):
+        try:
+            if url.startswith('stack://'): return url
+
+            url = getUrl(url, output='geturl').result
+            if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
+            else: url = url.replace('https://', 'http://')
+            return url
+        except:
+            return
+            
+class vkbox:
+    def __init__(self):
+        self.base_link = 'http://mobapps.cc'
+        self.data_link = '/data/data_en.zip'
+        self.moviedata_link = 'movies_lite.json'
+        self.tvdata_link = 'tv_lite.json'
+        self.movie_link = '/api/serials/get_movie_data/?id=%s'
+        self.show_link = '/api/serials/es?id=%s'
+        self.episode_link = '/api/serials/e/?h=%s&u=%01d&y=%01d'
+        self.vk_link = 'http://vk.com/video_ext.php?oid=%s&id=%s&hash=%s'
+
+    def get_movie(self, imdb, title, year):
+        try:
+            import zipfile, StringIO
+            query = self.base_link + self.data_link
+            data = urllib2.urlopen(query, timeout=5).read()
+            zip = zipfile.ZipFile(StringIO.StringIO(data))
+            result = zip.read(self.moviedata_link)
+            zip.close()
+
+            imdb = 'tt' + imdb
+            result = json.loads(result)
+            result = [i['id'] for i in result if imdb == i['imdb_id']][0]
+
+            url = self.movie_link % result
+            url = common.replaceHTMLCodes(url)
+            url = url.encode('utf-8')
+            return url
+        except:
+            return
+
+    def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
+        try:
+            sources = []
+
+            url = self.base_link + url
+            headers = {'User-Agent': 'android-async-http/1.4.1 (http://loopj.com/android-async-http)'}
+
+            par = urlparse.parse_qs(urlparse.urlparse(url).query)
+            try: num = int(par['h'][0]) + int(par['u'][0]) + int(par['y'][0])
+            except: num = int(par['id'][0]) + 537
+
+            result = getUrl(url, headers=headers).result
+            result = json.loads(result)
+            try: result = result['langs']
+            except: pass
+            i = [i for i in result if i['lang'] == 'en'][0]
+
+            url = (str(int(i['apple']) + num), str(int(i['google']) + num), i['microsoft'])
+            url = self.vk_link % url
+
+            from commonresolvers import vk
+            url = vk().resolve(url)
+
+            for i in url: sources.append({'source': 'VK', 'quality': i['quality'], 'provider': 'VKBox', 'url': i['url']})
+
+            return sources
+        except:
+            return sources
+
+    def resolve(self, url):
+        return url
 
 class movie25:
     def __init__(self):
@@ -188,7 +413,6 @@ class movie25:
                     sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url})
                 except:
                     pass
-            
             return sources
         except:
             return sources

@@ -1863,7 +1863,8 @@ class vodlocker:
             url = 'http://vodlocker.com/embed-%s.html' % url
 
             result = getUrl(url, mobile=True).result
-            url = re.compile('file *: *"(http.+?)"').findall(result)[-1]
+            url = re.compile('[\'|\"](http.+?[\w]+)[\'|\"]').findall(result)
+            url = [i for i in url if i.endswith(('.mp4', '.mkv', '.flv', '.avi'))][0]
             return url
         except:
             return
@@ -2137,11 +2138,8 @@ class dr_vodlocker:
 
     def resolve(self, url):
         try:
-            print '0-URL %s' %url
             url = 'http://vodlocker.com/embed-%s.html' % str(desirulez().getVideoID(url))
-            print '1-URL %s' %url
             url = vodlocker().resolve(url)
-            print '2-URL %s' %url
             return url 
         except:
             return
