@@ -90,7 +90,7 @@ class Main:
         elif action == 'home_newreleases' : Movies().newReleases()
         elif action == 'home_mostviewed' : Movies().mostViewed()
         elif action == 'home_mostvoted' : Movies().mostVoted()
-        elif action == 'home_settings' : settings().openSettings()
+        elif action == 'home_settings' : settings.openSettings()
         elif action == 'movie_list' : Movies().moviesList(url)
         elif action == 'desi_home_newreleases' : Movies().desiNewReleases()
         elif action == 'desi_home_az' : Menu().getDesiAtoZItems()

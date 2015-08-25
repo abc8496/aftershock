@@ -1,4 +1,4 @@
-[B]Version v2.0.1[/B] - 8/25/2015
+[B]Version v2.0.2[/B] - 8/25/2015
 - Bug fixes
 
 [B]Version v2.0.0[/B] - 8/25/2015
