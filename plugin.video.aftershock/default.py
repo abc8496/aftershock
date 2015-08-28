@@ -1,8 +1,8 @@
-import xbmc,xbmcgui, xbmcaddon, xbmcplugin
+import xbmc,xbmcgui, xbmcaddon, xbmcplugin, xbmcvfs
 import urllib,re,string,os,time,threading
 import urllib2
 from resources.libs import settings
-import base64, urlparse
+import base64, urlparse, datetime
 import CommonFunctions as common
 import commonsources
 from operator import itemgetter
@@ -10,6 +10,10 @@ try:
     import json
 except:
     import simplejson as json
+try:
+    from sqlite3 import dbapi2 as database
+except:
+    from pysqlite2 import dbapi2 as database
 
 action              = None
 getSetting          = xbmcaddon.Addon().getSetting
@@ -26,13 +30,24 @@ addonCache          = os.path.join(dataPath,'cache.db')
 
 class Main:
     def __init__(self):
+        if not os.path.exists(dataPath) :
+            xbmcvfs.mkdir(dataPath)
+        elif not os.path.exists(addonCache):
+            try :
+                dirs, files = xbmcvfs.listdir(dataPath)
+                for i in dirs :
+                    Index().deleteDirectory(os.path.join(dataPath, i))
+                for i in files :
+                    Index().deleteFiles(os.path.join(dataPath, i))
+                xbmcvfs.mkdir(dataPath)
+            except :
+                import traceback
+                traceback.print_exc()
+
         global action
         params = {}
-        print sys.argv[0], sys.argv[1], sys.argv[2]
         splitparams = sys.argv[2][sys.argv[2].find('?') + 1:].split('&')
-        print 'splitparams %s' % splitparams
         for param in splitparams:
-            print 'params %s length %s' % (param, len(param))
             if (len(param) > 0):
                 splitparam = param.split('=')
                 key = splitparam[0]
@@ -167,33 +182,34 @@ class Menu:
     def __init__(self):
         print "Menu Initialized"
     def getHomeItems(self):
+        print 'Getting Home Items'
         d = settings.getHomeItems(getSetting)
         homeItems = []
         for index, value in sorted(enumerate(d), key=lambda x:x[1]):
             if value==None: continue
             if index==0:
                 homeItems.append({'name':language(90100).encode("utf-8"), 'image': 'search.png', 'action': 'home_search'})
-            elif index==2:
+            elif index==1:
                 homeItems.append({'name':language(90102).encode("utf-8"), 'image': 'az.png', 'action': 'home_az'})
-            elif index==3:
+            elif index==2:
                 homeItems.append({'name':language(90103).encode("utf-8"), 'image': 'new.png', 'action': 'home_newreleases'})
-            elif index==4:
+            elif index==3:
                 homeItems.append({'name':language(90104).encode("utf-8"), 'image': 'latest.png', 'action': 'home_latest'})
-            elif index==5:
+            elif index==4:
                 homeItems.append({'name':language(90105).encode("utf-8"), 'image': 'feat.png', 'action': 'home_featured'})
-            elif index==6:
+            elif index==5:
                 homeItems.append({'name':language(90106).encode("utf-8"), 'image': 'view.png', 'action': 'home_mostviewed'})
-            elif index==7:
+            elif index==6:
                 homeItems.append({'name':language(90107).encode("utf-8"), 'image': 'vote.png', 'action': 'home_mostvoted'})
-            elif index==8:
+            elif index==7:
                 homeItems.append({'name':language(90108).encode("utf-8"), 'image': 'dvd2hd.png', 'action': 'home_hd'})
-            elif index==9:
+            elif index==8:
                 homeItems.append({'name':language(90109).encode("utf-8"), 'image': 'genre.png', 'action': 'home_genre'})
-            elif index==10:
+            elif index==9:
                 homeItems.append({'name':language(90110).encode("utf-8"), 'image': 'year.png', 'action': 'home_year'})
-            elif index==12:
+            elif index==10:
                 homeItems.append({'name':language(90112).encode("utf-8"), 'image': 'intl.png', 'action': 'home_international'})
-            elif index==13:
+            elif index==11:
                 homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
         homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
         Index().homeList(homeItems)
@@ -300,7 +316,109 @@ class Index:
         elif contentType == 'TVSHOWS' :
             view = 502
         xbmc.executebuiltin('Container.SetViewMode(%s)' % view)
+    
+    def deleteDirectory(self, path):
+        dirs, files = xbmcvfs.listdir(path)
+        for i in dirs:
+            self.deleteDirectory(os.path.join(path, i))
+        for i in files:
+            self.deleteFiles(os.path.join(path, i))
+        xbmcvfs.rmdir(path)
+            
+    def deleteFiles(self, path):
+        xbmcvfs.delete(path)
         
+    def cache(self, function, timeout, *args):
+        try:
+            response = None
+
+            f = repr(function)
+            f = re.sub('.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', f)
+
+            import hashlib
+            a = hashlib.md5()
+            for i in args: a.update(str(i))
+            a = str(a.hexdigest())
+        except:
+            pass
+
+        try:
+            dbcon = database.connect(addonCache)
+            dbcur = dbcon.cursor()
+            dbcur.execute("SELECT * FROM rel_list WHERE func = '%s' AND args = '%s'" % (f, a))
+            match = dbcur.fetchone()
+            
+            response = eval(match[2].encode('utf-8'))
+
+            t1 = int(re.sub('[^0-9]', '', str(match[3])))
+            
+            t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
+            
+            update = abs(t2 - t1) >= int(timeout*60)
+            if update == False:
+                return response
+        except:
+            pass
+
+        try:
+            r = function(*args)
+            if (r == None or r == []) and not response == None:
+                return response
+            elif (r == None or r == []):
+                return r
+        except:
+            return
+
+        try:
+            r = repr(r)
+            t = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_list (""func TEXT, ""args TEXT, ""response TEXT, ""added TEXT, ""UNIQUE(func, args)"");")
+            dbcur.execute("DELETE FROM rel_list WHERE func = '%s' AND args = '%s'" % (f, a))
+            dbcur.execute("INSERT INTO rel_list Values (?, ?, ?, ?)", (f, a, r, t))
+            dbcon.commit()
+        except:
+            import traceback
+            traceback.print_exc()    
+            pass
+
+        try:
+            return eval(r.encode('utf-8'))
+        except:
+            pass
+
+    def cache_clear_list(self):
+        try:
+            yes = index().yesnoDialog(language(30341).encode("utf-8"), '')
+            if not yes: return
+
+            dbcon = database.connect(addonCache)
+            dbcur = dbcon.cursor()
+            dbcur.execute("DROP TABLE IF EXISTS rel_list")
+            dbcur.execute("VACUUM")
+            dbcon.commit()
+            dbcur.execute("DROP TABLE IF EXISTS rel_lib")
+            dbcur.execute("VACUUM")
+            dbcon.commit()
+
+            index().infoDialog(language(30306).encode("utf-8"))
+        except:
+            pass
+
+    def cache_clear_src(self):
+        try:
+            yes = index().yesnoDialog(language(30341).encode("utf-8"), '')
+            if not yes: return
+
+            dbcon = database.connect(addonSources)
+            dbcur = dbcon.cursor()
+            dbcur.execute("DROP TABLE IF EXISTS rel_src")
+            dbcur.execute("VACUUM")
+            dbcon.commit()
+
+            index().infoDialog(language(30306).encode("utf-8"))
+        except:
+            pass
+    
     def homeList(self, homeList):
         if homeList == None or len(homeList) == 0: return
         
@@ -609,49 +727,49 @@ class Movies:
         print "Movies Initialized"
     def featured(self):
         url = Links().eng_featured
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def HD(self):
         url = Links().eng_hd
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def latestAdded(self):
         url = Links().eng_latest_added
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def newReleases(self):
         url = Links().eng_new_releases
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def mostViewed(self):
         url = Links().eng_popular
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def mostVoted(self):
         url = Links().eng_most_voted
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def moviesList(self, url):
-        self.list = self.scn_list(url)
+        self.list = Index().cache(self.scn_list, 24, url)
         Index().movieList(self.list)
     def cleantitle_movie(self, title):
         title = re.sub('\n|([[].+?[]])|([(].+?[)])|\s(vs|v[.])\s|(:|;|-|"|,|\'|\.|\?)|\s', '', title).lower()
         return title    
     def desiNewReleases(self):
         url = Links().desi_new_releases
-        self.list = self.desi_full_list(url)
+        self.list = Index().cache(self.desi_full_list, 24, url)
         Index().movieList(self.list, 'desi_movie_list')
     def desiLatestAdded(self):
         url = Links().desi_latest_added
-        self.list = self.desi_full_list(url)
+        self.list = Index().cache(self.desi_full_list, 24, url)
         Index().movieList(self.list,'desi_movie_list')
     def desiHD(self):
         url = Links().desi_hd
-        self.list = self.desi_full_list(url)
+        self.list = Index().cache(self.desi_full_list, 24, url)
         Index().movieList(self.list,'desi_movie_list')
 
     def desi_movie_list(self, url):
-        self.list = self.desi_full_list(url)
+        self.list = Index().cache(self.desi_full_list, 24, url)
         Index().movieList(self.list,'desi_movie_list')
     def scn_list(self, url):
         try:
@@ -983,12 +1101,12 @@ class Shows:
     def getShows(self, url, name, provider):
         try :
             commonsource = getattr(commonsources, provider)()
-            self.list = commonsource.get_shows(name, url)
+            self.list = Index().cache(commonsource.get_shows, 168, name, url)
             
             threads = []
             for i in range(0, len(self.list)): threads.append(Thread(self.tvdb_info, i))
             
-            [i.start() for i in threads]
+            [Index().cache(i.start, 672) for i in threads]
             [i.join() for i in threads]
 
             Index().showList(self.list)
@@ -1001,7 +1119,7 @@ class Shows:
     def getEpisodes(self, url, show, provider):
         try :
             commonsource = getattr(commonsources, provider)()
-            self.list = commonsource.get_episodes(show, url)
+            self.list = Index().cache(commonsource.get_episodes, 1, show, url)
             Index().episodeList(self.list)
             return self.list
         except:
@@ -1009,70 +1127,135 @@ class Shows:
             traceback.print_exc()  
             return 
     def tvdb_info(self, i):
-
         try:
             try: sid = self.list[i]['tvdb']
             except: sid = '0'
             
+            poster = '0'
+            banner = '0'
+            fanart = '0'
+            
             if sid == '0':
-                url = Links().tvdb_search % self.list[i]['imdb']
+                try :
+                    url = Links().tvdb_search % self.list[i]['imdb']
+                    result = getUrl(url, timeout='10').result
+
+                    try: name = common.parseDOM(result, "SeriesName")[0]
+                    except: name = '0'
+                    dupe = re.compile('[***]Duplicate (\d*)[***]').findall(name)
+
+                    year = self.list[i]['year']
+                    years = [str(year), str(int(year)+1), str(int(year)-1)]
+
+                    if len(dupe) > 0:
+                        sid = str(dupe[0])
+                    elif name == '0':
+                        show = self.list[i]['title']
+                        title = self.cleantitle_tv(show)
+                        url = Links().tvdb_search2 % urllib.quote_plus(show)
+                        result = getUrl(url, timeout='10').result
+                        result = common.replaceHTMLCodes(result)
+                        result = common.parseDOM(result, "Series")
+                        if result :
+                            result = [x for x in result if title == self.cleantitle_tv(common.parseDOM(x, "SeriesName")[0])]
+                            if 'FirstAired' in result:
+                                result = [x for x in result if any(y in common.parseDOM(x, "FirstAired")[0] for y in years)][0]
+                    
+                    if result:
+                        sid = common.parseDOM(result, "seriesid")[0]
+                except:
+                    import traceback
+                    traceback.print_exc()
+                    pass
+
+            if not sid == '0' :
+                url = Links().tvdb_info2 % (Links().tvdb_key, sid)
+                
                 result = getUrl(url, timeout='10').result
 
-                try: name = common.parseDOM(result, "SeriesName")[0]
-                except: name = '0'
-                dupe = re.compile('[***]Duplicate (\d*)[***]').findall(name)
+                tvdb = common.parseDOM(result, "id")[0]
+                if tvdb == '': tvdb = '0'
+                tvdb = common.replaceHTMLCodes(tvdb)
+                tvdb = tvdb.encode('utf-8')
+                if not tvdb == '0': self.list[i].update({'tvdb': tvdb})
 
-                year = self.list[i]['year']
-                years = [str(year), str(int(year)+1), str(int(year)-1)]
+                try: poster = common.parseDOM(result, "poster")[0]
+                except: poster = ''
+                if not poster == '': poster = Links().tvdb_image + poster
+                else: poster = '0'
+                poster = common.replaceHTMLCodes(poster)
+                poster = poster.encode('utf-8')
 
-                if len(dupe) > 0:
-                    sid = str(dupe[0])
-                elif name == '0':
-                    show = self.list[i]['title']
-                    title = self.cleantitle_tv(show)
-                    url = Links().tvdb_search2 % urllib.quote_plus(show)
-                    result = getUrl(url, timeout='10').result
-                    result = common.replaceHTMLCodes(result)
-                    result = common.parseDOM(result, "Series")
-                    if result :
-                        result = [x for x in result if title == self.cleantitle_tv(common.parseDOM(x, "SeriesName")[0])]
-                        result = [x for x in result if any(y in common.parseDOM(x, "FirstAired")[0] for y in years)][0]
+                try: banner = common.parseDOM(result, "banner")[0]
+                except: banner = ''
+                if not banner == '': banner = Links().tvdb_image + banner
+                else: banner = '0'
+                banner = common.replaceHTMLCodes(banner)
+                banner = banner.encode('utf-8')
+
+                try: fanart = common.parseDOM(result, "fanart")[0]
+                except: fanart = ''
+                if not fanart == '': fanart = Links().tvdb_image + fanart
+                else: fanart = '0'
+                fanart = common.replaceHTMLCodes(fanart)
+                fanart = fanart.encode('utf-8')
+                if not fanart == '0': self.list[i].update({'fanart': fanart})
                 
-                if result:
-                    sid = common.parseDOM(result, "seriesid")[0]
+                try: genre = common.parseDOM(result, "Genre")[0]
+                except: genre = ''
+                genre = [x for x in genre.split('|') if not x == '']
+                genre = " / ".join(genre)
+                if genre == '': genre = '0'
+                genre = common.replaceHTMLCodes(genre)
+                genre = genre.encode('utf-8')
+                if not genre == '0': self.list[i].update({'genre': genre})
 
+                try: studio = common.parseDOM(result, "Network")[0]
+                except: studio = ''
+                if studio == '': studio = '0'
+                studio = common.replaceHTMLCodes(studio)
+                studio = studio.encode('utf-8')
+                if not studio == '0': self.list[i].update({'studio': studio})
 
-            url = Links().tvdb_info2 % (Links().tvdb_key, sid)
+                try: premiered = common.parseDOM(result, "FirstAired")[0]
+                except: premiered = ''
+                if premiered == '': premiered = '0'
+                premiered = common.replaceHTMLCodes(premiered)
+                premiered = premiered.encode('utf-8')
+                if not premiered == '0': self.list[i].update({'premiered': premiered})
+
+                try: duration = common.parseDOM(result, "Runtime")[0]
+                except: duration = ''
+                if duration == '': duration = '0'
+                duration = common.replaceHTMLCodes(duration)
+                duration = duration.encode('utf-8')
+                if not duration == '0': self.list[i].update({'duration': duration})
+
+                try: rating = common.parseDOM(result, "Rating")[0]
+                except: rating = ''
+                if rating == '' or not self.list[i]['rating'] == '0': rating = '0'
+                rating = common.replaceHTMLCodes(rating)
+                rating = rating.encode('utf-8')
+                if not rating == '0': self.list[i].update({'rating': rating})
+
+                try: mpaa = common.parseDOM(result, "ContentRating")[0]
+                except: mpaa = ''
+                if mpaa == '': mpaa = '0'
+                mpaa = common.replaceHTMLCodes(mpaa)
+                mpaa = mpaa.encode('utf-8')
+                if not mpaa == '0': self.list[i].update({'mpaa': mpaa})
+
+                try: plot = common.parseDOM(result, "Overview")[0]
+                except: plot = ''
+                if plot == '': plot = '0'
+                plot = common.replaceHTMLCodes(plot)
+                plot = plot.encode('utf-8')
+                if not plot == '0': self.list[i].update({'plot': plot})
             
-            result = getUrl(url, timeout='10').result
-
-            tvdb = common.parseDOM(result, "id")[0]
-            if tvdb == '': tvdb = '0'
-            tvdb = common.replaceHTMLCodes(tvdb)
-            tvdb = tvdb.encode('utf-8')
-            if not tvdb == '0': self.list[i].update({'tvdb': tvdb})
-
-            try: poster = common.parseDOM(result, "poster")[0]
-            except: poster = ''
-            if not poster == '': poster = Links().tvdb_image + poster
-            else: poster = '0'
-            poster = common.replaceHTMLCodes(poster)
-            poster = poster.encode('utf-8')
-
-            try: banner = common.parseDOM(result, "banner")[0]
-            except: banner = ''
-            if not banner == '': banner = Links().tvdb_image + banner
-            else: banner = '0'
-            banner = common.replaceHTMLCodes(banner)
-            banner = banner.encode('utf-8')
-
-            try: fanart = common.parseDOM(result, "fanart")[0]
-            except: fanart = ''
-            if not fanart == '': fanart = Links().tvdb_image + fanart
-            else: fanart = '0'
-            fanart = common.replaceHTMLCodes(fanart)
-            fanart = fanart.encode('utf-8')
-            if not fanart == '0': self.list[i].update({'fanart': fanart})
+            try :
+                if poster == '0' : poster = self.getTVShowPosterFromGoogle(self.list[i]['channel'], show, 5)
+            except:
+                pass
 
             if not poster == '0': self.list[i].update({'poster': poster})
             elif not fanart == '0': self.list[i].update({'poster': fanart})
@@ -1081,59 +1264,31 @@ class Shows:
             if not banner == '0': self.list[i].update({'banner': banner})
             elif not fanart == '0': self.list[i].update({'banner': fanart})
             elif not poster == '0': self.list[i].update({'banner': poster})
-
-            try: genre = common.parseDOM(result, "Genre")[0]
-            except: genre = ''
-            genre = [x for x in genre.split('|') if not x == '']
-            genre = " / ".join(genre)
-            if genre == '': genre = '0'
-            genre = common.replaceHTMLCodes(genre)
-            genre = genre.encode('utf-8')
-            if not genre == '0': self.list[i].update({'genre': genre})
-
-            try: studio = common.parseDOM(result, "Network")[0]
-            except: studio = ''
-            if studio == '': studio = '0'
-            studio = common.replaceHTMLCodes(studio)
-            studio = studio.encode('utf-8')
-            if not studio == '0': self.list[i].update({'studio': studio})
-
-            try: premiered = common.parseDOM(result, "FirstAired")[0]
-            except: premiered = ''
-            if premiered == '': premiered = '0'
-            premiered = common.replaceHTMLCodes(premiered)
-            premiered = premiered.encode('utf-8')
-            if not premiered == '0': self.list[i].update({'premiered': premiered})
-
-            try: duration = common.parseDOM(result, "Runtime")[0]
-            except: duration = ''
-            if duration == '': duration = '0'
-            duration = common.replaceHTMLCodes(duration)
-            duration = duration.encode('utf-8')
-            if not duration == '0': self.list[i].update({'duration': duration})
-
-            try: rating = common.parseDOM(result, "Rating")[0]
-            except: rating = ''
-            if rating == '' or not self.list[i]['rating'] == '0': rating = '0'
-            rating = common.replaceHTMLCodes(rating)
-            rating = rating.encode('utf-8')
-            if not rating == '0': self.list[i].update({'rating': rating})
-
-            try: mpaa = common.parseDOM(result, "ContentRating")[0]
-            except: mpaa = ''
-            if mpaa == '': mpaa = '0'
-            mpaa = common.replaceHTMLCodes(mpaa)
-            mpaa = mpaa.encode('utf-8')
-            if not mpaa == '0': self.list[i].update({'mpaa': mpaa})
-
-            try: plot = common.parseDOM(result, "Overview")[0]
-            except: plot = ''
-            if plot == '': plot = '0'
-            plot = common.replaceHTMLCodes(plot)
-            plot = plot.encode('utf-8')
-            if not plot == '0': self.list[i].update({'plot': plot})
+            
         except:
+            import traceback
+            traceback.print_exc()
             pass
+            
+    def getTVShowPosterFromGoogle(self, channelName, showName, retry):
+        if retry == 0:
+            return ''
+        baseURL = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q={query}'
+        query = channelName.lower() + ' ' + showName.lower() + ' poster'
+        url = baseURL.format(query=urllib.quote_plus(query))
+        try:
+            result = getUrl(url).result
+            results = json.loads(result)['responseData']['results']
+            for image_info in results:
+                iconImage = image_info['unescapedUrl']
+                break
+            if iconImage is not None:
+                return iconImage
+            else:
+                return ''
+        except :
+            return self.getTVShowPosterFromGoogle(channelName, showName, retry-1)
+        return ''
 
 
 class Thread(threading.Thread):
@@ -1489,6 +1644,7 @@ class player(xbmc.Player):
             i = 'tt' + self.imdb
             dbcon = database.connect(addonSettings)
             dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS points (""name TEXT, ""imdb_id TEXT, ""resume_point TEXT, ""UNIQUE(name, imdb_id)"");")
             dbcur.execute("SELECT * FROM points WHERE name = '%s' AND imdb_id = '%s'" % (n, i))
             match = dbcur.fetchone()
             self.offset = str(match[2])

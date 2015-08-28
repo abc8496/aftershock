@@ -21,6 +21,6 @@ def getHomeItems(getSetting):
             d[x]=int(getSetting("homeitems_" + itemid))
     return d
 def openSettings():
-    xbmc.executebuiltin('Addon.OpenSettings(%s)' % addon_id)
+    selfAddon.openSettings()
 
 if  __name__ == "__main__": openSettings()

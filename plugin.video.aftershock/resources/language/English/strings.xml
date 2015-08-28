@@ -5,17 +5,15 @@
     
     <!-- Home Items -->
     <string id="90100">Search</string>
-    <string id="90101">Favourites</string>
     <string id="90102">A-Z</string>
     <string id="90103">New Releases</string>
-    <string id="90104">Latest Added</string>
+    <string id="90104">Recently Added</string>
     <string id="90105">Featured</string>
     <string id="90106">Most Viewed</string>
     <string id="90107">Most Voted</string>
-    <string id="90108">HD Releases</string>
+    <string id="90108">HD</string>
     <string id="90109">Genre</string>
     <string id="90110">By Year</string>
-    <string id="90111">Watch History</string>
     <string id="90112">International</string>
     <string id="90113">Hindi Movies</string>
     <string id="90116">Settings</string>

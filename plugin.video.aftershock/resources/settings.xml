@@ -1,41 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-
-   
-   <category label="Auto View">
-		<setting id="auto-view" type="bool" label="[B]Auto View[/B]" default="true"/>
-		<setting id="home-view"	type="enum" label="Main Menu View" values="List|Thumbnail" default="1" enable="!eq(-1,false)"/>
-   </category>
-   
    <category label="Home Layout">
 		<setting label="Customize your Home screen" type="lsep" />
 		<setting id="homeitems_1_enabled" type="bool" label="[B]Search[/B]" default="true"/>
 			<setting id="homeitems_1" type="number" label="     Order" default="10" visible="!eq(-1,false)"/>
-		<setting id="homeitems_2_enabled" type="bool" label="[B]Favorites[/B]" default="true"/>
-			<setting id="homeitems_2" type="number" label="     Order" default="20" visible="!eq(-1,false)"/>
-		<setting id="homeitems_3_enabled" type="bool" label="[B]A-Z[/B]" default="true"/>
-			<setting id="homeitems_3" type="number" label="     Order" default="30" visible="!eq(-1,false)"/>
-		<setting id="homeitems_4_enabled" type="bool" label="[B]New Releases[/B]" default="true"/>
-			<setting id="homeitems_4" type="number" label="     Order" default="40" visible="!eq(-1,false)"/>
-		<setting id="homeitems_5_enabled" type="bool" label="[B]Lastest Added[/B]" default="true"/>
-			<setting id="homeitems_5" type="number" label="     Order" default="50" visible="!eq(-1,false)"/>
-		<setting id="homeitems_6_enabled" type="bool" label="[B]Featured Movies[/B]" default="true"/>
-			<setting id="homeitems_6" type="number" label="     Order" default="60" visible="!eq(-1,false)"/>
-		<setting id="homeitems_7_enabled" type="bool" label="[B]Most Viewed[/B]" default="true"/>
-			<setting id="homeitems_7" type="number" label="     Order" default="70" visible="!eq(-1,false)"/>
-		<setting id="homeitems_8_enabled" type="bool" label="[B]Most Voted[/B]" default="true"/>
-			<setting id="homeitems_8" type="number" label="     Order" default="80" visible="!eq(-1,false)"/>
-		<setting id="homeitems_9_enabled" type="bool" label="[B]HD Releases[/B]" default="true"/>
-			<setting id="homeitems_9" type="number" label="     Order" default="90" visible="!eq(-1,false)"/>
-		<setting id="homeitems_10_enabled" type="bool" label="[B]Genre[/B]" default="true"/>
-			<setting id="homeitems_10" type="number" label="     Order" default="100" visible="!eq(-1,false)"/>
-		<setting id="homeitems_11_enabled" type="bool" label="[B]By Year[/B]" default="true"/>
-			<setting id="homeitems_11" type="number" label="     Order" default="110" visible="!eq(-1,false)"/>
-		<setting id="homeitems_12_enabled" type="bool" label="[B]Watch History[/B]" default="true"/>
-			<setting id="homeitems_12" type="number" label="     Order" default="120" visible="!eq(-1,false)"/>
-        <setting id="homeitems_13_enabled" type="bool" label="[B]International[/B]" default="true"/>
-			<setting id="homeitems_13" type="number" label="     Order" default="130" visible="!eq(-1,false)"/>
-        <setting id="homeitems_14_enabled" type="bool" label="[B]Hindi Movies[/B]" default="true"/>
-			<setting id="homeitems_14" type="number" label="     Order" default="140" visible="!eq(-1,false)"/>
+		<setting id="homeitems_2_enabled" type="bool" label="[B]A-Z[/B]" default="true"/>
+			<setting id="homeitems_2" type="number" label="     Order" default="30" visible="!eq(-1,false)"/>
+		<setting id="homeitems_3_enabled" type="bool" label="[B]New Releases[/B]" default="true"/>
+			<setting id="homeitems_3" type="number" label="     Order" default="40" visible="!eq(-1,false)"/>
+		<setting id="homeitems_4_enabled" type="bool" label="[B]Lastest Added[/B]" default="true"/>
+			<setting id="homeitems_4" type="number" label="     Order" default="50" visible="!eq(-1,false)"/>
+		<setting id="homeitems_5_enabled" type="bool" label="[B]Featured Movies[/B]" default="true"/>
+			<setting id="homeitems_5" type="number" label="     Order" default="60" visible="!eq(-1,false)"/>
+		<setting id="homeitems_6_enabled" type="bool" label="[B]Most Viewed[/B]" default="true"/>
+			<setting id="homeitems_6" type="number" label="     Order" default="70" visible="!eq(-1,false)"/>
+		<setting id="homeitems_7_enabled" type="bool" label="[B]Most Voted[/B]" default="true"/>
+			<setting id="homeitems_7" type="number" label="     Order" default="80" visible="!eq(-1,false)"/>
+		<setting id="homeitems_8_enabled" type="bool" label="[B]HD Releases[/B]" default="true"/>
+			<setting id="homeitems_8" type="number" label="     Order" default="90" visible="!eq(-1,false)"/>
+		<setting id="homeitems_9_enabled" type="bool" label="[B]Genre[/B]" default="true"/>
+			<setting id="homeitems_9" type="number" label="     Order" default="100" visible="!eq(-1,false)"/>
+		<setting id="homeitems_10_enabled" type="bool" label="[B]By Year[/B]" default="true"/>
+			<setting id="homeitems_10" type="number" label="     Order" default="110" visible="!eq(-1,false)"/>
+        <setting id="homeitems_11_enabled" type="bool" label="[B]International[/B]" default="true"/>
+			<setting id="homeitems_11" type="number" label="     Order" default="130" visible="!eq(-1,false)"/>
+        <setting id="homeitems_12_enabled" type="bool" label="[B]Hindi Movies[/B]" default="true"/>
+			<setting id="homeitems_12" type="number" label="     Order" default="140" visible="!eq(-1,false)"/>
    </category>
 </settings>
