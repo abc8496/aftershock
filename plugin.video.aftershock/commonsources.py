@@ -189,12 +189,13 @@ class yify:
 
             title = cleantitle().movie(title)
             result = [i['post_link'] for i in result if title == cleantitle().movie(i['post_title'])][0]
-
+            
             check = getUrl(result).result
             if not str('tt' + imdb) in check: raise Exception()
-
+            
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
+            
             url = common.replaceHTMLCodes(url)
             url = url.encode('utf-8')
             return url
@@ -233,7 +234,6 @@ class yify:
                     except: pass
                 except:
                     pass
-
             return sources
         except:
             return sources

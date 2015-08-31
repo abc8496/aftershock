@@ -179,10 +179,7 @@ class getUrl(object):
         self.result = result
 
 class Menu:
-    def __init__(self):
-        print "Menu Initialized"
     def getHomeItems(self):
-        print 'Getting Home Items'
         d = settings.getHomeItems(getSetting)
         homeItems = []
         for index, value in sorted(enumerate(d), key=lambda x:x[1]):
@@ -241,7 +238,7 @@ class Menu:
         
     def getHomeGenre(self) :
         listItems = []
-        genres = ['Action','Adventure','Animation','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Music','Musical','Mystery','Romance','Sci-Fi','Short','Sport','Thriller','War','Western']
+        genres = ['Action','Adventure','Animation','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','History','Horror','Musical','Mystery','Romance','Sci-Fi','Short','Sport','Thriller','War','Western']
         
         for i in genres:
             listItems.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movie_list', 'url':'/' + i.lower()+'/'})
@@ -295,8 +292,6 @@ class Menu:
         Index().homeList(listItems)
 
 class Index:
-    def __init__(self):
-        print "Initialized"
     def infoDialog(self, str, header=addonName, time=3000):
         try: xbmcgui.Dialog().notification(header, str, self.addonArt('icon.png'), time, sound=False)
         except: xbmc.executebuiltin("Notification(%s,%s, %s, %s)" % (header, str, time, self.addonArt('icon.png')))
@@ -524,7 +519,8 @@ class Index:
                 url, source, provider, quality = i['url'], i['source'], i['provider'], i['quality']
                 poster, fanart = meta['poster'], meta['fanart']
                 
-                if not type(url) is str :
+                print 'type(url) %s' % type(url)
+                if type(url) is list :
                     url = ",".join(url)
                 sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
 
@@ -724,7 +720,6 @@ class Trailer:
 class Movies:
     def __init__(self):
         self.list = []
-        print "Movies Initialized"
     def featured(self):
         url = Links().eng_featured
         self.list = Index().cache(self.scn_list, 24, url)
@@ -1312,6 +1307,7 @@ class resolver:
             else: content = 'episode'
 
             self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url)
+            
             if self.sources == []: raise Exception()
             self.sources = self.sources_filter() #For only displaying supported sources
             if meta : meta = json.loads(meta)
@@ -1435,10 +1431,10 @@ class resolver:
             self.sources = sorted(self.sources, key=itemgetter('source'))
             
             filter = []
-            for host in supportedDict: 
-                filter += [i for i in self.sources if i['source'] == host.lower()]
             filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
             filter += [i for i in self.sources if i['provider'].lower() == 'DesiRulez'.lower()]
+            for host in supportedDict: 
+                filter += [i for i in self.sources if i['source'] == host.lower()]
             
             for i in filter:
                 for j in excludeDict:
