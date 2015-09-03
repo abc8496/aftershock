@@ -110,8 +110,11 @@ class wso:
             except: url = result
             url = common.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            print 'WSO MOVIE URL %s' % url
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
     def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
@@ -198,8 +201,13 @@ class yify:
             
             url = common.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            
+            print 'YIFY MOVIE URL %s' % url
+            
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
     def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
@@ -244,7 +252,7 @@ class yify:
 
             url = getUrl(url, output='geturl').result
             if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
-            else: url = url.replace('https://', 'http://')
+            elif 'http:' in url : url = url.replace('https://', 'http://')
             return url
         except:
             return
@@ -411,6 +419,7 @@ class movie25:
                     url = url.encode('utf-8')
 
                     sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url})
+                    print host 
                 except:
                     pass
             return sources

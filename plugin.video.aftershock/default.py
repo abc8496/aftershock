@@ -106,6 +106,7 @@ class Main:
         elif action == 'home_mostviewed' : Movies().mostViewed()
         elif action == 'home_mostvoted' : Movies().mostVoted()
         elif action == 'home_settings' : settings.openSettings()
+        elif action == 'home_clearcache' : Index().cache_clear_list()
         elif action == 'movie_list' : Movies().moviesList(url)
         elif action == 'desi_home_newreleases' : Movies().desiNewReleases()
         elif action == 'desi_home_az' : Menu().getDesiAtoZItems()
@@ -209,6 +210,7 @@ class Menu:
             elif index==11:
                 homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
         homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
+        homeItems.append({'name':language(90117).encode("utf-8"), 'image':'clearcache.png','action':'home_clearcache'})
         Index().homeList(homeItems)
     def getDesiHomeItems(self):
         d = settings.getHomeItems(getSetting)
@@ -1466,7 +1468,9 @@ class resolver:
             return title
     def play_host(self, content, name, imdb, tvdb, url, source, provider):
         try:
+            print '>>>>>SOURCE URL %s' %url 
             url = self.sources_resolve(url, provider)
+            print '>>>>>RESOLVED URL %s' %url
             if url == None: raise Exception()
 
             if getSetting("playback_info") == 'true':
@@ -1525,7 +1529,10 @@ class player(xbmc.Player):
                 i = 0
                 for urlItem in url:
                     i = i+1
-                    item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)
+                    if len(url) > 1 :
+                        item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)
+                    else :
+                        item = xbmcgui.ListItem(name, path=urlItem,thumbnailImage=thumb)
                     try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
                     except: pass
                     try :
