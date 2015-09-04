@@ -501,13 +501,12 @@ class playindiafilms:
                         else :
                             quality = 'CAM'
                     break
-            
+            if url == None or url == '':
+                raise Exception()
             url = {'url' : url, 'quality' : quality}
             print 'PLAYINDIAFILMS MOVIE URL %s' % url
             return url
         except:
-            import traceback
-            traceback.print_exc()    
             return
             
     def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
@@ -533,7 +532,7 @@ class playindiafilms:
                     if len(common.parseDOM(tag, "span", attrs= {"class":"btn btn-custom btn-custom-large btn-black "})) > 0:
                         link = common.parseDOM(tag, "strong")
                         if len(urls) > 0 :
-                            sources.append({'source': host + ' | Parts [' + str(len(urls)) + ']', 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
+                            sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
                             urls = []
                     else :
                         link = common.parseDOM(tag, "a", attrs= {"class":"btn btn-custom btn-medium btn-red btn-red "}, ret="href")
@@ -541,7 +540,7 @@ class playindiafilms:
                             host = re.compile('\.(.+?)\.').findall(link[0])[0]
                             urls.append(link[0])
                 if len(urls) > 0:
-                    sources.append({'source': host + ' | Parts [' + str(len(urls)) + ']', 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
+                    sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': urls})
             except:
                 import traceback
                 traceback.print_exc()    
@@ -681,6 +680,7 @@ class desirulez:
             if soup.has_key('div'):
                 soup = soup.findChild('div', recursive=False)
             urls = []
+            quality = ''
             for child in soup.findChildren():
                 if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
                     continue
@@ -690,10 +690,14 @@ class desirulez:
                         indx = host.find('[')
                         if indx > 0 :
                             tmpHost = tmpHost[:indx-1]
-                        sources.append({'source':host+ ' | Parts [' + str(len(urls)) + ']', 'quality':quality,'provider':'DesiRulez','url':urls})
+                        sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':urls})
                         urls = []
                     host = child.getText()
-                    host = host.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD',' [COLOR red][HD][/COLOR]').replace('DVD',' [COLOR blue][DVD][/COLOR]').strip()
+                    if '720p HD' in host:
+                        quality = 'HD'
+                    elif 'DVD' in host:
+                        quality = 'DVD'
+                    host = host.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','').replace('DVD','').strip()
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']) + '###' + host)
             return sources

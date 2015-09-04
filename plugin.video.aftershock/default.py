@@ -95,6 +95,7 @@ class Main:
         print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] season [%s] episode [%s] show [%s] show_alt [%s] date [%s] genre [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, image, meta, query, source, provider)
         
         if action == None: Menu().getHomeItems()
+        elif action == 'home_search' : Movies().search(query)
         elif action == 'home_az': Menu().getAtoZItems()
         elif action == 'home_genre': Menu().getHomeGenre() 
         elif action == 'home_year' : Menu().getHomeYear() 
@@ -118,6 +119,7 @@ class Main:
         elif action == 'desi_movie_list' : Movies().desi_movie_list(url)
         elif action == 'desi_tv_channel' : Shows().getShows(url, name, provider)
         elif action == 'episodes' : Shows().getEpisodes(url, show, provider)
+        elif action == 'trailer' : Trailer().play(name, url)
         elif action == 'get_host' : resolver().get_host(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta)
         elif action == 'play_moviehost' : resolver().play_host('movie', name, imdb, tvdb, url, source, provider)
         elif action == 'play_tvhost' : resolver().play_host('tv', name, imdb, tvdb, url, source, provider)
@@ -304,7 +306,12 @@ class Index:
         art = os.path.join(addonPath, 'resources/art')
         image = os.path.join(art, image)
         return image
-        
+    def yesnoDialog(self, str1, str2, header=addonName, str3='', str4=''):
+        answer = xbmcgui.Dialog().yesno(header, str1, str2, '', str4, str3)
+        return answer
+    def container_refresh(self):
+        xbmc.executebuiltin('Container.Refresh')
+    
     def setContainerView(self, contentType, view=None):
         if contentType == 'HOME':
             view = 500
@@ -385,7 +392,7 @@ class Index:
 
     def cache_clear_list(self):
         try:
-            yes = index().yesnoDialog(language(30341).encode("utf-8"), '')
+            yes = Index().yesnoDialog(language(30341).encode("utf-8"), '')
             if not yes: return
 
             dbcon = database.connect(addonCache)
@@ -397,13 +404,13 @@ class Index:
             dbcur.execute("VACUUM")
             dbcon.commit()
 
-            index().infoDialog(language(30306).encode("utf-8"))
+            Index().infoDialog(language(30306).encode("utf-8"))
         except:
             pass
 
     def cache_clear_src(self):
         try:
-            yes = index().yesnoDialog(language(30341).encode("utf-8"), '')
+            yes = Index().yesnoDialog(language(30341).encode("utf-8"), '')
             if not yes: return
 
             dbcon = database.connect(addonSources)
@@ -412,7 +419,7 @@ class Index:
             dbcur.execute("VACUUM")
             dbcon.commit()
 
-            index().infoDialog(language(30306).encode("utf-8"))
+            Index().infoDialog(language(30306).encode("utf-8"))
         except:
             pass
     
@@ -519,6 +526,11 @@ class Index:
         for idx, i in enumerate(sourceList):
             try:
                 url, source, provider, quality = i['url'], i['source'], i['provider'], i['quality']
+                parts = ''
+                try :
+                    parts = i['parts']
+                except:
+                    pass
                 poster, fanart = meta['poster'], meta['fanart']
                 
                 if type(url) is list :
@@ -529,10 +541,14 @@ class Index:
                 
                 cm = []
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
+                itemText = '' 
                 if not quality or quality == '':
-                    item = xbmcgui.ListItem('{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    itemText = '{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]'
                 else :
-                    item = xbmcgui.ListItem('{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    itemText = '{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]'
+                if not parts == '' :
+                    itemText = itemText + ' | Parts [' + parts + ']'
+                item = xbmcgui.ListItem( itemText, iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
@@ -637,9 +653,10 @@ class Index:
 
         total = len(sourceList)
         imdb, tvdb = '', ''
-        for i in sourceList:
+        for idx, i in enumerate(sourceList):
+            #print '>>>>source %s' % i
             try:
-                url, source, provider = i['url'], i['source'], i['provider']
+                url, source, provider, quality, parts = i['url'], i['source'], i['provider'], i['quality'], i['parts']
                 if not type(url) is str :
                     url = ",".join(url)
                 if meta :
@@ -649,8 +666,9 @@ class Index:
                 sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
 
                 u = '%s?action=play_tvhost&name=%s&imdb=%s&tvdb=%s&url=%s&source=%s&provider=%s' % (sys.argv[0], sysname, sysimdb, systvdb, sysurl, syssource, sysprovider)
-
-                item = xbmcgui.ListItem(source, iconImage="DefaultVideo.png", thumbnailImage=thumb)
+                
+                itemText = '{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue]' + source + '[/COLOR] | Parts [' + parts + ']'
+                item = xbmcgui.ListItem(itemText, iconImage="DefaultVideo.png", thumbnailImage=thumb)
                 try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster, 'banner': banner, 'tvshow.banner': banner, 'season.banner': banner})
                 except: 
                     import traceback
@@ -713,13 +731,89 @@ class Links:
 
 class Trailer:
     def __init__(self):
-        print "Trailer Initialized"
-    def dummy():
-        print "hello"
+        self.youtube_base = 'http://www.youtube.com'
+        self.key_link = 'QUl6YVN5QXpCQzE0bnBkd2pfalA2QndqZlJuSnZHS1RMcU85NWNr'
+        self.key_link = '&key=%s' % base64.urlsafe_b64decode(self.key_link)
+        self.search_link = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=%s'
+        self.youtube_search = 'https://www.googleapis.com/youtube/v3/search?q='
+        self.youtube_watch = 'http://www.youtube.com/watch?v=%s'
+
+    def play(self, name, url):
+        url = self.worker(name, url)
+        if url == None: return
+        item = xbmcgui.ListItem(path=url)
+        item.setProperty("IsPlayable", "true")
+        xbmc.Player().play(url, item)
+
+    def worker(self, name, url):
+        try:
+            if url.startswith(self.youtube_base):
+                url = self.resolve(url)
+                if url == None: raise Exception()
+                return url
+            elif not url.startswith('http://'):
+                url = self.youtube_watch % url
+                url = self.resolve(url)
+                if url == None: raise Exception()
+                return url
+            else:
+                raise Exception()
+        except:
+            query = name + ' trailer'
+            query = self.youtube_search + query
+            url = self.resolve_search(query)
+            if url == None: return
+            return url
+
+    def resolve_search(self, url):
+        try:
+            query = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
+
+            url = self.search_link % urllib.quote_plus(query) + self.key_link
+
+            result = getUrl(url).result
+
+            items = json.loads(result)['items']
+            items = [(i['id']['videoId']) for i in items]
+
+            for url in items:
+                url = self.resolve(url)
+                if not url is None: return url
+        except:
+            return
+
+    def resolve(self, url):
+        try:
+            id = url.split("?v=")[-1].split("/")[-1].split("?")[0].split("&")[0]
+            result = getUrl('http://www.youtube.com/watch?v=%s' % id).result
+
+            message = common.parseDOM(result, "div", attrs = { "id": "unavailable-submessage" })
+            message = ''.join(message)
+
+            alert = common.parseDOM(result, "div", attrs = { "id": "watch7-notification-area" })
+
+            if len(alert) > 0: raise Exception()
+            if re.search('[a-zA-Z]', message): raise Exception()
+
+            url = 'plugin://plugin.video.youtube/play/?video_id=%s' % id
+            return url
+        except:
+            return
+
 
 class Movies:
     def __init__(self):
         self.list = []
+
+    def search(self, query=None):
+        if query == None:
+            self.query = common.getUserInput(language(90100).encode("utf-8"), '')
+        else:
+            self.query = query
+        if not (self.query == None or self.query == ''):
+            self.list = self.imdb_search(self.query)
+            Index().movieList(self.list)
+            return self.list
     def featured(self):
         url = Links().eng_featured
         self.list = Index().cache(self.scn_list, 24, url)
@@ -766,6 +860,7 @@ class Movies:
     def desi_movie_list(self, url):
         self.list = Index().cache(self.desi_full_list, 24, url)
         Index().movieList(self.list,'desi_movie_list')
+
     def scn_list(self, url):
         try:
             result = ''
@@ -956,6 +1051,67 @@ class Movies:
         for i in range(0, len(self.list)): threads.append(Thread(self.tmdb_info, i))
         [i.start() for i in threads]
         [i.join() for i in threads]
+        return self.list
+        
+    def imdb_search(self, url):
+        try:
+            url = Links().imdb_search % urllib.quote_plus(url)
+
+            result = getUrl(url, timeout='30').result
+            result = common.replaceHTMLCodes(result)
+            result = json.loads(result)
+
+            movies = []
+            try: movies += result['title_popular']
+            except: pass
+            try: movies += result['title_exact']
+            except: pass
+            try: movies += result['title_substring']
+            except: pass
+        except:
+            return
+
+        for movie in movies:
+            try:
+                year = movie['title_description']
+                year = year.split(',', 1)[0].lower()
+                if any(x in year for x in ['tv series', 'tv mini-series', 'video game']): raise Exception()
+                year = re.sub('[^0-9]', '', str(year))[:4]
+                if not year.isdigit(): raise Exception()
+
+                if int(year) > int((datetime.datetime.utcnow() - datetime.timedelta(hours = 5)).strftime("%Y")): raise Exception()
+
+                title = movie['title']
+                title = common.replaceHTMLCodes(title)
+                title = title.encode('utf-8')
+
+                name = '%s (%s)' % (title, year)
+                try: name = name.encode('utf-8')
+                except: pass
+
+                imdb = movie['id']
+                imdb = re.sub('[^0-9]', '', str(imdb))
+                imdb = imdb.encode('utf-8')
+
+                url = Links().imdb_title % imdb
+                url = common.replaceHTMLCodes(url)
+                url = url.encode('utf-8')
+
+                self.list.append({'name': name, 'title': title, 'year': year, 'imdb': imdb, 'tvdb': '0', 'season': '0', 'episode': '0', 'show': '0', 'show_alt': '0', 'date': '0', 'genre': '0', 'url': url, 'poster': '0', 'fanart': '0', 'studio': '0', 'duration': '0', 'rating': '0', 'votes': '0', 'mpaa': '0', 'director': '0', 'plot': '0', 'plotoutline': '0', 'tagline': '0'})
+            except:
+                pass
+
+        self.list = self.list[:50]
+
+        threads = []
+        for i in range(0, len(self.list)): threads.append(Thread(self.tmdb_info, i))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+
+        filter = [i for i in self.list if not i['poster'] == '0']
+        filter += [i for i in self.list if i['poster'] == '0']
+        self.list = filter
+
         return self.list
     def imdb_info(self, i):
         try:
@@ -1426,8 +1582,9 @@ class resolver:
             supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
             origSupportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
             brokenDict = ['Videomega', 'Mightyupload', 'Clicknupload', 'UpToBox']
-            excludeDict = ['embed upload', 'vidgg']
+            excludeDict = ['embed upload', 'vidgg', 'playu', 'tvlogy']
             for i in range(len(self.sources)): 
+                #print 'SOURCE >> [%s]' % self.sources[i]['source']
                 if not self.sources[i]['provider'].lower() == 'DesiRulez'.lower():
                     self.sources[i]['source'] = self.sources[i]['source'].lower()
             self.sources = sorted(self.sources, key=itemgetter('source'))
@@ -1440,6 +1597,7 @@ class resolver:
             
             for i in filter:
                 for j in excludeDict:
+                    #print 'excludedDict [%s] source [%s]' % (j, i['source'].lower())
                     if i['provider'].lower() == 'DesiRulez'.lower() and j in i['source'].lower() :
                         filter.pop(filter.index(i))
             self.sources = filter
@@ -1468,7 +1626,7 @@ class resolver:
             return title
     def play_host(self, content, name, imdb, tvdb, url, source, provider):
         try:
-            #print '>>>>>SOURCE URL %s' %url 
+            #print '>>>>Content [%s] Name [%s] url [%s] source [%s] provider [%s]' % (content, name, url, source, provider)
             url = self.sources_resolve(url, provider)
             #print '>>>>>RESOLVED URL %s' %url
             if url == None: raise Exception()
@@ -1639,7 +1797,7 @@ class player(xbmc.Player):
     def resume_info(self):
         try:
             self.offset = '0'
-            if not getSetting("resume_playback") == 'true': return
+            #if not getSetting("resume_playback") == 'true': return
 
             import hashlib
             n = (hashlib.md5())
@@ -1663,7 +1821,7 @@ class player(xbmc.Player):
             hours, minutes = divmod(minutes, 60)
             offset_time = '%02d:%02d:%02d' % (hours, minutes, seconds)
 
-            yes = index().yesnoDialog('%s %s' % (language(30342).encode("utf-8"), offset_time), '', self.name, language(30343).encode("utf-8"), language(30344).encode("utf-8"))
+            yes = Index().yesnoDialog('%s %s' % (language(30342).encode("utf-8"), offset_time), '', self.name, language(30343).encode("utf-8"), language(30344).encode("utf-8"))
             if not yes: self.offset = '0'
         except:
             pass
@@ -1673,7 +1831,7 @@ class player(xbmc.Player):
             try:
                 if self.folderPath.startswith(sys.argv[0]): raise Exception()
                 xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : %s, "playcount" : 1 }, "id": 1 }' % str(self.meta['movieid']))
-                index().container_refresh()
+                Index().container_refresh()
             except:
                 pass
 
@@ -1691,7 +1849,7 @@ class player(xbmc.Player):
             try:
                 if self.folderPath.startswith(sys.argv[0]): raise Exception()
                 xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "playcount" : 1 }, "id": 1 }' % str(self.meta['episodeid']))
-                index().container_refresh()
+                Index().container_refresh()
             except:
                 pass
 
@@ -1714,9 +1872,9 @@ class player(xbmc.Player):
         except:
 			pass
 
-        if getSetting("playback_info") == 'true':
-            elapsedTime = '%s %s seconds' % (language(30309).encode("utf-8"), int((time.time() - self.loadingStarting)))     
-            index().infoDialog(elapsedTime, header=self.name)
+        #if getSetting("playback_info") == 'true':
+        elapsedTime = '%s %s seconds' % (language(30309).encode("utf-8"), int((time.time() - self.loadingStarting)))     
+        Index().infoDialog(elapsedTime, header=self.name)
 
     def onPlayBackStopped(self):
 
