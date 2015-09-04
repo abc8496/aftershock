@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.aftershock"
        name="Aftershock"
-       version="2.1.3"
+       version="2.1.4"
        provider-name="Innovate-Dev">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>

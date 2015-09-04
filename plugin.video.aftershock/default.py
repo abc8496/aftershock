@@ -529,7 +529,7 @@ class Index:
                 
                 cm = []
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
-                
+                print '>>>>IDX %s' %idx
                 if not quality or quality == '':
                     item = xbmcgui.ListItem('{:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 else :
