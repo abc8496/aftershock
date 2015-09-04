@@ -529,11 +529,10 @@ class Index:
                 
                 cm = []
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
-                print '>>>>IDX %s' %idx
                 if not quality or quality == '':
-                    item = xbmcgui.ListItem('{:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem('{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 else :
-                    item = xbmcgui.ListItem('{:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem('{0:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
