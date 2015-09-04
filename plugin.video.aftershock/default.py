@@ -516,14 +516,13 @@ class Index:
         if sourceList == None or len(sourceList) == 0: return
 
         total = len(sourceList)
-        for i in sourceList:
+        for idx, i in enumerate(sourceList):
             try:
                 url, source, provider, quality = i['url'], i['source'], i['provider'], i['quality']
                 poster, fanart = meta['poster'], meta['fanart']
                 
-                print 'type(url) %s' % type(url)
                 if type(url) is list :
-                    url = ",".join(url)
+                    url = "##".join(url)
                 sysname, sysimdb, systvdb, sysurl, syssource, sysprovider = urllib.quote_plus(name), urllib.quote_plus(imdb), urllib.quote_plus(tvdb), urllib.quote_plus(url), urllib.quote_plus(source), urllib.quote_plus(provider)
 
                 u = '%s?action=play_moviehost&name=%s&imdb=%s&tvdb=%s&url=%s&source=%s&provider=%s' % (sys.argv[0], sysname, sysimdb, systvdb, sysurl, syssource, sysprovider)
@@ -532,9 +531,9 @@ class Index:
                 cm.append((language(30412).encode("utf-8"), 'Action(Info)'))
                 
                 if not quality or quality == '':
-                    item = xbmcgui.ListItem(name + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem('{:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR blue]'+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 else :
-                    item = xbmcgui.ListItem(name + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
+                    item = xbmcgui.ListItem('{:02d}'.format(idx+1) + ' | ' + provider + ' | [COLOR red]' + quality.upper() + '[/COLOR] | [COLOR blue] '+ source.upper() + '[/COLOR]' , iconImage="DefaultVideo.png", thumbnailImage=poster)
                 try: item.setArt({'poster': poster, 'banner': poster})
                 except: pass
                 item.setProperty("Fanart_Image", fanart)
@@ -1384,8 +1383,8 @@ class resolver:
                 quality = url['quality']
                 url = url['url']
         except:
-            import traceback
-            traceback.print_exc()
+            #import traceback
+            #traceback.print_exc()
             pass
         
         try:
@@ -1425,7 +1424,9 @@ class resolver:
     
     def sources_filter(self):
         try :
-            supportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
+            supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
+            origSupportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
+            brokenDict = ['Videomega', 'Mightyupload', 'Clicknupload', 'UpToBox']
             excludeDict = ['embed upload', 'vidgg']
             for i in range(len(self.sources)): 
                 if not self.sources[i]['provider'].lower() == 'DesiRulez'.lower():
@@ -1468,9 +1469,9 @@ class resolver:
             return title
     def play_host(self, content, name, imdb, tvdb, url, source, provider):
         try:
-            print '>>>>>SOURCE URL %s' %url 
+            #print '>>>>>SOURCE URL %s' %url 
             url = self.sources_resolve(url, provider)
-            print '>>>>>RESOLVED URL %s' %url
+            #print '>>>>>RESOLVED URL %s' %url
             if url == None: raise Exception()
 
             if getSetting("playback_info") == 'true':
@@ -1503,8 +1504,8 @@ class player(xbmc.Player):
             thumb = ''
             
             if self.folderPath.startswith(sys.argv[0]):
-                if type(url) is str:
-                    tUrl = url.split(',')
+                if type(url) is str or type(url) is unicode :
+                    tUrl = url.split('##')
                     if len(tUrl) > 0:
                         url = tUrl
                     else:
@@ -1528,6 +1529,7 @@ class player(xbmc.Player):
                 
                 i = 0
                 for urlItem in url:
+                    print '>>>> URL ITEM %s' % urlItem
                     i = i+1
                     if len(url) > 1 :
                         item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)

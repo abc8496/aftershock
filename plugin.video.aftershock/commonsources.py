@@ -113,8 +113,8 @@ class wso:
             print 'WSO MOVIE URL %s' % url
             return url
         except:
-            import traceback
-            traceback.print_exc()
+            #import traceback
+            #traceback.print_exc()
             return
 
     def get_sources(self, url, hosthdDict, hostDict, locDict, quality=None):
@@ -284,6 +284,7 @@ class vkbox:
             url = self.movie_link % result
             url = common.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            print 'VKBOX MOVIE URL %s' % url
             return url
         except:
             return
@@ -373,6 +374,7 @@ class movie25:
                     pass
             if not url == '':
                 url = url.encode('utf-8')
+            print 'Movie25 MOVIE URL %s' % url
             return url
         except:
             #import traceback
@@ -419,7 +421,6 @@ class movie25:
                     url = url.encode('utf-8')
 
                     sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url})
-                    print host 
                 except:
                     pass
             return sources
@@ -502,6 +503,7 @@ class playindiafilms:
                     break
             
             url = {'url' : url, 'quality' : quality}
+            print 'PLAYINDIAFILMS MOVIE URL %s' % url
             return url
         except:
             import traceback
@@ -550,7 +552,7 @@ class playindiafilms:
 
     def resolve(self, url):
         try:
-            tUrl = url.split(',')
+            tUrl = url.split('##')
             if len(tUrl) > 0:
                 url = tUrl
             else :
@@ -728,38 +730,41 @@ class einthusan:
 
     def get_movie(self, imdb, title, year):
         try:
-            search = 'http://www.omdbapi.com/?i=tt%s' % imdb
-            search = client.source(search)
+            search = 'http://www.imdbapi.com/?i=tt%s' % imdb
+            search = getUrl(search).result
             search = json.loads(search)
             country = [i.strip() for i in search['Country'].split(',')]
             if not 'India' in country: return
 
-            languages = ['hindi']
+            languages = ['hindi', 'tamil', 'telugu', 'malayalam']
             language = [i.strip().lower() for i in search['Language'].split(',')]
             language = [i for i in language if any(x == i for x in languages)][0]
 
-            query = self.search_link % (urllib.quote_plus(title), language)
-            query = urlparse.urljoin(self.base_link, query)
+            query = urllib.quote_plus(title)
+            query = self.base_link + self.search_link % (query, language)
 
-            result = client.source(query)
-            result = client.parseDOM(result, "div", attrs = { "class": "search-category" })
-            result = [i for i in result if 'Movies' in client.parseDOM(i, "p")[0]][0]
-            result = client.parseDOM(result, "li")
+            result = getUrl(query).result
+            result = common.parseDOM(result, "div", attrs = { "class": "search-category" })
+            result = [i for i in result if 'Movies' in common.parseDOM(i, "p")[0]][0]
+            result = common.parseDOM(result, "li")
 
-            title = cleantitle.movie(title)
+            title = cleantitle().movie(title)
             years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
-            result = [(client.parseDOM(i, "a", ret="href")[0], client.parseDOM(i, "a")[0]) for i in result]
+            result = [(common.parseDOM(i, "a", ret="href")[0], common.parseDOM(i, "a")[0]) for i in result]
             r = [i for i in result if any(x in i[1] for x in years)]
             if not len(r) == 0: result = r
-            result = [i[0] for i in result if title == cleantitle.movie(i[1])][0]
+            result = [i[0] for i in result if title == cleantitle().movie(i[1])][0]
 
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
             url = url.replace('../', '/')
-            url = client.replaceHTMLCodes(url)
+            url = common.replaceHTMLCodes(url)
             url = url.encode('utf-8')
+            print 'EINTHUSAN MOVIE URL %s' % url
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
 
@@ -778,7 +783,7 @@ class einthusan:
 
     def resolve(self, url):
         try:
-            result = client.request(url)
+            result = getUrl(url).result
             url = re.compile("'file': '(.+?)'").findall(result)[0]
             return url
         except:
