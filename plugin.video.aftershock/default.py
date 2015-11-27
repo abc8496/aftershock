@@ -116,6 +116,7 @@ class Main:
         elif action == 'desi_home_genre' : Menu().getDesiGenre()
         elif action == 'desi_home_year' : Menu().getDesiYear()
         elif action == 'home_international' : Menu().getInternationalTV()
+        elif action == 'home_live' : Menu().getLive()
         elif action == 'desi_movie_list' : Movies().desi_movie_list(url)
         elif action == 'desi_tv_channel' : Shows().getShows(url, name, provider)
         elif action == 'episodes' : Shows().getEpisodes(url, show, provider)
@@ -123,6 +124,7 @@ class Main:
         elif action == 'get_host' : resolver().get_host(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, meta)
         elif action == 'play_moviehost' : resolver().play_host('movie', name, imdb, tvdb, url, source, provider)
         elif action == 'play_tvhost' : resolver().play_host('tv', name, imdb, tvdb, url, source, provider)
+        elif action == 'play_live' : resolver().play_live('live', name, url, image)
 
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
@@ -211,6 +213,8 @@ class Menu:
                 homeItems.append({'name':language(90112).encode("utf-8"), 'image': 'intl.png', 'action': 'home_international'})
             elif index==11:
                 homeItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
+            elif index==12:
+                homeItems.append({'name':language(90114).encode("utf-8"), 'image': 'live.png', 'action': 'home_live'})
         homeItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
         homeItems.append({'name':language(90117).encode("utf-8"), 'image':'clearcache.png','action':'home_clearcache'})
         Index().homeList(homeItems)
@@ -294,6 +298,21 @@ class Menu:
         listItems.append({'provider':'desirulez', 'name':language(90218).encode("utf-8"), 'image': logoBaseURL+'/hh/hungama.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=472'})
         listItems.append({'provider':'desirulez', 'name':language(90219).encode("utf-8"), 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=509'})
         Index().homeList(listItems)
+        
+    def getLive(self):
+        listItems = []
+        liveUrl = Links().live_links
+        result = getUrl(liveUrl).result
+        
+        liveChannels = json.loads(result)
+        
+        channelNames = liveChannels.keys()
+        channelNames.sort()
+        for channel in channelNames:
+            channelObj = liveChannels[channel]
+            listItems.append({'provider':'live', 'name':channel, 'image':channelObj['iconimage'], 'action':'play_live','url':channelObj['channelUrl']})
+        
+        Index().liveList(listItems)
 
 class Index:
     def infoDialog(self, str, header=addonName, time=3000):
@@ -454,6 +473,47 @@ class Index:
                 item.setProperty("Fanart_Image", image)
                 
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=True)
+                
+            except:
+                pass
+        self.setContainerView('HOME')
+        xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
+    def liveList(self, liveList):
+        if liveList == None or len(liveList) == 0: return
+
+        total = len(liveList)
+        for i in liveList:
+            try:
+                try: name = language(i['name']).encode("utf-8")
+                except: name = i['name']
+                
+                action = i['action']
+                try: image = self.addonArt(i['image'])
+                except: image = i['image']
+
+                u = '%s?action=%s' % (sys.argv[0], action)
+                try: u += '&url=%s' % urllib.quote_plus(i['url'])
+                except: pass
+                
+                try: u += '&provider=%s' % urllib.quote_plus(i['provider'])
+                except: pass
+                
+                try: u += '&name=%s' % urllib.quote_plus(i['name'])
+                except: pass
+                
+                try: u += '&image=%s' % urllib.quote_plus(i['image'])
+                except: pass
+                
+                cm = []
+                replaceItems = False
+
+                item = xbmcgui.ListItem(name, iconImage=image, thumbnailImage=image)
+                item.setInfo(type="Video", infoLabels={"Label": name, "Title": name})
+                item.setProperty("Video", "true")
+                item.setProperty("IsPlayable", "true")
+                item.setProperty("Fanart_Image", image)
+                
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=item,totalItems=total,isFolder=False)
                 
             except:
                 pass
@@ -725,6 +785,7 @@ class Links:
         self.desi_new_releases = '/category/2015/feed'
         self.desi_latest_added = '/category/hindi-movies/feed'
         self.desi_hd = '/category/hindi-blurays/feed'
+        self.live_links = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS9hamRldmVsb3BlZC9saXZlX2NoYW5uZWwuanNvbg==')
         
     def getUrl(self, url):
         return self.eng_base + '/' + url
@@ -1639,6 +1700,12 @@ class resolver:
         except:
             Index().infoDialog(language(30308).encode("utf-8"))
             return
+    def play_live(self, content, name, url, poster):
+        try:
+            player().run(content, name, url, '', '', poster)
+        except:
+            Index().infoDialog(language(30308).encode("utf-8"))
+            return
     def sources_resolve(self, url, provider):
         try:
             provider = provider.lower()
@@ -1653,7 +1720,7 @@ class player(xbmc.Player):
         self.loadingStarting = time.time()
         xbmc.Player.__init__(self)
         
-    def run(self, content, name, url, imdb, tvdb):
+    def run(self, content, name, url, imdb, tvdb, poster=None):
         try :
             print 'Content [%s] Name [%s] url [%s] imdb [%s] tvdb [%s]' % (content, name, url, imdb, tvdb)
             self.video_info(content, name, imdb, tvdb)
