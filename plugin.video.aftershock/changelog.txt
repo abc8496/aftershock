@@ -1,5 +1,6 @@
-[B]Version v2.3.0[/B] - 11/26/2015
+[B]Version v2.3.1[/B] - 11/26/2015
 - Added Live Desi Channels
+- Fixed Desi TV Source Filters
 
 [B]Version v2.2.0[/B] - 9/4/2015
 - Enabled Trailers Playback from MovieInformation

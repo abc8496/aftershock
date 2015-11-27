@@ -1640,7 +1640,7 @@ class resolver:
     
     def sources_filter(self):
         try :
-            supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
+            supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker','Dailymotion', 'Flash Player', 'Letwatch', 'Cloudy','Vidgg','Vidto','VodLocker']
             origSupportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
             brokenDict = ['Videomega', 'Mightyupload', 'Clicknupload', 'UpToBox']
             excludeDict = ['embed upload', 'vidgg', 'playu', 'tvlogy']
@@ -1650,17 +1650,19 @@ class resolver:
                     self.sources[i]['source'] = self.sources[i]['source'].lower()
             self.sources = sorted(self.sources, key=itemgetter('source'))
             
+            print self.sources 
+            
             filter = []
             filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
-            filter += [i for i in self.sources if i['provider'].lower() == 'DesiRulez'.lower()]
+            #filter += [i for i in self.sources if i['provider'].lower() == 'DesiRulez'.lower()]
             for host in supportedDict: 
-                filter += [i for i in self.sources if i['source'] == host.lower()]
+                filter += [i for i in self.sources if i['source'].lower() == host.lower()]
             
-            for i in filter:
-                for j in excludeDict:
-                    #print 'excludedDict [%s] source [%s]' % (j, i['source'].lower())
-                    if i['provider'].lower() == 'DesiRulez'.lower() and j in i['source'].lower() :
-                        filter.pop(filter.index(i))
+            #for i in filter:
+            #    for j in excludeDict:
+            #        #print 'excludedDict [%s] source [%s]' % (j, i['source'].lower())
+            #        if i['provider'].lower() == 'DesiRulez'.lower() and j in i['source'].lower() :
+            #            filter.pop(filter.index(i))
             self.sources = filter
             
         except:
