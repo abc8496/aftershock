@@ -2,13 +2,13 @@
 <settings>
    <category label="Home Layout">
 		<setting label="Customize your Home screen" type="lsep" />
-		<setting id="homeitems_1_enabled" type="bool" label="[B]Search[/B]" default="false"/>
+		<setting id="homeitems_1_enabled" type="bool" label="[B]Search[/B]" default="true"/>
 			<setting id="homeitems_1" type="number" label="     Order" default="10" visible="!eq(-1,false)"/>
-		<setting id="homeitems_2_enabled" type="bool" label="[B]A-Z[/B]" default="false"/>
+		<setting id="homeitems_2_enabled" type="bool" label="[B]A-Z[/B]" default="true"/>
 			<setting id="homeitems_2" type="number" label="     Order" default="30" visible="!eq(-1,false)"/>
-		<setting id="homeitems_3_enabled" type="bool" label="[B]New Releases[/B]" default="false"/>
+		<setting id="homeitems_3_enabled" type="bool" label="[B]New Releases[/B]" default="true"/>
 			<setting id="homeitems_3" type="number" label="     Order" default="40" visible="!eq(-1,false)"/>
-		<setting id="homeitems_4_enabled" type="bool" label="[B]Lastest Added[/B]" default="false"/>
+		<setting id="homeitems_4_enabled" type="bool" label="[B]Lastest Added[/B]" default="true"/>
 			<setting id="homeitems_4" type="number" label="     Order" default="50" visible="!eq(-1,false)"/>
 		<setting id="homeitems_5_enabled" type="bool" label="[B]Featured Movies[/B]" default="true"/>
 			<setting id="homeitems_5" type="number" label="     Order" default="60" visible="!eq(-1,false)"/>

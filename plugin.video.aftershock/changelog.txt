@@ -1,3 +1,6 @@
+[B]Version v2.3.2[/B] - 11/28/2015
+- Removed English Movies
+
 [B]Version v2.3.1[/B] - 11/26/2015
 - Added Live Desi Channels
 - Fixed Desi TV Source Filters

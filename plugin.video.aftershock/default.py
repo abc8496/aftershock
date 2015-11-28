@@ -94,7 +94,7 @@ class Main:
         
         print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] season [%s] episode [%s] show [%s] show_alt [%s] date [%s] genre [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url, image, meta, query, source, provider)
         
-        if action == None: Menu().getHomeItems()
+        if action == None: Menu().getInternationalTV()
         elif action == 'home_search' : Movies().search(query)
         elif action == 'home_az': Menu().getAtoZItems()
         elif action == 'home_genre': Menu().getHomeGenre() 
@@ -277,6 +277,8 @@ class Menu:
     def getInternationalTV(self):
         listItems = []
         logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
+        listItems.append({'name':language(90113).encode("utf-8"), 'image': 'hindimovies.png', 'action': 'home_hindimovie'})
+        listItems.append({'name':language(90114).encode("utf-8"), 'image': 'live.png', 'action': 'home_live'})
         listItems.append({'provider':'desirulez', 'name':language(90200).encode("utf-8"), 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=42'})
         listItems.append({'provider':'desirulez', 'name':language(90201).encode("utf-8"), 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=73'})
         listItems.append({'provider':'desirulez', 'name':language(90202).encode("utf-8"), 'image': logoBaseURL+'/zz/zindagi_tv_pk.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
