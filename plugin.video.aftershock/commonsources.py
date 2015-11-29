@@ -1,4 +1,4 @@
-import urllib,urllib2,urlparse,re,os,sys,datetime,base64,xbmcaddon
+import urllib,urllib2,urlparse,re,os,sys,datetime,base64,xbmcaddon,xbmc
 
 try:
     import CommonFunctions as common
@@ -729,12 +729,14 @@ class desirulez:
 class einthusan:
     def __init__(self):
         self.base_link = 'http://www.einthusan.com'
+        self.cdn_link = 'http://cdn.einthusan.com/geturl/'
+        self.cdn_extn = '/hd/'
         self.search_link = '/search/?search_query=%s&lang=%s'
 
 
     def get_movie(self, imdb, title, year):
         try:
-            search = 'http://www.imdbapi.com/?i=tt%s' % imdb
+            search = 'http://www.omdbapi.com/?i=tt%s' % imdb
             search = getUrl(search).result
             search = json.loads(search)
             country = [i.strip() for i in search['Country'].split(',')]
@@ -767,8 +769,6 @@ class einthusan:
             print 'EINTHUSAN MOVIE URL %s' % url
             return url
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 
@@ -786,9 +786,29 @@ class einthusan:
 
 
     def resolve(self, url):
+        result = None
         try:
-            result = getUrl(url).result
-            url = re.compile("'file': '(.+?)'").findall(result)[0]
+            #http://cdn.einthusan.com/movies_hindi/movie_high/2766.mp4?st=LIoADUvnHgCdQowNQ9F1Pw&e=1448814347
+            #http://169.45.89.74/einthusancom/hot/D2766.mp4?st=2XKN2EAyZBtfGRw_wIrOJw&e=1448796478
+            movieId = re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url+'/')[0][1]
+            try :
+                cdn_url = self.cdn_link + movieId + self.cdn_extn + xbmc.getIPAddress()
+                result = getUrl(cdn_url).result
+            except: 
+                pass
+            #result = None
+            if (not (result is None)) and len(result) > 1 :
+                url = result 
+                return url
+            else :
+                try:
+                    result = getUrl(url).result
+                    print result
+                    result = re.compile("setupJwplayer\(\'(.+?)\'\)").findall(result)[0]
+                    ## NEED TO FIGURE OUT HOW TO FIX THIS
+                    url = 'http://p.jwpcdn.com/6/12/jwplayer.flash.swf' + result
+                except:
+                    pass
             return url
         except:
             return

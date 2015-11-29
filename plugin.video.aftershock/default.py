@@ -299,6 +299,9 @@ class Menu:
         listItems.append({'provider':'desirulez', 'name':language(90217).encode("utf-8"), 'image': logoBaseURL+'/dd/disney_channel_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=479'})
         listItems.append({'provider':'desirulez', 'name':language(90218).encode("utf-8"), 'image': logoBaseURL+'/hh/hungama.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=472'})
         listItems.append({'provider':'desirulez', 'name':language(90219).encode("utf-8"), 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=509'})
+        listItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
+        listItems.append({'name':language(90117).encode("utf-8"), 'image':'clearcache.png','action':'home_clearcache'})
+        
         Index().homeList(listItems)
         
     def getLive(self):

@@ -34,6 +34,7 @@ class Generator:
                 
                 # create path
                 _path = os.path.join ( addon, "addon.xml" )
+                _pathChangeLog = os.path.join ( addon, "changelog.txt" )
                 
                 # parse addon.xml to retrieve the version 
                 xmldoc = minidom.parse(_path)
@@ -52,7 +53,9 @@ class Generator:
                     
                 # copy the addon.xml to releases
                 _releasePathAddonFile = os.path.join(_releasePath, "addon.xml" )
+                _releasePathChangeLogFile = os.path.join(_releasePath, "changelog.txt" )
                 shutil.copy(_path, _releasePathAddonFile)
+                shutil.copy(_pathChangeLog, _releasePathChangeLogFile)
                 
                 # create the zipFile
                 _zipFileName = addon + "-" + version + ".zip"
