@@ -22,9 +22,7 @@
     
     <string id="90200">Star Plus</string>
     <string id="90201">Zee TV</string>
-    <string id="90202">Zindagi TV</string>
     <string id="90203">Sony TV</string>
-    <string id="90204">Sony Pal</string>
     <string id="90205">Life OK</string>
     <string id="90206">Sahara One</string>
     <string id="90207">Star Jalsha</string>
@@ -36,10 +34,11 @@
     <string id="90213">Channel [V]</string>
     <string id="90214">Bindass TV</string>
     <string id="90215">UTV Stars</string>
-    <string id="90216">POGO</string>
-    <string id="90217">Disney</string>
     <string id="90218">Hungama TV</string>
     <string id="90219">Cartoon Network</string>
+    <string id="90220">&amp; TV</string>
+    <string id="90221">Star Parvah</string>
+    <string id="90222">Colors Bangla</string>
     
     <string id="30412">Movie information</string>
     <string id="30413">TV show information</string>

@@ -281,27 +281,26 @@ class Menu:
         listItems.append({'name':language(90114).encode("utf-8"), 'image': 'live.png', 'action': 'home_live'})
         listItems.append({'provider':'desirulez', 'name':language(90200).encode("utf-8"), 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=42'})
         listItems.append({'provider':'desirulez', 'name':language(90201).encode("utf-8"), 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=73'})
-        listItems.append({'provider':'desirulez', 'name':language(90202).encode("utf-8"), 'image': logoBaseURL+'/zz/zindagi_tv_pk.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
         listItems.append({'provider':'desirulez', 'name':language(90203).encode("utf-8"), 'image': logoBaseURL+'/ss/set_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=63'})
-        listItems.append({'provider':'desirulez', 'name':language(90204).encode("utf-8"), 'image': logoBaseURL+'/ss/sony_pal_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
         listItems.append({'provider':'desirulez', 'name':language(90205).encode("utf-8"), 'image': logoBaseURL+'/ll/life_ok_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1375'})
         listItems.append({'provider':'desirulez', 'name':language(90206).encode("utf-8"), 'image': logoBaseURL+'/ss/sahara_one.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=134'})
         listItems.append({'provider':'desirulez', 'name':language(90207).encode("utf-8"), 'image': logoBaseURL+'/ss/star_jalsha.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=667'})
         listItems.append({'provider':'desirulez', 'name':language(90208).encode("utf-8"), 'image': logoBaseURL+'/cc/colors_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=176'})
         listItems.append({'provider':'desirulez', 'name':language(90209).encode("utf-8"), 'image': logoBaseURL+'/ss/sony_sab_tv.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=254'})
         listItems.append({'provider':'desirulez', 'name':language(90210).encode("utf-8"), 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1138'})
-        listItems.append({'provider':'desirulez', 'name':language(90211).encode("utf-8"), 'image': logoBaseURL+'/zz/zee_zing_asia.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=00'})
         listItems.append({'provider':'desirulez', 'name':language(90212).encode("utf-8"), 'image': logoBaseURL+'/mm/mtv_india.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=339'})
         listItems.append({'provider':'desirulez', 'name':language(90213).encode("utf-8"), 'image': logoBaseURL+'/cc/channel_v_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=633'})
         listItems.append({'provider':'desirulez', 'name':language(90214).encode("utf-8"), 'image': logoBaseURL+'/uu/utv_bindass.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=504'})
         listItems.append({'provider':'desirulez', 'name':language(90215).encode("utf-8"), 'image': logoBaseURL+'/uu/utv_stars.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1274'})
-        listItems.append({'provider':'desirulez', 'name':language(90216).encode("utf-8"), 'image': logoBaseURL+'/pp/pogo.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=500'})
-        listItems.append({'provider':'desirulez', 'name':language(90217).encode("utf-8"), 'image': logoBaseURL+'/dd/disney_channel_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=479'})
         listItems.append({'provider':'desirulez', 'name':language(90218).encode("utf-8"), 'image': logoBaseURL+'/hh/hungama.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=472'})
         listItems.append({'provider':'desirulez', 'name':language(90219).encode("utf-8"), 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=509'})
+        listItems.append({'provider':'desirulez', 'name':language(90220).encode("utf-8"), 'image': logoBaseURL+'/aa/and_tv_in.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=3138'})
+        listItems.append({'provider':'desirulez', 'name':language(90221).encode("utf-8"), 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=1138'})
+        listItems.append({'provider':'desirulez', 'name':language(90222).encode("utf-8"), 'image': logoBaseURL+'/cc/colors_in_bangla.png', 'action': 'desi_tv_channel', 'url':'forumdisplay.php?f=2117'})
+        listItems.sort()
         listItems.append({'name':language(90116).encode("utf-8"), 'image':'settings.png','action':'home_settings'})
         listItems.append({'name':language(90117).encode("utf-8"), 'image':'clearcache.png','action':'home_clearcache'})
-        
+        #listItems.sort()
         Index().homeList(listItems)
         
     def getLive(self):
@@ -719,7 +718,6 @@ class Index:
         total = len(sourceList)
         imdb, tvdb = '', ''
         for idx, i in enumerate(sourceList):
-            #print '>>>>source %s' % i
             try:
                 url, source, provider, quality, parts = i['url'], i['source'], i['provider'], i['quality'], i['parts']
                 if not type(url) is str :
@@ -1655,7 +1653,7 @@ class resolver:
                     self.sources[i]['source'] = self.sources[i]['source'].lower()
             self.sources = sorted(self.sources, key=itemgetter('source'))
             
-            print self.sources 
+            #print self.sources 
             
             filter = []
             filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
@@ -1760,7 +1758,7 @@ class player(xbmc.Player):
                 
                 i = 0
                 for urlItem in url:
-                    print '>>>> URL ITEM %s' % urlItem
+                    #print '>>>> URL ITEM %s' % urlItem
                     i = i+1
                     if len(url) > 1 :
                         item = xbmcgui.ListItem(name + ' Part #' + str(i), path=urlItem,thumbnailImage=thumb)

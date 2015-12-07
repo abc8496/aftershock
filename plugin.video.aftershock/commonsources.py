@@ -583,7 +583,9 @@ class desirulez:
             shows = []
             links = [self.link_1, self.link_2, self.link_3]
             for base_link in links:
-                try: result = getUrl(base_link + '/' + url).result
+                try: 
+                    result = getUrl(base_link + '/' + url).result
+                    print base_link + '/' + url
                 except: result = ''
                 if 'forumtitle' in result: break
             
@@ -631,7 +633,6 @@ class desirulez:
                 except: result = ''
                 if 'threadtitle' in result: break
             
-            
             rawResult = result.decode('iso-8859-1').encode('utf-8')
             
             result = common.parseDOM(rawResult, "h3", attrs = {"class" : "title threadtitle_unread"})
@@ -668,6 +669,7 @@ class desirulez:
                 if 'blockquote' in result: break
             
             result = result.decode('iso-8859-1').encode('utf-8')
+            
             result = result.replace('\n','')
             
             ### DIRTY Implementation
@@ -680,11 +682,11 @@ class desirulez:
             if soup.has_key('div'):
                 soup = soup.findChild('div', recursive=False)
             urls = []
-            quality = ''
+            quality = 'SD'
             for child in soup.findChildren():
                 if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
                     continue
-                elif (child.name == 'font') and re.search('Links|Online',str(child.getText()),re.IGNORECASE):
+                elif (child.name == 'font') and re.search('Links|Online|Link',str(child.getText()),re.IGNORECASE):
                     if len(urls) > 0:
                         tmpHost = host.lower()
                         indx = host.find('[')
@@ -697,7 +699,7 @@ class desirulez:
                         quality = 'HD'
                     elif 'DVD' in host:
                         quality = 'DVD'
-                    host = host.replace('Online','').replace('Links','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','').replace('DVD','').strip()
+                    host = host.replace('Online','').replace('Links','').replace('Link','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','').replace('DVD','').strip()
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']) + '###' + host)
             return sources

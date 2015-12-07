@@ -1,3 +1,6 @@
+[B]Version v2.3.4[/B] - 12/07/2015
+- Fixed TV Shows
+
 [B]Version v2.3.3[/B] - 11/28/2015
 - Removed English Movies
 - Fixed Einthusan
