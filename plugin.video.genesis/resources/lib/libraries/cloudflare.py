@@ -31,15 +31,17 @@ def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'
         cookie = cache.get(cloudflare, 168, u, post, headers, mobile, safe, timeout)
 
         result = client.request(url, cookie=cookie, post=post, headers=headers, mobile=mobile, safe=safe, timeout=timeout, output='response', error=True)
-
+        
+        print result
         if 'HTTP Error 503' in result[0]:
             cookie = cache.get(cloudflare, 0, u, post, headers, mobile, safe, timeout)
             result = client.request(url, cookie=cookie, post=post, headers=headers, mobile=mobile, safe=safe, timeout=timeout)
         else:
             result= result[1]
-
         return result
     except:
+        import traceback
+        traceback.print_exc()
         return
 
 

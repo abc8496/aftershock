@@ -71,8 +71,16 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
 
         try:
             response = urllib2.urlopen(request, timeout=int(timeout))
+            #print 'URL >> [%s] Success [TRUE]' % url
         except urllib2.HTTPError as response:
+            import traceback
+            #traceback.print_exc()
+            #print 'URL >> [%s] Success [FALSE]' % url
             if error == False: return
+        except:
+            import traceback
+            #traceback.print_exc()
+            #print 'URL >> [%s] Success [false]' % url
 
         if output == 'cookie':
             result = []
@@ -99,6 +107,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
 
         return result
     except:
+        #import traceback
+        #traceback.print_exc()
         return
 
 

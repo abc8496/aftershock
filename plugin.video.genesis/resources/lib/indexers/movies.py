@@ -97,8 +97,7 @@ class movies:
 
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
-
-
+            
             if u in self.tmdb_link:
                 self.list = cache.get(self.tmdb_list, 24, url)
                 self.worker()
@@ -313,6 +312,7 @@ class movies:
 
                 name = '%s (%s)' % (title, year)
                 try: name = name.encode('utf-8')
+
                 except: pass
 
                 tmdb = item['id']
@@ -768,12 +768,14 @@ class movies:
             try:
                 years = [(self.datetime).strftime('%Y'), (self.datetime - datetime.timedelta(days = 365)).strftime('%Y')]
                 months = (self.datetime - datetime.timedelta(days = 180)).strftime('%Y%m%d')
-
+                
                 result = ''
                 for i in years:
-                    result += client.request(self.scn_page % (str(i), '1'))
-                    result += client.request(self.scn_page % (str(i), '2'))
-
+                    try :
+                        result += client.request(self.scn_page % (str(i), '1'), mobile=True)
+                        result += client.request(self.scn_page % (str(i), '2'), mobile=True)
+                    except:
+                        pass
                 items = client.parseDOM(result, 'div', attrs = {'class': 'post'})
                 items = [(client.parseDOM(i, 'a', attrs = {'class': 'p-title'}), re.compile('(\d{4}-\d{2}-\d{2})').findall(i)) for i in items]
                 items = [(i[0][0], i[1][0]) for i in items if len(i[0]) > 0 and len(i[1]) > 0]

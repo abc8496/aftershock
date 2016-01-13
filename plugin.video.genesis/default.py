@@ -19,7 +19,7 @@
 '''
 
 
-import urlparse,sys
+import urlparse,sys, xbmcaddon
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
 
@@ -112,7 +112,7 @@ try:
 except:
     provider = None
 
-
+print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] tvrage [%s] season [%s] episode [%s] tvshowtitle [%s] alter [%s] date [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] content [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, url, image, meta, query, source, content, provider)
 
 if action == None:
     from resources.lib.indexers import navigator

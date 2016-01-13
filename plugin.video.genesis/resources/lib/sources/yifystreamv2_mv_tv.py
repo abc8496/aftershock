@@ -30,7 +30,8 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://yify-streaming.com'
+        #self.base_link = 'http://yify-streaming.com'
+        self.base_link = 'http://yss.rocks'
         self.tvbase_link = 'http://tv.yify-streaming.com'
         self.search_link = '/?s='
 
@@ -65,7 +66,7 @@ class source:
         try:
             query = urlparse.urljoin(self.base_link, self.search_link + urllib.quote_plus(title))
 
-            result = cloudflare.source(query)
+            result = cloudflare.source(query, mobile=True)
 
             #if result == None: result = client.source(self.__proxy() + urllib.quote_plus(query))
 
@@ -75,14 +76,16 @@ class source:
 
             title = cleantitle.movie(title)
             years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
-
+            
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a')) for i in r]
+            
             result = [(i[0][0], i[1][0]) for i in result if len(i[0]) > 0 and len(i[1]) > 0]
             result = [(i[0], re.compile('(.+?)(\.|\(|\[|\s)(\d{4})').findall(i[1])) for i in result]
             result = [(i[0], i[1][0][0], i[1][0][-1]) for i in result if len(i[1]) > 0]
-            result = [i for i in result if title == cleantitle.movie(i[1])]
+            result = [i for i in result if title == cleantitle.movie(client.replaceHTMLCodes(i[1]))]
+            
             result = [i[0] for i in result if any(x in i[2] for x in years)][0]
-
+            
             url = client.replaceHTMLCodes(result)
             try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
             except: pass
@@ -90,8 +93,11 @@ class source:
             except: pass
             url = urlparse.urlparse(url).path
             url = url.encode('utf-8')
+            print "URL PARSED %s" % url
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
 
@@ -153,18 +159,27 @@ class source:
             if len(content) == 0: url = urlparse.urljoin(self.base_link, url)
             else: url = urlparse.urljoin(self.tvbase_link, url)
 
-            result = cloudflare.source(url)
-
+            result = cloudflare.source(url, mobile=True)
+            
             #if result == None: result = client.source(self.__proxy() + urllib.quote_plus(url))
 
             result = client.parseDOM(result, 'iframe', ret='src')
-
-            url = [i for i in result if 'openload.' in i][0]
+            
+            url = [i for i in result if 'player.' in i][0]
             url = client.replaceHTMLCodes(url)
             try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
             except: pass
             try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
             except: pass
+            
+            #header = {}
+            #try :
+            #    header['Content-type'] = 'application/x-www-form-urlencoded'
+            #    result = client.request('http://yss.rocks/plugins/gkpluginsphp.php', post='link:f277bdd8e3638410db127161b540c3a8ddcae30b815fdbe916faeccca5aa3bfe7db463fac6f3f9bf0add86bc9f5bef22b841e3a5815d5b304e1dc57b2872aed1734d198ce9cd2eb8f83719625bf3dca8c5f916b9a5380df316e7c626272bf39e56f673667f9b1e89a2f871a0f0f33efb32b20c3f7a9f84c30f0583c934c70b0f', headers=header)
+            #    print "MY RESULT >>>> %s" % result
+            #except: 
+            #   import traceback
+            #    traceback.print_exc()
 
             if openload.check(url) == False: raise Exception()
             sources.append({'source': 'Openload', 'quality': 'HD', 'provider': 'YIFYstreamv2', 'url': url})

@@ -23,13 +23,14 @@ import re,urllib,urlparse,json
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
+from resources.lib.libraries import cloudflare
 
 
 class source:
     def __init__(self):
         self.base_link = 'http://yify.tv'
         self.search_link = '/wp-admin/admin-ajax.php'
-        self.search_link2 = '?s=%s'
+        self.search_link2 = '/?s=%s'
         self.pk_link = '/player/pk/pk/plugins/player_p2.php'
 
 
@@ -37,11 +38,11 @@ class source:
         try:
             query = self.search_link2 % (urllib.quote_plus(title))
             query = urlparse.urljoin(self.base_link, query)
-
+            
             for i in range(5):
-                result = client.source(query, close=False)
+                result = client.source(query, mobile=True)
                 if not result == None: break
-
+            
             result = client.parseDOM(result, 'section', attrs = {'id': 'contentrea'})[0]
 
             title = cleantitle.movie(title)
@@ -61,6 +62,8 @@ class source:
             url = url.encode('utf-8')
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
 
@@ -73,10 +76,11 @@ class source:
             base = urlparse.urljoin(self.base_link, url)
 
             for i in range(5):
-                result = client.source(base, close=False)
+                result = cloudflare.source(base, mobile=True)
                 if not result == None: break
 
             result = client.parseDOM(result, 'script', attrs = {'type': 'text/javascript'})
+            print result
             result = [i for i in result if 'parametros;' in i][0]
             result = 'function' + result.split('function', 1)[-1]
             result = result.rsplit('parametros;', 1)[0] + 'parametros;'
@@ -86,7 +90,7 @@ class source:
 
             result = js2py.evaljs.eval_js(result)
             result = str(result)
-
+            print result
 
             links = re.compile('pic=([^&]+)').findall(result)
             links = [x for y,x in enumerate(links) if x not in links[:y]]
@@ -113,6 +117,8 @@ class source:
 
             return sources
         except:
+            import traceback
+            traceback.print_exc()
             return sources
 
 
