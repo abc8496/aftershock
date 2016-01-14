@@ -69,7 +69,7 @@ def addDirectoryItem(handle, url, listitem, isFolder=False, totalItems=0):
         if not xbmcplugin.addDirectoryItem(int(sys.argv[1]), 'F:\\Trailers\\300.mov', listitem, totalItems=50):
             break
     """
-    return bool
+    return bool(True)
 
 
 def addDirectoryItems(handle, items, totalItems=0):

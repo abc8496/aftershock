@@ -45,6 +45,8 @@ class source:
 
             return result
         except:
+            import traceback
+            traceback.print_exc()
             return
 
 
@@ -103,6 +105,15 @@ class source:
             result = json.loads(result)
             result = result['data']
 
+            '''result = client.parseDOM(result, "iframe", ret="src")[0]
+
+            result = cloudflare.source(result, headers=self.headers)
+
+            result = client.parseDOM(result, "param", ret="value")
+
+            result = [i for i in result if i.find('location') >= 0]
+            '''
+
             result = re.compile('"file"\s*:\s*"(.+?)".+?"label"\s*:\s*"(\d*p)"').findall(result)
 
             links = [{'url': i[0], 'quality': i[1]} for i in result if 'google' in i[0]]
@@ -119,6 +130,8 @@ class source:
 
             return sources
         except:
+            import traceback
+            traceback.print_exc()
             return sources
 
 

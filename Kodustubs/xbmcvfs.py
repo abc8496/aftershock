@@ -11,7 +11,7 @@ __date__ = 'Fri May 01 16:22:23 BST 2015'
 __platform__ = 'ALL'
 __version__ = '2.20.0'
 
-
+import os, sys
 class File(object):
     def __init__(self, filepath, mode=None):
         """
@@ -19,6 +19,7 @@ class File(object):
         example:
          f = xbmcvfs.File(file, ['w'])
         """
+        open(filepath, mode)
         pass
 
     def close(self):
@@ -111,6 +112,10 @@ def delete(file):
 
     Example:
         xbmcvfs.delete(file)"""
+    try :
+        os.remove(file)
+    except:
+        pass
     pass
 
 
@@ -133,7 +138,13 @@ def mkdir(path):
     Example:
         success = xbmcfvs.mkdir(path)
     """
-    return bool
+    result = None
+    try :
+        result = os.mkdir(path, 0755)
+    except:
+        result = False
+        pass
+    return result
 
 
 def mkdirs(path):

@@ -40,8 +40,6 @@ property = xbmcplugin.setProperty
 
 addonInfo = xbmcaddon.Addon().getAddonInfo
 
-print addonInfo('profile')
-
 infoLabel = xbmc.getInfoLabel
 
 condVisibility = xbmc.getCondVisibility

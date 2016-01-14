@@ -51,7 +51,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
         if 'User-Agent' in headers:
             pass
         elif not mobile == True:
-            headers['User-Agent'] = 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
+            #headers['User-Agent'] = 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
+            headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
         if 'referer' in headers:

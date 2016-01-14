@@ -1,2 +1,7 @@
 *.pyo
 *.pyc
+
+*.iml
+*/.idea
+*/data
+*.iml

@@ -29,7 +29,8 @@ from resources.lib.resolvers import googleplus
 
 class source:
     def __init__(self):
-        self.base_link = 'http://dizilab.com'
+        #self.base_link = 'http://dizilab.com'
+        self.base_link = 'http://dizilab.org'
         self.search_link = '/arsiv?limit=&tur=&orderby=&ulke=&order=&yil=&dizi_adi=%s'
 
 
@@ -58,6 +59,8 @@ class source:
             url = url.encode('utf-8')
             return url
         except:
+            import traceback
+            traceback.print_exc()
             return
 
 
@@ -69,7 +72,7 @@ class source:
 
             result = cloudflare.source(url)
             result = client.parseDOM(result, 'a', ret='href')
-            result = [i for i in result if '/sezon-%01d/bolum-%01d' % (int(season), int(episode)) in i][0]
+            result = [i for i in result if '-%01d-sezon-%01d-bolum' % (int(season), int(episode)) in i][0]
 
             try: url = re.compile('//.+?(/.+)').findall(result)[0]
             except: url = result
@@ -90,7 +93,10 @@ class source:
 
             result = cloudflare.source(url)
 
-            links = re.compile('file\s*:\s*"(.+?)"').findall(result)
+            result = client.parseDOM(result, 'iframe', ret='src')
+
+            result = cloudflare.source(result[0])
+            links = re.compile('"file"\s*:\s*"(.+?)"').findall(result)
             links = [i for i in links if 'google' in i]
 
             for link in links:

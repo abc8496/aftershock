@@ -27,7 +27,8 @@ class Addon(object):
                           'path':'data/plugin.video.genesis',
                           'name':'plugin.video.genesis',
                           'icon':'icon',
-                          'id' : 'plugin.video.geneis'}
+                          'id' : 'plugin.video.geneis',
+                          'version' : '5.3.1'}
 
         self.setting = {'appearance':'',
                         'icon':''}
@@ -36,16 +37,9 @@ class Addon(object):
         settingList = xmldoc.getElementsByTagName('setting')
         for s in settingList:
             try :
-                self.setting[s.attributes['id'].value] = s.attributes['id'].value
+                self.setting[s.attributes['id'].value] = s.attributes['default'].value
             except :
                 pass
-        #    self.setSetting(s.attributes['id'], s.attributes['id'].value)
-
-        print self.setting
-        #    print(s.attributes['id'].value)
-        #import xml.etree.ElementTree
-        #e = xml.etree.ElementTree.parse('../plugin.video.genesis/resources/settings.xml').getroot()
-
         pass
 
     def getLocalizedString(self, id):
@@ -56,7 +50,7 @@ class Addon(object):
         Example:
             locstr = self.Addon.getLocalizedString(id=6)
         """
-        return unicode
+        return unicode('string')
 
     def getSetting(self, id):
         """Returns the value of a setting as a unicode string.
