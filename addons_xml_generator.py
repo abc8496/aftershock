@@ -83,7 +83,7 @@ class Generator:
         for addon in addons:
             try:
                 # skip any file or .svn folder
-                if ( addon == "releases" ) : continue
+                if ( addon == "releases" or addon == "Kodustubs" or addon == ".idea") : continue
                 if ( not os.path.isdir( addon ) or addon == ".svn" or addon == ".git" ): continue
                 # create path
                 _path = os.path.join( addon, "addon.xml" )
