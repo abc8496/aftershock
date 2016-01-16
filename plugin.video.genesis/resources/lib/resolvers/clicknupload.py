@@ -51,7 +51,10 @@ def resolve(url):
         for i in range(0, 10):
             try:
                 result = client.request(url, post=post, close=False)
-                if not '>File Download Link Generated<' in result: raise Exception()
+                if not 'File Download Link Generated' in result:
+                    raise Exception()
+                else:
+                    break
             except:
                 time.sleep(1)
 

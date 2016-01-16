@@ -93,7 +93,6 @@ class source:
             except: pass
             url = urlparse.urlparse(url).path
             url = url.encode('utf-8')
-            print "URL PARSED %s" % url
             return url
         except:
             import traceback

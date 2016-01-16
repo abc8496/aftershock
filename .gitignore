@@ -5,3 +5,7 @@
 **/.idea/
 */data
 *.idea
+
+*.iml
+
+.idea/workspace.xml

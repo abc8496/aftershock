@@ -881,7 +881,6 @@ class movies:
 
 
         try:
-            print 'HERE >>>> '
             items = cache.get(predb_items, 24)
 
             start = re.compile('start=(\d*)').findall(url)[-1]

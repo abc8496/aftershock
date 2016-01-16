@@ -102,7 +102,7 @@ def info():
         'a/c': False
     }, {
         'class': 'clicknupload',
-        'netloc': ['clicknupload.com'],
+        'netloc': ['clicknupload.com','clicknupload.me'],
         'host': ['Clicknupload'],
         'quality': 'High',
         'captcha': False,
@@ -517,6 +517,13 @@ def info():
     }, {
         'class': 'vk',
         'netloc': ['vk.com']
+    }, {
+        'class': 'vkpass',
+        'netloc': ['vkpass.com'],
+        'host': ['VkPass'],
+        'quality': 'HD',
+        'captcha': False,
+        'a/c': False
     }, {
         'class': 'vodlocker',
         'netloc': ['vodlocker.com'],

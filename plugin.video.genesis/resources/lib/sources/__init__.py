@@ -46,8 +46,9 @@ class sources:
 
     def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url):
         try:
-            if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
-                control.playlist.clear()
+            # UNCOMMENT THE FOLLOWING AFTER TESTING
+            #if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
+            #s    control.playlist.clear()
 
             control.resolve(int(sys.argv[1]), True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')
@@ -300,8 +301,6 @@ class sources:
 
         sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
         
-        print "sourceDict >>>> %s" % (sourceDict)
-
         if content == 'movie':
             title = cleantitle.normalize(title)
             for source in sourceDict: threads.append(workers.Thread(self.getMovieSource, title, year, imdb, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source()))

@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/xbmcstubs-master" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kodistubs-master" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kodistubs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Kodustubs" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

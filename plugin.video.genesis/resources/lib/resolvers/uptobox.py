@@ -25,7 +25,9 @@ from resources.lib.libraries import client
 
 def resolve(url):
     try:
-        result = client.request(url)
+        import urlresolver
+        url = urlresolver.resolve(url)
+        '''result = client.request(url)
 
         post = {}
         f = client.parseDOM(result, 'form', attrs = {'name': 'F1'})[0]
@@ -42,7 +44,8 @@ def resolve(url):
                 url = ['http' + i for i in url.split('http') if 'uptobox.com' in i][0]
                 return url
             except:
-                time.sleep(1)
+                time.sleep(1)'''
+        return url
     except:
         return
 

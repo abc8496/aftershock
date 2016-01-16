@@ -26,7 +26,9 @@ from resources.lib.libraries import captcha
 
 def resolve(url):
     try:
-        result = client.request(url)
+        import urlresolver
+        url = urlresolver.resolve(url)
+        '''result = client.request(url)
 
         post = {}
         f = client.parseDOM(result, 'Form', attrs = {'action': '' })
@@ -39,7 +41,7 @@ def resolve(url):
 
         result = client.request(url, post=post)
 
-        url = re.compile('fileUrl\s*=\s*[\'|\"](.+?)[\'|\"]').findall(result)[0]
+        url = re.compile('fileUrl\s*=\s*[\'|\"](.+?)[\'|\"]').findall(result)[0]'''
         return url
     except:
         return

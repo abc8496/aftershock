@@ -195,8 +195,10 @@ class source:
             post = urllib.urlencode(post)
 
             query = urlparse.parse_qs(urlparse.urlparse(url).query)
-
-            image = urllib.unquote(query['image'][0])
+            image = ''
+            try:
+                image = urllib.unquote(query['image'][0])
+            except : pass
 
             ref = self.video_link % query['t'][0]
 
@@ -206,8 +208,8 @@ class source:
             links = [self.link_1]
             for base_link in links:
                 referer = urlparse.urljoin(base_link, ref)
-                cookie = client.request(referer, output='cookie')
-                result = client.request(urlparse.urljoin(base_link, url), post=post, referer=referer, cookie=cookie)
+                cookie = client.request(referer, output='cookie', headers=self.headers)
+                result = client.request(urlparse.urljoin(base_link, url), post=post, referer=referer, cookie=cookie, headers=self.headers)
                 if 'com_iceplayer' in str(result): break
 
             self.img_parser(image, referer)
@@ -226,7 +228,7 @@ class source:
 
             d = control.windowDialog
 
-            result = client.request(image, referer=referer, close=False)
+            result = client.request(image, referer=referer, close=False, headers=self.headers)
 
             for match in re.finditer("<img\s+src='([^']+)'\s+width='(\d+)'\s+height='(\d+)'", result):
                 img_url, width, height = match.groups()

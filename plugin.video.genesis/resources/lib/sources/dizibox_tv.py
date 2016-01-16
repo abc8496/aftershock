@@ -169,6 +169,7 @@ class source:
 
     def resolve(self, url):
         try:
+            url = resolvers.request(url)
             if not 'google' in url: return url
             if url.startswith('stack://'): return url
 
