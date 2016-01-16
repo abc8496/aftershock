@@ -23,18 +23,19 @@ import re,urllib,urlparse
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
+from resources.lib.libraries import cloudflare
 from resources.lib.libraries import cache
 
 
 class source:
     def __init__(self):
-        self.base_link = 'http://dizimag.co'
+        self.base_link = 'http://m.dizimag.co'
         self.headers = {'X-Requested-With' : 'XMLHttpRequest'}
 
 
     def dizimag_shows(self):
         try:
-            result = client.source(self.base_link)
+            result = cloudflare.source(self.base_link)
 
             result = client.parseDOM(result, 'div', attrs = {'id': 'fil'})[0]
             result = zip(client.parseDOM(result, 'a', ret='href'), client.parseDOM(result, 'a'))

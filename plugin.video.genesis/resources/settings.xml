@@ -31,61 +31,61 @@
 		<setting id="playback_info" type="bool" label="30845" default="false" />
 	</category>
 	<category label="30860">
-		<setting id="alluc" type="bool" label="Alluc" default="true" />
-		<setting id="icefilms" type="bool" label="Icefilms" default="true" />
-		<setting id="primewire" type="bool" label="Primewire" default="true" />
-		<setting id="movie25" type="bool" label="Movie25" default="true" />
-		<setting id="iwatchonline" type="bool" label="Iwatchonline" default="true" />
+		<setting id="alluc" type="bool" label="Alluc" default="false" />
+		<setting id="icefilms" type="bool" label="Icefilms" default="false" /> <!-- Working -->
+		<setting id="primewire" type="bool" label="Primewire" default="false" /> <!-- Working -->
+		<setting id="movie25" type="bool" label="Movie25" default="false" /> <!-- Working -->
+		<setting id="iwatchonline" type="bool" label="Iwatchonline" default="false" />
 		<setting id="yify" type="bool" label="YIFY" default="true" />
-		<setting id="yifystreamv2" type="bool" label="YIFYstream" default="true" />
-		<setting id="afdah" type="bool" label="Afdah" default="true" />
-		<setting id="pubfilm" type="bool" label="Pubfilm" default="true" />
-		<setting id="xmovies" type="bool" label="Xmovies" default="true" />
-		<setting id="tunemovie" type="bool" label="Tunemovie" default="true" />
-		<setting id="beinmovie" type="bool" label="Beinmovie" default="true" />
-		<setting id="mvsnap" type="bool" label="MVsnap" default="true" />
-		<setting id="movietv" type="bool" label="MovieTV" default="true" />
-		<setting id="muchmoviesv2" type="bool" label="Muchmovies" default="true" />
-		<setting id="moviefarsiv2" type="bool" label="Moviefarsi" default="true" />
-		<setting id="onlinemoviesv2" type="bool" label="Onlinemovies" default="true" />
-		<setting id="movietubev2" type="bool" label="Movietube" default="true" />
-		<setting id="movienight" type="bool" label="Movienight" default="true" />
-		<setting id="movieshd" type="bool" label="MoviesHD" default="true" />
-		<setting id="oneclickwatch" type="bool" label="Oneclickwatch" default="true" />
-		<setting id="watchfree" type="bool" label="Watchfree" default="true" />
-		<setting id="vidics" type="bool" label="Vidics" default="true" />
-		<setting id="filmikz" type="bool" label="Filmikz" default="true" />
-		<setting id="wmonline" type="bool" label="WMOnline" default="true" />
-		<setting id="einthusan" type="bool" label="Einthusan (India)" default="true" />
+		<setting id="yifystreamv2" type="bool" label="YIFYstream" default="false" />
+		<setting id="afdah" type="bool" label="Afdah" default="false" />
+		<setting id="pubfilm" type="bool" label="Pubfilm" default="false" />
+		<setting id="xmovies" type="bool" label="Xmovies" default="false" />
+		<setting id="tunemovie" type="bool" label="Tunemovie" default="false" />
+		<setting id="beinmovie" type="bool" label="Beinmovie" default="false" />
+		<setting id="mvsnap" type="bool" label="MVsnap" default="false" />
+		<setting id="movietv" type="bool" label="MovieTV" default="false" /> <!-- Working -->
+		<setting id="muchmoviesv2" type="bool" label="Muchmovies" default="false" />
+		<setting id="moviefarsiv2" type="bool" label="Moviefarsi" default="false" /> <!-- Working -->
+		<setting id="onlinemoviesv2" type="bool" label="Onlinemovies" default="false" /> <!-- Working -->
+		<setting id="movietubev2" type="bool" label="Movietube" default="false" />
+		<setting id="movienight" type="bool" label="Movienight" default="false" /> <!-- Working -->
+		<setting id="movieshd" type="bool" label="MoviesHD" default="false" />
+		<setting id="oneclickwatch" type="bool" label="Oneclickwatch" default="false" />
+		<setting id="watchfree" type="bool" label="Watchfree" default="false" /> <!-- Working -->
+		<setting id="vidics" type="bool" label="Vidics" default="false" /> <!-- Working -->
+		<setting id="filmikz" type="bool" label="Filmikz" default="false" /> <!-- Working -->
+		<setting id="wmonline" type="bool" label="WMOnline" default="false" />
+		<setting id="einthusan" type="bool" label="Einthusan (India)" default="false" />
 		<setting id="easynews" type="bool" label="Easynews" default="false" />
 		<setting id="furk" type="bool" label="Furk" default="false" />
 	</category>
 	<category label="30861">
-		<setting id="alluc_tv" type="bool" label="Alluc" default="true" />
-		<setting id="icefilms_tv" type="bool" label="Icefilms" default="true" />
-		<setting id="primewire_tv" type="bool" label="Primewire" default="true" />
-		<setting id="watchseries_tv" type="bool" label="Watchseries" default="true" />
-		<setting id="iwatchonline_tv" type="bool" label="Iwatchonline" default="true" />
-		<setting id="yifystreamv2_tv" type="bool" label="YIFYstream" default="true" />
-		<setting id="xmovies_tv" type="bool" label="Xmovies" default="true" />
-		<setting id="tunemovie_tv" type="bool" label="Tunemovie" default="true" />
-		<setting id="mvsnap_tv" type="bool" label="MVsnap" default="true" />
-		<setting id="movietv_tv" type="bool" label="MovieTV" default="true" />
+		<setting id="alluc_tv" type="bool" label="Alluc" default="false" />
+		<setting id="icefilms_tv" type="bool" label="Icefilms" default="false" /> <!-- Working -->
+		<setting id="primewire_tv" type="bool" label="Primewire" default="false" /> <!-- Working -->
+		<setting id="watchseries_tv" type="bool" label="Watchseries" default="false" /> <!-- Working -->
+		<setting id="iwatchonline_tv" type="bool" label="Iwatchonline" default="false" />
+		<setting id="yifystreamv2_tv" type="bool" label="YIFYstream" default="false" /> <!-- BROKEN -->
+		<setting id="xmovies_tv" type="bool" label="Xmovies" default="false" />
+		<setting id="tunemovie_tv" type="bool" label="Tunemovie" default="false" /> <!-- Working -->
+		<setting id="mvsnap_tv" type="bool" label="MVsnap" default="false" /> <!-- DEAD -->
+		<setting id="movietv_tv" type="bool" label="MovieTV" default="false" /> <!-- Working -->
 		<setting id="muchmoviesv2_tv" type="bool" label="Muchmovies" default="true" />
-		<setting id="moviefarsiv2_tv" type="bool" label="Moviefarsi" default="true" />
-		<setting id="ororo_tv" type="bool" label="Ororo" default="true" />
-		<setting id="dizibox_tv" type="bool" label="Dizibox" default="true" />
-		<setting id="dizigoldv2_tv" type="bool" label="Dizigold" default="true" />
-		<setting id="dizilab_tv" type="bool" label="Dizilab" default="true" />
-		<setting id="dizimag_tv" type="bool" label="Dizimag" default="true" />
-		<setting id="oneclickwatch_tv" type="bool" label="Oneclickwatch" default="true" />
-		<setting id="tvrelease_tv" type="bool" label="TVrelease" default="true" />
-		<setting id="watchfree_tv" type="bool" label="Watchfree" default="true" />
-		<setting id="vidics_tv" type="bool" label="Vidics" default="true" />
-		<setting id="wsonline_tv" type="bool" label="WSOnline" default="true" />
-		<setting id="moviestorm_tv" type="bool" label="Moviestorm" default="true" />
-		<setting id="animeultima_tv" type="bool" label="Animeultima" default="true" />
-		<setting id="directdl_tv" type="bool" label="Directdownload" default="true" />
+		<setting id="moviefarsiv2_tv" type="bool" label="Moviefarsi" default="false" /> <!-- Working -->
+		<setting id="ororo_tv" type="bool" label="Ororo" default="false" /> <!-- DEAD -->
+		<setting id="dizibox_tv" type="bool" label="Dizibox" default="false" /> <!-- Working -->
+		<setting id="dizigoldv2_tv" type="bool" label="Dizigold" default="false" /> <!-- Broken -->
+		<setting id="dizilab_tv" type="bool" label="Dizilab" default="false" /> <!-- Working -->
+		<setting id="dizimag_tv" type="bool" label="Dizimag" default="false" /> <!-- Broken -->
+		<setting id="oneclickwatch_tv" type="bool" label="Oneclickwatch" default="false" />
+		<setting id="tvrelease_tv" type="bool" label="TVrelease" default="false" />
+		<setting id="watchfree_tv" type="bool" label="Watchfree" default="false" /> <!-- Working -->
+		<setting id="vidics_tv" type="bool" label="Vidics" default="false" />
+		<setting id="wsonline_tv" type="bool" label="WSOnline" default="false" /> <!-- Working -->
+		<setting id="moviestorm_tv" type="bool" label="Moviestorm" default="false" /> <!-- Working -->
+		<setting id="animeultima_tv" type="bool" label="Animeultima" default="false" />
+		<setting id="directdl_tv" type="bool" label="Directdownload" default="false" />
 		<setting id="easynews_tv" type="bool" label="Easynews" default="false" />
 		<setting id="furk_tv" type="bool" label="Furk" default="false" />
 	</category>

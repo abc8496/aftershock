@@ -80,7 +80,6 @@ class source:
                 if not result == None: break
 
             result = client.parseDOM(result, 'script', attrs = {'type': 'text/javascript'})
-            print result
             result = [i for i in result if 'parametros;' in i][0]
             result = 'function' + result.split('function', 1)[-1]
             result = result.rsplit('parametros;', 1)[0] + 'parametros;'
@@ -90,7 +89,6 @@ class source:
 
             result = js2py.evaljs.eval_js(result)
             result = str(result)
-            print result
 
             links = re.compile('pic=([^&]+)').findall(result)
             links = [x for y,x in enumerate(links) if x not in links[:y]]

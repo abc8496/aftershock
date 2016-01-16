@@ -30,16 +30,16 @@ else :
         traceback.print_exc()
         pass
 
-    name = 'Daredevil'
-    title = 'Pilot'
+    name = 'Minions'
+    title = 'Minions'
     year = '2015'
-    imdb = None
+    imdb = '2293640'
     tmdb = None
     tvdb = None
     tvrage = None
-    season = '1'
-    episode = '1'
-    tvshowtitle = 'Daredevil'
+    season = None
+    episode = None
+    tvshowtitle = None
     alter = None
     date = None
     meta = None

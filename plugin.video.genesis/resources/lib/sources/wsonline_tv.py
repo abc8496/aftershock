@@ -28,7 +28,7 @@ from resources.lib import resolvers
 
 class source:
     def __init__(self):
-        self.base_link = 'http://watchseries-online.ch'
+        self.base_link = 'http://watchseries-online.li'
         self.search_link = 'index'
 
 
@@ -59,7 +59,10 @@ class source:
         try:
             if url == None: return
 
-            year, month = re.compile('(\d{4})-(\d{2})').findall(date)[-1]
+            year = 2015
+            try :
+                year, month = re.compile('(\d{4})-(\d{2})').findall(date)[-1]
+            except : pass
             if int(year) <= 2008: raise Exception()
 
             cat = urlparse.urljoin(self.base_link, url)
@@ -78,6 +81,9 @@ class source:
                 result = client.source(url, output='response', error=True)
 
             if '404' in result[0]: raise Exception()
+
+            #if not '<!DOCTYPE' in result[0]:
+            #    result[0] = result[1]
 
             try: url = re.compile('//.+?(/.+)').findall(url)[0]
             except: url = result
