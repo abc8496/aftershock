@@ -46,9 +46,8 @@ class sources:
 
     def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url):
         try:
-            # UNCOMMENT THE FOLLOWING AFTER TESTING
-            #if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
-            #s    control.playlist.clear()
+            if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
+                control.playlist.clear()
 
             control.resolve(int(sys.argv[1]), True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')

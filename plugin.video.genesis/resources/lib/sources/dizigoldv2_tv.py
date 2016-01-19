@@ -45,8 +45,6 @@ class source:
 
             return result
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 
@@ -130,8 +128,6 @@ class source:
 
             return sources
         except:
-            import traceback
-            traceback.print_exc()
             return sources
 
 

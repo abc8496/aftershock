@@ -46,7 +46,7 @@ else :
     url = None
     #action [play] name [Game of Thrones S04E09] title [The Watchers on the Wall] year [2011] imdb [0944947] tvdb [121361] tvrage [0] season [4] episode [9] tvshowtitle [Game of Thrones] alter [Adventure / Drama / Fantasy] date [2014-06-08] url [http://www.imdb.com/title/tt0944947/] image [None] meta [None] query [None] source [None] content [None] provider [None]
     #print movies.movies().get('featured')
-    print sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #print sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
     #print sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
 
     name = 'Heroes Reborn S01E12'
@@ -64,8 +64,15 @@ else :
     meta = None
     url = 'plugin://plugin.video.genesis/?action=play&name=Heroes+Reborn+S01E12&title=Company+Woman&year=2015&imdb=tt3556944&tmdb=60858&tvdb=279201&tvrage=41064&season=1&episode=12&tvshowtitle=Heroes+Reborn&alter=0&date=2016-01-14'
 
-    from resources.lib.sources import icefilms_mv_tv
-    # CLICKNUPLOAD
+
+    from resources.lib.resolvers import urlresolver
+    print urlresolver.resolve('http://clicknupload.me/typkfk6034rb')
+
+    from resources.lib import resolvers
+
+    print resolvers.request('http://clicknupload.me/typkfk6034rb')
+    #from resources.lib.sources import icefilms_mv_tv
+    #CLICKNUPLOAD
     #icefilms_mv_tv.source().resolve('/membersonly/components/com_iceplayer/video.phpAjaxResp.php?id=1260904&s=10744&iqs=&url=&m=10390&cap= &sec=37fn8Oklq&t=226629&image=')
 
     #TUSFILES

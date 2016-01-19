@@ -39,8 +39,6 @@ def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'
             result= result[1]
         return result
     except:
-        import traceback
-        traceback.print_exc()
         return
 
 

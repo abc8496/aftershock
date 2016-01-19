@@ -40,13 +40,16 @@ def request(url):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
 
-        u = urlparse.urlparse(url).netloc
-        u = u.replace('www.', '').replace('embed.', '')
-        u = u.lower()
+        import urlresolver
+        r = urlresolver.resolve(url)
+        if r == False:
+            u = urlparse.urlparse(url).netloc
+            u = u.replace('www.', '').replace('embed.', '')
+            u = u.lower()
 
-        r = [i['class'] for i in info() if u in i['netloc']][0]
-        r = __import__(r, globals(), locals(), [], -1)
-        r = r.resolve(url)
+            r = [i['class'] for i in info() if u in i['netloc']][0]
+            r = __import__(r, globals(), locals(), [], -1)
+            r = r.resolve(url)
 
         if r == None: return r
         elif type(r) == list: return r

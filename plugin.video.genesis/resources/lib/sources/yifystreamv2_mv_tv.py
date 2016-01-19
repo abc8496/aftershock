@@ -95,8 +95,6 @@ class source:
             url = url.encode('utf-8')
             return url
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 
@@ -170,15 +168,6 @@ class source:
             except: pass
             try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
             except: pass
-            
-            #header = {}
-            #try :
-            #    header['Content-type'] = 'application/x-www-form-urlencoded'
-            #    result = client.request('http://yss.rocks/plugins/gkpluginsphp.php', post='link:f277bdd8e3638410db127161b540c3a8ddcae30b815fdbe916faeccca5aa3bfe7db463fac6f3f9bf0add86bc9f5bef22b841e3a5815d5b304e1dc57b2872aed1734d198ce9cd2eb8f83719625bf3dca8c5f916b9a5380df316e7c626272bf39e56f673667f9b1e89a2f871a0f0f33efb32b20c3f7a9f84c30f0583c934c70b0f', headers=header)
-            #    print "MY RESULT >>>> %s" % result
-            #except: 
-            #   import traceback
-            #    traceback.print_exc()
 
             if openload.check(url) == False: raise Exception()
             sources.append({'source': 'Openload', 'quality': 'HD', 'provider': 'YIFYstreamv2', 'url': url})

@@ -100,8 +100,6 @@ class source:
             url = url.encode('utf-8')
             return url
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 
