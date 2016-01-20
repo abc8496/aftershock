@@ -1985,8 +1985,8 @@ class zettahost:
 class desirulez:
     def info(self):
         return {
-            'netloc': ['xpressvids.info', 'bestarticles.me', 'www.embedupload.com', 'tellysony.com', ''],
-            'host': ['cloudy', 'dailymotion', 'embedupload','flashplayer','letwatch','vidgg','vidto','vodlocker'],
+            'netloc': ['xpressvids.info', 'bestarticles.me', 'www.embedupload.com', 'tellysony.com', 'reviewtv.in'],
+            'host': ['cloudy', 'dailymotion', 'embedupload','flashplayer','letwatch','vidgg','vidto','vodlocker','playu'],
             'quality': 'Medium',
             'captcha': False,
             'a/c': False
@@ -1998,12 +1998,15 @@ class desirulez:
             url = items[0].strip()
             host = items[1].split('[')[0]
             host = host.lower().strip()
-            
-            import sys, inspect
-            r = inspect.getmembers(sys.modules[__name__], inspect.isclass)
-            r = [i for i in r if hasattr(i[1], 'info') and host in eval(i[0])().info()['netloc']][0][0]
-            
-            r = eval(r)().resolve(url)
+
+            import urlresolver
+            r = urlresolver.resolve(url)
+            if r == None or r == False :
+                import sys, inspect
+                r = inspect.getmembers(sys.modules[__name__], inspect.isclass)
+                r = [i for i in r if hasattr(i[1], 'info') and host in eval(i[0])().info()['netloc']][0][0]
+
+                r = eval(r)().resolve(url)
 
             if r == None: return r
             elif type(r) == list: return r
@@ -2043,6 +2046,45 @@ class cloudy:
             return urlresolver.resolve(url)
         except:
             return
+
+class tvlogy:
+    def info(self):
+        return {
+            'netloc': ['tvlogy'],
+            'host': ['reviewtv.in'],
+            'quality': 'HD',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            url = 'http://tvlogy.com/watch.php?v=' + str(desirulez().getVideoID(url))
+            result = getUrl(url).result
+            url = re.findall('file: \'(.+?)\'',result)[0]
+            return url
+        except:
+            return
+
+class playu:
+    def info(self):
+        return {
+            'netloc': ['playu'],
+            'host': ['xpressvids.info'],
+            'quality': 'HD',
+            'captcha': False,
+            'a/c': False
+        }
+
+    def resolve(self, url):
+        try:
+            url = 'http://playu.net/embed-%s.html' % str(desirulez().getVideoID(url))
+            result = getUrl(url).result
+            url = re.findall('file: "(.+?)"',result)[0]
+            return url
+        except:
+            return
+
 
 class dailymotion:
     def info(self):

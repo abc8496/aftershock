@@ -1,3 +1,6 @@
+[B]Version v2.3.5[/B] - 1/20/2016
+- Added new resolvers
+
 [B]Version v2.3.4[/B] - 12/07/2015
 - Fixed TV Shows
 

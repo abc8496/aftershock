@@ -585,7 +585,7 @@ class desirulez:
             for base_link in links:
                 try: 
                     result = getUrl(base_link + '/' + url).result
-                    print base_link + '/' + url
+                    #print base_link + '/' + url
                 except: result = ''
                 if 'forumtitle' in result: break
             
@@ -613,8 +613,9 @@ class desirulez:
                     
                 if type(url) is list and len(url) > 0:
                     url = str(url[0])
-                
-                shows.append({'channel':name, 'title':title, 'url':url, 'year': '0', 'imdb': '0', 'tvdb': '0', 'genre': '0', 'poster': '0', 'banner': '0', 'fanart': '0', 'studio': '0', 'premiered': '0', 'duration': '0', 'rating': '0', 'mpaa': '0', 'plot': '0', 'next': '0', 'provider':'desirulez'})
+
+                if not 'Past Shows' in title:
+                    shows.append({'channel':name, 'title':title, 'url':url, 'year': '0', 'imdb': '0', 'tvdb': '0', 'genre': '0', 'poster': '0', 'banner': '0', 'fanart': '0', 'studio': '0', 'premiered': '0', 'duration': '0', 'rating': '0', 'mpaa': '0', 'plot': '0', 'next': '0', 'provider':'desirulez'})
         
             return shows
         except:

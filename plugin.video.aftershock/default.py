@@ -1468,7 +1468,8 @@ class Shows:
                 if not plot == '0': self.list[i].update({'plot': plot})
             
             try :
-                if poster == '0' : poster = self.getTVShowPosterFromGoogle(self.list[i]['channel'], show, 5)
+                if poster == None or poster == '0' :
+                    poster = Index().cache(self.getTVShowPosterFromGoogle, 168,self.list[i]['channel'], show, 5)
             except:
                 pass
 
@@ -1488,21 +1489,34 @@ class Shows:
     def getTVShowPosterFromGoogle(self, channelName, showName, retry):
         if retry == 0:
             return ''
-        baseURL = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q={query}'
+        #baseURL = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q={query}'
+
+        keyBing = 'btcCcvQ4Sfo9P2Q7u62eOREA1NfLEQPezqCNb+2LVhY'        # get Bing key from: https://datamarket.azure.com/account/keys
+        credentialBing = 'Basic ' + (':%s' % keyBing).encode('base64')[:-1] # the "-1" is to remove the trailing "\n" which encode adds
+
+        headers = {}
+        headers['Authorization'] = credentialBing
+
+        baseURL = 'https://api.datamarket.azure.com/Bing/Search/v1/Image?Query=%27{query}%27&$format=json'
+
         query = channelName.lower() + ' ' + showName.lower() + ' poster'
         url = baseURL.format(query=urllib.quote_plus(query))
+        print url
         try:
-            result = getUrl(url).result
-            results = json.loads(result)['responseData']['results']
+            result = getUrl(url, headers=headers).result
+
+            results = json.loads(result)['d']['results']
+
             for image_info in results:
-                iconImage = image_info['unescapedUrl']
+                iconImage = image_info['MediaUrl']
                 break
             if iconImage is not None:
                 return iconImage
             else:
                 return ''
         except :
-            return self.getTVShowPosterFromGoogle(channelName, showName, retry-1)
+            return ''
+            #return self.getTVShowPosterFromGoogle(channelName, showName, retry-1)
         return ''
 
 
@@ -1529,6 +1543,8 @@ class resolver:
             self.sources = self.sources_get(name, title, year, imdb, tvdb, season, episode, show, show_alt, date, genre, url)
             
             if self.sources == []: raise Exception()
+
+            print self.sources
             self.sources = self.sources_filter() #For only displaying supported sources
             if meta : meta = json.loads(meta)
 
@@ -1643,11 +1659,9 @@ class resolver:
     
     def sources_filter(self):
         try :
-            supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker','Dailymotion', 'Flash Player', 'Letwatch', 'Cloudy','Vidgg','Vidto','VodLocker']
+            supportedDict = ['GVideo', 'VK', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Tusfiles', 'Grifthost', 'Openload', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker','Dailymotion', 'Flash Player', 'Letwatch', 'Cloudy','Vidgg','Vidto','VodLocker', 'TVLogy']
             origSupportedDict = ['GVideo', 'VK', 'Videomega', 'Sweflix', 'Muchmovies', 'YIFY', 'Einthusan', 'Movreel', '180upload', 'Mightyupload', 'Clicknupload', 'Tusfiles', 'Grifthost', 'Openload', 'Uptobox', 'Primeshare', 'iShared', 'Vidplay', 'Xfileload', 'Mrfile', 'Ororo', 'Animeultima','Allmyvideos', 'VodLocker']
-            brokenDict = ['Videomega', 'Mightyupload', 'Clicknupload', 'UpToBox']
-            excludeDict = ['embed upload', 'vidgg', 'playu', 'tvlogy']
-            for i in range(len(self.sources)): 
+            for i in range(len(self.sources)):
                 #print 'SOURCE >> [%s]' % self.sources[i]['source']
                 if not self.sources[i]['provider'].lower() == 'DesiRulez'.lower():
                     self.sources[i]['source'] = self.sources[i]['source'].lower()
@@ -1657,15 +1671,9 @@ class resolver:
             
             filter = []
             filter += [i for i in self.sources if i['provider'].lower() == 'PlayIndiaFilms'.lower()]
-            #filter += [i for i in self.sources if i['provider'].lower() == 'DesiRulez'.lower()]
-            for host in supportedDict: 
+            for host in supportedDict:
                 filter += [i for i in self.sources if i['source'].lower() == host.lower()]
             
-            #for i in filter:
-            #    for j in excludeDict:
-            #        #print 'excludedDict [%s] source [%s]' % (j, i['source'].lower())
-            #        if i['provider'].lower() == 'DesiRulez'.lower() and j in i['source'].lower() :
-            #            filter.pop(filter.index(i))
             self.sources = filter
             
         except:
@@ -1694,7 +1702,7 @@ class resolver:
         try:
             #print '>>>>Content [%s] Name [%s] url [%s] source [%s] provider [%s]' % (content, name, url, source, provider)
             url = self.sources_resolve(url, provider)
-            #print '>>>>>RESOLVED URL %s' %url
+            print '>>>>>RESOLVED URL %s' %url
             if url == None: raise Exception()
 
             if getSetting("playback_info") == 'true':
