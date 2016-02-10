@@ -34,6 +34,8 @@ class player(xbmc.Player):
 
     def run(self, content, name, url, year, imdb, tvdb, meta):
 
+        print 'Content [%s] Name [%s] url [%s] year [%s] imdb [%s] tvdb [%s] meta [%s]' % (content, name, url, year, imdb, tvdb, meta)
+
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
 

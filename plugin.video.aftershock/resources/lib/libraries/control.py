@@ -104,43 +104,59 @@ metacacheFile = os.path.join(dataPath, 'meta.db')
 
 cacheFile = os.path.join(dataPath, 'cache.db')
 
+# List          xbmc.executebuiltin('Container.SetViewMode(502)')
+# Big List      xbmc.executebuiltin('Container.SetViewMode(51)')
+# Thumbnails    xbmc.executebuiltin('Container.SetViewMode(500)')
+# Poster Wrap   xbmc.executebuiltin('Container.SetViewMode(501)')
+# Fanart        xbmc.executebuiltin('Container.SetViewMode(508)')
+# Media info    xbmc.executebuiltin('Container.SetViewMode(504)')
+# Media info 2  xbmc.executebuiltin('Container.SetViewMode(503)')
+# Media info 3  xbmc.executebuiltin('Container.SetViewMode(515)')
+viewMode = {'list':502, 'biglist':51, 'thumbnails':500, 'posterwrap':501, 'fanart':508, 'mediainfo1':504,'mediainfo2':503, 'mediainfo3':515}
 
 def addonIcon():
-    appearance = setting('appearance').lower()
-    if appearance in ['-', '']: return addonInfo('icon')
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'icon.png')
+    #appearance = setting('appearance').lower()
+    #if appearance in ['-', '']: return addonInfo('icon')
+    #else:
+    return os.path.join(addonPath, 'resources', 'media', 'icon.png')
 
 
 def addonPoster():
-    appearance = setting('appearance').lower()
-    if appearance in ['-', '']: return 'DefaultVideo.png'
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'poster.png')
+    #appearance = setting('appearance').lower()
+    #if appearance in ['-', '']: return 'DefaultVideo.png'
+    #else:
+    return os.path.join(addonPath, 'resources', 'media', 'poster.png')
 
 
 def addonBanner():
-    appearance = setting('appearance').lower()
-    if appearance in ['-', '']: return 'DefaultVideo.png'
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'banner.png')
+    #appearance = setting('appearance').lower()
+    #if appearance in ['-', '']: return 'DefaultVideo.png'
+    #else:
+    return os.path.join(addonPath, 'resources', 'media', 'banner.png')
 
 
 def addonThumb():
-    appearance = setting('appearance').lower()
-    if appearance == '-': return 'DefaultFolder.png'
-    elif appearance == '': return addonInfo('icon')
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'icon.png')
+    #appearance = setting('appearance').lower()
+    #if appearance == '-': return 'DefaultFolder.png'
+    #elif appearance == '': return addonInfo('icon')
+    #else:
+    #return os.path.join(addonPath, 'resources', 'media', appearance, 'icon.png')
+    return os.path.join(addonPath, 'resources', 'media', 'icon.png')
 
 
 def addonFanart():
-    appearance = setting('appearance').lower()
-    if appearance == '-': return None
-    elif appearance == '': return addonInfo('fanart')
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'fanart.jpg')
+    #appearance = setting('appearance').lower()
+    #if appearance == '-': return None
+    #elif appearance == '': return addonInfo('fanart')
+    #else:
+    return os.path.join(addonPath, 'resources', 'media', 'fanart.png')
 
 
 def addonNext():
     appearance = setting('appearance').lower()
-    if appearance in ['-', '']: return 'DefaultFolderBack.png'
-    else: return os.path.join(addonPath, 'resources', 'media', appearance, 'next.jpg')
+    #if appearance in ['-', '']: return 'DefaultFolderBack.png'
+    #else:
+    return os.path.join(addonPath, 'resources', 'media', 'next.png')
 
 
 def artPath():

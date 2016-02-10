@@ -19,10 +19,13 @@
 '''
 
 
-import re,sys,urllib2,HTMLParser
+import re,sys,urllib2,HTMLParser, time
+
+import control
+import traceback
 
 
-def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
+def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30', debug=False):
     try:
         handlers = []
         if not proxy == None:
@@ -70,12 +73,17 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
 
         request = urllib2.Request(url, data=post, headers=headers)
 
-        try:
-            response = urllib2.urlopen(request, timeout=int(timeout))
-        except urllib2.HTTPError as response:
-            if error == False: return
-        except:
-            pass
+        for i in range(0,3):
+            try:
+                response = urllib2.urlopen(request, timeout=int(timeout))
+                break
+            except urllib2.HTTPError as response:
+                if debug :
+                    retryafter = int(response.headers['Retry-After'])
+                    time.sleep(retryafter)
+                if error == False: return
+            except:
+                pass
         if output == 'cookie':
             result = []
             for c in cookies: result.append('%s=%s' % (c.name, c.value))
@@ -224,4 +232,10 @@ def replaceHTMLCodes(txt):
 def agent():
     return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 
-
+def printException(function):
+    #try :debug = True if control.setting('debug') == 'true' else False
+    #except: debug = True
+    debug = True
+    if debug:
+        print 'Exception in %s' % (function)
+        traceback.print_exc()

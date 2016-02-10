@@ -22,6 +22,8 @@
 import os,sys,urlparse, urllib
 
 from resources.lib.libraries import control
+from resources.lib.libraries import views
+
 
 
 artPath = control.artPath()
@@ -40,37 +42,12 @@ class navigator:
 
     def root(self):
 
-        self.addDirectoryItem(90113, 'desiMovieNavigator', 'hindimovies.png','DefaultMovies.png')
+        self.addDirectoryItem(30860, 'movieNavigator', 'movies.png','DefaultMovies.png')
         self.addDirectoryItem(90114, 'desiLiveNavigator', 'live.png','DefaultMovies.png')
+        self.addDirectoryItem(30861, 'desiTVNavigator', 'tv.png','DefaultMovies.png')
 
-        listItems = []
-        logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
-        listItems.append({'provider':'desirulez', 'name':90200, 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=42'})
-        listItems.append({'provider':'desirulez', 'name':90201, 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=73'})
-        listItems.append({'provider':'desirulez', 'name':90203, 'image': logoBaseURL+'/ss/set_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=63'})
-        listItems.append({'provider':'desirulez', 'name':90205, 'image': logoBaseURL+'/ll/life_ok_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=1375'})
-        listItems.append({'provider':'desirulez', 'name':90206, 'image': logoBaseURL+'/ss/sahara_one.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=134'})
-        listItems.append({'provider':'desirulez', 'name':90207, 'image': logoBaseURL+'/ss/star_jalsha.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=667'})
-        listItems.append({'provider':'desirulez', 'name':90208, 'image': logoBaseURL+'/cc/colors_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=176'})
-        listItems.append({'provider':'desirulez', 'name':90209, 'image': logoBaseURL+'/ss/sony_sab_tv.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=254'})
-        listItems.append({'provider':'desirulez', 'name':90210, 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=1138'})
-        listItems.append({'provider':'desirulez', 'name':90212, 'image': logoBaseURL+'/mm/mtv_india.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=339'})
-        listItems.append({'provider':'desirulez', 'name':90213, 'image': logoBaseURL+'/cc/channel_v_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=633'})
-        listItems.append({'provider':'desirulez', 'name':90214, 'image': logoBaseURL+'/uu/utv_bindass.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=504'})
-        listItems.append({'provider':'desirulez', 'name':90215, 'image': logoBaseURL+'/uu/utv_stars.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=1274'})
-        listItems.append({'provider':'desirulez', 'name':90218, 'image': logoBaseURL+'/hh/hungama.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=472'})
-        listItems.append({'provider':'desirulez', 'name':90219, 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=509'})
-        listItems.append({'provider':'desirulez', 'name':90220, 'image': logoBaseURL+'/aa/and_tv_in.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=3138'})
-        listItems.append({'provider':'desirulez', 'name':90221, 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=1138'})
-        listItems.append({'provider':'desirulez', 'name':90222, 'image': logoBaseURL+'/cc/colors_in_bangla.png', 'action': 'desiTV', 'url':'forumdisplay.php?f=2117'})
-        listItems.sort()
-
-        for item in listItems:
-            self.addDirectoryItem(item['name'], '%s&provider=%s&url=%s' % (item['action'],item['provider'], item['url']), item['image'], 'DefaultMovies.png')
-
-        self.addDirectoryItem(90116, 'settings', 'settings.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90117, 'clearcache', 'clearcache.png', 'DefaultMovies.png')
-
+        self.addDirectoryItem(90116, 'openSettings&query=0.0', 'settings.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90117, 'clearCache', 'clearcache.png', 'DefaultMovies.png')
 
         self.endDirectory()
 
@@ -79,17 +56,43 @@ class navigator:
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
 
     def desiMovies(self):
-        self.addDirectoryItem(90100, 'movieSearch', 'search.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(90109, 'movieGenres', 'genre.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(90110, 'movieYears', 'year.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(90103, 'movies&url=theaters&provider=desirulez', 'new.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(90104, 'movies&url=added&provider=desirulez', 'latest.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(90108, 'movies&url=HD&provider=desirulez', 'dvd2hd.jpg', 'DefaultMovies.png')
+        provider = 'playindiafilms_mv'
+        self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90109, 'movieGenres', 'genre.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90110, 'movieYears', 'year.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s' % provider, 'new.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90104, 'movies&url=added&provider=%s' % provider, 'latest.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s' % provider, 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiLiveTV(self):
         from resources.lib.indexers import livetv
-        listItems = livetv.channels.get()
+        livetv.channels.get()
+
+    def desiTV(self):
+        listItems = []
+        logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
+        provider = 'desirulez_tv'
+        listItems.append({'provider':provider, 'name':90200, 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=42'})
+        listItems.append({'provider':provider, 'name':90201, 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=73'})
+        listItems.append({'provider':provider, 'name':90203, 'image': logoBaseURL+'/ss/set_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=63'})
+        listItems.append({'provider':provider, 'name':90205, 'image': logoBaseURL+'/ll/life_ok_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1375'})
+        listItems.append({'provider':provider, 'name':90206, 'image': logoBaseURL+'/ss/sahara_one.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=134'})
+        listItems.append({'provider':provider, 'name':90207, 'image': logoBaseURL+'/ss/star_jalsha.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=667'})
+        listItems.append({'provider':provider, 'name':90208, 'image': logoBaseURL+'/cc/colors_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=176'})
+        listItems.append({'provider':provider, 'name':90209, 'image': logoBaseURL+'/ss/sony_sab_tv.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=254'})
+        listItems.append({'provider':provider, 'name':90210, 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1138'})
+        listItems.append({'provider':provider, 'name':90212, 'image': logoBaseURL+'/mm/mtv_india.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=339'})
+        listItems.append({'provider':provider, 'name':90213, 'image': logoBaseURL+'/cc/channel_v_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=633'})
+        listItems.append({'provider':provider, 'name':90214, 'image': logoBaseURL+'/uu/utv_bindass.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=504'})
+        listItems.append({'provider':provider, 'name':90215, 'image': logoBaseURL+'/uu/utv_stars.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1274'})
+        listItems.append({'provider':provider, 'name':90218, 'image': logoBaseURL+'/hh/hungama.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=472'})
+        listItems.append({'provider':provider, 'name':90219, 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=509'})
+        listItems.append({'provider':provider, 'name':90220, 'image': logoBaseURL+'/aa/and_tv_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=3138'})
+        listItems.append({'provider':provider, 'name':90221, 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1138'})
+        listItems.append({'provider':provider, 'name':90222, 'image': logoBaseURL+'/cc/colors_in_bangla.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=2117'})
+        listItems.sort()
+
         for item in listItems:
             self.addDirectoryItem(item['name'], '%s&provider=%s&url=%s' % (item['action'],item['provider'], item['url']), item['image'], 'DefaultMovies.png')
         self.endDirectory()
@@ -110,60 +113,6 @@ class navigator:
         self.addDirectoryItem(30033, 'movieFavourites', 'movieFavourites.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30034, 'moviePerson', 'moviePerson.jpg', 'DefaultMovies.png')
         self.addDirectoryItem(30035, 'movieSearch', 'movieSearch.jpg', 'DefaultMovies.png')
-
-        self.endDirectory()
-
-
-    def tvshows(self):
-        self.addDirectoryItem(30051, 'tvGenres', 'tvGenres.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30052, 'tvYears', 'tvshows.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30053, 'tvNetworks', 'tvshows.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30054, 'tvshows&url=trending', 'tvshowsTrending.jpg', 'DefaultRecentlyAddedEpisodes.png')
-        self.addDirectoryItem(30055, 'tvshows&url=popular', 'tvshowsPopular.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30056, 'tvshows&url=airing', 'tvshows.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30057, 'tvshows&url=active', 'tvshowsActive.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30058, 'tvshows&url=premiere', 'tvshows.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30059, 'tvshows&url=rating', 'tvshowsRating.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30060, 'tvshows&url=views', 'tvshowsViews.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30061, 'calendars', 'calendar.jpg', 'DefaultRecentlyAddedEpisodes.png')
-        self.addDirectoryItem(30062, 'calendar&url=added', 'calendarsAdded.jpg', 'DefaultRecentlyAddedEpisodes.png')
-        self.addDirectoryItem(30063, 'episodeFavourites', 'tvFavourites.jpg', 'DefaultRecentlyAddedEpisodes.png')
-        self.addDirectoryItem(30064, 'tvFavourites', 'tvFavourites.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30065, 'tvPerson', 'tvPerson.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30066, 'tvSearch', 'tvSearch.jpg', 'DefaultTVShows.png')
-
-        self.endDirectory()
-
-
-    def genesis(self):
-        if traktMode == True:
-            self.addDirectoryItem(30081, 'movies&url=traktcollection', 'moviesTraktcollection.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktcollection'))
-            self.addDirectoryItem(30082, 'movies&url=traktwatchlist', 'moviesTraktwatchlist.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=traktwatchlist'))
-            self.addDirectoryItem(30083, 'movies&url=traktfeatured', 'movies.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30084, 'movies&url=traktratings', 'movies.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30085, 'tvshows&url=traktcollection', 'tvshowsTraktcollection.jpg', 'DefaultTVShows.png', context=(30191, 'tvshowsToLibrary&url=traktcollection'))
-            self.addDirectoryItem(30086, 'tvshows&url=traktwatchlist', 'tvshowsTraktwatchlist.jpg', 'DefaultTVShows.png', context=(30191, 'tvshowsToLibrary&url=traktwatchlist'))
-            self.addDirectoryItem(30087, 'tvshows&url=traktfeatured', 'tvshows.jpg', 'DefaultTVShows.png')
-            self.addDirectoryItem(30088, 'tvshows&url=traktratings', 'tvshows.jpg', 'DefaultTVShows.png')
-            self.addDirectoryItem(30089, 'calendar&url=progress', 'calendarsProgress.jpg', 'DefaultRecentlyAddedEpisodes.png')
-            self.addDirectoryItem(30090, 'calendar&url=mycalendar', 'calendarsMycalendar.jpg', 'DefaultRecentlyAddedEpisodes.png')
-
-        if imdbMode == True:
-            self.addDirectoryItem(30091, 'movies&url=imdbwatchlist', 'moviesImdbwatchlist.jpg', 'DefaultMovies.png', context=(30191, 'moviesToLibrary&url=imdbwatchlist'))
-            self.addDirectoryItem(30092, 'tvshows&url=imdbwatchlist', 'tvshowsImdbwatchlist.jpg', 'DefaultTVShows.png', context=(30191, 'tvshowsToLibrary&url=imdbwatchlist'))
-
-        if traktMode == True or imdbMode == True:
-            self.addDirectoryItem(30093, 'movieUserlists', 'movieUserlists.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30094, 'tvUserlists', 'tvUserlists.jpg', 'DefaultTVShows.png')
-
-        self.addDirectoryItem(30095, 'movieFavourites', 'movieFavourites.jpg', 'DefaultMovies.png')
-        self.addDirectoryItem(30096, 'episodeFavourites', 'tvFavourites.jpg', 'DefaultTVShows.png')
-        self.addDirectoryItem(30097, 'tvFavourites', 'tvFavourites.jpg', 'DefaultTVShows.png')
-
-        movie_downloads = control.setting('movie_downloads')
-        tv_downloads = control.setting('tv_downloads')
-        if len(control.listDir(movie_downloads)[0]) > 0 or len(control.listDir(tv_downloads)[0]) > 0:
-            self.addDirectoryItem(30098, 'downloadNavigator', 'downloads.jpg', 'DefaultFolder.png')
 
         self.endDirectory()
 
@@ -203,16 +152,6 @@ class navigator:
         self.addDirectoryItem(30133, control.setting('movie_library'), 'movies.jpg', 'DefaultMovies.png', isAction=False)
         self.addDirectoryItem(30134, control.setting('tv_library'), 'tvshows.jpg', 'DefaultTVShows.png', isAction=False)
 
-        if traktMode == True:
-            self.addDirectoryItem(30135, 'moviesToLibrary&url=traktcollection', 'moviesTraktcollection.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30136, 'moviesToLibrary&url=traktwatchlist', 'moviesTraktwatchlist.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30137, 'tvshowsToLibrary&url=traktcollection', 'tvshowsTraktcollection.jpg', 'DefaultTVShows.png')
-            self.addDirectoryItem(30138, 'tvshowsToLibrary&url=traktwatchlist', 'tvshowsTraktwatchlist.jpg', 'DefaultTVShows.png')
-
-        if imdbMode == True:
-            self.addDirectoryItem(30139, 'moviesToLibrary&url=imdbwatchlist', 'moviesImdbwatchlist.jpg', 'DefaultMovies.png')
-            self.addDirectoryItem(30140, 'tvshowsToLibrary&url=imdbwatchlist', 'tvshowsImdbwatchlist.jpg', 'DefaultTVShows.png')
-
         self.endDirectory()
 
 
@@ -233,6 +172,7 @@ class navigator:
         if not 'http' in thumb :
             thumb = os.path.join(artPath, thumb) if not artPath == None else icon
         cm = []
+
         if not context == None: cm.append((control.lang(context[0]).encode('utf-8'), 'RunPlugin(%s?action=%s)' % (sysaddon, context[1])))
         item = control.item(label=name, iconImage=thumb, thumbnailImage=thumb)
         item.addContextMenuItems(cm, replaceItems=False)
@@ -241,6 +181,5 @@ class navigator:
 
 
     def endDirectory(self, cacheToDisc=True):
+        views.setView('movies', {'skin.confluence': control.viewMode['thumbnails']})
         control.directory(int(sys.argv[1]), cacheToDisc=cacheToDisc)
-
-

@@ -1,3 +1,5 @@
+/.idea
+/aftershock-repo.iml
 *.pyo
 *.pyc
 
@@ -7,6 +9,13 @@
 *.idea
 **/urlresolver/
 
-*.iml
-
 .idea/workspace.xml
+/.idea/copyright/profiles_settings.xml
+/.idea/.name
+/.idea/copyright
+/.idea/compiler.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/.idea/encodings.xml

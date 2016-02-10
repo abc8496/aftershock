@@ -7,8 +7,29 @@
       <sourceFolder url="file://$MODULE_DIR$/Kodistubs-master" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kodistubs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kodustubs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugin.video.aftershock" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugin.video.genesis" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.beautifulsoup/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

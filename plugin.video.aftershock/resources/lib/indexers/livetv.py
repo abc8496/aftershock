@@ -49,8 +49,7 @@ class channels:
             self.channelDirectory(self.list)
             return self.list
         except :
-            import traceback
-            traceback.print_exc()
+            client.printException('livetv.get()')
             pass
 
     def channelDirectory(self, items):
@@ -71,8 +70,7 @@ class channels:
                 if banner == '0' and poster == '0': banner = addonBanner
                 elif banner == '0': banner = poster
 
-                url = '%s?action=play&name=%s' % (sysaddon, sysname)
-                sysurl = urllib.quote_plus(url)
+                url = i['url']
 
                 item = control.item(label=label, iconImage=poster, thumbnailImage=poster)
 
@@ -82,17 +80,13 @@ class channels:
                 if not addonFanart == None:
                     item.setProperty('Fanart_Image', addonFanart)
 
-                #item.setInfo(type='Video')
                 item.setProperty('Video', 'true')
-                #item.setProperty('IsPlayable', 'true')
-                print label
+                item.addContextMenuItems([], replaceItems=True)
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=False)
             except:
-                import traceback
-                traceback.print_exc()
                 pass
 
-        control.content(int(sys.argv[1]), 'movies')
+        control.content(int(sys.argv[1]), 'video')
         control.directory(int(sys.argv[1]), cacheToDisc=True)
         views.setView('movies', {'skin.confluence': 500})
 
