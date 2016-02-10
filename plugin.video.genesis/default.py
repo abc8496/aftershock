@@ -22,7 +22,6 @@
 import urlparse,sys, xbmcaddon
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
-
 try:
     action = params['action']
 except:

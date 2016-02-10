@@ -104,7 +104,6 @@ metacacheFile = os.path.join(dataPath, 'meta.db')
 
 cacheFile = os.path.join(dataPath, 'cache.db')
 
-
 def addonIcon():
     appearance = setting('appearance').lower()
     if appearance in ['-', '']: return addonInfo('icon')
