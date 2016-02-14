@@ -18,6 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
 from resources.lib.libraries import client
 from resources.lib import resolvers
 
@@ -25,18 +26,20 @@ def resolve(url):
     try:
         rUrl = None
         result = client.source(url)
-        item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
-        item = item.lower()
         try :
-            rUrl = client.parseDOM(item, name="iframe", ret="src")[0]
+            item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
+            rUrl = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
         except:
             pass
 
-        if rUrl == None:
-            try :
-                rUrl = client.parseDOM(item, name="script", ret="data-config")[0]
-            except:
-                pass
+        try :
+            videoId = re.compile('(id)=(.+?)/').findall(url + '/')[0][1]
+            if 'idowatch' in url :
+                rUrl = 'http://idowatch.net/embed-%s-520x400.html' % (videoId)
+            elif 'watchvideo' in url:
+                rUrl = 'http://watchvideo2.us/embed-%s-520x400.html' % (videoId)
+        except: pass
+
         return resolvers.request(rUrl)
     except:
         client.printException('tellycolors.resolve(url=%s)' % url)

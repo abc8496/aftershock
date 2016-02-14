@@ -56,13 +56,14 @@ class navigator:
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
 
     def desiMovies(self):
-        provider = 'playindiafilms_mv'
+        playindia_provider = 'playindiafilms_mv'
+        apnaview_provider = 'apnaview_mv'
         self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')
         self.addDirectoryItem(90109, 'movieGenres', 'genre.png', 'DefaultMovies.png')
         self.addDirectoryItem(90110, 'movieYears', 'year.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s' % provider, 'new.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90104, 'movies&url=added&provider=%s' % provider, 'latest.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s' % provider, 'dvd2hd.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s' % apnaview_provider, 'new.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90104, 'movies&url=added&provider=%s' % apnaview_provider, 'latest.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s' % playindia_provider, 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiLiveTV(self):

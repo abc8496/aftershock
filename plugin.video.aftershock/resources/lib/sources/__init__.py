@@ -606,6 +606,12 @@ class sources:
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
         filter = []
+        from resources.lib import resolvers
+        supportedDict = resolvers.supportedHosts()
+        for host in supportedDict: filter += [i for i in self.sources if i['source'] == host]
+        self.sources = filter
+
+        filter = []
 
         for host in hd_rank: filter += [i for i in self.sources if i['quality'] == '1080p' and i['source'] == host]
         for host in hd_rank: filter += [i for i in self.sources if i['quality'] == 'HD' and i['source'] == host]

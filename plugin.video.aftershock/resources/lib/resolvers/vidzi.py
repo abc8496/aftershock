@@ -19,12 +19,15 @@
 '''
 
 import re, json
+
 from resources.lib.libraries import client
+from resources.lib.libraries import jsunpack
 
 def resolve(url):
     try:
-        import urlresolver
-        url = urlresolver.resolve(url)
+        result = client.source(url)
+        url = re.findall('file: "(.+?)"',result)[0]
         return url
     except:
+        client.printException('vidzi.resolve')
         return

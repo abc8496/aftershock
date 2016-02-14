@@ -54,6 +54,11 @@ def request(url):
             r = __import__(r, globals(), locals(), [], -1)
             r = r.resolve(url)
 
+        if r == None:
+            import urlresolver
+            r = urlresolver.resolve(url)
+            if not r :
+                r = None
         if r == None: return r
         elif type(r) == list: return r
         elif not r.startswith('http'): return r
@@ -67,10 +72,16 @@ def request(url):
         r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
         return r
     except:
-        import traceback
-        traceback.print_exc()
         return url
 
+
+def supportedHosts():
+    supportedHost = []
+    supportedHost +=[i['host'] for i in info()]
+    from itertools import chain
+    supportedHost = set(chain.from_iterable(supportedHost))
+    supportedHost = list(supportedHost)
+    return supportedHost
 
 def info():
     return [
@@ -93,8 +104,8 @@ def info():
         'captcha': False,
         'a/c': False
     },{ 'class': 'tellycolors',
-        'netloc': ['tellycolors.me', 'bestarticles.me', 'desimania.net'],
-        'host': ['tellycolors.me','bestarticles.me'],
+        'netloc': ['tellycolors.me', 'bestarticles.me', 'desimania.net', 'tellysony.com', 'tellyzee.com', 'hd-rulez.info'],
+        'host': ['tellycolors','bestarticles', 'letwatch', 'flash player'],
         'quality': 'High',
         'captcha': False,
         'a/c': False
@@ -105,23 +116,33 @@ def info():
         'captcha': False,
         'a/c': False
     }, { 'class': 'vidshare',
-         'netloc': ['vidshare.us', 'idowatch.net', 'watchvideo2.us'],
-         'host': ['vidshare.us'],
+         'netloc': ['vidshare.us', 'idowatch.net', 'watchvideo2.us', 'letwatch.us', 'vidto.me'],
+         'host': ['vidshare', 'letwatch', 'vidto', 'idowatch'],
          'quality': 'High',
          'captcha': False,
          'a/c': False
-    }, { 'class': 'dailymotion',
+    }, { 'class': 'vidzi',
+         'netloc': ['vidzi.tv'],
+         'host': ['vidzi',],
+         'quality': 'High',
+         'captcha': False,
+         'a/c': False
+    },{ 'class': 'dailymotion',
          'netloc': ['dailymotion.com'],
-         'host': ['dailymotion.com'],
+         'host': ['dailymotion'],
          'quality': 'High',
          'captcha': False,
          'a/c': False
     }, { 'class': 'playu',
-         'netloc': ['xpressvids.info'],
-         'host': ['xpressvids.info'],
+         'netloc': ['xpressvids.info', 'playu.net'],
+         'host': ['xpressvids.info', 'playu'],
          'quality': 'High',
          'captcha': False,
          'a/c': False
+    }, { 'class': 'apnasave',
+         'netloc': ['apnasave.in'],
+         'host': ['apnasave'],
+         'quality': 'Low',
+         'captcha': False,
+         'a/c': False
     }]
-
-

@@ -1,3 +1,6 @@
+import sys
+
+sys.argv = ['plugin.video.aftershock', '1']
 try :
     from resources.lib.sources import playindiafilms_mv
 
@@ -26,10 +29,25 @@ try :
 
     # params for getsources
     params =  {'tmdb': '0', 'episode': '0', 'name': '5th February 2016', 'title': '5th February 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Sasural Simar Ka', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/2498-Sasural-Simar-Ka?s=bbbd558b7a817327c6c5cac90a92e545", "title": "5th February 2016", "url": "threads/850585-Sasural-Simar-Ka-5th-February-2016-Watch-Online?s=bbbd558b7a817327c6c5cac90a92e545", "tvshowtitle": "Sasural Simar Ka", "next": "forums/2498-Sasural-Simar-Ka/page2?s=bbbd558b7a817327c6c5cac90a92e545", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Sasural+Simar+Ka", "name": "5th February 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'sources', 'tvrage': '0', 'alter': '0'}
+    params = {'name': 'Airlift (2016)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.awesomevids.pw/video/105169##http://www.awesomevids.pw/video/105170##http://www.awesomevids.pw/video/105171", "label": "06 | [B]APNAVIEW[/B] | LETWATCH | [I]CAM [/I] [3]", "source": "letwatch", "parts": "3", "provider": "ApnaView", "quality": "CAM"}]', 'imdb': 'tt4387040', 'year': '2016', 'action': 'playItem'}
+    params = {'name': 'Airlift (2016)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.awesomevids.pw/video/105159##http://www.awesomevids.pw/video/105160##http://www.awesomevids.pw/video/105161", "label": "04 | [B]APNAVIEW[/B] | PLAYWIRE | [I]CAM [/I] [3]", "source": "playwire", "parts": "3", "provider": "ApnaView", "quality": "CAM"}]', 'imdb': 'tt4387040', 'year': '2016', 'action': 'playItem'}
+    params = {'name': 'Airlift (2016)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.awesomevids.pw/video/105169##http://www.awesomevids.pw/video/105170##http://www.awesomevids.pw/video/105171", "label": "06 | [B]APNAVIEW[/B] | LETWATCH | [I]CAM [/I] [3]", "source": "letwatch", "parts": "3", "provider": "ApnaView", "quality": "CAM"}]', 'imdb': 'tt4387040', 'year': '2016', 'action': 'playItem'}
+    params = {'tmdb': '348892', 'name': 'Bajrangi Bhaijaan (2015)', 'title': 'Bajrangi Bhaijaan', 'meta': '{"rating": "7.9", "code": "tt3863552", "tmdb": "348892", "imdb": "tt3863552", "year": "2015", "duration": "9540", "plot": "A young mute girl from Pakistan loses herself in India with no way to head back. A devoted man with a magnanimous spirit undertakes the task to get her back to her motherland and unite her with her family.", "votes": "80", "title": "Bajrangi Bhaijaan", "fanart": "http://image.tmdb.org/t/p/original/gT3xgPyb7yoaVJoeiCefxe0TtTD.jpg", "tagline": "A young mute girl from Pakistan loses herself in India with no way to head back", "writer": "K. V. Vijayendra Prasad", "next": "/category/hindi-blurays/feed?paged=4", "poster": "http://image.tmdb.org/t/p/w500/71dIayQVmWw2QEs4AJFpqdv2n0S.jpg", "director": "Kabir Khan", "studio": "Kabir Khan Films", "genre": "Drama / Action / Comedy / Romance", "metacache": false, "lang": "en", "name": "Bajrangi Bhaijaan (2015)", "premiered": "2015-07-17", "originaltitle": "Bajrangi Bhaijaan", "cast": [["Salman Khan", "Pawan Kumar Chaturvedi / Bajrangi"], ["Kareena Kapoor", "Rasika"], ["Harshaali Malthotra", "Munni / Shahida"], ["Nawazuddin Siddiqui", "Chand Nawab (Pakistani Reporter)"], ["Rajesh Sharma", "Senior Pakistani Police Officer"], ["Sharat Saxena", "Dayanand, Rasika\'s Father"], ["Om Puri", "Molana"], ["Meher Vij", "Shahida\'s mother"]], "mpaa": "UA", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bajrangi+Bhaijaan+%282015%29"}', 'imdb': 'tt3863552', 'year': '2015', 'action': 'sources'}
+    params = {'tmdb': '0', 'episode': '0', 'name': '12th February 2016', 'title': '12th February 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Saubhaghyalakshmi', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/3830-Saubhaghyalakshmi?s=3a76fabc38cf22276befc1ed452f24fa", "title": "12th February 2016", "url": "threads/854548-Saubhaghyalakshmi-12th-February-2016-Watch-Online?s=3a76fabc38cf22276befc1ed452f24fa", "tvshowtitle": "Saubhaghyalakshmi", "next": "forums/3830-Saubhaghyalakshmi/page2?s=3a76fabc38cf22276befc1ed452f24fa", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Saubhaghyalakshmi", "name": "12th February 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'sources', 'tvrage': '0', 'alter': '0'}
+    params = {'action': 'movies', 'url': 'added', 'provider': 'apnaview_mv'}
+    params = {'action': 'movies', 'url': '/browse/hindi?order=desc&sort=date&page=2', 'provider': 'apnaview_mv'}
 
-    params = {'tmdb': '17501', 'name': 'Don 2 (2006)', 'title': 'Don 2', 'meta': '{"rating": "7.4", "code": "tt0461936", "tmdb": "17501", "imdb": "tt0461936", "year": "2006", "duration": "10680", "plot": "A huge South Asian law enforcement contingent embarks on a dangerous cat-and-mouse game of capturing DON (Shah Rukh Khan) - high-ranking member of the ruthless drug mafia in Malaysia. When DON gets seriously injured in a police encounter, the word that he is dead begins to do the rounds. The reality, of course, is that DON is held captive in a secret location, while his bumpkin of a look-alike, Vijay, is polished and sent to infiltrate DON\'s gang. In a bizarre twist of fate, when the policeman shielding the humble street singer Vijay, is killed, the latter comes to terms with the horrifying realization that both the police and the gang are out to get him for different reasons. In a desperate attempt to prove his innocence, he is aided by the glamorous Roma (Priyanka Chopra), and ex-con Jasjit (Arjun Rampal), who owes Vijay a debt for caring for his son during his imprisonment. But will Vijay be successful in his mission?", "votes": "28", "title": "Don", "fanart": "http://image.tmdb.org/t/p/original/wxTpIJn375p8NRSxygS1Dz9UZv.jpg", "tagline": "The Chase Begins Again", "writer": "Farhan Akhtar", "next": "", "poster": "http://image.tmdb.org/t/p/w500/pRlVq9lUEuMv9Fq0t8kpPwfUT6d.jpg", "director": "Farhan Akhtar", "studio": "Excel Entertainment", "genre": "Action / Drama / Thriller", "metacache": false, "name": "Don (2006)", "premiered": "2006-10-20", "originaltitle": "Don", "cast": [["Shahrukh Khan", "Don / Vijay"], ["Priyanka Chopra", "Roma"], ["Arjun Rampal", "Jasjit"], ["Isha Koppikar", "Anita"], ["Boman Irani", "DCP DeSilva / Vardhaan"], ["Om Puri", "Vishal Malik"], ["Diwakar Pundir", "Ramesh"], ["Rajesh Khattar", "Singhania"], ["Kareena Kapoor", "Kamini / Sonia"], ["Tanay Chheda", "Dipu"], ["Sushma Reddy", "Geeta"], ["Chunky Pandey", "Teja (T.J.)"], ["Pavan Malhotra", "Narang"]], "mpaa": "PG-13", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Don+%282006%29"}', 'imdb': 'tt0461936', 'year': '2006', 'action': 'sources'}
+    #params = {'name': '13th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://www.tellycolors.me/shashtri-sisters/?si=4593378##http://www.tellycolors.me/shashtri-sisters/?si=4593382", "label": "01 | [B]DESIRULEZ[/B] | FLASH PLAYER | [B][I]HD [/I][/B] [2]", "source": "flash player", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'meta': '{"tvshowurl": "forums/3520-Ishq-Ka-Rang-Safed?s=03cbe759a7ebd67edb9897a970f02f97", "title": "13th February 2016", "url": "threads/855607-Ishq-Ka-Rang-Safed-13th-February-2016-Watch-Online?s=03cbe759a7ebd67edb9897a970f02f97", "tvshowtitle": "Ishq Ka Rang Safed", "next": "forums/3520-Ishq-Ka-Rang-Safed/page2?s=03cbe759a7ebd67edb9897a970f02f97", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Ishq+Ka+Rang+Safed", "name": "13th February 2016"}', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
+    params = {'name': '12th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://bestarticles.me/yeh-rishta-kya-kehlata-hai/?si=kHMUn3GMpg9mmafqMNd##http://bestarticles.me/yeh-rishta-kya-kehlata-hai/?si=k7yzAb5NYhp5KifqMNm", "label": "02 | [B]DESIRULEZ[/B] | DAILYMOTION | [B][I]HD [/I][/B] [2]", "source": "dailymotion", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
+    params = {'name': '12th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://www.tellysony.com/sony-tv/?si=n7zkup140hu0##http://www.tellysony.com/sony-tv/?si=rkr9w38ionmj", "label": "03 | [B]DESIRULEZ[/B] | LETWATCH | [B][I]HD [/I][/B] [2]", "source": "letwatch", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
+    #params = {'name': '12th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://bestarticles.me/yeh-rishta-kya-kehlata-hai/?si=4590144##http://bestarticles.me/yeh-rishta-kya-kehlata-hai/?si=4590143", "label": "01 | [B]DESIRULEZ[/B] | FLASH PLAYER | [B][I]HD [/I][/B] [2]", "source": "flash player", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'meta': '{"tvshowurl": "forums/3699-Yeh-Rishta-Kya-Kehlata-Hai?s=03cbe759a7ebd67edb9897a970f02f97", "title": "12th February 2016", "url": "threads/854208-Yeh-Rishta-Kya-Kehlata-Hai-12th-February-2016-Watch-Online?s=03cbe759a7ebd67edb9897a970f02f97", "tvshowtitle": "Yeh Rishta Kya Kehlata Hai", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Yeh+Rishta+Kya+Kehlata+Hai", "name": "12th February 2016"}', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
+    params = {'name': '12th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://hd-rulez.info/idowatch.php?id=r7vaeza4ktu9##http://hd-rulez.info/idowatch.php?id=r8x8qjhjeszj", "label": "04 | [B]DESIRULEZ[/B] | IDOWATCH | [B][I]HD [/I][/B] [2]", "source": "idowatch", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
+    params = {'name': '12th February 2016', 'tvdb': '0', 'content': 'episode', 'source': '[{"url": "http://xpressvids.info/playu.php?id=ck5o03zprixc##http://xpressvids.info/playu.php?id=h0s7l5mg2q3o", "label": "05 | [B]DESIRULEZ[/B] | PLAYU | [B][I]HD [/I][/B] [2]", "source": "playu", "parts": "2", "provider": "DesiRulez", "quality": "HD"}]', 'imdb': 'tt0000000', 'year': '0', 'action': 'playItem'}
 
-    params = {'tmdb': '0', 'episode': '0', 'name': '9th February 2016', 'title': '9th February 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Sasural Simar Ka', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/2498-Sasural-Simar-Ka?s=9c7ced9d1acda3921055ec305954891b", "title": "9th February 2016", "url": "threads/853158-Sasural-Simar-Ka-9th-February-2016-Watch-Online?s=9c7ced9d1acda3921055ec305954891b", "tvshowtitle": "Sasural Simar Ka", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Sasural+Simar+Ka", "name": "9th February 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'sources', 'tvrage': '0', 'alter': '0'}
+    params = {'name': 'Fitoor (2016)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.awesomevids.pw/video/105749##http://www.awesomevids.pw/video/105750##http://www.awesomevids.pw/video/105751", "label": "08 | [B]APNAVIEW[/B] | PLAYWIRE | [I]CAM [/I] [3]", "source": "playwire", "parts": "3", "provider": "ApnaView", "quality": "CAM"}]', 'imdb': 'tt4399594', 'year': '2016', 'action': 'playItem'}
+    #params = {'name': 'Fitoor (2016)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.awesomevids.pw/video/105779##http://www.awesomevids.pw/video/105780##http://www.awesomevids.pw/video/105781", "label": "01 | [B]APNAVIEW[/B] | APNASAVE | [I]CAM [/I] [3]", "source": "apnasave", "parts": "3", "provider": "ApnaView", "quality": "CAM"}]', 'meta': '{"rating": "10.0", "code": "tt4399594", "tmdb": "376047", "imdb": "tt4399594", "year": "2016", "duration": "0", "plot": "Follows a young Kashmiri boy Noor, his muse Firdaus and a mercurial Begum.", "votes": "1", "title": "Fitoor", "tagline": "Follows a young Kashmiri boy Noor, his muse Firdaus and a mercurial Begum.", "next": "/browse/hindi?order=desc&sort=date&page=2", "poster": "http://image.tmdb.org/t/p/w500/wkF0R7sAMIGAk2SnIr2JpErJdTd.jpg", "director": "Abhishek Kapoor", "studio": "UTV Motion Pictures", "genre": "Romance / Drama", "metacache": true, "lang": "en", "name": "Fitoor (2016)", "premiered": "2016-02-12", "originaltitle": "Fitoor", "cast": [["Katrina Kaif", "Firdous"], ["Aditya Roy Kapoor", "Noor"]], "mpaa": "", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Fitoor+%282016%29"}', 'imdb': 'tt4399594', 'year': '2016', 'action': 'playItem'}
+
+
 
     try:
         action = params['action']
@@ -120,47 +138,68 @@ try :
     except:
         provider = None
 
-    from resources.lib.sources import sources
-    from resources.lib.indexers import episodes
+    #title = 'Ghayal Once Again'
+    #year = '2016'
+    #imdb = 'tt00000000'
 
-    #episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
+    #from resources.lib.sources import apnaview_mv
+
+    #url = apnaview_mv.source().get_movie(imdb,title, year)
+    #print 'Movie URL = %s' % url
+    #print apnaview_mv.source().get_sources(url, [], [], [])
+
+    #from resources.lib.sources import apnaview_mv
+    #url = '/hindi-movies/watch/35416/Airlift-2016'
+    #apnaview_mv.source().get_sources(url, [], [], [])
+
+    from resources.lib.indexers import movies
+
+    movies.movies().get(url, provider=provider)
+    from resources.lib.sources import sources
+    # from resources.lib.indexers import episodes
+    #
+    # #episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
+    sources().playItem(content, name, year, imdb, tvdb, source)
     #sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #from resources.lib import resolvers
+    #print resolvers.supportedHosts()
 
-    #from resources.lib.sources import desirulez_tv
-    #title = 'Sasural Simar Ka'
-    #url = 'forums/2498-Sasural-Simar-Ka?s=485267fe875e5e71d08730ed0ad7f24f'
-    #url = 'forums/2498-Sasural-Simar-Ka/page2?s=b1b769323933aeeff5c937efd024008a'
-    #desirulez_tv.source().get_episodes(title, url)
-
-    # test search sources
-    from resources.lib.sources import sources
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
-
-    from resources.lib.resolvers import tellycolors
-    # Playwire
-    url = 'http://www.tellycolors.me/balika-vadhu/?si=4576302'
-
-    # vidhsare url
-    url = 'http://www.tellycolors.me/colors/?si=v8m8ab3g72bs'
-    url = 'http://vidshare.us/embed-v8m8ab3g72bs-595x430.html'
-    # DAILYMOTION
-    url = 'http://www.tellycolors.me/balika-vadhu/?si=k1xvL0nEgZZNg9flv6Z'
-    #IDOWATCH
-    url = 'http://bestarticles.me/colors/?si=970446x6ywj7'
-
-    #playu
-    url = 'http://xpressvids.info/playu.php?id=bkp9bewk35ex'
-
-    # video
-    url = 'http://desimania.net/colors/?si=39wbg65nqzxz'
-
-    # letwatch
-    url = 'http://www.tellycolors.me/colors/?si=iyrasrqwffrt'
-
-    # video
-    url = 'http://desimania.net/colors/?si=kwgnbk2k2qoq'
-    from resources.lib import resolvers
-    #resolvers.request(url)
+    #
+    # #from resources.lib.sources import desirulez_tv
+    # #title = 'Sasural Simar Ka'
+    # #url = 'forums/2498-Sasural-Simar-Ka?s=485267fe875e5e71d08730ed0ad7f24f'
+    # #url = 'forums/2498-Sasural-Simar-Ka/page2?s=b1b769323933aeeff5c937efd024008a'
+    # #desirulez_tv.source().get_episodes(title, url)
+    #
+    # # test search sources
+    # from resources.lib.sources import sources
+    # sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #
+    # from resources.lib.resolvers import tellycolors
+    # # Playwire
+    # url = 'http://www.tellycolors.me/balika-vadhu/?si=4576302'
+    #
+    # # vidhsare url
+    # url = 'http://www.tellycolors.me/colors/?si=v8m8ab3g72bs'
+    # url = 'http://vidshare.us/embed-v8m8ab3g72bs-595x430.html'
+    # # DAILYMOTION
+    # url = 'http://www.tellycolors.me/balika-vadhu/?si=k1xvL0nEgZZNg9flv6Z'
+    # #IDOWATCH
+    # url = 'http://bestarticles.me/colors/?si=970446x6ywj7'
+    #
+    # #playu
+    # url = 'http://xpressvids.info/playu.php?id=bkp9bewk35ex'
+    #
+    # # video
+    # url = 'http://desimania.net/colors/?si=39wbg65nqzxz'
+    #
+    # # letwatch
+    # url = 'http://www.tellycolors.me/colors/?si=iyrasrqwffrt'
+    #
+    # # video
+    # url = 'http://desimania.net/colors/?si=kwgnbk2k2qoq'
+    # from resources.lib import resolvers
+    # #resolvers.request(url)
 except:
     from resources.lib.libraries import client
     client.printException('aftershock-testharness')

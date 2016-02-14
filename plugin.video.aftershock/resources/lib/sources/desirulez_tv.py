@@ -99,8 +99,6 @@ class source:
                     shows.append({'name':title, 'channel':name, 'title':title, 'url':url, 'poster': '0', 'banner': '0', 'fanart': '0', 'next': '0', 'tvrage':'0','year':'0','duration':'0','provider':'desirulez_tv'})
             return shows
         except:
-            import traceback
-            traceback.print_exc()
             return
 
     def get_episodes(self, title, url):
@@ -182,7 +180,7 @@ class source:
                     if '720p HD' in host:
                         quality = 'HD'
                     elif 'DVD' in host:
-                        quality = 'DVD'
+                        quality = 'SD'
                     host = host.replace('Online','').replace('Links','').replace('Link','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','').replace('DVD','').strip()
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']))

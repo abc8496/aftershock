@@ -204,20 +204,37 @@ class movies:
     def genres(self):
         try:
             self.list = []
-            provider = 'playindiafilms_mv'
-            genres = ['Action','Comedy','Crime','Drama','Horror','Romance','Thriller']
-            for i in genres:
-                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s' % provider, 'url':'/category/%s/feed' % i.lower()})
+            provider = 'apnaview_mv'
+            genres = {'Action':'15',
+                      'Adult':'32',
+                      'Adventure':'22',
+                      'Biography':'29',
+                      'Children':'28',
+                      'Comedy':'10',
+                      'Crime':'21',
+                      'Drama':'12',
+                      'Family':'26',
+                      'Fantasy':'31',
+                      'History':'30',
+                      'Horror':'16',
+                      'Romance':'11',
+                      'Thriller':'13',
+                      'Suspense':'14'}
+            keys = genres.keys()
+            for i in keys:
+                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s' % provider, 'url':'/browse/hindi?genre=%s' % genres[i]})
+            self.list.sort()
             self.addDirectory(self.list)
             return self.list
         except:
+            client.printException('genres')
             return
 
 
     def years(self):
         year = (self.datetime.strftime('%Y'))
-        provider = 'playindiafilms_mv'
-        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': '/category/%s/feed' % str(i), 'image': str(i)+'.png', 'action': 'movies&provider=%s' % provider})
+        provider = 'apnaview_mv'
+        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': '/browse/hindi?year=%s' % str(i), 'image': str(i)+'.png', 'action': 'movies&provider=%s' % provider})
         self.addDirectory(self.list)
         return self.list
 

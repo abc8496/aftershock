@@ -18,26 +18,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re, json
-
+import re
 from resources.lib.libraries import client
+from resources.lib import resolvers
 
 def resolve(url):
     try:
-        result = client.source(url)
-        data = json.loads(result)
+        rUrl = None
+        hdUrl = None
         try :
-            publisherId = data['publisherId']
-            hostingId = data['hostingId']
-            videoId = data['content']['videoId']
+            result = client.source(url)
+            rUrl = client.parseDOM(result, name="source", ret="src")[0]
+            videoId = getVideoID(rUrl)
+            rUrl = 'http://www.apnasave.in/media/player/config_embed.php?vkey=%s' % videoId
+            result = client.source(rUrl)
 
+            try :
+                hdUrl = client.parseDOM(result, name="hd")[0]
+                url = hdUrl
+            except:
+                pass
+            if hdUrl == None:
+                url = client.parseDOM(result, name="src")[0]
         except:
-            publisherId = data['settings']['publisherId']
-            hostingId = data['settings']['hostingId']
-            videoId = data['settings']['videoId']
-
-        url = 'https://cdn.video.playwire.com/%s/videos/%s/video-sd.mp4?hosting_id=%s' % (publisherId, videoId, hostingId)
-        print 'playwire url >>> %s' % url
+            pass
         return url
     except:
+        client.printException('apnasave.resolve(url=%s)' % url)
+        return
+
+def getVideoID(url):
+    try :
+        return re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url + '/')[0][1]
+    except:
+        client.printException('getVideoID()')
         return

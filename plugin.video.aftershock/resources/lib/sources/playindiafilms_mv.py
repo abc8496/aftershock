@@ -192,7 +192,7 @@ class source:
             elif "DVD" in quality:
                 quality = "DVD"
             else:
-                quality = "CAM"
+                quality = "SD"
 
             result = client.parseDOM(result, "p", attrs= {"style":"text-align: center;"})
 
