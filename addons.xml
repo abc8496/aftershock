@@ -2,14 +2,13 @@
 <addons>
 <addon id="plugin.video.aftershock"
        name="Aftershock"
-       version="3.0.0"
+       version="3.0.1"
        provider-name="Innovate-Dev">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.urlresolver"  version="2.6.0"/>
-		<import addon="script.module.t0mm0.common" version="1.1.0"/>
 		<import addon="script.module.metahandler"  version="1.0.2"/>
-        <import addon="script.module.parsedom" version="2.5.2"/>
+        <import addon="script.module.requests" version="1.0.0" />
 		<import addon="script.module.beautifulsoup"/>
         <import addon="plugin.video.youtube"/>
     </requires>
