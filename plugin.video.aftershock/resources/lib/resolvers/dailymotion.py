@@ -2,7 +2,7 @@
 
 '''
     Aftershock Add-on
-    Copyright (C) 2015 Innovate
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

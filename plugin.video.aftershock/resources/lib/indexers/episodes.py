@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
-    Copyright (C) 2015 lambda
+    Aftershock Add-on
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,13 +19,11 @@
 '''
 
 
-import os,sys,re,json,zipfile,StringIO,urllib,urllib2,urlparse,base64,datetime
+import os,sys,re,json,zipfile,StringIO,urllib,urllib2,base64,datetime
 
-from resources.lib.libraries import cleantitle
 from resources.lib.libraries import control
 from resources.lib.libraries import client
 from resources.lib.libraries import cache
-from resources.lib.libraries import workers
 from resources.lib.libraries import views
 
 class seasons:
@@ -664,8 +662,6 @@ class episodes:
 
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
             except:
-                import traceback
-                #traceback.print_exc()
                 client.printException('episodeDirectory')
                 pass
 

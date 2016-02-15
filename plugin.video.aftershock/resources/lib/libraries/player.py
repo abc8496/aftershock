@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
     Copyright (C) 2015 lambda
 
     This program is free software: you can redistribute it and/or modify
@@ -50,7 +49,7 @@ class player(xbmc.Player):
 
         for i in range(0,len(url)):
             if len(url) > 1:
-                name = '%s Patr # %s' % (name, str(i))
+                meta['title'] = '%s Part # %s' % (name, str(i+1))
             item = control.item(name, path=url[i], iconImage='DefaultVideo.png', thumbnailImage=thumb)
             item.setInfo(type='Video', infoLabels = meta)
             try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})

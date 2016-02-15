@@ -2,7 +2,7 @@
 
 '''
     Aftershock Add-on
-    Copyright (C) 2015 Innovate
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,7 +37,6 @@ def resolve(url):
             videoId = data['settings']['videoId']
 
         url = 'https://cdn.video.playwire.com/%s/videos/%s/video-sd.mp4?hosting_id=%s' % (publisherId, videoId, hostingId)
-        print 'playwire url >>> %s' % url
         return url
     except:
         return

@@ -23,17 +23,17 @@ class Addon(object):
         Example:
             self.Addon = xbmcaddon.Addon(id='script.recentlyadded')
         """
-        self.addonInfo = {'profile':'data/plugin.video.genesis/',
-                          'path':'data/plugin.video.genesis',
-                          'name':'plugin.video.genesis',
+        self.addonInfo = {'profile':'data/plugin.video.aftershock/',
+                          'path':'data/plugin.video.aftershock',
+                          'name':'plugin.video.aftershock',
                           'icon':'icon',
-                          'id' : 'plugin.video.geneis',
-                          'version' : '5.3.1'}
+                          'id' : 'plugin.video.aftershock',
+                          'version' : '3.0.2'}
 
         self.setting = {'appearance':'',
                         'icon':''}
         from xml.dom import minidom
-        xmldoc = minidom.parse('../plugin.video.genesis/resources/settings.xml')
+        xmldoc = minidom.parse('../plugin.video.aftershock/resources/settings.xml')
         settingList = xmldoc.getElementsByTagName('setting')
         for s in settingList:
             try :

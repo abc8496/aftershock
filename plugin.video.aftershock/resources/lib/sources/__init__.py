@@ -579,9 +579,9 @@ class sources:
     def sourcesFilter(self):
         self.sourcesReset()
 
-        try: customhdDict = [control.setting('hosthd50001'), control.setting('hosthd50002'), control.setting('hosthd50003'), control.setting('hosthd50004'), control.setting('hosthd50005'), control.setting('hosthd50006'), control.setting('hosthd50007'), control.setting('hosthd50008'), control.setting('hosthd50009'), control.setting('hosthd50010'), control.setting('hosthd50011'), control.setting('hosthd50012'), control.setting('hosthd50013'), control.setting('hosthd50014'), control.setting('hosthd50015'), control.setting('hosthd50016'), control.setting('hosthd50017'), control.setting('hosthd50018'), control.setting('hosthd50019'), control.setting('hosthd50020')]
+        try: customhdDict = [control.setting('hosthd50001'), control.setting('hosthd50002'), control.setting('hosthd50003'), control.setting('hosthd50004'), control.setting('hosthd50005'), control.setting('hosthd50006'), control.setting('hosthd50007'), control.setting('hosthd50008'), control.setting('hosthd50009'), control.setting('hosthd50010') ]
         except: customhdDict = []
-        try: customsdDict = [control.setting('host50001'), control.setting('host50002'), control.setting('host50003'), control.setting('host50004'), control.setting('host50005'), control.setting('host50006'), control.setting('host50007'), control.setting('host50008'), control.setting('host50009'), control.setting('host50010'), control.setting('host50011'), control.setting('host50012'), control.setting('host50013'), control.setting('host50014'), control.setting('host50015'), control.setting('host50016'), control.setting('host50017'), control.setting('host50018'), control.setting('host50019'), control.setting('host50020')]
+        try: customsdDict = [control.setting('host50001'), control.setting('host50002'), control.setting('host50003'), control.setting('host50004'), control.setting('host50005'), control.setting('host50006'), control.setting('host50007'), control.setting('host50008'), control.setting('host50009'), control.setting('host50010')]
         except: customsdDict = []
 
         hd_rank = []
@@ -605,11 +605,12 @@ class sources:
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
-        filter = []
-        from resources.lib import resolvers
-        supportedDict = resolvers.supportedHosts()
-        for host in supportedDict: filter += [i for i in self.sources if i['source'] == host]
-        self.sources = filter
+        # if control.setting('unsupp_host') == 'false':
+        #     filter = []
+        #     from resources.lib import resolvers
+        #     supportedDict = resolvers.supportedHosts()
+        #     for host in supportedDict: filter += [i for i in self.sources if i['source'] == host]
+        #     self.sources = filter
 
         filter = []
 
@@ -617,7 +618,9 @@ class sources:
         for host in hd_rank: filter += [i for i in self.sources if i['quality'] == 'HD' and i['source'] == host]
         for host in sd_rank: filter += [i for i in self.sources if i['quality'] == 'SD' and i['source'] == host]
         if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'SCR']
-        if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'CAM']
+        if len(filter) < 10:
+            for host in sd_rank:
+                filter += [i for i in self.sources if i['quality'] == 'CAM' and i['source'] == host]
         self.sources = filter
 
         try: playback_quality = control.setting('playback_quality')
@@ -676,7 +679,7 @@ class sources:
             try : pts = self.sources[i]['parts']
             except:pass
 
-            if not pts == None:
+            if not pts == None and int(pts) > 1:
                 label += ' [%s]' % pts
 
             self.sources[i]['label'] = label.upper()

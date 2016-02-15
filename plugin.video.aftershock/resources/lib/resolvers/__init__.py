@@ -2,7 +2,7 @@
 
 '''
     Aftershock Add-on
-    Copyright (C) 2015 Innovate
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,25 +40,20 @@ def request(url):
             if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
             return url
 
-        # Uncomment after testing
-        #import urlresolver
-        #r = urlresolver.resolve(url)
+        u = urlparse.urlparse(url).netloc
+        u = u.replace('www.', '').replace('embed.', '').replace('config.','')
+        u = u.lower()
 
-        r = False
-        if r == False:
-            u = urlparse.urlparse(url).netloc
-            u = u.replace('www.', '').replace('embed.', '').replace('config.','')
-            u = u.lower()
-
-            r = [i['class'] for i in info() if u in i['netloc']][0]
-            r = __import__(r, globals(), locals(), [], -1)
-            r = r.resolve(url)
+        r = [i['class'] for i in info() if u in i['netloc']][0]
+        r = __import__(r, globals(), locals(), [], -1)
+        r = r.resolve(url)
 
         if r == None:
             import urlresolver
             r = urlresolver.resolve(url)
-            if not r :
+            if not r:
                 r = None
+
         if r == None: return r
         elif type(r) == list: return r
         elif not r.startswith('http'): return r
@@ -72,6 +67,13 @@ def request(url):
         r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
         return r
     except:
+        try :
+            import urlresolver
+            r = urlresolver.resolve(url)
+            if not r :
+                url = r
+        except:
+            pass
         return url
 
 

@@ -76,6 +76,7 @@
     <string id="30830">Playback</string>
     <string id="30831">Max Quality</string>
     <string id="30832">Host selection</string>
+    <string id="30835">Enable unsupported hosts</string>
     <string id="30833">Dialog</string>
     <string id="30834">Directory</string>
     <string id="30839">Auto-play</string>
@@ -86,6 +87,20 @@
     <string id="30845">Playback Info</string>
     <string id="30860">Movies</string>
     <string id="30861">TV</string>
+
+    <string id="30870">HD Hosts</string>
+    <string id="30871">SD Hosts</string>
+
+    <string id="30881">Priority 1</string>
+    <string id="30882">Priority 2</string>
+    <string id="30883">Priority 3</string>
+    <string id="30884">Priority 4</string>
+    <string id="30885">Priority 5</string>
+    <string id="30886">Priority 6</string>
+    <string id="30887">Priority 7</string>
+    <string id="30888">Priority 8</string>
+    <string id="30889">Priority 9</string>
+    <string id="30890">Priority 10</string>
 
     <string id="90103">New Releases</string>
     <string id="90104">Recently Added</string>

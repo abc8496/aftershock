@@ -2,7 +2,7 @@
 
 '''
     Aftershock Add-on
-    Copyright (C) 2015 Innovate
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -178,7 +178,6 @@ class movies:
 
         return self.list
 
-
     def search(self, query=None):
         try:
             if query == None:
@@ -199,7 +198,6 @@ class movies:
         except:
             client.printException('movies.search(query=%s)' % (query))
             return
-
 
     def genres(self):
         try:
@@ -451,12 +449,6 @@ class movies:
                     cm.append((control.lang(30206).encode('utf-8'), 'RunPlugin(%s?action=moviePlaycount&title=%s&year=%s&imdb=%s&query=7)' % (sysaddon, systitle, year, imdb)))
                     cm.append((control.lang(30207).encode('utf-8'), 'RunPlugin(%s?action=moviePlaycount&title=%s&year=%s&imdb=%s&query=6)' % (sysaddon, systitle, year, imdb)))#
 
-                #if action == 'movieFavourites':
-                #    cm.append((control.lang(30210).encode('utf-8'), 'RunPlugin(%s?action=deleteFavourite&meta=%s&content=movies)' % (sysaddon, sysmeta)))
-                #elif action == 'movieSearch':
-                #    cm.append((control.lang(30209).encode('utf-8'), 'RunPlugin(%s?action=addFavourite&meta=%s&query=0&content=movies)' % (sysaddon, sysmeta)))
-
-                #cm.append((control.lang(30211).encode('utf-8'), 'RunPlugin(%s?action=movieToLibrary&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s)' % (sysaddon, sysname, systitle, year, imdb, tmdb)))
                 cm.append((control.lang(30212).encode('utf-8'), 'RunPlugin(%s?action=addView&content=movies)' % sysaddon))
 
 
@@ -520,9 +512,6 @@ class movies:
                 except: pass
 
                 cm = []
-
-                #try: cm.append((control.lang(30211).encode('utf-8'), 'RunPlugin(%s?action=moviesToLibrary&url=%s)' % (sysaddon, urllib.quote_plus(i['context']))))
-                #except: pass
 
                 item = control.item(label=name, iconImage=thumb, thumbnailImage=thumb)
                 item.addContextMenuItems(cm, replaceItems=False)

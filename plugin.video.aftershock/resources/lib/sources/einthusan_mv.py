@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
-    Copyright (C) 2015 lambda
+    Aftershock Add-on
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -85,15 +85,12 @@ class source:
 
     def resolve(self, url):
         try:
-            #http://cdn.einthusan.com/movies_hindi/movie_high/2766.mp4?st=LIoADUvnHgCdQowNQ9F1Pw&e=1448814347
-            #http://169.45.89.74/einthusancom/hot/D2766.mp4?st=2XKN2EAyZBtfGRw_wIrOJw&e=1448796478
             movieId = re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url+'/')[0][1]
             try :
                 cdn_url = self.cdn_link + movieId + self.cdn_extn
                 result = client.source(cdn_url)
             except:
                 pass
-            #result = None
             if (not (result is None)) and len(result) > 1 :
                 url = result
                 return url

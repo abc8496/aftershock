@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Genesis Add-on
-    Copyright (C) 2015 lambda
+    Aftershock Add-on
+    Copyright (C) 2015 IDev
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 '''
 
 
-import sys,json,urllib,urlparse, base64
+import sys,json,urllib, base64
 
 from resources.lib.libraries import control
 from resources.lib.libraries import client
