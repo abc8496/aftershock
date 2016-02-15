@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.aftershock"
        name="Aftershock"
-       version="3.0.1"
-       provider-name="Innovate-Dev">
+       version="3.0.2"
+       provider-name="IDev">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.urlresolver"  version="2.6.0"/>
@@ -17,7 +17,8 @@
     </extension>
     <extension point="xbmc.addon.metadata">
     <summary lang="en">Watch Hindi Movies &amp; TV Shows</summary>
-    <description lang="en">Browse and play a wide selection of Hindi movies and TV Shows. The author doesn't have any affiliation with the content providers.</description>
+    <description lang="en">Addon based on GENESIS framework by lambda to browse and play a wide selection of Desi Movies, TV Shows and Live Streams. The author doesn't have any affiliation with the content providers.</description>
+    <disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
     <platform>all</platform>
     <forum>http://forum.kodi.tv/showthread.php?tid=237364</forum>
 	<website>http://forum.kodi.tv/showthread.php?tid=237364</website>

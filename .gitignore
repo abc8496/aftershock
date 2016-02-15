@@ -10,6 +10,8 @@
 **/urlresolver/
 
 .idea/workspace.xml
+.idea/modules.xml
+.idea/vcs.xml
 /.idea/copyright/profiles_settings.xml
 /.idea/.name
 /.idea/copyright

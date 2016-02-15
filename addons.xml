@@ -2,8 +2,8 @@
 <addons>
 <addon id="plugin.video.aftershock"
        name="Aftershock"
-       version="3.0.1"
-       provider-name="Innovate-Dev">
+       version="3.0.2"
+       provider-name="IDev">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.urlresolver"  version="2.6.0"/>
@@ -18,35 +18,15 @@
     </extension>
     <extension point="xbmc.addon.metadata">
     <summary lang="en">Watch Hindi Movies &amp; TV Shows</summary>
-    <description lang="en">Browse and play a wide selection of Hindi movies and TV Shows. The author doesn't have any affiliation with the content providers.</description>
+    <description lang="en">Addon based on GENESIS framework by lambda to browse and play a wide selection of Desi Movies, TV Shows and Live Streams. The author doesn't have any affiliation with the content providers.</description>
+    <disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
     <platform>all</platform>
     <forum>http://forum.kodi.tv/showthread.php?tid=237364</forum>
 	<website>http://forum.kodi.tv/showthread.php?tid=237364</website>
   </extension>
 </addon>
 
-<addon id="plugin.video.genesis" name="Genesis" version="5.1.8" provider-name="lambda">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0" />
-		<import addon="script.module.requests" version="1.0.0" />
-		<import addon="script.module.metahandler" optional="true" />
-		<import addon="plugin.video.youtube" optional="true" />
-		<import addon="script.module.urlresolver"  version="2.6.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="startup" />
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">The origins of streaming</summary>
-		<description lang="en">Taken over from Lambda at 5.1.4</description>
-		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
-		<forum>http://forums.tvaddons.ag/forums/148-lambda-s-xbmc-addons</forum>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.aftershock" name="Aftershock addons" version="1.2.1" provider-name="vineegu">
+<addon id="repository.aftershock" name="Aftershock addons" version="1.2.2" provider-name="IDev">
 	<extension point="xbmc.addon.repository" name="Innovate add-on repository">
 		<info compressed="false">https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml</info>
 		<checksum>https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml.md5</checksum>
@@ -54,8 +34,8 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Install video addons from Aftershock</summary>
-		<description>Download and install video addons from Innovate Adddon repository.</description>
-		<disclaimer>The video add-ons hosted by my XBMC add-ons repository(Innovate add-ons) makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, video add-ons don't warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on the Internet web site where from data is retrieved or otherwise relating to such materials or on any sites linked to this addon. Videos are streamed directly from video-hosting websites that are having full rights to remove such access to video if required.</disclaimer>
+		<description>Download and install video addons from Aftershock Adddon repository.</description>
+		<disclaimer>The video add-ons hosted by add-ons repository(Aftershock add-ons) makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, video add-ons don't warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on the Internet web site where from data is retrieved or otherwise relating to such materials or on any sites linked to this addon. Videos are streamed directly from video-hosting websites that are having full rights to remove such access to video if required.</disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
