@@ -22,7 +22,7 @@
 	<category label="30860">
 		<setting id="desirulez_tv" type="bool" label="DesiRulez" default="true" />
 		<setting id="playindiafilms" type="bool" label="PlayIndiaFilms" default="true" />
-		<setting id="apnaview" type="bool" label="ApnaView" default="false" />
+		<setting id="apnaview" type="bool" label="ApnaView" default="true" />
 		<setting id="einthusan" type="bool" label="Einthusan" default="true" />
 		<setting id="hindilinks4u" type="bool" label="HindiLinks4U" default="true" />
 	</category>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aftershock-repo.iml" filepath="$PROJECT_DIR$/aftershock-repo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" filepath="$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" />
     </modules>
   </component>
 </project>
