@@ -31,6 +31,9 @@ try :
     # playItem
     params = {'name': 'Piku (2015)', 'tvdb': '0', 'content': 'movie', 'source': '[{"url": "http://www.mediaplaybox.com/video/Piku_Eng_Sub_Part_1##http://www.mediaplaybox.com/video/Piku_Eng_Sub_Part_2##http://www.mediaplaybox.com/video/Piku_Eng_Sub_Part_3##http://www.mediaplaybox.com/video/Piku_Eng_Sub_Part_4", "label": "02 | [B]PLAYINDIAFILMS[/B] | MEDIAPLAYBOX | [B][I]HD [/I][/B] [4]", "source": "mediaplaybox", "parts": "4", "provider": "PlayIndiaFilms", "quality": "HD"}]', 'imdb': 'tt3767372', 'year': '2015', 'action': 'playItem'}
 
+    params = {'tmdb': '353464', 'name': 'Talvar (2015)', 'title': 'Talvar', 'meta': '{"rating": "8.3", "code": "tt4934950", "tmdb": "353464", "imdb": "tt4934950", "year": "2015", "duration": "7920", "plot": "Dramatization of the notorious \\"Noida Double Murder Case\\", which set off a media frenzy around the world in 2008.", "votes": "10", "title": "Talvar", "fanart": "http://image.tmdb.org/t/p/original/hT118jQAcrCMDVrwduhQGfps4Uj.jpg", "tagline": "Dramatization of the notorious \\"Noida Double Murder Case\\", which set off a media frenzy around the world in 2008.", "writer": "Vishal Bhardwaj", "next": "", "poster": "http://image.tmdb.org/t/p/w500/ctOxiFFWrhyP4XG8QtrcyCZA4uG.jpg", "director": "Meghna Gulzar", "studio": "Vishal Bhardwaj Pictures", "genre": "Thriller / Drama / Mystery", "metacache": false, "name": "Talvar (2015)", "premiered": "2015-09-14", "originaltitle": "Talvar", "cast": [["Irrfan Khan", "Ashwin Kumar (Investigation officer of CDI)"], ["Konkona Sen Sharma", "Nutan Tandon"], ["Neeraj Kabi", "Ramesh Tandon"], ["Sohum Shah", "Vedant Mishra (ACP)"], ["Atul Kumar", "Paul (Investigation officer of CDI)"], ["Gajraj Rao", "Dhaniram (Inspector)"], ["Ayesha Parveen", "Shruti Tandon"], ["Tabu", "Reema Kumar"], ["Sumit Gulati", "Kanhaiya"], ["Prakash Belawadi", "Ramshankar Pillai (CDI Director)"], ["Shishir Sharma", "JK Dixit (CDI Director)"]], "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Talvar+%282015%29"}', 'imdb': 'tt4934950', 'year': '2015', 'action': 'sources'}
+
+
     try:
         action = params['action']
     except:
@@ -120,46 +123,17 @@ try :
     except:
         provider = None
 
+    from resources.lib.indexers import movies
+
+    #from resources.lib.sources import hotstar_mv
+    #hotstar_mv.source().get_movie(imdb, title, year)
+
     # test search sources
     from resources.lib.sources import sources
-    #sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
-    sources().playItem(content, name, year, imdb, tvdb, source)
+    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #sources().playItem(content, name, year, imdb, tvdb, source)
 
 
-    content = 'movie'
-    name = 'Piku (2015)'
-    year = '2015'
-    imdb = 'tt3767372'
-    tvdb = '0'
-    meta = {"rating": "6.5", "code": "tt3767372", "tmdb": "332835", "imdb": "tt3767372", "year": "2015", "duration": "7380", "plot": "Piku is an Indian comedy-drama film directed by Shoojit Sircar. Deepika Padukone portrays the titular protagonist, a Bengali architect living in New Delhi, and Amitabh Bachchan plays her hypochondriac father. Irrfan Khan, Moushumi Chatterjee and Jishu Sengupta portray supporting roles", "votes": "13", "title": "Piku", "fanart": "http://image.tmdb.org/t/p/original/9KtXu0KGqR5siwUIdYRB2HlOyn1.jpg", "tagline": "Motion Se Hi Emotion", "writer": "Juhi Chaturvedi", "next": "", "poster": "http://image.tmdb.org/t/p/w500/3AiMCKSLxpYsjP3eQFg3FG3a9OW.jpg", "director": "Shoojit Sircar", "studio": "Rising Sun Films", "genre": "Drama / Comedy", "metacache": "true", "lang": "en", "name": "Piku (2015)", "premiered": "2015-05-08", "originaltitle": "Piku", "cast": [["Amitabh Bachchan", "Bashkor Banerjee"], ["Deepika Padukone", "Piku"], ["Irrfan Khan", "Rana"], ["Jisshu Sengupta", ""]], "mpaa": "", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Piku+%282015%29"}
-    url = ['http://www.mediaplaybox.com:81/media/files_flv/user2/4643b1ff028.flv|Referer=http%3A%2F%2Fwww.mediaplaybox.com%2Fvideo%2FPiku_Eng_Sub_Part_1&User-Agent=Mozilla%2F5.0+%28compatible%2C+MSIE+11%2C+Windows+NT+6.3%3B+Trident%2F7.0%3B+rv%3A11.0%29+like+Gecko', 'http://www.mediaplaybox.com:81/media/files_flv/user2/4644af092a7.flv|Referer=http%3A%2F%2Fwww.mediaplaybox.com%2Fvideo%2FPiku_Eng_Sub_Part_2&User-Agent=Mozilla%2F5.0+%28compatible%2C+MSIE+11%2C+Windows+NT+6.3%3B+Trident%2F7.0%3B+rv%3A11.0%29+like+Gecko', 'http://www.mediaplaybox.com:81/media/files_flv/user2/4645d91842e.flv|Referer=http%3A%2F%2Fwww.mediaplaybox.com%2Fvideo%2FPiku_Eng_Sub_Part_3&User-Agent=Mozilla%2F5.0+%28compatible%2C+MSIE+11%2C+Windows+NT+6.3%3B+Trident%2F7.0%3B+rv%3A11.0%29+like+Gecko', 'http://www.mediaplaybox.com:81/media/files_flv/user2/4646a48057e.flv|Referer=http%3A%2F%2Fwww.mediaplaybox.com%2Fvideo%2FPiku_Eng_Sub_Part_4&User-Agent=Mozilla%2F5.0+%28compatible%2C+MSIE+11%2C+Windows+NT+6.3%3B+Trident%2F7.0%3B+rv%3A11.0%29+like+Gecko']
-    from resources.lib.libraries import player
-    player.player().run(content, name, url, year, imdb, tvdb, meta)
-    # from resources.lib.resolvers import tellycolors
-    # # Playwire
-    # url = 'http://www.tellycolors.me/balika-vadhu/?si=4576302'
-    #
-    # # vidhsare url
-    # url = 'http://www.tellycolors.me/colors/?si=v8m8ab3g72bs'
-    # url = 'http://vidshare.us/embed-v8m8ab3g72bs-595x430.html'
-    # # DAILYMOTION
-    # url = 'http://www.tellycolors.me/balika-vadhu/?si=k1xvL0nEgZZNg9flv6Z'
-    # #IDOWATCH
-    # url = 'http://bestarticles.me/colors/?si=970446x6ywj7'
-    #
-    # #playu
-    # url = 'http://xpressvids.info/playu.php?id=bkp9bewk35ex'
-    #
-    # # video
-    # url = 'http://desimania.net/colors/?si=39wbg65nqzxz'
-    #
-    # # letwatch
-    # url = 'http://www.tellycolors.me/colors/?si=iyrasrqwffrt'
-    #
-    # # video
-    # url = 'http://desimania.net/colors/?si=kwgnbk2k2qoq'
-    # from resources.lib import resolvers
-    # #resolvers.request(url)
 except:
     from resources.lib.libraries import client
     client.printException('aftershock-testharness')

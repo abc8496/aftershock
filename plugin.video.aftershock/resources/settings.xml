@@ -25,6 +25,7 @@
 		<setting id="apnaview" type="bool" label="ApnaView" default="true" />
 		<setting id="einthusan" type="bool" label="Einthusan" default="true" />
 		<setting id="hindilinks4u" type="bool" label="HindiLinks4U" default="true" />
+		<!--<setting id="hotstar" type="bool" label="Hotstar" default="true" />-->
 	</category>
 
 	<category label="30861">
@@ -56,5 +57,8 @@
 		<setting id="host50009" type="select" label="30889" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Vidzi" />
 		<setting id="host50010" type="select" label="30890" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Vidto" />
 	</category>
-
+	<category label="30910">
+		<setting type="lsep" label="IMDb" />
+		<setting id="imdb_user" type="text" label="30911" default="" />
+	</category>
 </settings>

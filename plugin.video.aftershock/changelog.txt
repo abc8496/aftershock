@@ -1,5 +1,5 @@
 ------------------------
-Aftershock v3.0.3 (15-Feb-16)
+Aftershock v3.0.4 (15-Feb-16)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon and it will always be a free addon.[/COLOR]
 

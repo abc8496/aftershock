@@ -38,8 +38,8 @@ class tvshows:
         self.list = []
 
         self.tmdb_link = 'http://api.themoviedb.org'
-        self.tmdb_key = base64.urlsafe_b64decode('NTc5ODNlMzFmYjQzNWRmNGRmNzdhZmI4NTQ3NDBlYTk=')
-        self.tvdb_key = base64.urlsafe_b64decode('MUQ2MkYyRjkwMDMwQzQ0NA==')
+        self.tmdb_key = base64.urlsafe_b64decode('MTdmMjI3YmVjNTdkOTQ4OGJiYzgyNzYyZmMxNDQ0NmM=')
+        self.tvdb_key = base64.urlsafe_b64decode('OUZDQkM2MjlEQzgyRjA4Qw==')
         self.datetime = (datetime.datetime.utcnow() - datetime.timedelta(hours = 5))
         self.info_lang = control.setting('infoLang') or 'en'
 
