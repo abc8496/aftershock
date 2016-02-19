@@ -31,7 +31,7 @@ class channels:
     def __init__(self):
         self.list = []
 
-        self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS9hamRldmVsb3BlZC9saXZlX2NoYW5uZWwuanNvbg==')
+        self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
 
 
     def get(self):
@@ -87,7 +87,7 @@ class channels:
                 pass
 
         control.content(int(sys.argv[1]), 'video')
-        control.directory(int(sys.argv[1]), cacheToDisc=True)
+        control.directory(int(sys.argv[1]), cacheToDisc=False)
         views.setView('movies', {'skin.confluence': 500})
 
 

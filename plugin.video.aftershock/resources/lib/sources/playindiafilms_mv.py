@@ -31,6 +31,7 @@ class source:
         self.base_link_1 = 'http://www.playindiafilms.com'
         self.base_link_2 = self.base_link_1
         self.search_link = '/feed/?s=%s&submit=Search'
+        self.movie_link = '%s/%s/'
         self.info_link = ''
         self.now = datetime.datetime.now()
         self.theaters_link = '/category/%s/feed' % (self.now.year)
@@ -159,6 +160,7 @@ class source:
                 searchTitle = cleantitle.movie(searchTitle)
                 if title == searchTitle:
                     url = client.parseDOM(item, "link")[0]
+                    url = re.compile('com/(.+?)/').findall(url)[0]
                     break
             if url == None or url == '':
                 raise Exception()
@@ -174,7 +176,7 @@ class source:
 
             if url == None: return sources
 
-            try: result = client.source(url)
+            try: result = client.source(self.movie_link % (self.base_link_1, url))
             except: result = ''
 
             result = result.decode('iso-8859-1').encode('utf-8')
@@ -182,17 +184,25 @@ class source:
             result = result.replace('\n','')
 
             try :
-                quality = client.parseDOM(result, name="title")[0]
-                quality = quality.upper()
-            except:
-                quality = 'CAM'
-
-            if "BLURAY" in quality:
+                # get bluray source
+                url = client.parseDOM(result, "a", attrs={"class": "btn btn-custom btn-custom-large btn-blue btn-icon "}, ret="href")[0]
+                if 'playsominal' in url:
+                    raise Exception()
                 quality = "HD"
-            elif "DVD" in quality:
-                quality = "DVD"
-            else:
-                quality = "SD"
+                sources.append({'source': "playsominal", 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url})
+            except :
+                pass
+
+            try :
+                # get DVD source
+                quality = client.parseDOM(result, "span", attrs={"class": "btn btn-custom btn-custom-large btn-yellow "})[0]
+                quality = client.parseDOM(quality, "strong")[0]
+                quality = "HD"
+            except :
+                quality = 'CAM'
+                pass
+
+
 
             result = client.parseDOM(result, "p", attrs= {"style":"text-align: center;"})
 
@@ -204,16 +214,16 @@ class source:
                         link = client.parseDOM(tag, "strong")
                         if len(urls) > 0 :
                             url = "##".join(urls)
-                            sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url})
+                            sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url, 'direct':True})
                             urls = []
                     else :
                         link = client.parseDOM(tag, "a", attrs= {"class":"btn btn-custom btn-medium btn-red btn-red "}, ret="href")
                         if len(link) > 0 :
                             host = re.compile('\.(.+?)\.').findall(link[0])[0]
-                            urls.append(link[0])
+                            urls.append(resolvers.request(link[0]))
                 if len(urls) > 0:
                     url = "##".join(urls)
-                    sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url})
+                    sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url, 'direct':True})
             except:
                 pass
             return sources
@@ -231,7 +241,7 @@ class source:
 
             links = []
             for item in url:
-                links.append(resolvers.request(item))
+                links.append(item)
             url = links
             return url
         except:

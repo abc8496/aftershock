@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.aftershock"
        name="Aftershock"
-       version="3.0.4"
+       version="3.0.5"
        provider-name="IDev">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -21,8 +21,8 @@
     <description lang="en">Addon based on GENESIS framework by lambda to browse and play a wide selection of Desi Movies, TV Shows and Live Streams. The author doesn't have any affiliation with the content providers.</description>
     <disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content provider.</disclaimer>
     <platform>all</platform>
-    <forum>http://forum.kodi.tv/showthread.php?tid=237364</forum>
-	<website>http://forum.kodi.tv/showthread.php?tid=237364</website>
+    <forum>https://forums.tvaddons.ag/addon-releases/41405-aftershock-video-addon-indian-movies-tv.html</forum>
+	<website>https://forums.tvaddons.ag/addon-releases/41405-aftershock-video-addon-indian-movies-tv.html</website>
   </extension>
 </addon>
 

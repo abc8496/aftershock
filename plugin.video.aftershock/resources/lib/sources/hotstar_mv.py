@@ -31,6 +31,7 @@ class source:
         self.base_link_1 = 'http://%s.hotstar.com'
         self.base_link_2 = self.base_link_1
         self.search_link = '/AVS/besc?action=GetSuggestionsStar&query=%s&type=vod'
+        self.cdn_link = 'http://getcdn.hotstar.com/AVS/besc?action=GetCDN&asJson=Y&channel=PCTV&id=%s&type=VOD'
         self.info_link = ''
         self.now = datetime.datetime.now()
         self.theaters_link = '/category/%s/feed' % (self.now.year)
@@ -57,7 +58,7 @@ class source:
             for item in result:
                 searchTitle = cleantitle.movie(item['title'])
                 if title == searchTitle:
-                    url = item['contentId']
+                    url = self.cdn_link % item['contentId']
                     break
             if url == None or url == '':
                 raise Exception()
@@ -76,43 +77,13 @@ class source:
             try: result = client.source(url)
             except: result = ''
 
-            result = result.decode('iso-8859-1').encode('utf-8')
-
-            result = result.replace('\n','')
+            result = json.loads(result)
 
             try :
-                quality = client.parseDOM(result, name="title")[0]
-                quality = quality.upper()
-            except:
-                quality = 'CAM'
-
-            if "BLURAY" in quality:
-                quality = "HD"
-            elif "DVD" in quality:
-                quality = "DVD"
-            else:
-                quality = "SD"
-
-            result = client.parseDOM(result, "p", attrs= {"style":"text-align: center;"})
-
-            try :
-                host = ''
-                urls = []
-                for tag in result:
-                    if len(client.parseDOM(tag, "span", attrs= {"class":"btn btn-custom btn-custom-large btn-black "})) > 0:
-                        link = client.parseDOM(tag, "strong")
-                        if len(urls) > 0 :
-                            url = "##".join(urls)
-                            sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url})
-                            urls = []
-                    else :
-                        link = client.parseDOM(tag, "a", attrs= {"class":"btn btn-custom btn-medium btn-red btn-red "}, ret="href")
-                        if len(link) > 0 :
-                            host = re.compile('\.(.+?)\.').findall(link[0])[0]
-                            urls.append(link[0])
-                if len(urls) > 0:
-                    url = "##".join(urls)
-                    sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url})
+                url = result['resultObj']['src']
+                host = 'hotstar'
+                quality = 'SD'
+                sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'Hotstar', 'url': url})
             except:
                 pass
             return sources
@@ -122,16 +93,6 @@ class source:
 
     def resolve(self, url):
         try:
-            tUrl = url.split('##')
-            if len(tUrl) > 0:
-                url = tUrl
-            else :
-                url = urlparse.urlparse(url).path
-
-            links = []
-            for item in url:
-                links.append(resolvers.request(item))
-            url = links
             return url
         except:
             return
