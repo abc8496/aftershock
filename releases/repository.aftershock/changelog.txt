@@ -1,1 +1,4 @@
-[B]Version v1.2.1[/B]
+------------------------
+Aftershock v1.3.0 (19-Feb-16)
+------------------------
+- Migrated to offshoreGit

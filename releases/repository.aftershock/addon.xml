@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.aftershock" name="Aftershock addons" version="1.2.2" provider-name="IDev">
-	<extension point="xbmc.addon.repository" name="Innovate add-on repository">
-		<info compressed="false">https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/vineegu/aftershock-repo/master/releases</datadir>
+<addon id="repository.aftershock" name="Aftershock addons" version="1.3.0" provider-name="IDev">
+	<extension point="xbmc.addon.repository" name="Aftershock add-on repository">
+		<dir>
+			<info compressed="false">https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/vineegu/aftershock-repo/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/vineegu/aftershock-repo/master/releases</datadir>
+		</dir>
+		<info compressed="false">https://offshoregit.com/vineegu/aftershock-repo/addons.xml</info>
+		<checksum>https://offshoregit.com/vineegu/aftershock-repo/addons.xml.md5</checksum>
+		<datadir zip="true">https://offshoregit.com/vineegu/aftershock-repo/releases</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Install video addons from Aftershock</summary>
@@ -12,3 +17,4 @@
 		<platform>all</platform>
 	</extension>
 </addon>
+
