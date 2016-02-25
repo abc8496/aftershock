@@ -31,7 +31,7 @@
 		<setting id="desirulez_tv" type="bool" label="DesiRulez" default="true"/>
 	</category>
 
-	<category label="30870">
+	<!--<category label="30870">
 		<setting id="hosthd50001" type="select" label="30881" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Einthusan" />
 		<setting id="hosthd50002" type="select" label="30882" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="MediaPlayBox" />
 		<setting id="hosthd50003" type="select" label="30883" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Desiflicks" />
@@ -55,7 +55,7 @@
 		<setting id="host50008" type="select" label="30888" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Letwatch" />
 		<setting id="host50009" type="select" label="30889" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Vidzi" />
 		<setting id="host50010" type="select" label="30890" values="-|Einthusan|MediaplayBox|Desiflicks|Flash Player|DailyMotion|Letwatch|Playu|Apnasave|AllMyVideos|Cloudtime|Vidzi|Vidto|Vodlocker|Movshare|NovaMov|RealVid|VideoWeed" default="Vidto" />
-	</category>
+	</category>-->
 	<category label="30910">
 		<setting type="lsep" label="IMDb" />
 		<setting id="imdb_user" type="text" label="30911" default="" />
