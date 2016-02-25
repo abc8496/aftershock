@@ -29,18 +29,21 @@ from resources.lib.libraries import metacache
 class source:
     def __init__(self):
         self.base_link = 'http://www.apnaview.com'
-        self.search_link = '/browse/?q=%s'
+        self.search_link = '/browse?q=%s'
         self.now = datetime.datetime.now()
-        self.theaters_link = '/browse/hindi/?year=%s' % (self.now.year)
-        self.added_link = '/browse/hindi/?'
+        self.theaters_link = '/browse/%s?year=%s' % ('%s', self.now.year)
+        self.added_link = '/browse/%s?'
         self.sort_link = '&order=desc&sort=date'
+        self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
 
-    def scn_full_list(self, url):
+    def scn_full_list(self, url, lang=None):
         tmpList = []
         self.list = []
 
         pagesScanned = 0
-        try : url = getattr(self, url + '_link')
+        try :
+            url = getattr(self, url + '_link')
+            url = url % lang
         except:pass
 
         links = [self.base_link, self.base_link, self.base_link]
@@ -75,16 +78,18 @@ class source:
                 except: pass
 
                 poster = '0'
-                try: poster = client.parseDOM(movie, "img", ret="src")[0]
+                try:
+                    poster = client.parseDOM(movie, "img", ret="src")[0]
+                    poster = '%s%s' % (self.base_link, poster)
                 except: pass
                 poster = client.replaceHTMLCodes(poster)
                 try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
                 except: pass
                 poster = poster.encode('utf-8')
 
-                genre = '0' ; duration = 0 ; rating = 0; votes = 0; director = ''; cast = '' ; plot = ''; tagline = ''; mpaa = ''; next = ''; tvdb = '0'
+                duration = '0'
 
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': '0', 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': '0', 'cast': cast, 'plot': plot, 'tagline': tagline, 'name': name, 'tvdb': tvdb, 'tvrage': '0', 'poster': poster, 'banner': '0', 'fanart': '0', 'lang':'en','next': next})
+                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'duration': duration, 'name': name, 'poster': poster, 'banner': '0', 'fanart': '0', 'tvdb':'0'})
             except:
                 pass
         try :
@@ -96,7 +101,6 @@ class source:
             client.printException('Exception in NEXT')
             pass
 
-        self.list = metacache.fetchImdb(self.list)
         return self.list
 
     def get_movie(self, imdb, title, year):
@@ -125,9 +129,9 @@ class source:
             return
 
 
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
-            quality = 'CAM'
+            quality = ''
             sources = []
 
             if url == None: return sources
@@ -139,24 +143,32 @@ class source:
 
             result = result.decode('iso-8859-1').encode('utf-8')
 
-            #result = result.replace('\n','')
             result = client.parseDOM(result, "table", attrs={"class":"table table-bordered"})[0]
             result = client.parseDOM(result, "tbody")[0]
             result = client.parseDOM(result, "tr")
 
             for item in result:
                 try :
-                    host = client.parseDOM(item, "td")[0].lower()
                     urls = client.parseDOM(item, "td")[1]
                     urls = client.parseDOM(urls, "a", ret="href")
                     for i in range(0, len(urls)):
-                        videoID = re.compile('/video/(.+?)/').findall(urls[i] + '/')[0]
-                        urls[i] = 'http://www.awesomevids.pw/video/%s' % videoID
+                        result = client.source(urls[i], mobile=False)
+                        result = result.replace('\n','').replace('\t','')
+                        if 'Could not connect to mysql! Please check your database' in result:
+                            result = client.source(urls[i], mobile=True)
+                        try :
+                            item = client.parseDOM(result, "div", attrs={"class":"videoplayer"})[0]
+                            item = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
+                        except :
+                            item = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
+                            pass
+                        urls[i] = item
+                    host = client.host(urls[0])
                     if len(urls) > 1:
                         url = "##".join(urls)
                     else:
                         url = urls[0]
-                    sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url})
+                    sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url, 'direct':False})
                 except :
                     pass
             return sources
@@ -164,7 +176,7 @@ class source:
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -174,17 +186,11 @@ class source:
 
             links = []
             for item in url:
-                result = client.source(item, mobile=False)
-                if 'Could not connect to mysql! Please check your database' in result:
-                    result = client.source(item, mobile=True)
-
-                try :
-                    item = client.parseDOM(result, "div", attrs={"class":"videoplayer"})[0]
-                    item = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
-                except :
-                    pass
-                links.append(resolvers.request(item))
+                r = resolvers.request(item, resolverList)
+                if not r :
+                    raise Exception()
+                links.append(r)
             url = links
             return url
         except:
-            return
+            return False

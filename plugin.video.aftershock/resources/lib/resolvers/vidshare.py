@@ -37,7 +37,9 @@ def resolve(url):
         link = re.search('file\s*:\s*"([^"]+)', js)
         if link:
             url = link.group(1)
-
+        else :
+            url = None
         return url
     except:
+        client.printException('vidshare.me resolver')
         return

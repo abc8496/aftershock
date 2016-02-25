@@ -67,7 +67,7 @@ class source:
             return
 
 
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
             quality = ''
             sources = []
@@ -91,11 +91,11 @@ class source:
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         try:
             return url
         except:
-            return
+            return False
 
 
 

@@ -138,7 +138,7 @@ class source:
         except:
             client.printException('desirulez_tv.get_episodes(title=%s, url=%s)' % (title, url))
             return
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
             quality = ''
             sources = []
@@ -169,32 +169,51 @@ class source:
                     continue
                 elif (child.name == 'font') and re.search('Links|Online|Link',str(child.getText()),re.IGNORECASE):
                     if len(urls) > 0:
-                        tmpHost = host.lower()
-                        indx = host.find('[')
-                        if indx > 0 :
-                            tmpHost = tmpHost[:indx-1]
+                        for i in range(0,len(urls)):
+                            try :
+                                result = client.source(urls[i])
+                                item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
+                                try :
+                                    rUrl = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
+                                except:
+                                    rUrl = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
+                                urls[i] = rUrl
+                            except :
+                                pass
+                        host = client.host(urls[0])
                         url = "##".join(urls)
-                        sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url})
+                        sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url, 'direct':False})
                         urls = []
-                    host = child.getText()
-                    if '720p HD' in host:
+                    quality = child.getText()
+                    if '720p HD' in quality:
                         quality = 'HD'
-                    elif 'DVD' in host:
+                    elif 'DVD' in quality:
                         quality = 'SD'
-                    host = host.replace('Online','').replace('Links','').replace('Link','').replace('Quality','').replace('Watch','').replace('-','').replace('Download','').replace('  ','').replace('720p HD','').replace('DVD','').strip()
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']))
 
             if len(urls) > 0:
+                for i in range(0,len(urls)):
+                    try :
+                        result = client.source(urls[i])
+                        item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
+                        try :
+                            rUrl = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
+                        except:
+                            rUrl = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
+                        urls[i] = rUrl
+                    except :
+                        pass
+                host = client.host(urls[0])
                 url = "##".join(urls)
-                sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url})
+                sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url,'direct':False})
             return sources
         except:
             client.printException('desirulez_tv.get_sources')
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -204,11 +223,14 @@ class source:
 
             links = []
             for item in url:
-                links.append(resolvers.request(item))
+                r = resolvers.request(item, resolverList)
+                if not r :
+                    raise Exception()
+                links.append(r)
             url = links
             return url
         except:
-            return
+            return False
 
 
 

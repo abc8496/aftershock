@@ -69,12 +69,10 @@ class source:
             return url
 
         except:
-            import traceback
-            traceback.print_exc()
             return
 
 
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
             sources = []
 
@@ -86,11 +84,11 @@ class source:
             url = 'http://cdn.einthusan.com/geturl/%s/hd/%s/' % (url, ip)
             url = client.request(url)
 
-            sources.append({'source': 'einthusan', 'quality': 'HD', 'provider': 'Einthusan', 'url': url, 'direct': True})
+            sources.append({'source': 'einthusan', 'quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
             return sources
         except:
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         return url

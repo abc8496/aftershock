@@ -36,21 +36,23 @@ class source:
         self.now = datetime.datetime.now()
         self.theaters_link = '/category/%s/feed' % (self.now.year)
         self.added_link = '/category/hindi-movies/feed'
-        self.HD_link = '/category/hindi-blurays/feed'
+        self.HD_link = '/category/%s-blurays/feed'
         self.list = []
 
-    def scn_full_list(self, url):
+    def scn_full_list(self, url, lang=None):
         tmpList = []
         self.list = []
 
         pagesScanned = 0
-        try : url = getattr(self, url + '_link')
+        try :
+            url = getattr(self, url + '_link')
+            url = url % lang
         except:pass
 
         turl = url
 
         while((len(self.list) < 15) and (pagesScanned < 10)):
-            self.scn_list(turl)
+            self.scn_list(turl, lang)
             try : url =  re.compile('(.+)\?paged=.+').findall(turl)[0]
             except :
                 pass
@@ -65,7 +67,7 @@ class source:
         self.list = metacache.fetchImdb(self.list)
         return self.list
 
-    def scn_list(self, url):
+    def scn_list(self, url, lang=None):
         try :
             links = [self.base_link_1, self.base_link_1, self.base_link_1]
             for base_link in links:
@@ -116,21 +118,9 @@ class source:
                     genre = client.replaceHTMLCodes(genre)
                     genre = genre.encode('utf-8')
 
-                    hindiMovie = False
-                    categories = []
-                    try: categories = client.parseDOM(movie, "category")
-                    except :
-                        hindiMovie = True
-                        pass
+                    duration = '0' ; tvdb = '0'
 
-                    for category in categories:
-                        if re.search('Hindi', category, flags= re.I):
-                            hindiMovie = True
-                    duration = 0 ; rating = 0; votes = 0; director = ''; cast = '' ; plot = ''; tagline = ''; mpaa = ''; next = ''; tvdb = '0'
-
-
-                    if hindiMovie :
-                        self.list.append({'title': title, 'originaltitle': title, 'year': year, 'premiered': '0', 'studio': '0', 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': '0', 'cast': cast, 'plot': plot, 'tagline': tagline, 'name': name, 'tvdb': tvdb, 'tvrage': '0', 'poster': poster, 'banner': '0', 'fanart': '0', 'lang':'en','next': next})
+                    self.list.append({'title': title, 'originaltitle': title, 'duration':duration,'year': year, 'genre': genre, 'name': name, 'tvdb': tvdb, 'poster': poster, 'banner': '0', 'fanart': '0', 'lang':lang})
 
                 except:
                     pass
@@ -169,7 +159,7 @@ class source:
             return
 
 
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
             quality = ''
             sources = []
@@ -214,15 +204,17 @@ class source:
                         link = client.parseDOM(tag, "strong")
                         if len(urls) > 0 :
                             url = "##".join(urls)
+                            host = client.host(urls[0])
                             sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url, 'direct':True})
                             urls = []
                     else :
                         link = client.parseDOM(tag, "a", attrs= {"class":"btn btn-custom btn-medium btn-red btn-red "}, ret="href")
                         if len(link) > 0 :
-                            host = re.compile('\.(.+?)\.').findall(link[0])[0]
-                            urls.append(resolvers.request(link[0]))
+                            #urls.append(resolvers.request(link[0]))
+                            urls.append(link[0])
                 if len(urls) > 0:
                     url = "##".join(urls)
+                    host = client.host(urls[0])
                     sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'PlayIndiaFilms', 'url': url, 'direct':True})
             except:
                 pass
@@ -231,7 +223,7 @@ class source:
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -241,11 +233,15 @@ class source:
 
             links = []
             for item in url:
-                links.append(item)
+                r = resolvers.request(item, resolverList)
+                if not r :
+                    raise Exception()
+                links.append(r)
             url = links
             return url
         except:
-            return
+            client.printException('playindiafilms.resolve')
+            return False
 
 
 

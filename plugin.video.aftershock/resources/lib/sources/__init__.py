@@ -41,59 +41,10 @@ from resources.lib import resolvers
 
 class sources:
     def __init__(self):
-        self.sources = [] ; self.sourcesDictionary()
+        self.resolverList = self.getResolverList()
+        self.hostDict = self.getHostDict()
+        self.sources = []
 
-
-    def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url):
-        try:
-            if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
-                control.playlist.clear()
-
-            control.resolve(int(sys.argv[1]), True, control.item(path=''))
-            control.execute('Dialog.Close(okdialog)')
-
-            if imdb == '0': imdb = '0000000'
-            imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
-
-            content = 'movie' if tvshowtitle == None else 'episode'
-
-            self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date)
-            if self.sources == []: raise Exception()
-
-            self.sources = self.sourcesFilter()
-
-            if control.window.getProperty('PseudoTVRunning') == 'True':
-                url = self.sourcesDirect()
-
-            elif url == 'dialog://':
-                url = self.sourcesDialog()
-
-            elif url == 'direct://':
-                url = self.sourcesDirect()
-
-            elif not control.infoLabel('Container.FolderPath').startswith('plugin://') and control.setting('autoplay_library') == 'false':
-                url = self.sourcesDialog()
-
-            elif control.infoLabel('Container.FolderPath').startswith('plugin://') and control.setting('autoplay') == 'false':
-                url = self.sourcesDialog()
-
-            else:
-                url = self.sourcesDirect()
-
-            if url == None: raise Exception()
-            if url == 'close://': return
-
-            if control.setting('playback_info') == 'true':
-                control.infoDialog(self.selectedSource, heading=name)
-
-            control.sleep(200)
-
-            from resources.lib.libraries.player import player
-            player().run(content, name, url, year, imdb, tvdb, meta)
-
-            return url
-        except:
-            control.infoDialog(control.lang(30501).encode('utf-8'))
 
 
     def addItem(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta):
@@ -227,7 +178,7 @@ class sources:
 
                     if items[i]['source'] == block: raise Exception()
 
-                    w = workers.Thread(self.sourcesResolve, items[i]['url'], items[i]['provider'], items[i]['source'])
+                    w = workers.Thread(self.sourcesResolve, items[i])
                     w.start()
 
                     m = ''
@@ -238,14 +189,14 @@ class sources:
                         k = control.condVisibility('Window.IsActive(virtualkeyboard)')
                         if k: m += '1'; m = m[-1]
                         if (w.is_alive() == False or x > 30) and not k: break
-                        time.sleep(0.5)
+                        time.sleep(1.0)
 
-                    for x in range(30):
+                    for x in range(3600):
                         if m == '': break
                         if self.progressDialog.iscanceled(): return self.progressDialog.close()
                         if xbmc.abortRequested == True: return sys.exit()
                         if w.is_alive() == False: break
-                        time.sleep(0.5)
+                        time.sleep(1.0)
 
 
                     if w.is_alive() == True: block = items[i]['source']
@@ -354,60 +305,6 @@ class sources:
         return self.sources
 
 
-    def checkSources(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date):
-        sourceDict = []
-        for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
-        sourceDict = [i[0] for i in sourceDict if i[1] == False]
-
-        content = 'movie' if tvshowtitle == None else 'episode'
-
-
-        if content == 'movie':
-            sourceDict = [i for i in sourceDict if i.endswith(('_mv', '_mv_tv'))]
-            try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
-            except: sourceDict = [(i, 'true') for i in sourceDict]
-        else:
-            sourceDict = [i for i in sourceDict if i.endswith(('_tv', '_mv_tv'))]
-            try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i) + '_tv')) for i in sourceDict]
-            except: sourceDict = [(i, 'true') for i in sourceDict]
-
-        threads = []
-
-        control.makeFile(control.dataPath)
-        self.sourceFile = control.sourcescacheFile
-
-        sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
-
-        if content == 'movie':
-            title = cleantitle.normalize(title)
-            for source in sourceDict: threads.append(workers.Thread(self.getMovieSource, title, year, imdb, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source()))
-        else:
-            tvshowtitle = cleantitle.normalize(tvshowtitle)
-            season, episode = alterepisode.alterepisode().get(imdb, tmdb, tvdb, tvrage, season, episode, alter, title, date)
-            for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source()))
-
-
-        try: timeout = int(control.setting('sources_timeout_40'))
-        except: timeout = 40
-
-        [i.start() for i in threads]
-
-        for i in range(0, timeout * 2):
-            try:
-                if xbmc.abortRequested == True: return sys.exit()
-
-                if len(self.sources) >= 10: break
-
-                is_alive = [x.is_alive() for x in threads]
-                if all(x == False for x in is_alive): break
-                time.sleep(0.5)
-            except:
-                pass
-
-        if len(self.sources) >= 10: return True
-        else: return False
-
-
     def getMovieSource(self, title, year, imdb, source, call):
         try:
             dbcon = database.connect(self.sourceFile)
@@ -449,7 +346,7 @@ class sources:
 
         try:
             sources = []
-            sources = call.get_sources(url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict)
+            sources = call.get_sources(url)
             if sources == None: sources = []
             self.sources.extend(sources)
             dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))
@@ -533,7 +430,7 @@ class sources:
 
             try:
                 sources = []
-                sources = call.get_sources(ep_url, self.hosthdfullDict, self.hostsdfullDict, self.hostlocDict)
+                sources = call.get_sources(ep_url)
                 if sources == None: sources = []
                 self.sources.extend(sources)
                 dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, season, episode))
@@ -577,81 +474,23 @@ class sources:
 
 
     def sourcesFilter(self):
-        self.sourcesReset()
-
-        try: customhdDict = [control.setting('hosthd50001'), control.setting('hosthd50002'), control.setting('hosthd50003'), control.setting('hosthd50004'), control.setting('hosthd50005'), control.setting('hosthd50006'), control.setting('hosthd50007'), control.setting('hosthd50008'), control.setting('hosthd50009'), control.setting('hosthd50010') ]
-        except: customhdDict = []
-        try: customsdDict = [control.setting('host50001'), control.setting('host50002'), control.setting('host50003'), control.setting('host50004'), control.setting('host50005'), control.setting('host50006'), control.setting('host50007'), control.setting('host50008'), control.setting('host50009'), control.setting('host50010')]
-        except: customsdDict = []
-
-        hd_rank = []
-        hd_rank += [i for i in self.rdDict if i in self.hostprDict + self.hosthdDict]
-        hd_rank += [i for i in self.pzDict if i in self.hostprDict + self.hosthdDict]
-        hd_rank += customhdDict
-        hd_rank += [i['source'] for i in self.sources if i['quality'] in ['1080p', 'HD'] and not i['source'] in customhdDict + self.hostprDict + self.hosthdDict]
-        hd_rank += self.hosthdDict
-        hd_rank = [i.lower() for i in hd_rank]
-        hd_rank = [x for y,x in enumerate(hd_rank) if x not in hd_rank[:y]]
-
-        sd_rank = []
-        sd_rank += [i for i in self.rdDict if i in self.hostprDict + self.hosthqDict]
-        sd_rank += [i for i in self.pzDict if i in self.hostprDict + self.hosthqDict]
-        sd_rank += customsdDict
-        sd_rank += [i['source'] for i in self.sources if i['quality'] == 'SD' and not i['source'] in customsdDict + self.hostprDict + self.hosthqDict + self.hostmqDict + self.hostlqDict]
-        sd_rank += self.hosthqDict + self.hostmqDict + self.hostlqDict
-        sd_rank = [i.lower() for i in sd_rank]
-        sd_rank = [x for y,x in enumerate(sd_rank) if x not in sd_rank[:y]]
-
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
-        self.sources = sorted(self.sources, key=lambda k: k['source'])
-
-        # if control.setting('unsupp_host') == 'false':
-        #     filter = []
-        #     from resources.lib import resolvers
-        #     supportedDict = resolvers.supportedHosts()
-        #     for host in supportedDict: filter += [i for i in self.sources if i['source'] == host]
-        #     self.sources = filter
+        #self.sources = sorted(self.sources, key=lambda k: k['source'])
 
         filter = []
-
-        for host in hd_rank: filter += [i for i in self.sources if i['quality'] == '1080p' and i['source'] == host]
-        for host in hd_rank: filter += [i for i in self.sources if i['quality'] == 'HD' and i['source'] == host]
-        for host in sd_rank: filter += [i for i in self.sources if i['quality'] == 'SD' and i['source'] == host]
-        if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'SCR']
-        if len(filter) < 10:
-            for host in sd_rank:
-                filter += [i for i in self.sources if i['quality'] == 'CAM' and i['source'] == host]
+        filter += [i for i in self.sources if i['direct'] == True]
+        for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
+        for host in resolvers.info() : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host['host']]
         self.sources = filter
 
-        try: playback_quality = control.setting('playback_quality')
-        except: playback_quality = '0'
-
-        if playback_quality == '1':
-            self.sources = [i for i in self.sources if not i['quality'] == '1080p']
-        elif playback_quality == '2':
-            self.sources = [i for i in self.sources if not i['quality'] in ['1080p', 'HD']]
-        elif playback_quality == '3':
-            self.sources = [i for i in self.sources if not i['quality'] in ['1080p', 'HD'] and i['source'] in self.hostmqDict + self.hostlqDict]
-        elif playback_quality == '4':
-            self.sources = [i for i in self.sources if not i['quality'] in ['1080p', 'HD'] and i['source'] in self.hostlqDict]
-
-        try: playback_captcha = control.setting('playback_captcha_hosts')
-        except: playback_captcha = 'false'
-
-        try: playback_1080p = control.setting('playback_1080p_hosts')
-        except: playback_1080p = 'true'
-
-        try: playback_720p = control.setting('playback_720p_hosts')
-        except: playback_720p = 'true'
-
-        if playback_captcha == 'false':
-            self.sources = [i for i in self.sources if not i['source'] in self.hostcapDict]
-
-        if playback_1080p == 'false':
-            self.sources = [i for i in self.sources if not (i['quality'] == '1080p' and i['source'] in self.hosthdDict and not i['source'] in self.rdDict + self.pzDict)]
-
-        if playback_720p == 'false':
-            self.sources = [i for i in self.sources if not (i['quality'] == 'HD' and i['source'] in self.hosthdDict and not i['source'] in self.rdDict + self.pzDict)]
+        filter = []
+        filter += [i for i in self.sources if i['quality'] == '1080p']
+        filter += [i for i in self.sources if i['quality'] == 'HD']
+        filter += [i for i in self.sources if i['quality'] == 'SD']
+        if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'SCR']
+        if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == 'CAM']
+        if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == '']
+        self.sources = filter
 
         for i in range(len(self.sources)):
             s = self.sources[i]['source'].lower()
@@ -660,19 +499,15 @@ class sources:
 
 
             q = self.sources[i]['quality']
-            if q == 'SD' and s in self.hostmqDict: q = 'MQ'
-            elif q == 'SD' and s in self.hostlqDict: q = 'LQ'
-            elif q == 'SD': q = 'HQ'
 
             try: d = self.sources[i]['info']
             except: d = ''
             if not d == '': d = ' | [I]%s [/I]' % d
 
-            if s in self.rdDict: label = '%02d | [B]realdebrid[/B] | ' % int(i+1)
-            elif s in self.pzDict: label = '%02d | [B]premiumize[/B] | ' % int(i+1)
-            else: label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
+            label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
 
             if q in ['1080p', 'HD']: label += '%s%s | [B][I]%s [/I][/B]' % (s, d, q)
+            elif q == '' : label += '%s%s' % (s, d)
             else: label += '%s%s | [I]%s [/I]' % (s, d, q)
 
             pts = None
@@ -686,30 +521,10 @@ class sources:
         return self.sources
 
 
-    def sourcesReset(self):
+    def sourcesResolve(self, item):
         try:
-            if control.setting('hosthd1') == '': return
-
-            settingsFile = control.settingsFile
-            file = control.openFile(settingsFile) ; read = file.read().splitlines() ; file.close()
-
-            write = unicode( '<settings>' + '\n', 'UTF-8' )
-            for line in read:
-                if len(re.findall('<settings>', line)) > 0: continue
-                elif len(re.findall('</settings>', line)) > 0: continue
-                elif len(re.findall('id="(host|hosthd)500\d*"', line)) > 0: pass
-                elif len(re.findall('id="(host|hosthd)\d*"', line)) > 0: continue
-                write += unicode(line.rstrip() + '\n', 'UTF-8')
-            write += unicode('</settings>' + '\n', 'UTF-8')
-
-            file = control.openFile(settingsFile, 'w') ; file.write(str(write)) ; file.close()
-        except:
-            return
-
-
-    def sourcesResolve(self, url, provider, source=None):
-        try:
-            provider = provider.lower()
+            u = url = item['url']
+            provider = item['provider'].lower()
 
             if not provider.endswith(('_mv', '_tv', '_mv_tv')):
                 sourceDict = []
@@ -717,179 +532,44 @@ class sources:
                 provider = [i[0] for i in sourceDict if i[1] == False and i[0].startswith(provider + '_')][0]
 
             source = __import__(provider, globals(), locals(), [], -1).source()
-            url = source.resolve(url)
+            url = source.resolve(url, self.resolverList)
+
+            if url == False: raise Exception()
 
             try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
             except: headers = dict('')
 
-            if not type(url) is list:
-                result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20', debug=True)
+            if type(url) is list :
+                self.url = url
+                return url
+
+            if url.startswith('http') and '.m3u8' in url:
+                result = client.request(url.split('|')[0], headers=headers, output='geturl', timeout='20')
                 if result == None: raise Exception()
+
+            elif url.startswith('http'):
+                result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20')
+                if result == None: raise Exception()
+
             self.url = url
             return url
         except:
             client.printException('sources().sourcesResolve()')
             return
-
-
-    def sourcesDialog(self):
+    def getResolverList(self):
         try:
-            sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + self.sources
-
-            labels = [i['label'] for i in sources]
-
-            select = control.selectDialog(labels)
-            if select == 0: return self.sourcesDirect()
-            if select == -1: return 'close://'
-
-            items = [self.sources[select-1]]
-
-            next = [y for x,y in enumerate(self.sources) if x >= select]
-            prev = [y for x,y in enumerate(self.sources) if x < select][::-1]
-
-            source, quality = items[0]['source'], items[0]['quality']
-            items = [i for i in items+next+prev if i['quality'] == quality and i['source'] == source][:10]
-            items += [i for i in next+prev if i['quality'] == quality and not i['source'] == source][:10]
-
-            self.progressDialog = control.progressDialog
-            self.progressDialog.create(control.addonInfo('name'), '')
-            self.progressDialog.update(0)
-
-            block = None
-
-            for i in range(len(items)):
-                try:
-                    if self.progressDialog.iscanceled(): break
-
-                    self.progressDialog.update(int((100 / float(len(items))) * i), str(items[i]['label']), str(' '))
-
-                    if items[i]['source'] == block: raise Exception()
-
-                    w = workers.Thread(self.sourcesResolve, items[i]['url'], items[i]['provider'])
-                    w.start()
-
-                    m = ''
-
-                    for x in range(3600):
-                        if self.progressDialog.iscanceled(): return self.progressDialog.close()
-                        if xbmc.abortRequested == True: return sys.exit()
-                        k = control.condVisibility('Window.IsActive(virtualkeyboard)')
-                        if k: m += '1'; m = m[-1]
-                        if (w.is_alive() == False or x > 30) and not k: break
-                        time.sleep(0.5)
-
-                    for x in range(30):
-                        if m == '': break
-                        if self.progressDialog.iscanceled(): return self.progressDialog.close()
-                        if xbmc.abortRequested == True: return sys.exit()
-                        if w.is_alive() == False: break
-                        time.sleep(0.5)
-
-
-                    if w.is_alive() == True: block = items[i]['source']
-
-                    if self.url == None: raise Exception()
-
-                    self.selectedSource = items[i]['label']
-                    self.progressDialog.close()
-
-                    return self.url
-                except:
-                    pass
-
-            try: self.progressDialog.close()
-            except: pass
-
+            import urlresolver.plugnplay
+            resolverList = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
+            resolverList = [i for i in resolverList if not '*' in i.domains]
         except:
-            try: self.progressDialog.close()
-            except: pass
+            resolverList = []
+        return resolverList
 
-
-    def sourcesDirect(self):
-        self.sources = [i for i in self.sources if not i['source'] in self.hostcapDict]
-
-        self.sources = [i for i in self.sources if not (i['quality'] in ['1080p', 'HD'] and i['source'] in self.hosthdDict and not i['source'] in self.rdDict + self.pzDict)]
-
-        self.sources = [i for i in self.sources if not i['source'] in ['easynews', 'furk', 'vk']]
-
-        if control.setting("playback_auto_sd") == 'true':
-            self.sources = [i for i in self.sources if not i['quality'] in ['1080p', 'HD']]
-
-        u = None
-
-        self.progressDialog = control.progressDialog
-        self.progressDialog.create(control.addonInfo('name'), '')
-        self.progressDialog.update(0)
-
-        for i in range(len(self.sources)):
-            try:
-                if self.progressDialog.iscanceled(): break
-
-                self.progressDialog.update(int((100 / float(len(self.sources))) * i), str(self.sources[i]['label']), str(' '))
-
-                if xbmc.abortRequested == True: return sys.exit()
-
-                url = self.sourcesResolve(self.sources[i]['url'], self.sources[i]['provider'])
-                if url == None: raise Exception()
-                if u == None: u = url
-
-                self.selectedSource = self.sources[i]['label']
-                self.progressDialog.close()
-
-                return url
-            except:
-                pass
-
-        try: self.progressDialog.close()
-        except: pass
-
-        return u
-
-
-    def sourcesDictionary(self):
-        hosts = resolvers.info()
-        hosts = [i for i in hosts if 'host' in i]
-
-        self.rdDict = realdebrid.getHosts()
-        self.pzDict = premiumize.getHosts()
-
-        self.hostlocDict = [i['netloc'] for i in hosts if i['quality'] == 'High' and i['captcha'] == False]
-        try: self.hostlocDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostlocDict)]
-        except: pass
-        self.hostlocDict = [x for y,x in enumerate(self.hostlocDict) if x not in self.hostlocDict[:y]]
-
-        self.hostdirhdDict = [i['netloc'] for i in resolvers.info() if 'quality' in i and i['quality'] == 'High' and 'captcha' in i and i['captcha'] == False and 'a/c' in i and i['a/c'] == False]
-        try: self.hostdirhdDict = [i.lower().rsplit('.', 1)[0] for i in reduce(lambda x, y: x+y, self.hostdirhdDict)]
-        except: pass
-        self.hostdirhdDict = [x for y,x in enumerate(self.hostdirhdDict) if x not in self.hostdirhdDict[:y]]
-
-        self.hostprDict = [i['host'] for i in hosts if i['a/c'] == True]
-        try: self.hostprDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostprDict)]
-        except: pass
-        self.hostprDict = [x for y,x in enumerate(self.hostprDict) if x not in self.hostprDict[:y]]
-
-        self.hostcapDict = [i['host'] for i in hosts if i['captcha'] == True]
-        try: self.hostcapDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostcapDict)]
-        except: pass
-        self.hostcapDict = [i for i in self.hostcapDict if not i in self.rdDict + self.pzDict]
-
-        self.hosthdDict = [i['host'] for i in hosts if i['quality'] == 'High' and i['a/c'] == False and i['captcha'] == False]
-        self.hosthdDict += [i['host'] for i in hosts if i['quality'] == 'High' and i['a/c'] == False and i['captcha'] == True]
-        try: self.hosthdDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hosthdDict)]
-        except: pass
-
-        self.hosthqDict = [i['host'] for i in hosts if i['quality'] == 'High' and i['a/c'] == False and i['captcha'] == False]
-        try: self.hosthqDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hosthqDict)]
-        except: pass
-
-        self.hostmqDict = [i['host'] for i in hosts if i['quality'] == 'Medium' and i['a/c'] == False and i['captcha'] == False]
-        try: self.hostmqDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostmqDict)]
-        except: pass
-
-        self.hostlqDict = [i['host'] for i in hosts if i['quality'] == 'Low' and i['a/c'] == False and i['captcha'] == False]
-        try: self.hostlqDict = [i.lower() for i in reduce(lambda x, y: x+y, self.hostlqDict)]
-        except: pass
-
-        self.hostsdfullDict = self.hostprDict + self.hosthqDict + self.hostmqDict + self.hostlqDict
-
-        self.hosthdfullDict = self.hostprDict + self.hosthdDict
+    def getHostDict(self):
+        try:
+            hostDict = [i.domains for i in self.resolverList]
+            hostDict = [i.lower() for i in reduce(lambda x, y: x+y, hostDict)]
+            hostDict = [x for y,x in enumerate(hostDict) if x not in hostDict[:y]]
+        except:
+            hostDict = []
+        return hostDict

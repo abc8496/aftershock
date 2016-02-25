@@ -84,8 +84,6 @@ def insert(meta):
 
         dbcon.commit()
     except:
-        import traceback
-        traceback.print_exc()
         return
 
 
@@ -98,14 +96,14 @@ def insertImdb(items):
         t = int(time.time())
 
         for item in items:
-            try:
-                try: dbcur.execute("DELETE FROM meta_imdb WHERE title = '%s'" % (item['title']))
+            if not item['imdb'] == '0' or not item['tmdb'] == '0':
+                try:
+                    try: dbcur.execute("DELETE FROM meta_imdb WHERE title = '%s'" % (item['title']))
+                    except:
+                        pass
+                    dbcur.execute("INSERT INTO meta_imdb Values (?, ?, ?, ?)", (item['title'], item['imdb'], item['tmdb'], t))
                 except:
                     pass
-                dbcur.execute("INSERT INTO meta_imdb Values (?, ?, ?, ?)", (item['title'], item['imdb'], item['tmdb'], t))
-            except:
-                pass
-
         dbcon.commit()
     except:
         return
@@ -119,12 +117,13 @@ def fetchImdb(items):
             try:
                 dbcur.execute("SELECT imdb, tmdb FROM meta_imdb WHERE (title = '%s')" % (items[i]['title']))
                 item = dbcur.fetchone()
-                item = dict((k,v) for k, v in item.iteritems() if not v == '0')
 
-                try :items[i].update({'imdb':item['imdb'], 'tmdb': item['tmdb']})
+                try :items[i].update({'imdb':item[0], 'tmdb': item[1]})
                 except: pass
             except:
                 pass
+        dbcur.close()
+        dbcon.close()
     except:
         pass
     return items

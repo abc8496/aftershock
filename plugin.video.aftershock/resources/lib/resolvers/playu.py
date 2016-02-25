@@ -25,17 +25,9 @@ from resources.lib.libraries import jsunpack
 
 def resolve(url):
     try:
-        url = 'http://playu.net/embed-%s.html' % str(getVideoID(url))
         result = client.source(url)
         url = re.findall('file: "(.+?)"',result)[0]
         return url
     except:
         client.printException('playu.resolve')
-        return
-
-def getVideoID(url):
-    try :
-        return re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url + '/')[0][1]
-    except:
-        client.printException('getVideoID()')
         return

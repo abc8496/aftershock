@@ -19,132 +19,52 @@
 '''
 
 
-import re,urllib,urlparse
-
-from resources.lib.libraries import client
+import urlparse, urllib
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
+from resources.lib.libraries import client
 
+def request(url, resolverList):
 
-def request(url):
-    try:
-        if '</regex>' in url:
-            import regex ; url = regex.resolve(url)
+    try :
+        u = client.host(url)
 
-        rd = realdebrid.resolve(url)
-        if not rd == None: return rd
-        pz = premiumize.resolve(url)
-        if not pz == None: return pz
-
-        if url.startswith('rtmp'):
-            if len(re.compile('\s*timeout=(\d*)').findall(url)) == 0: url += ' timeout=10'
-            return url
-
-        u = urlparse.urlparse(url).netloc
-        u = u.replace('www.', '').replace('embed.', '').replace('config.','')
-        u = u.lower()
-
-        r = [i['class'] for i in info() if u in i['netloc']][0]
+        r = [i['class'] for i in info() if u in i['host']][0]
         r = __import__(r, globals(), locals(), [], -1)
         r = r.resolve(url)
-
-        if r == None:
-            import urlresolver
-            r = urlresolver.resolve(url)
-            if not r:
-                r = None
-
-        if r == None: return r
-        elif type(r) == list: return r
-        elif not r.startswith('http'): return r
-
-        try: h = dict(urlparse.parse_qsl(r.rsplit('|', 1)[1]))
-        except: h = dict('')
-
-        if not 'User-Agent' in h: h['User-Agent'] = client.agent()
-        if not 'Referer' in h: h['Referer'] = url
-
+        if not r:
+            raise Exception()
+        h = dict('')
+        h['User-Agent'] = client.agent()
+        h['Referer'] = url
         r = '%s|%s' % (r.split('|')[0], urllib.urlencode(h))
+
         return r
-    except:
-        try :
-            import urlresolver
-            r = urlresolver.resolve(url)
-            if not r :
-                url = r
-        except:
-            pass
+    except :
+        pass
+
+    u = url
+    try:
+        url = [(i, i.get_host_and_id(u)) for i in resolverList]
+        print '%s %s' % ('1', url)
+        url = [i for i in url if not i[1] == False]
+        print '%s %s' % ('2', url)
+        url = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in url]
+        print '%s %s' % ('3', url)
+        url = [i for i in url if not i[1] == False][0]
+        print '%s %s' % ('4', url)
+        url = url[0].get_media_url(url[2], url[3])
+        print '%s %s' % ('5', url)
         return url
-
-
-def supportedHosts():
-    supportedHost = []
-    supportedHost +=[i['host'] for i in info()]
-    from itertools import chain
-    supportedHost = set(chain.from_iterable(supportedHost))
-    supportedHost = list(supportedHost)
-    return supportedHost
+    except:
+        return False
 
 def info():
     return [
-    { 'class': 'playindiafilms',
-        'netloc': ['mediaplaybox', 'desiflicks'],
-        'host': ['mediaplaybox', 'desiflicks'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    },{ 'class': 'mediaplaybox',
-        'netloc': ['mediaplaybox.com'],
-        'host': ['mediaplaybox'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    },{ 'class': 'desiflicks',
-        'netloc': ['desiflicks.com', 'media.desiflicks.com'],
-        'host': ['desiflicks'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    },{ 'class': 'tellycolors',
-        'netloc': ['tellycolors.me', 'bestarticles.me', 'desimania.net', 'tellysony.com', 'tellyzee.com', 'hd-rulez.info'],
-        'host': ['tellycolors','bestarticles', 'letwatch', 'flash player'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    },{ 'class': 'playwire',
-        'netloc': ['playwire.com'],
-        'host': ['playwire'],
-        'quality': 'High',
-        'captcha': False,
-        'a/c': False
-    }, { 'class': 'vidshare',
-         'netloc': ['vidshare.us', 'idowatch.net', 'watchvideo2.us', 'letwatch.us', 'vidto.me'],
-         'host': ['vidshare', 'letwatch', 'vidto', 'idowatch'],
-         'quality': 'High',
-         'captcha': False,
-         'a/c': False
-    }, { 'class': 'vidzi',
-         'netloc': ['vidzi.tv'],
-         'host': ['vidzi',],
-         'quality': 'High',
-         'captcha': False,
-         'a/c': False
-    },{ 'class': 'dailymotion',
-         'netloc': ['dailymotion.com'],
-         'host': ['dailymotion'],
-         'quality': 'High',
-         'captcha': False,
-         'a/c': False
-    }, { 'class': 'playu',
-         'netloc': ['xpressvids.info', 'playu.net'],
-         'host': ['xpressvids.info', 'playu'],
-         'quality': 'High',
-         'captcha': False,
-         'a/c': False
-    }, { 'class': 'apnasave',
-         'netloc': ['apnasave.in'],
-         'host': ['apnasave'],
-         'quality': 'Low',
-         'captcha': False,
-         'a/c': False
-    }]
+          {'class':'desiflicks','host':'desiflicks'}
+        , {'class':'playwire','host': ['playwire']}
+        , {'class': 'vidshare', 'host': ['vidshare','idowatch','watchvideo2', 'tvlogy']}
+        , {'class': 'xpressvids', 'host': ['xpressvids']}
+        , {'class': 'playu', 'host': ['playu']}
+        , {'class': 'apnasave', 'host': 'apnasave' }
+    ]

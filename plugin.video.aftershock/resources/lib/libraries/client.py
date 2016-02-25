@@ -18,7 +18,7 @@
 '''
 
 
-import re,sys,urllib2,HTMLParser, time
+import re,sys,urllib2,HTMLParser, time, urlparse
 
 import control
 import traceback
@@ -227,14 +227,18 @@ def replaceHTMLCodes(txt):
     txt = txt.replace("&amp;", "&")
     return txt
 
+def host(url):
+    u = urlparse.urlparse(url).netloc
+    u = u.split(".")
+    u = u[len(u)-2]
+    return str(u)
 
 def agent():
     return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 
 def printException(function):
-    #try :debug = True if control.setting('debug') == 'true' else False
-    #except: debug = True
-    debug = True
+    try :debug = True if control.setting('debug') == 'true' else False
+    except: debug = True
     if debug:
         print 'Exception in %s' % (function)
         traceback.print_exc()

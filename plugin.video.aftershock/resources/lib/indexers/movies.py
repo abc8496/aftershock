@@ -51,55 +51,18 @@ class movies:
 
         self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
 
-    def get(self, url, idx=True, provider=None):
+    def get(self, url, idx=True, provider=None, lang=None):
         try:
             if not provider == None:
                 call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
-                self.list = cache.get(call.scn_full_list, 48, url)
-                self.list = self.predb(self.list)
+                self.list = cache.get(call.scn_full_list, 24, url, lang)
                 self.worker()
 
-            if idx == True: self.movieDirectory(self.list, provider)
+            if idx == True: self.movieDirectory(self.list, provider, lang)
             return self.list
         except:
-            client.printException('get(url=%s, provider=%s)' % (url, provider))
+            client.printException('get(url=%s, provider=%s, lang=%s)' % (url, provider, lang))
             pass
-
-    def predb(self, items):
-        for i in range(0, len(items)):
-            try: imdb = self.list[i]['imdb']
-            except: imdb = '0'
-            try: tmdb = self.list[i]['tmdb']
-            except: tmdb = '0'
-
-            if imdb == '0' and tmdb =='0':
-                title = self.list[i]['title']
-                url = self.search_link % ('%s', urllib.quote_plus(title))
-                try:
-                    result = client.request(url % self.tmdb_key)
-                    result = json.loads(result)
-                    item = result['results'][0]
-                    tmdb = item['id']
-                    tmdb = re.sub('[^0-9]', '', str(tmdb))
-                    tmdb = tmdb.encode('utf-8')
-                except:
-                    pass
-
-                if tmdb == '0':
-                    try :
-                        url = self.imdb_by_query % (urllib.quote_plus(self.list[i]['title']), self.list[i]['year'])
-                        item = client.request(url, timeout='10')
-                        item = json.loads(item)
-                        imdb = item['imdbID']
-                        imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
-                        imdb = imdb.encode('utf-8')
-                    except:
-                        pass
-
-                self.list[i].update({"tmdb":tmdb, "imdb":imdb})
-
-        metacache.insertImdb(self.list)
-        return self.list
 
     def tmdb_list(self, url):
         try:
@@ -178,7 +141,7 @@ class movies:
 
         return self.list
 
-    def search(self, query=None):
+    def search(self, query=None, lang=None):
         try:
             if query == None:
                 t = control.lang(30201).encode('utf-8')
@@ -199,7 +162,7 @@ class movies:
             client.printException('movies.search(query=%s)' % (query))
             return
 
-    def genres(self):
+    def genres(self, lang=None):
         try:
             self.list = []
             provider = 'apnaview_mv'
@@ -220,7 +183,7 @@ class movies:
                       'Suspense':'14'}
             keys = genres.keys()
             for i in keys:
-                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s' % provider, 'url':'/browse/hindi?genre=%s' % genres[i]})
+                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s&lang=%s' % (provider, lang), 'url':'/browse/%s?genre=%s' % (lang, genres[i])})
             self.list.sort()
             self.addDirectory(self.list)
             return self.list
@@ -229,10 +192,10 @@ class movies:
             return
 
 
-    def years(self):
+    def years(self, lang=None):
         year = (self.datetime.strftime('%Y'))
         provider = 'apnaview_mv'
-        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': '/browse/hindi?year=%s' % str(i), 'image': str(i)+'.png', 'action': 'movies&provider=%s' % provider})
+        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': '/browse/%s?year=%s' % (lang, str(i)), 'image': str(i)+'.png', 'action': 'movies&provider=%s&lang=%s' % (provider, lang)})
         self.addDirectory(self.list)
         return self.list
 
@@ -240,6 +203,7 @@ class movies:
         self.meta = []
         total = len(self.list)
         for i in range(0, total): self.list[i].update({'metacache': False})
+        self.list = metacache.fetchImdb(self.list)
         self.list = metacache.fetch(self.list, self.info_lang)
 
         itemsPerPage = 25
@@ -250,7 +214,8 @@ class movies:
             [i.start() for i in threads]
             [i.join() for i in threads]
 
-        self.list = [i for i in self.list if not i['imdb'] == '0' and not i['tmdb'] == '0']
+        metacache.insertImdb(self.list)
+        #self.list = [i for i in self.list if not (i['imdb'] == '0' and i['tmdb'] == '0')]
 
         if len(self.meta) > 0: metacache.insert(self.meta)
 
@@ -266,9 +231,24 @@ class movies:
 
             if not tmdb == '0': url = self.tmdb_info_link % tmdb
             elif not imdb == '0': url = self.tmdb_info_link % imdb
-            else: raise Exception()
+            else:
+                try :
+                    year = self.list[i]['year']
+                    years = ['%s' % str(year), '%s' % str(int(year)+1), '%s' % str(int(year)-1)]
+                    year = " ".join(years)
+                    url = self.imdb_by_query % (urllib.quote_plus(self.list[i]['title']), urllib.quote_plus(year))
+                    item = client.request(url, timeout='10')
+                    item = json.loads(item)
+                    imdb = item['imdbID']
+                    imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+                    imdb = imdb.encode('utf-8')
+                    self.list[i].update({"tmdb":'0', "imdb":imdb})
+                    url = self.tmdb_info_link % imdb
+                except:
+                    self.list[i].update({"tmdb":'0', "imdb":'0'})
+                    raise Exception()
 
-            item = client.request(url, timeout='10', error=True)
+            item = client.request(url, timeout='10', error=True, debug=True)
             item = json.loads(item)
 
             tmdb = item['id']
@@ -383,7 +363,7 @@ class movies:
             pass
 
 
-    def movieDirectory(self, items, provider=None):
+    def movieDirectory(self, items, provider=None, lang=None):
         if items == None or len(items) == 0: return
 
         isFolder = True if control.setting('autoplay') == 'false' and control.setting('host_select') == '1' else False
@@ -474,7 +454,7 @@ class movies:
         try:
             url = items[0]['next']
             if url == '': raise Exception()
-            url = '%s?action=movies&url=%s&provider=%s' % (sysaddon, urllib.quote_plus(url), provider)
+            url = '%s?action=movies&url=%s&provider=%s&lang=%s' % (sysaddon, urllib.quote_plus(url), provider, lang)
             addonNext = control.addonNext()
             item = control.item(label=control.lang(30213).encode('utf-8'), iconImage=addonNext, thumbnailImage=addonNext)
             item.addContextMenuItems([], replaceItems=False)

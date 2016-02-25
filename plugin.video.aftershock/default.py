@@ -22,6 +22,7 @@
 import urlparse,sys, xbmcaddon
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
+
 print params
 
 try:
@@ -113,16 +114,26 @@ try:
 except:
     provider = None
 
-print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] tvrage [%s] season [%s] episode [%s] tvshowtitle [%s] alter [%s] date [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] content [%s] provider [%s]" % (action, name, title, year, imdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, url, image, meta, query, source, content, provider)
+try:
+    lang = params['lang']
+except:
+    lang = None
+
+#print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] tvrage [%s] season [%s] episode [%s] tvshowtitle [%s] alter [%s] date [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] content [%s] provider [%s] lang [%s]" % (action, name, title, year, imdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, url, image, meta, query, source, content, provider, lang)
 
 if action == None:
     from resources.lib.indexers import navigator
     navigator.navigator().root()
 
+elif action == 'movieLangNavigator':
+    from resources.lib.indexers import navigator
+    # change to show language selection
+    navigator.navigator().desiLangMovies()
+
 elif action == 'movieNavigator':
     from resources.lib.indexers import navigator
     # change to show language selection
-    navigator.navigator().desiMovies()
+    navigator.navigator().desiMovies(lang)
 
 elif action == 'desiTVNavigator':
     from resources.lib.indexers import navigator
@@ -132,22 +143,21 @@ elif action == 'desiLiveNavigator':
     from resources.lib.indexers import livetv
     livetv.channels().get()
 
-
 elif action == 'movieGenres':
     from resources.lib.indexers import movies
-    movies.movies().genres()
+    movies.movies().genres(lang)
 
 elif action == 'movieYears':
     from resources.lib.indexers import movies
-    movies.movies().years()
+    movies.movies().years(lang)
 
 elif action == 'movies':
     from resources.lib.indexers import movies
-    movies.movies().get(url, provider=provider)
+    movies.movies().get(url, provider=provider, lang=lang)
 
 elif action == 'movieSearch':
     from resources.lib.indexers import movies
-    movies.movies().search(query)
+    movies.movies().search(query, lang)
 
 elif action == 'tvshows':
     from resources.lib.indexers import tvshows

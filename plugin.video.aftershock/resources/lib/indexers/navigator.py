@@ -42,7 +42,7 @@ class navigator:
 
     def root(self):
 
-        self.addDirectoryItem(30860, 'movieNavigator', 'movies.png','DefaultMovies.png')
+        self.addDirectoryItem(30860, 'movieLangNavigator', 'movies.png','DefaultMovies.png')
         self.addDirectoryItem(90114, 'desiLiveNavigator', 'live.png','DefaultMovies.png')
         self.addDirectoryItem(30861, 'desiTVNavigator', 'tv.png','DefaultMovies.png')
 
@@ -55,15 +55,21 @@ class navigator:
         from resources.lib.libraries import changelog
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
 
-    def desiMovies(self):
+    def desiLangMovies(self):
+        self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90105, 'movieNavigator&lang=%s' % 'hindi', 'hindimovies.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90106, 'movieNavigator&lang=%s' % 'tamil', 'tamil.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90107, 'movieNavigator&lang=%s' % 'telugu', 'telugu.png', 'DefaultMovies.png')
+        self.endDirectory()
+
+    def desiMovies(self, lang):
         playindia_provider = 'playindiafilms_mv'
         apnaview_provider = 'apnaview_mv'
-        self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90109, 'movieGenres', 'genre.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90110, 'movieYears', 'year.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s' % apnaview_provider, 'new.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90104, 'movies&url=added&provider=%s' % apnaview_provider, 'latest.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s' % playindia_provider, 'dvd2hd.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90109, 'movieGenres&lang=%s' % lang, 'genre.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90110, 'movieYears&lang=%s' % lang, 'year.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s&lang=%s' % (apnaview_provider, lang), 'new.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90104, 'movies&url=added&provider=%s&lang=%s' % (apnaview_provider, lang), 'latest.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s&lang=%s' % (playindia_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiLiveTV(self):

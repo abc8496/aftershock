@@ -61,7 +61,7 @@ class source:
             return
 
 
-    def get_sources(self, url, hosthdDict, hostDict, locDict):
+    def get_sources(self, url):
         try:
             quality = ''
             sources = []
@@ -75,10 +75,11 @@ class source:
 
             result = result.replace('\n','')
 
-            quality = 'CAM'
+            quality = ''
 
             result = client.parseDOM(result, name="div", attrs={"class" : "entry-content rich-content"})[0]
-            result = client.parseDOM(result, name="p", attrs={"style" : "text-align: justify;"})
+            #result = client.parseDOM(result, name="p", attrs={"style" : "text-align: justify;"})
+            result = client.parseDOM(result, name="p")
             try :
                 host = ''
                 urls = []
@@ -86,15 +87,26 @@ class source:
                 serversList = result[::2]
                 linksList = result[1::2]
                 for i in range(0, len(serversList)):
-                    host = serversList[i]
-                    links = linksList[i]
-                    host = re.compile('<strong>.* (.+?)</strong>').findall(host)[0]
-                    urls = client.parseDOM(links, name="a", ret="href")
-                    if len(urls) > 1:
-                        url = "##".join(urls)
-                    else:
-                        url = urls[0]
-                    sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'HindiLinks4U', 'url': url})
+                    try :
+                        links = linksList[i]
+                        urls = client.parseDOM(links, name="a", ret="href")
+
+                        for j in range(0, len(urls)):
+                            try :
+                                item = client.source(urls[j], mobile=True)
+                                item = client.parseDOM(item, "td")[0]
+                                item = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
+                                urls[j] = item
+                            except:
+                                pass
+                        if len(urls) > 1:
+                            url = "##".join(urls)
+                        else:
+                            url = urls[0]
+                        host = client.host(urls[0])
+                        sources.append({'source': host, 'parts': str(len(urls)), 'quality': quality, 'provider': 'HindiLinks4U', 'url': url, 'direct':False})
+                    except:
+                        pass
             except:
                 pass
             return sources
@@ -102,7 +114,7 @@ class source:
             return sources
 
 
-    def resolve(self, url):
+    def resolve(self, url, resolverList):
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -112,8 +124,11 @@ class source:
 
             links = []
             for item in url:
-                links.append(resolvers.request(item))
+                r = resolvers.request(item, resolverList)
+                if not r :
+                    raise Exception()
+                links.append(r)
             url = links
             return url
         except:
-            return
+            return False
