@@ -44,12 +44,10 @@ def resolve(url):
             pass
         return url
     except:
-        client.printException('apnasave.resolve(url=%s)' % url)
         return
 
 def getVideoID(url):
     try :
         return re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url + '/')[0][1]
     except:
-        client.printException('getVideoID()')
         return

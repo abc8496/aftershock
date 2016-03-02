@@ -30,12 +30,10 @@ def resolve(url):
         url = re.findall('file: "(.+?)"',result)[0]
         return url
     except:
-        client.printException('xpressvids.resolve')
         return
 
 def getVideoID(url):
     try :
         return re.compile('(id|url|v|si|sim|data-config)=(.+?)/').findall(url + '/')[0][1]
     except:
-        client.printException('getVideoID()')
         return

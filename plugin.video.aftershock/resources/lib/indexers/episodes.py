@@ -557,7 +557,6 @@ class episodes:
                 self.list[i].update({'season':'0', 'episode':'0','imdb':'0', 'tmdb':'0', 'tvdb':'0', 'tvrage':'0', 'year':'0', 'alter':'0','poster':'0', 'banner':'0', 'fanart':'0', 'thumb':'0', 'premiered':'0', 'duration':'30'})
             return self.list
         except:
-            client.printException('super_info')
             pass
 
     def episodeDirectory(self, items, provider=None):
@@ -662,7 +661,6 @@ class episodes:
 
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
             except:
-                client.printException('episodeDirectory')
                 pass
 
         try:
@@ -675,7 +673,6 @@ class episodes:
             if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
             control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=True)
         except:
-            client.printException('movies.movieDirectory(provider=%s, item=next)' % (provider))
             pass
 
         control.content(int(sys.argv[1]), 'episodes')

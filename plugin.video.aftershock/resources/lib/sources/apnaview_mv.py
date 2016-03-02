@@ -36,7 +36,7 @@ class source:
         self.sort_link = '&order=desc&sort=date'
         self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
 
-    def scn_full_list(self, url, lang=None):
+    def scn_full_list(self, url, lang=None, provider=None):
         tmpList = []
         self.list = []
 
@@ -98,7 +98,6 @@ class source:
             url = re.compile('(.+?)&amp;page=(.+?)').findall(url)[0]
             self.list[0].update({'next':url[0]+'&page='+url[1]})
         except:
-            client.printException('Exception in NEXT')
             pass
 
         return self.list

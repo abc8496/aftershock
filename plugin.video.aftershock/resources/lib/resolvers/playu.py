@@ -29,5 +29,4 @@ def resolve(url):
         url = re.findall('file: "(.+?)"',result)[0]
         return url
     except:
-        client.printException('playu.resolve')
         return

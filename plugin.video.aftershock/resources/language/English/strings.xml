@@ -70,6 +70,7 @@
     <string id="30515">Loading sources</string>
 
     <string id="30800">General</string>
+    <string id="30801">Index Provider</string>
     <string id="30802">Enable Fanart</string>
     <string id="30804">Sources Timeout</string>
     <string id="30805">Main menu</string>
@@ -87,23 +88,19 @@
     <string id="30845">Playback Info</string>
     <string id="30860">Movies</string>
     <string id="30861">TV</string>
+    <string id="30862">Providers</string>
 
     <string id="30870">HD Hosts</string>
     <string id="30871">SD Hosts</string>
 
-    <string id="30881">Priority 1</string>
-    <string id="30882">Priority 2</string>
-    <string id="30883">Priority 3</string>
-    <string id="30884">Priority 4</string>
-    <string id="30885">Priority 5</string>
-    <string id="30886">Priority 6</string>
-    <string id="30887">Priority 7</string>
-    <string id="30888">Priority 8</string>
-    <string id="30889">Priority 9</string>
-    <string id="30890">Priority 10</string>
-
     <string id="30910">Accounts</string>
-    <string id="30911">User</string>
+    <string id="30911">IMDB</string>
+    <string id="30912">User</string>
+    <string id="30913">Hotstar</string>
+    <string id="30914">IP Address</string>
+    <string id="30915">Eros Now</string>
+    <string id="30916">Username</string>
+    <string id="30917">Password</string>
 
     <string id="90103">New Releases</string>
     <string id="90104">Recently Added</string>

@@ -1,4 +1,18 @@
 ------------------------
+Aftershock v3.2.0 (02-Mar-16)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+
+- Bug Fixes
+- New Provider Added
+    - HotStar
+    - YoDesi
+    - Ditto
+    - Movie25
+    - NineMovies
+    - OneMovies
+
+------------------------
 Aftershock v3.1.0 (25-Feb-16)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]

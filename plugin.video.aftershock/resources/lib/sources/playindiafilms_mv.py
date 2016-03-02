@@ -35,11 +35,11 @@ class source:
         self.info_link = ''
         self.now = datetime.datetime.now()
         self.theaters_link = '/category/%s/feed' % (self.now.year)
-        self.added_link = '/category/hindi-movies/feed'
+        self.added_link = '/category/%s-movies/feed'
         self.HD_link = '/category/%s-blurays/feed'
         self.list = []
 
-    def scn_full_list(self, url, lang=None):
+    def scn_full_list(self, url, lang=None,  provider=None):
         tmpList = []
         self.list = []
 
@@ -240,7 +240,6 @@ class source:
             url = links
             return url
         except:
-            client.printException('playindiafilms.resolve')
             return False
 
 

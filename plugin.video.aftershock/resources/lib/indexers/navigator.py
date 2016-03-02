@@ -63,13 +63,13 @@ class navigator:
         self.endDirectory()
 
     def desiMovies(self, lang):
-        playindia_provider = 'playindiafilms_mv'
-        apnaview_provider = 'apnaview_mv'
+        index_provider = control.setting('idx_provider')
         self.addDirectoryItem(90109, 'movieGenres&lang=%s' % lang, 'genre.png', 'DefaultMovies.png')
         self.addDirectoryItem(90110, 'movieYears&lang=%s' % lang, 'year.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s&lang=%s' % (apnaview_provider, lang), 'new.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90104, 'movies&url=added&provider=%s&lang=%s' % (apnaview_provider, lang), 'latest.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s&lang=%s' % (playindia_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s_mv&lang=%s' % (index_provider, lang), 'new.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90104, 'movies&url=added&provider=%s_mv&lang=%s' % (index_provider, lang), 'latest.png', 'DefaultMovies.png')
+        index_provider = 'playindiafilms'
+        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiLiveTV(self):

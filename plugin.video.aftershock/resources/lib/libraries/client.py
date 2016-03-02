@@ -82,6 +82,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
                     time.sleep(retryafter)
                 if error == False: return
             except:
+                import traceback
+                traceback.print_exc()
                 pass
         if output == 'cookie':
             result = []
@@ -228,10 +230,8 @@ def replaceHTMLCodes(txt):
     return txt
 
 def host(url):
-    u = urlparse.urlparse(url).netloc
-    u = u.split(".")
-    u = u[len(u)-2]
-    return str(u)
+    host = re.findall('([\w]+[.][\w]+)$', urlparse.urlparse(url.strip().lower()).netloc)[0]
+    return str(host)
 
 def agent():
     return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'

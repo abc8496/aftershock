@@ -101,6 +101,10 @@ class source:
         except:
             return
 
+    def get_show(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
+        if tvshowurl:
+            return tvshowurl
+
     def get_episodes(self, title, url):
         try :
             episodes = []
@@ -136,8 +140,12 @@ class source:
             episodes[0].update({'next':next})
             return episodes
         except:
-            client.printException('desirulez_tv.get_episodes(title=%s, url=%s)' % (title, url))
             return
+
+    def get_episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
+        if ep_url :
+            return ep_url
+
     def get_sources(self, url):
         try:
             quality = ''
@@ -173,10 +181,7 @@ class source:
                             try :
                                 result = client.source(urls[i])
                                 item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
-                                try :
-                                    rUrl = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
-                                except:
-                                    rUrl = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
+                                rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                                 urls[i] = rUrl
                             except :
                                 pass
@@ -187,7 +192,7 @@ class source:
                     quality = child.getText()
                     if '720p HD' in quality:
                         quality = 'HD'
-                    elif 'DVD' in quality:
+                    else :
                         quality = 'SD'
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']))
@@ -197,10 +202,7 @@ class source:
                     try :
                         result = client.source(urls[i])
                         item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
-                        try :
-                            rUrl = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
-                        except:
-                            rUrl = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
+                        rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                         urls[i] = rUrl
                     except :
                         pass
@@ -209,7 +211,6 @@ class source:
                 sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url,'direct':False})
             return sources
         except:
-            client.printException('desirulez_tv.get_sources')
             return sources
 
 

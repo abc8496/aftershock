@@ -124,7 +124,6 @@ class sources:
             try: self.progressDialog.close()
             except: pass
         except:
-            client.printException('addItem')
             control.infoDialog(control.lang(30501).encode('utf-8'))
             try: self.progressDialog.close()
             except: pass
@@ -347,7 +346,9 @@ class sources:
         try:
             sources = []
             sources = call.get_sources(url)
-            if sources == None: sources = []
+            if sources == None:
+                raise Exception()
+                sources = []
             self.sources.extend(sources)
             dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))
             dbcur.execute("INSERT INTO rel_src Values (?, ?, ?, ?, ?, ?)", (source, imdb, '', '', json.dumps(sources), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
@@ -369,7 +370,6 @@ class sources:
                 dbcur.execute("CREATE TABLE IF NOT EXISTS rel_url (""source TEXT, ""imdb_id TEXT, ""season TEXT, ""episode TEXT, ""rel_url TEXT, ""UNIQUE(source, imdb_id, season, episode)"");")
                 dbcur.execute("CREATE TABLE IF NOT EXISTS rel_src (""source TEXT, ""imdb_id TEXT, ""season TEXT, ""episode TEXT, ""hosts TEXT, ""added TEXT, ""UNIQUE(source, imdb_id, season, episode)"");")
             except:
-                client.printException('Exception in creating table')
                 pass
 
             try:
@@ -383,7 +383,6 @@ class sources:
                     sources = json.loads(match[4])
                     return self.sources.extend(sources)
             except:
-                client.printException('Exception -> No existing sources')
                 pass
 
             try:
@@ -392,19 +391,17 @@ class sources:
                 url = dbcur.fetchone()
                 url = url[4]
             except:
-                client.printException('Exception -> Show URL not cached')
                 pass
 
             try:
                 if url == None:
-                    url = meta['tvshowurl']
-                    #url = call.get_show(imdb, tvdb, tvshowtitle, year)
+                    tvshowurl = meta['tvshowurl']
+                    url = call.get_show(tvshowurl, imdb, tvdb, tvshowtitle, year)
                 if url == None: raise Exception()
                 dbcur.execute("DELETE FROM rel_url WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, '', ''))
                 dbcur.execute("INSERT INTO rel_url Values (?, ?, ?, ?, ?)", (source, imdb, '', '', url))
                 dbcon.commit()
             except:
-                client.printException('Exception -> while saving show url')
                 pass
 
             try:
@@ -419,8 +416,7 @@ class sources:
             try:
                 if url == None: raise Exception()
                 if ep_url == None:
-                    ep_url = meta['url']
-                    #ep_url = call.get_episode(url, imdb, tvdb, title, date, season, episode)
+                    ep_url = call.get_episode(url, meta['url'], imdb, tvdb, title, date, season, episode)
                 if ep_url == None: raise Exception()
                 dbcur.execute("DELETE FROM rel_url WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, imdb, season, episode))
                 dbcur.execute("INSERT INTO rel_url Values (?, ?, ?, ?, ?)", (source, imdb, season, episode, ep_url))
@@ -437,10 +433,10 @@ class sources:
                 dbcur.execute("INSERT INTO rel_src Values (?, ?, ?, ?, ?, ?)", (source, imdb, season, episode, json.dumps(sources), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                 dbcon.commit()
             except:
-                client.printException('')
                 pass
         except:
             client.printException('sources.getEpisodeSource')
+            pass
 
 
     def alterSources(self, url, meta):
@@ -475,12 +471,11 @@ class sources:
 
     def sourcesFilter(self):
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
-        #self.sources = sorted(self.sources, key=lambda k: k['source'])
+        self.sources = sorted(self.sources, key=lambda k: k['source'])
 
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
-        for host in resolvers.info() : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host['host']]
         self.sources = filter
 
         filter = []
@@ -491,6 +486,7 @@ class sources:
         if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == 'CAM']
         if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
+
 
         for i in range(len(self.sources)):
             s = self.sources[i]['source'].lower()
@@ -506,9 +502,9 @@ class sources:
 
             label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
 
-            if q in ['1080p', 'HD']: label += '%s%s | [B][I]%s [/I][/B]' % (s, d, q)
-            elif q == '' : label += '%s%s' % (s, d)
-            else: label += '%s%s | [I]%s [/I]' % (s, d, q)
+            if q in ['1080p', 'HD']: label += '%s%s | [B][I]%s [/I][/B]' % (s.rsplit('.', 1)[0], d, q)
+            elif q == '' : label += '%s%s' % (s.rsplit('.', 1)[0], d)
+            else: label += '%s%s | [I]%s [/I]' % (s.rsplit('.', 1)[0], d, q)
 
             pts = None
             try : pts = self.sources[i]['parts']
@@ -570,6 +566,12 @@ class sources:
             hostDict = [i.domains for i in self.resolverList]
             hostDict = [i.lower() for i in reduce(lambda x, y: x+y, hostDict)]
             hostDict = [x for y,x in enumerate(hostDict) if x not in hostDict[:y]]
+
+            customHostDict = [x['host'] for x in resolvers.info()]
+            customHostDict = [i.lower() for i in reduce(lambda x, y: x+y, customHostDict)]
+            customHostDict = [x for y,x in enumerate(customHostDict) if x not in customHostDict[:y]]
+            hostDict += customHostDict
+            hostDict = list(set(hostDict))
         except:
             hostDict = []
         return hostDict

@@ -49,7 +49,6 @@ class channels:
             self.channelDirectory(self.list)
             return self.list
         except :
-            client.printException('livetv.get()')
             pass
 
     def channelDirectory(self, items):

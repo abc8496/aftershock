@@ -42,5 +42,4 @@ def resolve(url):
 
         return resolvers.request(rUrl)
     except:
-        client.printException('tellycolors.resolve(url=%s)' % url)
         return

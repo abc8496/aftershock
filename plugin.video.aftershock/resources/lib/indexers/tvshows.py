@@ -63,7 +63,6 @@ class tvshows:
             if idx == True: self.tvshowDirectory(self.list)
             return self.list
         except:
-            client.printException('tvshows.get(url=%s,provider=%s,network=%s)' % (url, provider, network))
             pass
 
     def get_shows(self, url, provider=None, network=None):
@@ -79,7 +78,6 @@ class tvshows:
                 self.network = ''
             return self.list
         except:
-            client.printException('tvshows.get_shows(provider=%s, netowrk=%s, url=%s)' % (provider, network, url))
             pass
     def predb(self, items):
         for i in range(0, len(self.list)):
@@ -432,7 +430,6 @@ class tvshows:
 
             self.meta.append({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'tvrage': tvrage, 'poster': poster, 'banner': banner, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'cast': cast, 'plot': plot}})
         except:
-            client.printException('tvshows.super_info()')
             pass
 
 
@@ -511,7 +508,6 @@ class tvshows:
                 item.addContextMenuItems(cm, replaceItems=True)
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=True)
             except:
-                client.printException('tvshows.tvshowdirectory()')
                 pass
 
         control.content(int(sys.argv[1]), 'tvshows')

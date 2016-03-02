@@ -46,25 +46,25 @@ def request(url, resolverList):
     u = url
     try:
         url = [(i, i.get_host_and_id(u)) for i in resolverList]
-        print '%s %s' % ('1', url)
+        #print '%s %s' % ('1', url)
         url = [i for i in url if not i[1] == False]
-        print '%s %s' % ('2', url)
+        #print '%s %s' % ('2', url)
         url = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in url]
-        print '%s %s' % ('3', url)
+        #print '%s %s' % ('3', url)
         url = [i for i in url if not i[1] == False][0]
-        print '%s %s' % ('4', url)
+        #print '%s %s' % ('4', url)
         url = url[0].get_media_url(url[2], url[3])
-        print '%s %s' % ('5', url)
+        #print '%s %s' % ('5', url)
         return url
     except:
         return False
 
 def info():
     return [
-          {'class':'desiflicks','host':'desiflicks'}
-        , {'class':'playwire','host': ['playwire']}
-        , {'class': 'vidshare', 'host': ['vidshare','idowatch','watchvideo2', 'tvlogy']}
+          {'class':'desiflicks','host':['desiflicks.com']}
+        , {'class':'playwire','host': ['playwire.com']}
+        , {'class': 'vidshare', 'host': ['vidshare.us','idowatch.us','watchvideo2.us', 'tvlogy.to']}
         , {'class': 'xpressvids', 'host': ['xpressvids']}
-        , {'class': 'playu', 'host': ['playu']}
-        , {'class': 'apnasave', 'host': 'apnasave' }
+        , {'class': 'playu', 'host': ['playu.net']}
+        , {'class': 'apnasave', 'host': ['apnasave.in'] }
     ]

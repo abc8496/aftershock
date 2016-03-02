@@ -41,5 +41,4 @@ def resolve(url):
             url = None
         return url
     except:
-        client.printException('vidshare.me resolver')
         return

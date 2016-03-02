@@ -55,13 +55,12 @@ class movies:
         try:
             if not provider == None:
                 call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
-                self.list = cache.get(call.scn_full_list, 24, url, lang)
+                self.list = cache.get(call.scn_full_list, 24, url, lang, provider)
                 self.worker()
 
             if idx == True: self.movieDirectory(self.list, provider, lang)
             return self.list
         except:
-            client.printException('get(url=%s, provider=%s, lang=%s)' % (url, provider, lang))
             pass
 
     def tmdb_list(self, url):
@@ -159,7 +158,6 @@ class movies:
             self.movieDirectory(self.list)
             return self.list
         except:
-            client.printException('movies.search(query=%s)' % (query))
             return
 
     def genres(self, lang=None):
@@ -188,7 +186,6 @@ class movies:
             self.addDirectory(self.list)
             return self.list
         except:
-            client.printException('genres')
             return
 
 
@@ -448,7 +445,6 @@ class movies:
                 item.addContextMenuItems(cm, replaceItems=True)
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
             except:
-                client.printException('movies.movieDirectory(provider=%s, item=%s)' % (provider, i))
                 pass
 
         try:
@@ -461,7 +457,6 @@ class movies:
             if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
             control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=True)
         except:
-            client.printException('movies.movieDirectory(provider=%s, item=next)' % (provider))
             pass
 
 
@@ -498,7 +493,6 @@ class movies:
                 if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=True)
             except:
-                client.printException('movies.addDirectory(item=%s)' % (i))
                 pass
         views.setView('movies', {'skin.confluence': control.viewMode['thumbnails']})
         control.directory(int(sys.argv[1]), cacheToDisc=True)
