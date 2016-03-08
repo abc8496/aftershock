@@ -44,11 +44,12 @@ class source:
         try :
             url = getattr(self, url + '_link')
             url = url % lang
+            url += self.sort_link
         except:pass
 
         links = [self.base_link, self.base_link, self.base_link]
         for base_link in links:
-            try: result = client.source(base_link + url + self.sort_link)
+            try: result = client.source(base_link + url)
             except:
                 result = ''
 
@@ -95,8 +96,10 @@ class source:
         try :
             next = client.parseDOM(result, "li", attrs={"class":"next page"})
             url = client.parseDOM(next, "a", ret="href")[0]
-            url = re.compile('(.+?)&amp;page=(.+?)').findall(url)[0]
-            self.list[0].update({'next':url[0]+'&page='+url[1]})
+            url = url.replace("&amp;", "&").replace(self.base_link, '')
+            self.list[0].update({'next':'%s' % (url)})
+            #url = re.compile('(.+?)&amp;page=(.+?)').findall(url)[0]
+            #self.list[0].update({'next':url[0]+'&page='+url[1]})
         except:
             pass
 
@@ -155,12 +158,9 @@ class source:
                         result = result.replace('\n','').replace('\t','')
                         if 'Could not connect to mysql! Please check your database' in result:
                             result = client.source(urls[i], mobile=True)
-                        try :
-                            item = client.parseDOM(result, "div", attrs={"class":"videoplayer"})[0]
-                            item = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
-                        except :
-                            item = re.compile('(SRC|src|data-config)=\'(.+?)\'').findall(item)[0][1]
-                            pass
+
+                        item = client.parseDOM(result, "div", attrs={"class":"videoplayer"})[0]
+                        item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                         urls[i] = item
                     host = client.host(urls[0])
                     if len(urls) > 1:

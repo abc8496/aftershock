@@ -5,6 +5,21 @@ Aftershock v3.2.0 (02-Mar-16)
 
 - Bug Fixes
 - New Provider Added
+    - iBollyTV
+- New Movie Languages Supported
+    - Punjabi
+    - Malayalam
+    - Bengali
+    - Kannada
+    - Gujarati
+    - Marathi
+------------------------
+Aftershock v3.2.0 (02-Mar-16)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+
+- Bug Fixes
+- New Provider Added
     - HotStar
     - YoDesi
     - Ditto

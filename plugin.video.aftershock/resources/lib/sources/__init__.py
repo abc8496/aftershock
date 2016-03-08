@@ -241,7 +241,8 @@ class sources:
             except: sourceDict = [(i, 'true') for i in sourceDict]
         else:
             sourceDict = [i for i in sourceDict if i.endswith(('_tv', '_mv_tv'))]
-            try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i) + '_tv')) for i in sourceDict]
+            #try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i) + '_tv')) for i in sourceDict]
+            try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
             except: sourceDict = [(i, 'true') for i in sourceDict]
 
         threads = []

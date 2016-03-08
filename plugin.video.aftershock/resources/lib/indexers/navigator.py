@@ -39,6 +39,17 @@ sysaddon = sys.argv[0]
 
 
 class navigator:
+    def __init__(self):
+        self.index_provider = control.setting('idx_provider')
+        self.langProviderMap = {'hindi':self.index_provider,
+                                'tamil':self.index_provider,
+                                'telugu':self.index_provider,
+                                'marathi':'ibollytv',
+                                'punjabi':'ibollytv',
+                                'bengali':'ibollytv',
+                                'gujarati':'ibollytv',
+                                'malayalam':'ibollytv',
+                                'kannada':'ibollytv'}
 
     def root(self):
 
@@ -60,16 +71,24 @@ class navigator:
         self.addDirectoryItem(90105, 'movieNavigator&lang=%s' % 'hindi', 'hindimovies.png', 'DefaultMovies.png')
         self.addDirectoryItem(90106, 'movieNavigator&lang=%s' % 'tamil', 'tamil.png', 'DefaultMovies.png')
         self.addDirectoryItem(90107, 'movieNavigator&lang=%s' % 'telugu', 'telugu.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90118, 'movieNavigator&lang=%s' % 'marathi', 'marathi.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90119, 'movieNavigator&lang=%s' % 'punjabi', 'punjabi.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90120, 'movieNavigator&lang=%s' % 'bengali', 'bengali.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90121, 'movieNavigator&lang=%s' % 'gujarati', 'gujarati.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90122, 'movieNavigator&lang=%s' % 'malayalam', 'malayalam.png', 'DefaultMovies.png')
+        self.addDirectoryItem(90123, 'movieNavigator&lang=%s' % 'kannada', 'kannada.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiMovies(self, lang):
-        index_provider = control.setting('idx_provider')
-        self.addDirectoryItem(90109, 'movieGenres&lang=%s' % lang, 'genre.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90110, 'movieYears&lang=%s' % lang, 'year.png', 'DefaultMovies.png')
+        index_provider = self.langProviderMap[lang]
+        if lang in 'hindi, tamil, telugu':
+            self.addDirectoryItem(90109, 'movieGenres&provider=%s_mv&lang=%s' % (index_provider, lang), 'genre.png', 'DefaultMovies.png')
+            self.addDirectoryItem(90110, 'movieYears&provider=%s_mv&lang=%s' % (index_provider, lang), 'year.png', 'DefaultMovies.png')
         self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s_mv&lang=%s' % (index_provider, lang), 'new.png', 'DefaultMovies.png')
         self.addDirectoryItem(90104, 'movies&url=added&provider=%s_mv&lang=%s' % (index_provider, lang), 'latest.png', 'DefaultMovies.png')
-        index_provider = 'playindiafilms'
-        self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
+        if lang in 'hindi, tamil, telugu':
+            index_provider = 'playindiafilms'
+            self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
     def desiLiveTV(self):

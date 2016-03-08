@@ -140,7 +140,7 @@ class source:
             episodes[0].update({'next':next})
             return episodes
         except:
-            return
+            return episodes
 
     def get_episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
         if ep_url :

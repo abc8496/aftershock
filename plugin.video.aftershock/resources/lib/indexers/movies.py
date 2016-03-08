@@ -239,7 +239,9 @@ class movies:
                     imdb = item['imdbID']
                     imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
                     imdb = imdb.encode('utf-8')
-                    self.list[i].update({"tmdb":'0', "imdb":imdb})
+                    try : poster = item['Poster']
+                    except:poster=self.list[i]['poster']
+                    self.list[i].update({"tmdb":'0', "imdb":imdb, "poster":poster})
                     url = self.tmdb_info_link % imdb
                 except:
                     self.list[i].update({"tmdb":'0', "imdb":'0'})
@@ -261,7 +263,7 @@ class movies:
             if not imdb == '0': self.list[i].update({'imdb': imdb, 'code': imdb})
 
             poster = item['poster_path']
-            if poster == '' or poster == None: poster = '0'
+            if poster == '' or poster == 'N/A' or poster == None: poster = '0'
             if not poster == '0': poster = '%s%s' % (self.tmdb_poster, poster)
             poster = poster.encode('utf-8')
             if not poster == '0': self.list[i].update({'poster': poster})
@@ -376,7 +378,7 @@ class movies:
 
         try:
             from metahandler import metahandlers
-            metaget = metahandlers.MetaData(preparezip=False)
+            metaget = metahandlers.MetaData(tmdb_api_key=self.tmdb_key, preparezip=False)
         except:
             pass
 
