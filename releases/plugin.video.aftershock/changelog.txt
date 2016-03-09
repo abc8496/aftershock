@@ -1,5 +1,11 @@
 ------------------------
-Aftershock v3.2.0 (02-Mar-16)
+Aftershock v3.3.1 (08-Mar-16)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Hotfix for TV shows issue
+
+------------------------
+Aftershock v3.3.0 (08-Mar-16)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
 

@@ -31,8 +31,8 @@
 		<setting id="onemovies" type="bool" label="OneMovies" default="true" />
 		<setting id="hotstar" type="bool" label="HotStar" default="true" />
 		<setting id="ibollytv" type="bool" label="iBollyTV" default="true" />
-		<setting id="yodesi_tv" type="bool" label="YoDesi" default="true"/>
-		<setting id="desirulez_tv" type="bool" label="DesiRulez" default="true" />
+		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>
+		<setting id="desirulez" type="bool" label="DesiRulez" default="true" />
 	</category>
 
 	<category label="30910">

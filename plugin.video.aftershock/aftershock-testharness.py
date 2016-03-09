@@ -20,6 +20,7 @@ try :
     params = {'action': 'movies', 'lang': 'marathi', 'url': '/watch-marathi-movies-online?sort=latest&year=2016&page=2', 'provider': 'ibollytv_mv'}
     params = {'action': 'movies', 'lang': 'punjabi', 'url': 'theaters', 'provider': 'ibollytv_mv'}
     params = {'action': 'movies', 'lang': 'kannada', 'url': 'added', 'provider': 'ibollytv_mv'}
+    params = {'tmdb': '0', 'episode': '0', 'name': '7th March 2016', 'title': '7th March 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Yeh Rishta Kya Kehlata Hai', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/3699-Yeh-Rishta-Kya-Kehlata-Hai?s=fa29871dc1e6cd307816b20f0b40635a", "title": "7th March 2016", "url": "threads/862392-Yeh-Rishta-Kya-Kehlata-Hai-7th-March-2016-Watch-Online?s=fa29871dc1e6cd307816b20f0b40635a", "tvshowtitle": "Yeh Rishta Kya Kehlata Hai", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Yeh+Rishta+Kya+Kehlata+Hai", "name": "7th March 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'sources', 'tvrage': '0', 'alter': '0'}
 
 
 
@@ -134,7 +135,7 @@ try :
     #einthusan_mv.source().get_movie(imdb, title, year)
 
     from resources.lib.sources import sources
-    movies.movies().get(url, provider=provider, lang=lang)
+    #movies.movies().get(url, provider=provider, lang=lang)
     #episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
     sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
     #sources().playItem(content, name, year, imdb, tvdb, source)
