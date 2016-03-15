@@ -31,6 +31,8 @@
 		<setting id="onemovies" type="bool" label="OneMovies" default="true" />
 		<setting id="hotstar" type="bool" label="HotStar" default="true" />
 		<setting id="ibollytv" type="bool" label="iBollyTV" default="true" />
+		<setting id="desihit" type="bool" label="DesiHits" default="true" />
+		<setting id="desihdmovies" type="bool" label="DesiHDMovies" default="true" />
 		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>
 		<setting id="desirulez" type="bool" label="DesiRulez" default="true" />
 	</category>

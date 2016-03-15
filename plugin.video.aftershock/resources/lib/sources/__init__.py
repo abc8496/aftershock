@@ -19,7 +19,7 @@
 '''
 
 
-import sys,pkgutil,re,json,urllib,urlparse,datetime,time
+import sys,pkgutil,re,json,urllib,urlparse,datetime,time, random
 
 try: import xbmc
 except: pass
@@ -478,6 +478,8 @@ class sources:
         filter += [i for i in self.sources if i['direct'] == True]
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
         self.sources = filter
+
+        random.shuffle(self.sources)
 
         filter = []
         filter += [i for i in self.sources if i['quality'] == '1080p']

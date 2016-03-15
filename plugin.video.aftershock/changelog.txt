@@ -1,4 +1,12 @@
 ------------------------
+Aftershock v3.4.0 (15-Mar-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- New Provider Added
+    - DesiHits
+    - DesiHDMovies
+
+------------------------
 Aftershock v3.3.1 (08-Mar-16)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]

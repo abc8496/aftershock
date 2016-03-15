@@ -154,12 +154,12 @@ class source:
                     urls = client.parseDOM(item, "td")[1]
                     urls = client.parseDOM(urls, "a", ret="href")
                     for i in range(0, len(urls)):
-                        result = client.source(urls[i], mobile=False)
-                        result = result.replace('\n','').replace('\t','')
+                        uResult = client.source(urls[i], mobile=False)
+                        uResult = uResult.replace('\n','').replace('\t','')
                         if 'Could not connect to mysql! Please check your database' in result:
-                            result = client.source(urls[i], mobile=True)
+                            uResult = client.source(urls[i], mobile=True)
 
-                        item = client.parseDOM(result, "div", attrs={"class":"videoplayer"})[0]
+                        item = client.parseDOM(uResult, "div", attrs={"class":"videoplayer"})[0]
                         item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                         urls[i] = item
                     host = client.host(urls[0])
