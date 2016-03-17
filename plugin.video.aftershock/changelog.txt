@@ -1,4 +1,11 @@
 ------------------------
+Aftershock v3.4.1 (17-Mar-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Fixed HD Movies
+- Updated Providers
+
+------------------------
 Aftershock v3.4.0 (15-Mar-2016)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]

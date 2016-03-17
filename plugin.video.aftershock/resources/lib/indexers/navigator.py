@@ -87,7 +87,7 @@ class navigator:
         self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s_mv&lang=%s' % (index_provider, lang), 'new.png', 'DefaultMovies.png')
         self.addDirectoryItem(90104, 'movies&url=added&provider=%s_mv&lang=%s' % (index_provider, lang), 'latest.png', 'DefaultMovies.png')
         if lang in 'hindi, tamil, telugu':
-            index_provider = 'playindiafilms'
+            index_provider = 'hdbuffer'
             self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 

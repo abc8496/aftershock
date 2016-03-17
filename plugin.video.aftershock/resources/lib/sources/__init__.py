@@ -485,9 +485,9 @@ class sources:
         filter += [i for i in self.sources if i['quality'] == '1080p']
         filter += [i for i in self.sources if i['quality'] == 'HD']
         filter += [i for i in self.sources if i['quality'] == 'SD']
-        if len(filter) < 10: filter += [i for i in self.sources if i['quality'] == 'SCR']
-        if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == 'CAM']
-        if len(filter) < 10:filter += [i for i in self.sources if i['quality'] == '']
+        if len(filter) < 15: filter += [i for i in self.sources if i['quality'] == 'SCR']
+        if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == 'CAM']
+        if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
 
 

@@ -46,7 +46,6 @@ class source:
             title = cleantitle.movie(title)
 
             for item in result:
-
                 searchTitle = client.parseDOM(item, "span", attrs={"class":"tt"})[0]
                 searchTitle = cleantitle.movie(searchTitle)
                 if title in searchTitle:
