@@ -37,7 +37,7 @@
  "Zee Smile": {"iconimage":"http://www.lyngsat-logo.com/logo/tv/zz/zee_smile.png",
                "channelType": "IND",
                "channelUrl": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeesmile/chunklist.m3u8"},  
- "Aaj Tak Tez"	{"iconimage":"http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
+ "Aaj Tak Tez":	{"iconimage":"http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
 				"channelType":"IND",
 				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE"}		   
  }
