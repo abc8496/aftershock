@@ -39,5 +39,8 @@
                "channelUrl": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeesmile/chunklist.m3u8"},  
  "Aaj Tak Tez":	{"iconimage":"http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
 				"channelType":"IND",
-				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE&name=AajTakTez"}		   
+				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE&name=AajTakTez"},
+"Aaj Tak Delhi" : {"iconImage":"http://www.lyngsat-logo.com/hires/aa/aaj_tak_delhi.png",
+				"channelType":"IND",
+				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=14014394&event_id=4198951&url=http://example.com&video_id=LIVE&name=AajTakDelhi"}
  }
