@@ -86,10 +86,7 @@ class source:
                         quality = "SD"
 
                     for i in range(0, len(urls)):
-                        item = client.source(urls[i], referer=self.base_link)
-                        item = client.parseDOM(item, "td", attrs={"valign":"top", "align":"center"})[0]
-                        item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
-                        urls[i] = item
+                        urls[i] = client.urlRewrite(urls[i])
                     host = client.host(urls[0])
                     if len(urls) > 1:
                         url = "##".join(urls)
@@ -97,8 +94,6 @@ class source:
                         url = urls[0]
                     sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiHit', 'url': url, 'direct':False})
                 except :
-                    import traceback
-                    traceback.print_exc()
                     pass
             return sources
         except:

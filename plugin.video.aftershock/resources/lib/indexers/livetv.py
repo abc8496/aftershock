@@ -32,6 +32,8 @@ class channels:
         self.list = []
 
         self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
+        #WIP LINK
+        #self.live_link = base64.b64decode('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3ZpbmVlZ3UvYWZ0ZXJzaG9jay1yZXBvL21hc3Rlci9saXZlc3RyZWFtc193aXAuanNvbg==')
 
 
     def get(self):
@@ -80,6 +82,7 @@ class channels:
                     item.setProperty('Fanart_Image', addonFanart)
 
                 item.setProperty('Video', 'true')
+                item.setProperty("IsPlayable", "true")
                 item.addContextMenuItems([], replaceItems=True)
                 control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=False)
             except:

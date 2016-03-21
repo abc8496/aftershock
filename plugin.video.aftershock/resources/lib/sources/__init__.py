@@ -45,8 +45,6 @@ class sources:
         self.hostDict = self.getHostDict()
         self.sources = []
 
-
-
     def addItem(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta):
         try:
             if imdb == '0': imdb = '0000000'
@@ -62,6 +60,7 @@ class sources:
             self.progressDialog.update(0, control.lang(30515).encode('utf-8'), str(' '))
 
             self.sources = self.sourcesFilter()
+            if self.sources == []: raise Exception()
 
             infoMenu = control.lang(30502).encode('utf-8') if content == 'movie' else control.lang(30503).encode('utf-8')
 
@@ -128,6 +127,53 @@ class sources:
             try: self.progressDialog.close()
             except: pass
 
+    def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url):
+        try:
+            #if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
+            #    control.playlist.clear()
+
+            control.resolve(int(sys.argv[1]), True, control.item(path=''))
+            control.execute('Dialog.Close(okdialog)')
+
+            if imdb == '0': imdb = '0000000'
+            imdb = 'tt' + re.sub('[^0-9]', '', str(imdb))
+
+            content = 'movie' if tvshowtitle == None else 'episode'
+
+            self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+            if self.sources == []: raise Exception()
+
+            self.sources = self.sourcesFilter()
+
+            if url == 'dialog://':
+                url = self.sourcesDialog()
+
+            elif url == 'direct://':
+                url = self.sourcesDirect()
+
+            elif not control.infoLabel('Container.FolderPath').startswith('plugin://') and control.setting('autoplay_library') == 'false':
+                url = self.sourcesDialog()
+
+            elif control.infoLabel('Container.FolderPath').startswith('plugin://') and control.setting('autoplay') == 'false':
+                url = self.sourcesDialog()
+
+            else:
+                url = self.sourcesDirect()
+
+            if url == None: raise Exception()
+            if url == 'close://': return
+
+            if control.setting('playback_info') == 'true':
+                control.infoDialog(self.selectedSource, heading=name)
+
+            control.sleep(200)
+
+            from resources.lib.libraries.player import player
+            player().run(content, name, url, year, imdb, tvdb, meta)
+
+            return url
+        except:
+            control.infoDialog(control.lang(30501).encode('utf-8'))
 
     def playItem(self, content, name, year, imdb, tvdb, source):
         try:
@@ -227,7 +273,6 @@ class sources:
             client.printException('sources.playItem(content=[%s], name=[%s], year=[%s], imdb=[%s], tvdb=[%s], source=[%s])' % (content, name, year, imdb, tvdb, source))
             pass
 
-
     def getSources(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta=None):
         sourceDict = []
         for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
@@ -304,7 +349,6 @@ class sources:
 
         return self.sources
 
-
     def getMovieSource(self, title, year, imdb, source, call):
         try:
             dbcon = database.connect(self.sourceFile)
@@ -356,7 +400,6 @@ class sources:
             dbcon.commit()
         except:
             pass
-
 
     def getEpisodeSource(self, title, year, imdb, tvdb, season, episode, tvshowtitle, date, source, call, meta=None):
         meta = json.loads(meta)
@@ -439,6 +482,109 @@ class sources:
             client.printException('sources.getEpisodeSource')
             pass
 
+    def sourcesDialog(self):
+        try:
+            sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + self.sources
+
+            labels = [i['label'] for i in sources]
+
+            select = control.selectDialog(labels)
+            #if select == 0: return self.sourcesDirect()
+            if select == -1: return 'close://'
+
+            items = [self.sources[select-1]]
+
+            next = [y for x,y in enumerate(self.sources) if x >= select]
+            prev = [y for x,y in enumerate(self.sources) if x < select][::-1]
+
+            source, quality = items[0]['source'], items[0]['quality']
+            items = [i for i in items+next+prev if i['quality'] == quality and i['source'] == source][:10]
+            items += [i for i in next+prev if i['quality'] == quality and not i['source'] == source][:10]
+
+            self.progressDialog = control.progressDialog
+            self.progressDialog.create(control.addonInfo('name'), '')
+            self.progressDialog.update(0)
+
+            block = None
+
+            for i in range(len(items)):
+                try:
+                    if self.progressDialog.iscanceled(): break
+
+                    self.progressDialog.update(int((100 / float(len(items))) * i), str(items[i]['label']), str(' '))
+
+                    if items[i]['source'] == block: raise Exception()
+
+                    w = workers.Thread(self.sourcesResolve, items[i])
+                    w.start()
+
+                    m = ''
+
+                    for x in range(3600):
+                        if self.progressDialog.iscanceled(): return self.progressDialog.close()
+                        if xbmc.abortRequested == True: return sys.exit()
+                        k = control.condVisibility('Window.IsActive(virtualkeyboard)')
+                        if k: m += '1'; m = m[-1]
+                        if (w.is_alive() == False or x > 30) and not k: break
+                        time.sleep(0.5)
+
+                    for x in range(30):
+                        if m == '': break
+                        if self.progressDialog.iscanceled(): return self.progressDialog.close()
+                        if xbmc.abortRequested == True: return sys.exit()
+                        if w.is_alive() == False: break
+                        time.sleep(0.5)
+
+
+                    if w.is_alive() == True: block = items[i]['source']
+
+                    if self.url == None: raise Exception()
+
+                    self.selectedSource = items[i]['label']
+                    self.progressDialog.close()
+
+                    return self.url
+                except:
+                    pass
+
+            try: self.progressDialog.close()
+            except: pass
+
+        except:
+            try: self.progressDialog.close()
+            except: pass
+
+    def sourcesDirect(self):
+
+        u = None
+
+        self.progressDialog = control.progressDialog
+        self.progressDialog.create(control.addonInfo('name'), '')
+        self.progressDialog.update(0)
+
+        for i in range(len(self.sources)):
+            try:
+                if self.progressDialog.iscanceled(): break
+
+                self.progressDialog.update(int((100 / float(len(self.sources))) * i), str(self.sources[i]['label']), str(' '))
+
+                if xbmc.abortRequested == True: return sys.exit()
+
+                url = self.sourcesResolve(self.sources[i])
+                if url == None: raise Exception()
+                if u == None: u = url
+
+                self.selectedSource = self.sources[i]['label']
+                self.progressDialog.close()
+
+                return url
+            except:
+                pass
+
+        try: self.progressDialog.close()
+        except: pass
+
+        return u
 
     def alterSources(self, url, meta):
         try:
@@ -449,7 +595,6 @@ class sources:
             control.execute('RunPlugin(%s)' % url)
         except:
             pass
-
 
     def clearSources(self):
         try:
@@ -468,7 +613,6 @@ class sources:
             control.infoDialog(control.lang(30511).encode('utf-8'))
         except:
             pass
-
 
     def sourcesFilter(self):
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
@@ -519,7 +663,6 @@ class sources:
             self.sources[i]['label'] = label.upper()
         return self.sources
 
-
     def sourcesResolve(self, item):
         try:
             u = url = item['url']
@@ -555,6 +698,7 @@ class sources:
         except:
             client.printException('sources().sourcesResolve()')
             return
+
     def getResolverList(self):
         try:
             import urlresolver.plugnplay

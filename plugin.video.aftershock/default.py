@@ -211,6 +211,10 @@ elif action == 'tvPlaycount':
     from resources.lib.libraries import playcount
     playcount.tvshows(name, year, imdb, tvdb, season, query)
 
+elif action == 'alterSources':
+    from resources.lib.sources import sources
+    sources().alterSources(url, meta)
+
 elif action == 'trailer':
     from resources.lib.libraries import trailer
     trailer.trailer().play(name, url)

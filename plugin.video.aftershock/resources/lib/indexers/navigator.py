@@ -115,12 +115,20 @@ class navigator:
         listItems.append({'provider':provider, 'name':90218, 'image': logoBaseURL+'/hh/hungama.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=472'})
         listItems.append({'provider':provider, 'name':90219, 'image': logoBaseURL+'/cc/cartoon_network_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=509'})
         listItems.append({'provider':provider, 'name':90220, 'image': logoBaseURL+'/aa/and_tv_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=3138'})
-        listItems.append({'provider':provider, 'name':90221, 'image': logoBaseURL+'/ss/star_pravah.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1138'})
         listItems.append({'provider':provider, 'name':90222, 'image': logoBaseURL+'/cc/colors_in_bangla.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=2117'})
+        listItems.append({'provider':provider, 'name':90223, 'image': logoBaseURL+'/zz/zee_zindagi_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=2679'})
+        listItems.append({'provider':provider, 'name':90224, 'image': logoBaseURL+'/bb/big_magic_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1887'})
+        listItems.append({'provider':provider, 'name':90225, 'image': logoBaseURL+'/cc/colors_in_marathi.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=2369'})
+        listItems.append({'provider':provider, 'name':90226, 'image': logoBaseURL+'/mm/maa_tv.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=3165'})
+        listItems.append({'provider':provider, 'name':90227, 'image': logoBaseURL+'/zz/zee_marathi.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1299'})
+        listItems.append({'provider':provider, 'name':90228, 'image': logoBaseURL+'/zz/zee_bangla.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=676'})
+        listItems.append({'provider':provider, 'name':90229, 'image': logoBaseURL+'/zz/zoom_tv_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1876'})
+        listItems.append({'provider':provider, 'name':90230, 'image': logoBaseURL+'/ss/star_vijay_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=1609'})
         listItems.sort()
 
         for item in listItems:
             self.addDirectoryItem(item['name'], '%s&provider=%s&url=%s' % (item['action'],item['provider'], item['url']), item['image'], 'DefaultMovies.png')
+
         self.endDirectory()
 
     def search(self):

@@ -86,6 +86,7 @@ class source:
 
                 if type(title) is list and len(title) > 0:
                     title = str(title[0])
+                title = client.replaceHTMLCodes(title)
                 url = client.parseDOM(item, "a", ret="href")
 
                 if not url:
@@ -99,6 +100,7 @@ class source:
                     shows.append({'name':title, 'channel':name, 'title':title, 'url':url, 'poster': '0', 'banner': '0', 'fanart': '0', 'next': '0', 'tvrage':'0','year':'0','duration':'0','provider':'desirulez_tv'})
             return shows
         except:
+            client.printException('')
             return
 
     def get_show(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
@@ -131,7 +133,7 @@ class source:
                 if type(url) is list:
                     url = url[0]
                 if "Online" not in name: continue
-                name = name.replace(title, '').replace('Online','').replace('Watch','').replace('Video','')
+                name = re.compile('.+? ([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
                 name = name.strip()
                 episodes.append({'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'desirulez_tv', 'tvshowurl':tvshowurl})
 
@@ -182,8 +184,10 @@ class source:
                                 result = client.source(urls[i])
                                 item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
                                 rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
+                                rUrl = client.urlRewrite(rUrl)
                                 urls[i] = rUrl
                             except :
+                                urls[i] = client.urlRewrite(urls[i])
                                 pass
                         host = client.host(urls[0])
                         url = "##".join(urls)
@@ -203,8 +207,10 @@ class source:
                         result = client.source(urls[i])
                         item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
                         rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
+                        rUrl = client.urlRewrite(rUrl)
                         urls[i] = rUrl
                     except :
+                        urls[i] = client.urlRewrite(urls[i])
                         pass
                 host = client.host(urls[0])
                 url = "##".join(urls)

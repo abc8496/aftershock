@@ -224,10 +224,40 @@ def parseDOM(html, name=u"", attrs={}, ret=False):
 
 def replaceHTMLCodes(txt):
     txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)
+    txt = txt.replace('&#8236;','')
     txt = HTMLParser.HTMLParser().unescape(txt)
     txt = txt.replace("&quot;", "\"")
     txt = txt.replace("&amp;", "&")
     return txt
+
+def getVideoID(url):
+    try :
+        return re.compile('(id|url|v|si|sim|data-config|file)=(.+?)/').findall(url + '/')[0][1]
+    except:
+        return
+
+def urlRewrite(url):
+    urlReWriteDict = [{'host':'letwatch.php','url':'http://letwatch.us/embed-%s-650x400.html'},
+                      {'host':'playwire.php','url':'http://config.playwire.com/%s/player.json'},
+                      {'host':'dailymotion.php','url':'http://www.dailymotion.com/embed/video/%s'},
+                      {'host':'speedplay.php','url':'http://speedplay.me/embed-%s.html'},
+                      {'host':'watchvideo.php','url':'http://watchvideo.us/embed-%s.html'},
+                      {'host':'cloudy.php','url':'http://www.cloudy.ec/embed.php?id=%s&width=650&height=410'},
+                      {'host':'tvlogy.php','url':'http://tvlogy.to/watch.php?v=%s'},
+                      {'host':'idowatch.php','url':'http://idowatch.us/embed-%s.html'},
+                      {'host':'playu.php','url':'http://playu.net/embed-%s-700x440.html'},
+                      {'host':'nowvideo.php','url':'http://embed.nowvideo.sx/embed.php?v=%s&amp;wmode=direct&amp;autoplay=true&controls=false'}]
+    try :
+        videoID = getVideoID(url)
+        for i in urlReWriteDict:
+            try :
+                if re.compile(i['host']).findall(url)[0]:
+                    return i['url'] % videoID
+            except:
+                pass
+        return url
+    except:
+        return url
 
 def host(url):
     host = re.findall('([\w]+[.][\w]+)$', urlparse.urlparse(url.strip().lower()).netloc)[0]

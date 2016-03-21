@@ -69,6 +69,7 @@
     <string id="30513">seconds</string>
     <string id="30514">Remaining sources</string>
     <string id="30515">Loading sources</string>
+    <string id="30516">No episodes available</string>
 
     <string id="30800">General</string>
     <string id="30801">Index Provider</string>
@@ -83,16 +84,12 @@
     <string id="30834">Directory</string>
     <string id="30839">Auto-play</string>
     <string id="30840">Auto-play</string>
-    <string id="30842">Force SD playback in Auto-play</string>
     <string id="30843">When playback starts...</string>
     <string id="30844">Resume Playback</string>
     <string id="30845">Playback Info</string>
     <string id="30860">Movies</string>
     <string id="30861">TV</string>
     <string id="30862">Providers</string>
-
-    <string id="30870">HD Hosts</string>
-    <string id="30871">SD Hosts</string>
 
     <string id="30910">Accounts</string>
     <string id="30911">IMDB</string>
@@ -139,6 +136,15 @@
     <string id="90218">Hungama TV</string>
     <string id="90219">Cartoon Network</string>
     <string id="90220">&amp; TV</string>
-    <string id="90221">Star Parvah</string>
+    <string id="90221">Star Jalsha</string>
     <string id="90222">Colors Bangla</string>
+    <string id="90223">Zindagi TV</string>
+    <string id="90224">Big Magic</string>
+    <string id="90225">Colors Marathi</string>
+    <string id="90226">Maa TV</string>
+    <string id="90227">Zee Marathi</string>
+    <string id="90228">Zee Bangla</string>
+    <string id="90229">Zoom TV</string>
+    <string id="90230">Star Vijay</string>
+    <string id="90231">Aaj Tak Live</string>
 </strings>

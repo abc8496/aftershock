@@ -83,7 +83,9 @@ class source:
             url = self.movie_link % url
             url = urlparse.urljoin(self.base_link, url)
 
-            try: result = client.source(url, referer=url)
+            rUrl = url
+
+            try: result = client.source(url, referer=rUrl)
             except: result = ''
 
             result = result.decode('iso-8859-1').encode('utf-8')
@@ -104,10 +106,7 @@ class source:
                         quality = "CAM"
 
                     for i in range(0, len(urls)):
-                        item = client.source(urls[i], referer=url)
-                        item = client.parseDOM(item, "td", attrs={"valign":"top", "align":"center"})[0]
-                        item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
-                        urls[i] = item
+                        urls[i] = client.urlRewrite(urls[i])
                     host = client.host(urls[0])
                     if len(urls) > 1:
                         url = "##".join(urls)

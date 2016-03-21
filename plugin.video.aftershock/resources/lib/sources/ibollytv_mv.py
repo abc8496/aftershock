@@ -95,7 +95,6 @@ class source:
 
                 self.list.append({'title': title, 'originaltitle': title, 'year': year, 'duration': duration, 'name': name, 'poster': poster, 'banner': '0', 'fanart': '0', 'tvdb':'0'})
             except:
-                client.printException('')
                 pass
         try :
             next = client.parseDOM(result, "li", attrs={"class":"next page"})
@@ -103,8 +102,6 @@ class source:
             url = url.replace("&amp;", "&").replace(self.base_link, '')
             self.list[0].update({'next':'%s' % (url)})
         except:
-            import traceback
-            traceback.print_exc()
             pass
         return self.list
 

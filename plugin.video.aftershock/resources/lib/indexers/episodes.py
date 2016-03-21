@@ -543,12 +543,14 @@ class episodes:
                 if not provider == None:
                     call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
                     self.list = call.get_episodes(tvshowtitle, url)
+                    if self.list == [] : raise Exception()
                     self.list = self.super_info(self.list)
 
                 self.episodeDirectory(self.list, provider)
                 return self.list
         except:
             client.printException('episodes.get(tvshowtitle=%s, provider=%s, url=%s)' % (tvshowtitle, provider, url))
+            control.infoDialog(control.lang(30516).encode('utf-8'))
             pass
 
     def super_info(self, items):

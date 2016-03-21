@@ -24,7 +24,7 @@ from resources.lib.resolvers import premiumize
 from resources.lib.libraries import client
 
 
-def request(url, resolverList):
+def request(url, resolverList=None):
     try:
         u = client.host(url)
 
@@ -58,7 +58,7 @@ def info():
     return [
         {'class': 'desiflicks', 'host': ['desiflicks.com']}
         , {'class': 'playwire', 'host': ['playwire.com']}
-        , {'class': 'vidshare', 'host': ['vidshare.us', 'idowatch.us', 'watchvideo2.us', 'tvlogy.to', 'watchvideo4.us', 'speedplay.pw']}
+        , {'class': 'vidshare', 'host': ['vidshare.us', 'idowatch.us', 'watchvideo4.us','watchvideo2.us','watchvideo.us', 'tvlogy.to',  'speedplay.pw']}
         , {'class': 'xpressvids', 'host': ['xpressvids']}
         , {'class': 'playu', 'host': ['playu.net']}
         , {'class': 'apnasave', 'host': ['apnasave.in']}
