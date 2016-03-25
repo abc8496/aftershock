@@ -42,5 +42,8 @@
 				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE&name=AajTakTez"},
 "Aaj Tak Delhi" : {"iconimage":"http://www.lyngsat-logo.com/hires/aa/aaj_tak_delhi.png",
 				"channelType":"IND",
-				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=14014394&event_id=4198951&url=http://example.com&video_id=LIVE&name=AajTakDelhi"}
+				"channelUrl":"plugin://plugin.video.livestream/?mode=104&owner_id=14014394&event_id=4198951&url=http://example.com&video_id=LIVE&name=AajTakDelhi"},
+  "Zee Cinema" : {"iconimage":"http://www.lyngsat-logo.com/hires/zz/zee_cinema.png",
+    "channelType":"IND",
+    "channelUrl":"http://stream.zliving.online/zeecinema/index.m3u8"}
  }
