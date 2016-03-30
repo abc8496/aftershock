@@ -18,10 +18,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re, json
+import re
 
 from resources.lib.libraries import client
 from resources.lib.libraries import jsunpack
+from resources.lib.libraries import logger
 
 def resolve(url):
     try:
@@ -39,6 +40,7 @@ def resolve(url):
             url = link.group(1)
         else :
             url = None
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return

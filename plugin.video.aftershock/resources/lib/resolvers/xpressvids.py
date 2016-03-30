@@ -18,16 +18,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re, json
+import re
 
 from resources.lib.libraries import client
-from resources.lib.libraries import jsunpack
+from resources.lib.libraries import logger
 
 def resolve(url):
     try:
         url = 'http://playu.net/embed-%s.html' % str(getVideoID(url))
         result = client.source(url)
         url = re.findall('file: "(.+?)"',result)[0]
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return

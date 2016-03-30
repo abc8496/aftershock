@@ -27,7 +27,6 @@ except:
 
 from resources.lib.libraries import control
 
-
 def get(function, timeout, *args, **table):
     try:
         response = None
@@ -87,7 +86,6 @@ def get(function, timeout, *args, **table):
     except:
         pass
 
-
 def clear(table=None):
     try:
         control.idle()
@@ -112,4 +110,3 @@ def clear(table=None):
         control.infoDialog(control.lang(30402).encode('utf-8'))
     except:
         pass
-

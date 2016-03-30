@@ -37,7 +37,7 @@ from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
 from resources.lib.libraries import alterepisode
 from resources.lib import resolvers
-
+from resources.lib.libraries import logger
 
 class sources:
     def __init__(self):
@@ -129,8 +129,8 @@ class sources:
 
     def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url):
         try:
-            #if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
-            #    control.playlist.clear()
+            if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
+                control.playlist.clear()
 
             control.resolve(int(sys.argv[1]), True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')
@@ -618,12 +618,14 @@ class sources:
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
+        random.shuffle(self.sources)
+
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
         self.sources = filter
 
-        random.shuffle(self.sources)
+
 
         filter = []
         filter += [i for i in self.sources if i['quality'] == '1080p']
@@ -633,7 +635,6 @@ class sources:
         if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == 'CAM']
         if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
-
 
         for i in range(len(self.sources)):
             s = self.sources[i]['source'].lower()
@@ -701,8 +702,10 @@ class sources:
 
     def getResolverList(self):
         try:
-            import urlresolver.plugnplay
-            resolverList = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
+            import urlresolver
+            resolverList = []
+            try: resolverList = urlresolver.relevant_resolvers(order_matters=True)
+            except: resolverList = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
             resolverList = [i for i in resolverList if not '*' in i.domains]
         except:
             resolverList = []

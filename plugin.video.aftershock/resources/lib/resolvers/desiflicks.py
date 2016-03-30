@@ -21,7 +21,7 @@
 import re
 
 from resources.lib.libraries import client, EnkDekoder
-
+from resources.lib.libraries import logger
 
 def resolve(url):
     try:
@@ -42,6 +42,7 @@ def resolve(url):
 
         url = url.replace('_ipod.mp4', '.flv')
         url = url.replace('preview','edit')
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return

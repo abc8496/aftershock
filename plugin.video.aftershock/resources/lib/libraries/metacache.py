@@ -17,8 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-
-import time,hashlib
+import time
 
 try:
     from sqlite3 import dbapi2 as database
@@ -65,7 +64,6 @@ def fetch(items, lang):
 
     return items
 
-
 def insert(meta):
     try:
         control.makeFile(control.dataPath)
@@ -85,7 +83,6 @@ def insert(meta):
         dbcon.commit()
     except:
         return
-
 
 def insertImdb(items):
     try :

@@ -22,14 +22,13 @@ import urllib,json
 from resources.lib.libraries import cache
 from resources.lib.libraries import control
 from resources.lib.libraries import client
-
+from resources.lib.libraries import logger
 
 def getCredentials():
     user = control.setting('realdedrid_user') 
     password = control.setting('realdedrid_password')
     if (user == '' or password == ''): return False
     return (user, password)
-
 
 def getHosts():
     try:
@@ -41,7 +40,6 @@ def getHosts():
         return hosts
     except:
         return []
-
 
 def resolve(url):
     try:
@@ -61,7 +59,7 @@ def resolve(url):
         result = json.loads(result)
         url = result['generated_links'][0][-1]
         url = '%s|Cookie=%s' % (url, urllib.quote_plus(cookie))
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return
-

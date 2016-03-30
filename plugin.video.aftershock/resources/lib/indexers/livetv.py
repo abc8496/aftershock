@@ -19,26 +19,30 @@
 '''
 
 
-import sys,json,urllib, base64
+import sys,json,urllib, base64, os
 
 from resources.lib.libraries import control
 from resources.lib.libraries import client
 from resources.lib.libraries import views
-
-
+from resources.lib.libraries import logger
 
 class channels:
     def __init__(self):
         self.list = []
 
         self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
-        #WIP LINK
-        #self.live_link = base64.b64decode('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3ZpbmVlZ3UvYWZ0ZXJzaG9jay1yZXBvL21hc3Rlci9saXZlc3RyZWFtc193aXAuanNvbg==')
-
 
     def get(self):
         try :
-            result = client.request(self.live_link)
+            if control.setting('livelocal'):
+                dataPath = control.dataPath
+                filename = os.path.join(dataPath, 'livestreams_wip.json')
+                filename = open(filename)
+                result = filename.read()
+                filename.close()
+            else :
+                result = client.request(self.live_link)
+
             channels = json.loads(result)
 
             channelNames = channels.keys()
@@ -46,11 +50,13 @@ class channels:
 
             for channel in channelNames:
                 channelObj = channels[channel]
-                self.list.append({'name':channel, 'poster':channelObj['iconimage'],'url':channelObj['channelUrl']})
+                if not channelObj['enabled'] == 'false':
+                    self.list.append({'name':channel, 'poster':channelObj['iconimage'],'url':channelObj['channelUrl']})
 
             self.channelDirectory(self.list)
             return self.list
         except :
+            client.printException('')
             pass
 
     def channelDirectory(self, items):
@@ -91,6 +97,3 @@ class channels:
         control.content(int(sys.argv[1]), 'video')
         control.directory(int(sys.argv[1]), cacheToDisc=False)
         views.setView('movies', {'skin.confluence': 500})
-
-
-

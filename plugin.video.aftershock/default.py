@@ -19,11 +19,12 @@
 '''
 
 
-import urlparse,sys, xbmcaddon
+import urlparse,sys
+from resources.lib.libraries import logger
+
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
-
-print params
+logger.debug(params)
 
 try:
     action = params['action']
@@ -119,20 +120,16 @@ try:
 except:
     lang = None
 
-#print "action [%s] name [%s] title [%s] year [%s] imdb [%s] tvdb [%s] tvrage [%s] season [%s] episode [%s] tvshowtitle [%s] alter [%s] date [%s] url [%s] image [%s] meta [%s] query [%s] source [%s] content [%s] provider [%s] lang [%s]" % (action, name, title, year, imdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, url, image, meta, query, source, content, provider, lang)
-
 if action == None:
     from resources.lib.indexers import navigator
     navigator.navigator().root()
 
 elif action == 'movieLangNavigator':
     from resources.lib.indexers import navigator
-    # change to show language selection
     navigator.navigator().desiLangMovies()
 
 elif action == 'movieNavigator':
     from resources.lib.indexers import navigator
-    # change to show language selection
     navigator.navigator().desiMovies(lang)
 
 elif action == 'desiTVNavigator':

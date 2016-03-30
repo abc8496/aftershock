@@ -19,12 +19,11 @@
 '''
 
 
-import os,sys,urlparse, urllib
+import os,sys,urlparse
 
 from resources.lib.libraries import control
 from resources.lib.libraries import views
-
-
+from resources.lib.libraries import logger
 
 artPath = control.artPath()
 
@@ -36,7 +35,6 @@ except: action = None
 imdbMode = False if control.setting('imdb_user') == '' else True
 
 sysaddon = sys.argv[0]
-
 
 class navigator:
     def __init__(self):
@@ -139,7 +137,6 @@ class navigator:
 
         self.endDirectory()
 
-
     def addDirectoryItem(self, name, query, thumb, icon, context=None, isAction=True, isFolder=True):
         try: name = control.lang(name).encode('utf-8')
         except: pass
@@ -154,7 +151,6 @@ class navigator:
         item.addContextMenuItems(cm, replaceItems=False)
         if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
         control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
-
 
     def endDirectory(self, cacheToDisc=True):
         views.setView('movies', {'skin.confluence': control.viewMode['thumbnails']})

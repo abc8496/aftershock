@@ -30,7 +30,7 @@ from resources.lib.libraries import cache
 from resources.lib.libraries import metacache
 from resources.lib.libraries import workers
 from resources.lib.libraries import views
-
+from resources.lib.libraries import logger
 
 class movies:
     def __init__(self):
@@ -188,7 +188,6 @@ class movies:
         except:
             return
 
-
     def years(self, lang=None):
         year = (self.datetime.strftime('%Y'))
         provider = 'apnaview_mv'
@@ -215,7 +214,6 @@ class movies:
         #self.list = [i for i in self.list if not (i['imdb'] == '0' and i['tmdb'] == '0')]
 
         if len(self.meta) > 0: metacache.insert(self.meta)
-
 
     def super_info(self, i):
         try:
@@ -361,7 +359,6 @@ class movies:
         except:
             pass
 
-
     def movieDirectory(self, items, provider=None, lang=None):
         if items == None or len(items) == 0: return
 
@@ -466,8 +463,6 @@ class movies:
         control.content(int(sys.argv[1]), 'movies')
         views.setView('movies', {'skin.confluence': control.viewMode['thumbnails']})
         control.directory(int(sys.argv[1]), cacheToDisc=cacheToDisc)
-
-
 
     def addDirectory(self, items):
         if items == None or len(items) == 0: return

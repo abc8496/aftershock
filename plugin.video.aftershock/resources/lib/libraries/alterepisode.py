@@ -35,7 +35,6 @@ class alterepisode:
         self.tmdb_by_imdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=imdb_id' % ('%s', self.tmdb_key)
         self.tmdb_by_tvdb = 'http://api.themoviedb.org/3/find/%s?api_key=%s&external_source=tvdb_id' % ('%s', self.tmdb_key)
 
-
     def get(self, imdb, tmdb, tvdb, tvrage, season, episode, alter, title, date):
         try:
             alt = False
@@ -54,7 +53,6 @@ class alterepisode:
             return (result[0], result[1])
         except:
             return (season, episode)
-
 
     def tvrageId(self, imdb, tmdb, tvdb):
         try:
@@ -94,7 +92,6 @@ class alterepisode:
         except:
             pass
 
-
     def tvrageEpisode(self, tvrage, title, date, season, episode):
         monthMap = {'01':'Jan', '02':'Feb', '03':'Mar', '04':'Apr', '05':'May', '06':'Jun', '07':'Jul', '08':'Aug', '09':'Sep', '10':'Oct', '11':'Nov', '12':'Dec'}
         title = cleantitle.tv(title)
@@ -122,5 +119,3 @@ class alterepisode:
             if len(match) == 1: return (str('%01d' % int(match[0][0])), str('%01d' % int(match[0][1])))
         except:
             pass
-
-

@@ -21,15 +21,13 @@
 
 import re,urllib,urlparse,json
 
-from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib import resolvers
-from resources.lib.libraries import metacache
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
         self.base_link = 'http://www.desihit.tv'
-        #self.search_link = '?s=%s'
         self.search_link = '/wp-admin/admin-ajax.php?td_theme_name=Newsmag&v=2.3.5'
 
     def get_show(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
@@ -48,7 +46,6 @@ class source:
 
         result = json.loads(result)
         result = result['td_data']
-        #searchTitle = client.parseDOM(result, "a", ret="title")[0]
         ep_url = client.parseDOM(result, "a", ret="href")[0]
 
         ep_url = re.compile('.+/(.+?)/').findall(ep_url)[0]
@@ -56,6 +53,7 @@ class source:
             return ep_url
 
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -95,12 +93,14 @@ class source:
                     sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiHit', 'url': url, 'direct':False})
                 except :
                     pass
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
 
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -115,6 +115,7 @@ class source:
                     raise Exception()
                 links.append(r)
             url = links
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             return False

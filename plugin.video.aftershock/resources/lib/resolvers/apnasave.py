@@ -20,7 +20,7 @@
 
 import re
 from resources.lib.libraries import client
-from resources.lib import resolvers
+from resources.lib.libraries import logger
 
 def resolve(url):
     try:
@@ -42,6 +42,7 @@ def resolve(url):
                 url = client.parseDOM(result, name="src")[0]
         except:
             pass
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return

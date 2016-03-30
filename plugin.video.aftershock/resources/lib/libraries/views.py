@@ -27,7 +27,6 @@ except:
 
 from resources.lib.libraries import control
 
-
 def addView(content):
     try:
         skin = control.skin
@@ -62,9 +61,7 @@ def addView(content):
     except:
         return
 
-
 def setView(content, viewDict=None):
-
 
     skin = control.skin
     for i in range(0, 200):
@@ -87,4 +84,3 @@ def setView(content, viewDict=None):
              except:
                  return
          control.sleep(100)
-

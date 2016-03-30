@@ -70,6 +70,7 @@
     <string id="30514">Remaining sources</string>
     <string id="30515">Loading sources</string>
     <string id="30516">No episodes available</string>
+    <string id="30517">No suitable provider enabled</string>
 
     <string id="30800">General</string>
     <string id="30801">Index Provider</string>
@@ -90,6 +91,7 @@
     <string id="30860">Movies</string>
     <string id="30861">TV</string>
     <string id="30862">Providers</string>
+    <string id="30863">Enable Hyper-Threading (Only for powerful machines)</string>
 
     <string id="30910">Accounts</string>
     <string id="30911">IMDB</string>

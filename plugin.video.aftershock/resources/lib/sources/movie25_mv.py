@@ -24,14 +24,13 @@ import re,urllib,urlparse,base64
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import proxy
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
         self.domains = ['movie25.hk']
         self.base_link = 'http://movie25.hk'
         self.search_link = 'http://movie25.hk/search.php?key=%s'
-
 
     def request(self, url, check):
         try:
@@ -45,7 +44,6 @@ class source:
             if check in str(result): return result.decode('iso-8859-1').encode('utf-8')
         except:
             return
-
 
     def get_movie(self, imdb, title, year):
         try:
@@ -75,8 +73,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             sources = []
 
@@ -115,11 +113,10 @@ class source:
                     sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url, 'direct': False, 'debridonly': False})
                 except:
                     pass
-
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
-
 
     def resolve(self, url, resolverList=None):
         return url

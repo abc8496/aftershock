@@ -22,14 +22,10 @@
 import re,urllib,urlparse,json
 from resources.lib.libraries import client
 
-
-
 def google(url):
     try:
         netloc = urlparse.urlparse(url.strip().lower()).netloc
         netloc = netloc.split('.google')[0]
-
-
 
         if netloc == 'docs' or netloc == 'drive':
             url = url.split('/preview', 1)[0]
@@ -43,8 +39,6 @@ def google(url):
             result = [i.split('|')[-1] for i in result.split(',')]
             result = sum([googletag(i) for i in result], [])
 
-
-
         elif netloc == 'photos':
             result = client.request(url, headers={'User-Agent': client.agent()})
 
@@ -56,8 +50,6 @@ def google(url):
             result = [urllib.unquote(i) for i in result]
 
             result = [googletag(i)[0] for i in result]
-
-
 
         elif netloc == 'picasaweb':
             id = re.compile('#(\d*)').findall(url)[0]
@@ -74,8 +66,6 @@ def google(url):
             result = [i['url'] for i in result if 'video' in i['type']]
             result = sum([googletag(i) for i in result], [])
 
-
-
         elif netloc == 'plus':
             result = client.source(url, headers={'User-Agent': client.agent()})
 
@@ -89,8 +79,6 @@ def google(url):
 
             result = [googletag(i)[0] for i in result]
 
-
-
         url = []
         try: url += [[i for i in result if i['quality'] == '1080p'][0]]
         except: pass
@@ -103,7 +91,6 @@ def google(url):
         return url
     except:
         return
-
 
 def googletag(url):
     quality = re.compile('itag=(\d*)').findall(url)
@@ -123,8 +110,6 @@ def googletag(url):
         return [{'quality': 'SD', 'url': url}]
     else:
         return []
-
-
 
 def vk(url):
     try:
@@ -160,7 +145,6 @@ def vk(url):
     except:
         return
 
-
 def vk_hash(oid, id):
     try:
         url = 'http://vk.com/al_video.php?act=show_inline&al=1&video=%s_%s' % (oid, id)
@@ -175,7 +159,6 @@ def vk_hash(oid, id):
     except:
         return
 
-
 def vk_private(oid, id):
     try:
         url = 'http://vk.com/al_video.php?act=show_inline&al=1&video=%s_%s' % (oid, id)
@@ -188,8 +171,6 @@ def vk_private(oid, id):
         return result
     except:
         return
-
-
 
 def odnoklassniki(url):
     try:
@@ -219,5 +200,3 @@ def odnoklassniki(url):
 
     except:
         return
-
-

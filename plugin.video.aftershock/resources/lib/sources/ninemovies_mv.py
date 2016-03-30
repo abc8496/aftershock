@@ -25,14 +25,13 @@ from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import cache
 from resources.lib.libraries import directstream
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
         self.domains = ['9movies.to']
         self.base_link = 'http://9movies.to'
         self.search_link = '/sitemap'
-
 
     def get_movie(self, imdb, title, year):
         try:
@@ -41,7 +40,6 @@ class source:
             return url
         except:
             return
-
 
     def ninemovies_cache(self):
         try:
@@ -56,8 +54,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             sources = []
 
@@ -136,13 +134,13 @@ class source:
                 for i in sources: i['quality'] = 'SD'
             except:
                 pass
-
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
-
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             data = urlparse.parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
@@ -170,8 +168,7 @@ class source:
             url = client.request(url, output='geturl')
             if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
             else: url = url.replace('https://', 'http://')
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             return
-
-

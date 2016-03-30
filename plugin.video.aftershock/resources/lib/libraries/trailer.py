@@ -23,7 +23,6 @@ import re,urllib,json,urlparse,base64,random
 from resources.lib.libraries import client
 from resources.lib.libraries import control
 
-
 class trailer:
     def __init__(self):
         self.base_link = 'http://www.youtube.com'
@@ -32,7 +31,6 @@ class trailer:
         self.search_link = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=%s'
         self.youtube_search = 'https://www.googleapis.com/youtube/v3/search?q='
         self.youtube_watch = 'http://www.youtube.com/watch?v=%s'
-
 
     def play(self, name, url=None):
         try:
@@ -65,7 +63,6 @@ class trailer:
             if url == None: return
             return url
 
-
     def search(self, url):
         try:
             query = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
@@ -82,7 +79,6 @@ class trailer:
                 if not url is None: return url
         except:
             return
-
 
     def resolve(self, url):
         try:
@@ -101,4 +97,3 @@ class trailer:
             return url
         except:
             return
-

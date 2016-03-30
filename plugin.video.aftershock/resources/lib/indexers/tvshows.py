@@ -31,7 +31,7 @@ from resources.lib.libraries import cache
 from resources.lib.libraries import metacache
 from resources.lib.libraries import workers
 from resources.lib.libraries import views
-
+from resources.lib.libraries import logger
 
 class tvshows:
     def __init__(self):
@@ -56,7 +56,6 @@ class tvshows:
         self.tvdb_image = 'http://thetvdb.com/banners/'
         self.network = ''
 
-
     def get(self, url, idx=True, provider=None,network=None):
         try:
             self.list = cache.get(self.get_shows, 168, url, provider, network)
@@ -79,6 +78,7 @@ class tvshows:
             return self.list
         except:
             pass
+
     def predb(self, items):
         for i in range(0, len(self.list)):
             try: imdb = self.list[i]['imdb']
@@ -156,7 +156,6 @@ class tvshows:
         #self.list = [i for i in self.list if not i['tvdb'] == '0']
 
         if len(self.meta) > 0: metacache.insert(self.meta)
-
 
     def super_info(self, i):
         try:
@@ -432,7 +431,6 @@ class tvshows:
         except:
             pass
 
-
     def tvshowDirectory(self, items):
         if items == None or len(items) == 0: return
 
@@ -546,6 +544,7 @@ class tvshows:
         except :
             return self.getTVShowPosterFromGoogle(showName, retry-1)
         return ''
+
     def addDirectory(self, items):
         if items == None or len(items) == 0: return
 
@@ -581,5 +580,3 @@ class tvshows:
 
         views.setView('tvshows', {'skin.confluence': control.viewMode['mediainfo1']})
         control.directory(int(sys.argv[1]), cacheToDisc=True)
-
-

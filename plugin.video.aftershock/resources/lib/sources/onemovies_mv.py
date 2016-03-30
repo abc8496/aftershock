@@ -24,7 +24,7 @@ import re,urllib,urlparse,json,base64
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import cloudflare
 from resources.lib.libraries import client
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -32,7 +32,6 @@ class source:
         self.base_link = 'http://123movies.to'
         self.search_link = 'aHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vY3VzdG9tc2VhcmNoL3YxP2tleT1BSXphU3lCS3NHYUZ6alIxUXl5bE1QYzZ6Vm9QNzFVczU3aTltRWsmbnVtPTEwJmhsPWVuJmN4PTAxNTc3MDA5MzA5OTIyNTYzNDAxMzpvOHRwZHlram93dSYmZ29vZ2xlaG9zdD13d3cuZ29vZ2xlLmNvbSZxPSVz'
         self.search2_link = '/movie/search/%s'
-
 
     def get_movie(self, imdb, title, year):
         try:
@@ -79,8 +78,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             sources = []
 
@@ -125,13 +124,13 @@ class source:
             links = []
             links += [('movie/loadEmbed/%s/%s' % (i[2], i[1]), 'openload.co') for i in result if i[0] == '14']
             for i in links: sources.append({'source': i[1], 'quality': quality, 'provider': 'Onemovies', 'url': i[0], 'direct': False, 'debridonly': False})
-
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
-
     def resolve(self, url):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             url = urlparse.urljoin(self.base_link, url)
             result = cloudflare.source(url)
@@ -147,14 +146,14 @@ class source:
             url = client.request(url, output='geturl')
             if 'requiressl=yes' in url: url = url.replace('http://', 'https://')
             else: url = url.replace('https://', 'http://')
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             pass
 
         try:
             url = json.loads(result)['embed_url']
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             pass
-
-

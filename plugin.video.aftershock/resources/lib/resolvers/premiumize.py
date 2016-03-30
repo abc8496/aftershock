@@ -22,14 +22,13 @@ import json,urllib
 from resources.lib.libraries import cache
 from resources.lib.libraries import control
 from resources.lib.libraries import client
-
+from resources.lib.libraries import logger
 
 def getCredentials():
     user = control.setting('premiumize_user') 
     password = control.setting('premiumize_password')
     if (user == '' or password == ''): return False
     return (user, password)
-
 
 def getHosts():
     try:
@@ -42,7 +41,6 @@ def getHosts():
     except:
         return []
 
-
 def resolve(url):
     try:
         user, password = getCredentials()
@@ -52,7 +50,7 @@ def resolve(url):
 
         result = client.request(url, close=False)
         url = json.loads(result)['result']['location']
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return
-

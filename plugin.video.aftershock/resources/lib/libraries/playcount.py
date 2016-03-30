@@ -22,7 +22,6 @@ import sys,xbmc
 
 from resources.lib.libraries import control
 
-
 def movies(title, year, imdb, watched):
     watched = int(watched)
 
@@ -35,7 +34,6 @@ def movies(title, year, imdb, watched):
         pass
 
     control.refresh()
-
 
 def episodes(imdb, tvdb, season, episode, watched):
 
@@ -52,10 +50,8 @@ def episodes(imdb, tvdb, season, episode, watched):
 
     control.refresh()
 
-
 def tvshows(tvshowtitle, year, imdb, tvdb, season, watched):
     watched = int(watched)
-
 
     try:
         from metahandler import metahandlers
@@ -91,5 +87,3 @@ def tvshows(tvshowtitle, year, imdb, tvdb, season, watched):
         except: pass
 
     control.refresh()
-
-

@@ -119,20 +119,17 @@ def addonIcon():
     #else:
     return os.path.join(addonPath, 'resources', 'media', 'icon.png')
 
-
 def addonPoster():
     #appearance = setting('appearance').lower()
     #if appearance in ['-', '']: return 'DefaultVideo.png'
     #else:
     return os.path.join(addonPath, 'resources', 'media', 'poster.png')
 
-
 def addonBanner():
     #appearance = setting('appearance').lower()
     #if appearance in ['-', '']: return 'DefaultVideo.png'
     #else:
     return os.path.join(addonPath, 'resources', 'media', 'banner.png')
-
 
 def addonThumb():
     #appearance = setting('appearance').lower()
@@ -142,7 +139,6 @@ def addonThumb():
     #return os.path.join(addonPath, 'resources', 'media', appearance, 'icon.png')
     return os.path.join(addonPath, 'resources', 'media', 'icon.png')
 
-
 def addonFanart():
     #appearance = setting('appearance').lower()
     #if appearance == '-': return None
@@ -150,30 +146,24 @@ def addonFanart():
     #else:
     return os.path.join(addonPath, 'resources', 'media', 'fanart.png')
 
-
 def addonNext():
     appearance = setting('appearance').lower()
     #if appearance in ['-', '']: return 'DefaultFolderBack.png'
     #else:
     return os.path.join(addonPath, 'resources', 'media', 'next.png')
 
-
 def artPath():
     return os.path.join(addonPath, 'resources', 'media')
-
 
 def infoDialog(message, heading=addonInfo('name'), icon=addonIcon(), time=3000):
     try: dialog.notification(heading, message, icon, time, sound=False)
     except: execute("Notification(%s,%s, %s, %s)" % (heading, message, time, icon))
 
-
 def yesnoDialog(line1, line2, line3, heading=addonInfo('name'), nolabel='', yeslabel=''):
     return dialog.yesno(heading, line1, line2, line3, nolabel, yeslabel)
 
-
 def selectDialog(list, heading=addonInfo('name')):
     return dialog.select(heading, list)
-
 
 def version():
     num = ''
@@ -184,22 +174,17 @@ def version():
         else: break
     return int(num)
 
-
 def refresh():
     return execute('Container.Refresh')
-
 
 def idle():
     return execute('Dialog.Close(busydialog)')
 
-
 def queueItem():
     return execute('Action(Queue)')
 
-
 def openPlaylist():
     return execute('ActivateWindow(VideoPlaylist)')
-
 
 def openSettings(query=None, id=addonInfo('id')):
     try:
@@ -211,5 +196,3 @@ def openSettings(query=None, id=addonInfo('id')):
         execute('SetFocus(%i)' % (int(f) + 200))
     except:
         return
-
-

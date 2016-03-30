@@ -24,7 +24,6 @@ import re,urllib,urlparse,time
 from resources.lib.libraries import cache
 from resources.lib.libraries import client
 
-
 def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
     try:
         try: headers.update(headers)
@@ -53,14 +52,11 @@ def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'
     except:
         return
 
-
 def source(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):
     return request(url, post, headers, mobile, safe, timeout)
 
-
 def cloudflareAgent():
     return client.randomagent()
-
 
 def cloudflareCookie(url, post, headers, mobile, safe, timeout):
     try:
@@ -91,7 +87,6 @@ def cloudflareCookie(url, post, headers, mobile, safe, timeout):
         return cookie
     except:
         pass
-
 
 def parseJSString(s):
     try:

@@ -18,7 +18,7 @@
 '''
 
 
-import re,sys,json,time,xbmc
+import re,json,time,xbmc
 
 from resources.lib.libraries import control
 from resources.lib.libraries import subtitles
@@ -27,7 +27,6 @@ from resources.lib.libraries import bookmarks
 class player(xbmc.Player):
     def __init__ (self):
         xbmc.Player.__init__(self)
-
 
     def run(self, content, name, url, year, imdb, tvdb, meta):
 
@@ -72,7 +71,6 @@ class player(xbmc.Player):
         control.window.clearProperty('script.trakt.ids')
         time.sleep(5)
 
-
     def getVideoInfo(self, content, name, year, imdb, tvdb):
         try:
             self.loadingTime = time.time()
@@ -116,7 +114,6 @@ class player(xbmc.Player):
         except:
             pass
 
-
     def getMeta(self, meta):
         try:
             meta = json.loads(meta)
@@ -130,7 +127,6 @@ class player(xbmc.Player):
         except:
             poster, thumb, meta = '', '', {'title': self.name}
             return (poster, thumb, meta)
-
 
     def getLibraryMeta(self):
         try:
@@ -177,12 +173,10 @@ class player(xbmc.Player):
                 poster = unicode(poster, 'utf-8', errors='ignore')
                 poster = json.loads(poster)['result']['tvshows'][0]['thumbnail']
 
-
             return (poster, thumb, meta)
         except:
             poster, thumb, meta = '', '', {'title': self.name}
             return (poster, thumb, meta)
-
 
     def setWatchedStatus(self):
         if self.content == 'movie':
@@ -206,7 +200,6 @@ class player(xbmc.Player):
             except:
                 pass
 
-
         elif self.content == 'episode':
             try:
                 control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "playcount" : 1 }, "id": 1 }' % str(self.DBID))
@@ -228,7 +221,6 @@ class player(xbmc.Player):
                 trakt.syncTVShows()
             except:
                 pass
-
 
     def onPlayBackStarted(self):
         for i in range(0, 200):
@@ -252,7 +244,6 @@ class player(xbmc.Player):
         except:
             pass
 
-
     def onPlayBackStopped(self):
         try:
             bookmarks.deleteBookmark(self.name, self.imdb)
@@ -266,8 +257,5 @@ class player(xbmc.Player):
         except:
             pass
 
-
     def onPlayBackEnded(self):
         self.onPlayBackStopped()
-
-

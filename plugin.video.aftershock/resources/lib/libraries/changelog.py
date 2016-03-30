@@ -15,7 +15,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-
 def get(version):
     try:
         import xbmc,xbmcgui,xbmcaddon,xbmcvfs
@@ -45,5 +44,3 @@ def get(version):
         return '1'
     except:
         return '1'
-
-

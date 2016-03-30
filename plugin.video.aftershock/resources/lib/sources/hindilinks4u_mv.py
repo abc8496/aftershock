@@ -19,12 +19,12 @@
 '''
 
 
-import re,urllib,urlparse,datetime, random
+import re,urllib,urlparse, random
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib import resolvers
-from resources.lib.libraries import metacache
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -60,8 +60,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -78,7 +78,6 @@ class source:
             quality = ''
 
             result = client.parseDOM(result, name="div", attrs={"class" : "entry-content rich-content"})[0]
-            #result = client.parseDOM(result, name="p", attrs={"style" : "text-align: justify;"})
             result = client.parseDOM(result, name="p")
             try :
                 host = ''
@@ -109,12 +108,13 @@ class source:
                         pass
             except:
                 pass
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
-
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -129,6 +129,7 @@ class source:
                     raise Exception()
                 links.append(r)
             url = links
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             return False

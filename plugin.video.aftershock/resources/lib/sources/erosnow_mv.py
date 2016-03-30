@@ -24,7 +24,7 @@ import re,urllib,urlparse,random, datetime, json
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import control
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -37,7 +37,6 @@ class source:
         self.user = control.setting('eros_user')
         self.password = control.setting('eros_pwd')
         self.list = []
-
 
     def get_movie(self, imdb, title, year):
         try:
@@ -67,8 +66,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -88,6 +87,7 @@ class source:
             #except:
             #    client.printException('')
             #    pass
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
@@ -104,7 +104,9 @@ class source:
             t = result['success']
         except:
             pass
+
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             post = {'el':self.user, 'pw':self.password, 'mobile':'', 'callingcode':'', 'type':'json', 'fbid':''}
             h = {'Referer':self.base_link}
@@ -114,7 +116,7 @@ class source:
             result = json.loads(result)
 
             t = result['success']
-
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return [url]
         except:
             return False

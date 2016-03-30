@@ -25,6 +25,7 @@ from resources.lib.libraries import control
 from resources.lib.libraries import client
 from resources.lib.libraries import cache
 from resources.lib.libraries import views
+from resources.lib.libraries import logger
 
 class seasons:
     def __init__(self):
@@ -533,7 +534,6 @@ class episodes:
         self.scn_link = 'http://m2v.ru'
         self.added_link = 'http://m2v.ru/?Part=11&func=part&page=1'
 
-
     def get(self, tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season=None, episode=None, idx=True, provider=None, url=None):
         try:
             if idx == True:
@@ -543,13 +543,13 @@ class episodes:
                 if not provider == None:
                     call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
                     self.list = call.get_episodes(tvshowtitle, url)
-                    if self.list == [] : raise Exception()
+                    if self.list == [] : raise Exception(control.lang(30516).encode('utf-8'))
                     self.list = self.super_info(self.list)
 
                 self.episodeDirectory(self.list, provider)
                 return self.list
-        except:
-            client.printException('episodes.get(tvshowtitle=%s, provider=%s, url=%s)' % (tvshowtitle, provider, url))
+        except Exception as e:
+            logger.error(e)
             control.infoDialog(control.lang(30516).encode('utf-8'))
             pass
 
@@ -579,7 +579,6 @@ class episodes:
         except: multi = []
         multi = len([x for y,x in enumerate(multi) if x not in multi[:y]])
         multi = True if multi > 1 else False
-
 
         try: sysaction = items[0]['action']
         except: sysaction = ''
@@ -681,7 +680,6 @@ class episodes:
         control.directory(int(sys.argv[1]), cacheToDisc=cacheToDisc)
         views.setView('episodes', {'skin.confluence': 504})
 
-
     def addDirectory(self, items):
         if items == None or len(items) == 0: return
 
@@ -710,5 +708,3 @@ class episodes:
                 pass
 
         control.directory(int(sys.argv[1]), cacheToDisc=True)
-
-

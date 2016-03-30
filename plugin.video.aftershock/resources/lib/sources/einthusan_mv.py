@@ -23,7 +23,7 @@ import re,urllib,urlparse,json
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -71,8 +71,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             sources = []
 
@@ -85,10 +85,10 @@ class source:
             url = client.request(url)
 
             sources.append({'source': 'einthusan', 'quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
-
 
     def resolve(self, url, resolverList):
         return url

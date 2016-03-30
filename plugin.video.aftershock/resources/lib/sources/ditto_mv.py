@@ -19,21 +19,19 @@
 '''
 
 
-import re,urllib,urlparse,random, datetime, json
+import urllib,urlparse,random
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
-from resources.lib.libraries import control
-
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
         self.base_link_1 = 'http://www.dittotv.com'
         self.base_link_2 = self.base_link_1
-        self.search_link = '/index.php?r=search/index&q=%s&FiltersForm[filterType]=movie'
+        self.search_link = 'search?q=%s'
         self.info_link = '/catalog/movie/%s/cc=US'
         self.list = []
-
 
     def get_movie(self, imdb, title, year):
         try:
@@ -65,10 +63,9 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
-            quality = ''
             sources = []
 
             if url == None: return sources
@@ -84,6 +81,7 @@ class source:
             url = '%s|Referer=%s' % (url, oUrl)
 
             sources.append({'source': "Ditto", 'parts': '1', 'quality': "HD", 'provider': 'Ditto', 'url': url, 'direct':True})
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources

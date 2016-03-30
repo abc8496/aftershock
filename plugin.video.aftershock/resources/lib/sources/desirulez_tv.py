@@ -19,12 +19,11 @@
 '''
 
 
-import re,urllib,urlparse,random, datetime
+import re,urlparse, datetime
 
-from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
-from resources.lib.libraries import metacache
 from resources.lib import resolvers
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -36,7 +35,6 @@ class source:
         self.search_link = '/feed/?s=%s&submit=Search'
         self.info_link = ''
         self.now = datetime.datetime.now()
-
 
         self.star_plus_link = 'forumdisplay.php?f=42'
         self.zee_tv_link = 'forumdisplay.php?f=73'
@@ -120,7 +118,6 @@ class source:
 
             rawResult = result.decode('iso-8859-1').encode('utf-8')
 
-
             result = client.parseDOM(rawResult, "h3", attrs = {"class" : "title threadtitle_unread"})
             result += client.parseDOM(rawResult, "h3", attrs = {"class" : "threadtitle"})
 
@@ -149,6 +146,7 @@ class source:
             return ep_url
 
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -215,12 +213,14 @@ class source:
                 host = client.host(urls[0])
                 url = "##".join(urls)
                 sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url,'direct':False})
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
 
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -235,9 +235,7 @@ class source:
                     raise Exception()
                 links.append(r)
             url = links
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             return False
-
-
-

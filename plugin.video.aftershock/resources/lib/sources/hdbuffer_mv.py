@@ -25,6 +25,7 @@ from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import metacache
 from resources.lib import resolvers
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -38,7 +39,6 @@ class source:
         self.list = []
 
     def scn_full_list(self, url, lang=None,  provider=None):
-        tmpList = []
         self.list = []
 
         pagesScanned = 0
@@ -151,8 +151,8 @@ class source:
         except:
             return
 
-
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -187,14 +187,16 @@ class source:
                     sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'HDBuffer', 'url': url, 'direct':False})
                 except :
                     pass
-
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
-
     def resolve(self, url, resolverList):
-        return resolvers.request(url, resolverList)
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
+        url = resolvers.request(url, resolverList)
+        logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
+        return url
 
 
 

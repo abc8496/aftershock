@@ -20,16 +20,13 @@
 
 import re,unicodedata
 
-
 def movie(title):
     title = re.sub('\n|([[].+?[]])|([(].+?[)])|\s(vs|v[.])\s|(:|;|-|"|,|\'|\_|\.|\?)|\s', '', title).lower()
     return title
 
-
 def tv(title):
     title = re.sub('\n|\s(|[(])(UK|US|AU|\d{4})(|[)])$|\s(vs|v[.])\s|(:|;|-|"|,|\'|\_|\.|\?)|\s', '', title).lower()
     return title
-
 
 def normalize(title):
     try:
@@ -46,4 +43,3 @@ def normalize(title):
         return t.encode("utf-8")
     except:
         return title
-

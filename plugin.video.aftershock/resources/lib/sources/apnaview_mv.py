@@ -19,12 +19,14 @@
 '''
 
 
-import re,urllib,urlparse,datetime, random
+import re,urllib,urlparse,datetime
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib import resolvers
-from resources.lib.libraries import metacache
+from resources.lib.libraries import workers
+from resources.lib.libraries import control
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -35,12 +37,11 @@ class source:
         self.added_link = '/browse/%s?'
         self.sort_link = '&order=desc&sort=date'
         self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
+        self.sources = []
 
     def scn_full_list(self, url, lang=None, provider=None):
-        tmpList = []
         self.list = []
 
-        pagesScanned = 0
         try :
             url = getattr(self, url + '_link')
             url = url % lang
@@ -98,8 +99,6 @@ class source:
             url = client.parseDOM(next, "a", ret="href")[0]
             url = url.replace("&amp;", "&").replace(self.base_link, '')
             self.list[0].update({'next':'%s' % (url)})
-            #url = re.compile('(.+?)&amp;page=(.+?)').findall(url)[0]
-            #self.list[0].update({'next':url[0]+'&page='+url[1]})
         except:
             pass
 
@@ -132,11 +131,9 @@ class source:
 
 
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
-            quality = ''
-            sources = []
-
-            if url == None: return sources
+            if url == None: return self.sources
 
             url = '%s%s' % (self.base_link, url)
 
@@ -149,33 +146,53 @@ class source:
             result = client.parseDOM(result, "tbody")[0]
             result = client.parseDOM(result, "tr")
 
+            hypermode = False if control.setting('hypermode') == 'false' else True
+
+            threads = []
             for item in result:
-                try :
-                    urls = client.parseDOM(item, "td")[1]
-                    urls = client.parseDOM(urls, "a", ret="href")
-                    for i in range(0, len(urls)):
-                        uResult = client.source(urls[i], mobile=False)
-                        uResult = uResult.replace('\n','').replace('\t','')
-                        if 'Could not connect to mysql! Please check your database' in result:
-                            uResult = client.source(urls[i], mobile=True)
+                if hypermode :
+                    threads.append(workers.Thread(self.get_source, item))
+                else :
+                    self.get_source(item)
 
-                        item = client.parseDOM(uResult, "div", attrs={"class":"videoplayer"})[0]
-                        item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
-                        urls[i] = item
-                    host = client.host(urls[0])
-                    if len(urls) > 1:
-                        url = "##".join(urls)
-                    else:
-                        url = urls[0]
-                    sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url, 'direct':False})
-                except :
-                    pass
-            return sources
+            if hypermode:
+                [i.start() for i in threads]
+
+                stillWorking = True
+
+                while stillWorking:
+                    stillWorking = False
+                    stillWorking = [True for x in threads if x.is_alive() == True]
+            logger.debug('%s SOURCES [%s]' % (__name__,self.sources))
+            return self.sources
         except:
-            return sources
+            return self.sources
 
+    def get_source(self, item):
+        quality = ''
+        try :
+            urls = client.parseDOM(item, "td")[1]
+            urls = client.parseDOM(urls, "a", ret="href")
+            for i in range(0, len(urls)):
+                uResult = client.source(urls[i], mobile=False)
+                uResult = uResult.replace('\n','').replace('\t','')
+                if 'Could not connect to mysql! Please check your database' in uResult:
+                    uResult = client.source(urls[i], mobile=True)
+
+                item = client.parseDOM(uResult, "div", attrs={"class":"videoplayer"})[0]
+                item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
+                urls[i] = item
+            host = client.host(urls[0])
+            if len(urls) > 1:
+                url = "##".join(urls)
+            else:
+                url = urls[0]
+            self.sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url, 'direct':False})
+        except :
+            pass
 
     def resolve(self, url, resolverList):
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -190,6 +207,7 @@ class source:
                     raise Exception()
                 links.append(r)
             url = links
+            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except:
             return False

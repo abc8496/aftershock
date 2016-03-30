@@ -1,5 +1,14 @@
 ------------------------
-Aftershock v3.4.2 (21-Mar-2016)
+Aftershock v3.5.1 (30-Mar-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Logging Improvements
+- Code cosmetics
+- UrlResolver Integration Improvements
+- Performance Improvements
+
+------------------------
+Aftershock v3.5.0 (21-Mar-2016)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
 - Fixed Aaj Tak Live Streams

@@ -22,9 +22,14 @@ import urlparse, urllib
 from resources.lib.resolvers import realdebrid
 from resources.lib.resolvers import premiumize
 from resources.lib.libraries import client
+from resources.lib.libraries import logger
 
+try :import urlresolver
+except:pass
 
 def request(url, resolverList=None):
+
+    # Custom Resolvers
     try:
         u = client.host(url)
 
@@ -42,17 +47,54 @@ def request(url, resolverList=None):
     except:
         pass
 
+    # URLResolvers
     u = url
     try:
-        url = [(i, i.get_host_and_id(u)) for i in resolverList]
-        url = [i for i in url if not i[1] == False]
-        url = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in url]
-        url = [i for i in url if not i[1] == False][0]
-        url = url[0].get_media_url(url[2], url[3])
-        return url
-    except:
-        return False
+        url = None
 
+        hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True, include_universal=False)
+        if hmf.valid_url() == True: url = hmf.resolve()
+        else: url = False
+    except:
+        pass
+
+    try:
+        if not url == None: raise Exception()
+
+        hmf = urlresolver.HostedMediaFile(url=u, include_disabled=True)
+        hmf = hmf.get_resolvers(validated=True)
+        hmf = [i for i in hmf if not i.isUniversal()][0]
+        host, media_id = hmf.get_host_and_id(u)
+        url = hmf.get_media_url(host, media_id)
+    except:
+        pass
+
+    # URL Resolver 2.10.12
+    try:
+        if not url == None: raise Exception()
+
+        hmf = urlresolver.plugnplay.man.implementors(urlresolver.UrlResolver)
+        hmf = [i for i in hmf if not '*' in i.domains]
+        hmf = [(i, i.get_host_and_id(u)) for i in hmf]
+        hmf = [i for i in hmf if not i[1] == False]
+        hmf = [(i[0], i[0].valid_url(u, i[1][0]), i[1][0], i[1][1]) for i in hmf]
+        hmf = [i for i in hmf if not i[1] == False][0]
+        url = hmf[0].get_media_url(hmf[2], hmf[3])
+    except:
+        pass
+
+    try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
+    except: headers = dict('')
+
+    if url.startswith('http') and '.m3u8' in url:
+        result = client.request(url.split('|')[0], headers=headers, output='geturl', timeout='20')
+        if result == None: raise Exception()
+
+    elif url.startswith('http'):
+        result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20')
+        if result == None: raise Exception()
+
+    return url
 
 def info():
     return [

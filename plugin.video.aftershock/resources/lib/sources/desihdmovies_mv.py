@@ -19,12 +19,12 @@
 '''
 
 
-import re,urllib,urlparse,datetime, random
+import re,urllib,urlparse
 
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib import resolvers
-from resources.lib.libraries import metacache
+from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
@@ -59,8 +59,8 @@ class source:
             return
 
     def get_sources(self, url):
+        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
         try:
-            quality = ''
             sources = []
 
             if url == None: return sources
@@ -81,8 +81,6 @@ class source:
             items = client.parseDOM(result, "div", attrs={"id":"player2"})[0]
             items = client.parseDOM(items, "div", attrs={"class":"movieplay"})
 
-            urls = []
-
             for i in range(0, len(items)):
                 try :
                     part = parts[i]
@@ -96,10 +94,14 @@ class source:
                     sources.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'DesiHDMovies', 'url': url, 'direct':False})
                 except :
                     pass
+            logger.debug('%s SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
 
     def resolve(self, url, resolverList):
-        return resolvers.request(url, resolverList)
+        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
+        url = resolvers.request(url, resolverList)
+        logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
+        return url

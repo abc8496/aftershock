@@ -26,5 +26,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

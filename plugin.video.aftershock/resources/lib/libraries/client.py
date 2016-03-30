@@ -23,7 +23,6 @@ import re,sys,urllib2,HTMLParser, time, urlparse
 import control
 import traceback
 
-
 def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30', debug=False):
     try:
         handlers = []
@@ -112,10 +111,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
     except:
         return
 
-
 def source(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
     return request(url, close, error, proxy, post, headers, mobile, safe, referer, cookie, output, timeout)
-
 
 def parseDOM(html, name=u"", attrs={}, ret=False):
     # Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen
@@ -220,7 +217,6 @@ def parseDOM(html, name=u"", attrs={}, ret=False):
         ret_lst += lst
 
     return ret_lst
-
 
 def replaceHTMLCodes(txt):
     txt = re.sub("(&#[0-9]+)([^;^0-9]+)", "\\1;\\2", txt)

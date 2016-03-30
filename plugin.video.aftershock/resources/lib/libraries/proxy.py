@@ -21,7 +21,6 @@
 
 import random
 
-
 def get():
     return random.choice([
     'https://www.3proxy.us/index.php?hl=2e5&q=',

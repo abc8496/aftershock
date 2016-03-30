@@ -27,7 +27,6 @@ except:
 
 from resources.lib.libraries import control
 
-
 def getBookmark(name, imdb='0'):
     try:
         offset = '0'
@@ -44,7 +43,6 @@ def getBookmark(name, imdb='0'):
         return offset
     except:
         return '0'
-
 
 def addBookmark(currentTime, name, imdb='0'):
     try:
@@ -63,7 +61,6 @@ def addBookmark(currentTime, name, imdb='0'):
     except:
         pass
 
-
 def deleteBookmark(name, imdb='0'):
     try:
         idFile = hashlib.md5()
@@ -78,4 +75,3 @@ def deleteBookmark(name, imdb='0'):
         dbcon.commit()
     except:
         pass
-

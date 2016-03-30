@@ -21,7 +21,7 @@
 
 import re
 from resources.lib.libraries import client
-
+from resources.lib.libraries import logger
 
 def resolve(url):
     try:
@@ -43,9 +43,7 @@ def resolve(url):
         try :url = client.parseDOM(result, "meta", attrs={"itemprop":"contentURL"}, ret="content")[0]
         except:
             pass
-
+        logger.debug('%s URL [%s]' % (__name__, url))
         return url
     except:
         return
-
-
