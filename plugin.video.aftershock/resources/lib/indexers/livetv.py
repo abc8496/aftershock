@@ -34,7 +34,8 @@ class channels:
 
     def get(self):
         try :
-            if control.setting('livelocal'):
+            logger.debug(control.setting('livelocal'))
+            if control.setting('livelocal') == 'true':
                 dataPath = control.dataPath
                 filename = os.path.join(dataPath, 'livestreams_wip.json')
                 filename = open(filename)
