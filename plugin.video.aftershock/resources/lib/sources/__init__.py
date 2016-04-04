@@ -141,7 +141,7 @@ class sources:
             content = 'movie' if tvshowtitle == None else 'episode'
 
             self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
-            if self.sources == []: raise Exception()
+            #if self.sources == []: raise Exception()
 
             self.sources = self.sourcesFilter()
 
@@ -482,6 +482,75 @@ class sources:
             client.printException('sources.getEpisodeSource')
             pass
 
+    def getLiveSources(self):
+        try :
+            sourceDict = []
+            for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
+            sourceDict = [i[0] for i in sourceDict if i[1] == False]
+            sourceDict = [i for i in sourceDict if i.endswith('_live')]
+            try: sourceDict = [(i, control.setting(re.sub('_live$', '', i))) for i in sourceDict]
+            except: sourceDict = [(i, 'true') for i in sourceDict]
+
+            sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
+
+            control.makeFile(control.dataPath)
+            self.sourceFile = control.sourcescacheFile
+
+            threads = []
+            for source in sourceDict:
+                threads.append(workers.Thread(self.getLiveSource,re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
+
+            try: timeout = int(control.setting('sources_timeout_40'))
+            except: timeout = 40
+            [i.start() for i in threads]
+
+            control.idle()
+
+            for i in range(0, timeout * 2):
+                try:
+                    is_alive = [x.is_alive() for x in threads]
+                    if all(x == False for x in is_alive): break
+                    time.sleep(0.5)
+                except:
+                    pass
+
+            return self.sources
+        except:
+            return self.sources
+
+    def getLiveSource(self, source, call):
+        try:
+            dbcon = database.connect(self.sourceFile)
+            dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_src (""source TEXT, ""imdb_id TEXT, ""season TEXT, ""episode TEXT, ""hosts TEXT, ""added TEXT, ""UNIQUE(source, imdb_id, season, episode)"");")
+        except:
+            pass
+
+        try:
+            sources = []
+            dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, '', '', ''))
+            match = dbcur.fetchone()
+            t1 = int(re.sub('[^0-9]', '', str(match[5])))
+            t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
+            update = abs(t2 - t1) > 300
+            if update == False:
+                sources = json.loads(match[4])
+                return self.sources.extend(sources)
+        except:
+            pass
+        try:
+            sources = []
+            sources = call.getLiveSource()
+            if sources == None:
+                raise Exception()
+                sources = []
+            self.sources.extend(sources)
+            dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s' AND episode = '%s'" % (source, '', '', ''))
+            dbcur.execute("INSERT INTO rel_src Values (?, ?, ?, ?, ?, ?)", (source, '', '', '', json.dumps(sources), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+            dbcon.commit()
+        except:
+            pass
+
     def sourcesDialog(self):
         try:
             sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + self.sources
@@ -624,8 +693,6 @@ class sources:
         filter += [i for i in self.sources if i['direct'] == True]
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
         self.sources = filter
-
-
 
         filter = []
         filter += [i for i in self.sources if i['quality'] == '1080p']

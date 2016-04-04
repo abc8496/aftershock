@@ -62,12 +62,14 @@ class source:
         for movie in movies:
             try :
                 title = client.parseDOM(movie, "span", attrs={"class":"title"})[0]
+                #title = re.compile('(.+?) [(]\d{4}[)]').findall(title)
+                title = re.compile('(.+?) \d{4} ').findall(title)[0]
                 title = client.replaceHTMLCodes(title)
                 try : title = title.encode('utf-8')
                 except: pass
 
-                year = client.parseDOM(movie, "small")[0]
-                year = re.compile('(.+?) watch online').findall(year)[0]
+                year = client.parseDOM(movie, "span", attrs={"class":"title"})[0]
+                year = year = re.compile('.+? (\d{4})').findall(year)[0]
                 year = year.encode('utf-8')
 
                 name = '%s (%s)' % (title, year)
@@ -119,6 +121,8 @@ class source:
             title = cleantitle.movie(title)
             for item in result:
                 searchTitle = client.parseDOM(item, "span", attrs={"class":"title"})[0]
+                try : searchTitle = re.compile('(.+?) \d{4} ').findall(searchTitle)[0]
+                except: pass
                 searchTitle = cleantitle.movie(searchTitle)
                 if title == searchTitle:
                     url = client.parseDOM(item, "a", ret="href")[0]

@@ -18,44 +18,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-
-import sys,json,urllib, base64, os
+import sys,urllib
 
 from resources.lib.libraries import control
 from resources.lib.libraries import client
 from resources.lib.libraries import views
-from resources.lib.libraries import logger
+from resources.lib.sources import sources
 
 class channels:
     def __init__(self):
         self.list = []
 
-        self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
-
     def get(self):
         try :
-            logger.debug(control.setting('livelocal'))
-            if control.setting('livelocal') == 'true':
-                dataPath = control.dataPath
-                filename = os.path.join(dataPath, 'livestreams_wip.json')
-                filename = open(filename)
-                result = filename.read()
-                filename.close()
-            else :
-                result = client.request(self.live_link)
-
-            channels = json.loads(result)
-
-            channelNames = channels.keys()
-            channelNames.sort()
-
-            for channel in channelNames:
-                channelObj = channels[channel]
-                if not channelObj['enabled'] == 'false':
-                    self.list.append({'name':channel, 'poster':channelObj['iconimage'],'url':channelObj['channelUrl']})
-
+            self.list.extend(sources().getLiveSources())
+            self.list = sorted(self.list, key=lambda k: k['name'])
             self.channelDirectory(self.list)
-            return self.list
         except :
             client.printException('')
             pass

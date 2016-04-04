@@ -18,12 +18,12 @@
 '''
 
 
-import re,sys,urllib2,HTMLParser, time, urlparse
+import re,sys,urllib2,HTMLParser, time, urlparse, gzip, StringIO
 
 import control
 import traceback
 
-def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30', debug=False):
+def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30', debug=False, compression=False):
     try:
         handlers = []
         if not proxy == None:
@@ -104,6 +104,12 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
                 result = response.read(224 * 1024)
             else:
                 result = response.read()
+        try:
+            if response.headers['content-encoding'].lower() == 'gzip':
+                result = gzip.GzipFile(fileobj=StringIO.StringIO(result)).read()
+        except:
+            pass
+
         if close == True:
             response.close()
 
@@ -111,8 +117,8 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
     except:
         return
 
-def source(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30'):
-    return request(url, close, error, proxy, post, headers, mobile, safe, referer, cookie, output, timeout)
+def source(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, safe=False, referer=None, cookie=None, output='', timeout='30', compression=False):
+    return request(url, close, error, proxy, post, headers, mobile, safe, referer, cookie, output, timeout, compression)
 
 def parseDOM(html, name=u"", attrs={}, ret=False):
     # Copyright (C) 2010-2011 Tobias Ussing And Henrik Mosgaard Jensen

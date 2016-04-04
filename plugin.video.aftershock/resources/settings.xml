@@ -36,6 +36,8 @@
 		<setting id="hdbuffer" type="bool" label="HDBuffer" default="true" />
 		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>
 		<setting id="desirulez" type="bool" label="DesiRulez" default="true" />
+		<setting id="json" type="bool" label="DesiRulez" default="true" />
+		<setting id="uktvnow" type="bool" label="DesiRulez" default="true" />
 	</category>
 
 	<category label="30910">
