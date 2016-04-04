@@ -26,7 +26,7 @@ from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
-        self.base_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
+        self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
         self.now = datetime.datetime.now()
         self.list = []
 
