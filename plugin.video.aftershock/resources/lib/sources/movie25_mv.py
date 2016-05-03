@@ -28,9 +28,9 @@ from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
-        self.domains = ['movie25.hk']
-        self.base_link = 'http://movie25.hk'
-        self.search_link = 'http://movie25.hk/search.php?key=%s'
+        self.domains = ['movie25.ph', 'movie25.hk']
+        self.base_link = 'http://movie25.ph'
+        self.search_link = 'http://movie25.ph/search.php?q=%s'
 
     def request(self, url, check):
         try:

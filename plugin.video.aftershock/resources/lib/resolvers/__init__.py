@@ -104,4 +104,5 @@ def info():
         , {'class': 'xpressvids', 'host': ['xpressvids']}
         , {'class': 'playu', 'host': ['playu.net']}
         , {'class': 'apnasave', 'host': ['apnasave.in']}
+        , {'class': 'filmywap', 'host': ['storeinusa.com']}
     ]

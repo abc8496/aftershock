@@ -26,7 +26,7 @@ from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
-        self.live_link = base64.b64decode('aHR0cDovL29mZnNob3JlZ2l0LmNvbS92aW5lZWd1L2FmdGVyc2hvY2stcmVwby9saXZlc3RyZWFtcy5qc29u')
+        self.live_link = base64.b64decode('aHR0cHM6Ly9vZmZzaG9yZWdpdC5jb20vdmluZWVndS9hZnRlcnNob2NrLXJlcG8vbGl2ZXN0cmVhbXMuanNvbg==')
         self.now = datetime.datetime.now()
         self.list = []
 
@@ -53,6 +53,4 @@ class source:
                     self.list.append({'name':channel, 'poster':channelObj['iconimage'],'url':channelObj['channelUrl'],'provider':'json','direct':True})
             return self.list
         except:
-            import traceback
-            traceback.print_exc()
             pass

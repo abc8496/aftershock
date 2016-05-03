@@ -248,7 +248,10 @@ def urlRewrite(url):
                       {'host':'tvlogy.php','url':'http://tvlogy.to/watch.php?v=%s'},
                       {'host':'idowatch.php','url':'http://idowatch.us/embed-%s.html'},
                       {'host':'playu.php','url':'http://playu.net/embed-%s-700x440.html'},
-                      {'host':'nowvideo.php','url':'http://embed.nowvideo.sx/embed.php?v=%s&amp;wmode=direct&amp;autoplay=true&controls=false'}]
+                      {'host':'nowvideo.php','url':'http://embed.nowvideo.sx/embed.php?v=%s&amp;wmode=direct&amp;autoplay=true&controls=false'},
+                      {'host':'openload.php','url':'https://openload.co/embed/%s/'},
+                      {'host':'thevideo.php','url':'http://www.thevideo.me/embed-%s-650x400.html'},
+                      {'host':'vodlocker.php','url':'http://vodlocker.com/embed-%s-650x400.html'}]
     try :
         videoID = getVideoID(url)
         for i in urlReWriteDict:

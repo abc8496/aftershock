@@ -47,6 +47,8 @@ class source:
 
             for item in result:
                 searchTitle = client.parseDOM(item, "span", attrs={"class":"tt"})[0]
+                try : searchTitle = re.compile('(.+?) \d{4} ').findall(searchTitle)[0]
+                except: pass
                 searchTitle = cleantitle.movie(searchTitle)
                 if title in searchTitle:
                     url = client.parseDOM(item, "a", ret="href")[0]
