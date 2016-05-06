@@ -1,4 +1,12 @@
 ------------------------
+Aftershock v3.7.0 (-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Fixed Download Feature
+- Updated dependencies
+- Updated Live TV Providers
+
+------------------------
 Aftershock v3.6.2 (03-May-2016)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
