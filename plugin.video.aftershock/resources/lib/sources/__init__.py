@@ -64,6 +64,10 @@ class sources:
 
             infoMenu = control.lang(30502).encode('utf-8') if content == 'movie' else control.lang(30503).encode('utf-8')
 
+            downloads = True if control.setting('downloads') == 'true' and not control.setting('movie.download.path') == '' else False
+
+            logger.debug('Downloads : %s' % downloads)
+
             sysmeta = urllib.quote_plus(meta)
             sysaddon = sys.argv[0]
 
@@ -90,6 +94,15 @@ class sources:
 
                     url, label, provider = self.sources[i]['url'], self.sources[i]['label'], self.sources[i]['provider']
 
+                    try :
+                        parts = int(self.sources[i]['parts'])
+                        logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label))
+                    except:
+                        parts = 2
+
+                    logger.debug('Downloads : %s Parts : %s' % (downloads, parts))
+
+                    systitle = urllib.quote_plus('%s (%s)' % (title, year) if tvshowtitle == None or season == None or episode == None else '%s S%02dE%02d' % (tvshowtitle, int(season), int(episode)))
                     sysname, sysurl, sysimage, sysprovider = urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(poster), urllib.quote_plus(provider)
 
                     syssource = urllib.quote_plus(json.dumps([self.sources[i]]))
@@ -101,7 +114,8 @@ class sources:
 
                     cm = []
                     cm.append((control.lang(30504).encode('utf-8'), 'RunPlugin(%s?action=queueItem)' % sysaddon))
-                    cm.append((control.lang(30505).encode('utf-8'), 'RunPlugin(%s?action=download&name=%s&image=%s&url=%s&provider=%s)' % (sysaddon, sysname, sysimage, sysurl, sysprovider)))
+                    if (downloads == True and parts <= 1):
+                        cm.append((control.lang(30505).encode('utf-8'), 'RunPlugin(%s?action=download&name=%s&image=%s&source=%s)' % (sysaddon, systitle, sysimage, syssource)))
                     cm.append((infoMenu, 'Action(Info)'))
                     cm.append((control.lang(30506).encode('utf-8'), 'RunPlugin(%s?action=refresh)' % sysaddon))
                     cm.append((control.lang(30507).encode('utf-8'), 'RunPlugin(%s?action=openSettings)' % sysaddon))
@@ -183,33 +197,40 @@ class sources:
             next = [] ; prev = [] ; total = []
             meta = None
 
-            for i in range(1,10000):
-                try:
-                    u = control.infoLabel('ListItem(%s).FolderPath' % str(i))
-                    if u in total: raise Exception()
-                    total.append(u)
-                    u = dict(urlparse.parse_qsl(u.replace('?','')))
-                    if 'meta' in u: meta = u['meta']
-                    u = json.loads(u['source'])[0]
-                    next.append(u)
-                except:
-                    break
-            for i in range(-10000,0)[::-1]:
-                try:
-                    u = control.infoLabel('ListItem(%s).FolderPath' % str(i))
-                    if u in total: raise Exception()
-                    total.append(u)
-                    u = dict(urlparse.parse_qsl(u.replace('?','')))
-                    if 'meta' in u: meta = u['meta']
-                    u = json.loads(u['source'])[0]
-                    prev.append(u)
-                except:
-                    break
+            if content == 'live':
+                items = json.loads(source)
+                source, quality = items[0]['source'], items[0]['quality']
+                meta = items[0]['meta']
+            else :
 
-            items = json.loads(source)
-            source, quality = items[0]['source'], items[0]['quality']
-            items = [i for i in items+next+prev if i['quality'] == quality and i['source'] == source][:10]
-            items += [i for i in next+prev if i['quality'] == quality and not i['source'] == source][:10]
+                for i in range(1,10000):
+                    try:
+                        u = control.infoLabel('ListItem(%s).FolderPath' % str(i))
+
+                        if u in total: raise Exception()
+                        total.append(u)
+                        u = dict(urlparse.parse_qsl(u.replace('?','')))
+                        if 'meta' in u: meta = u['meta']
+                        u = json.loads(u['source'])[0]
+                        next.append(u)
+                    except:
+                        break
+                for i in range(-10000,0)[::-1]:
+                    try:
+                        u = control.infoLabel('ListItem(%s).FolderPath' % str(i))
+                        if u in total: raise Exception()
+                        total.append(u)
+                        u = dict(urlparse.parse_qsl(u.replace('?','')))
+                        if 'meta' in u: meta = u['meta']
+                        u = json.loads(u['source'])[0]
+                        prev.append(u)
+                    except:
+                        break
+
+                items = json.loads(source)
+                source, quality = items[0]['source'], items[0]['quality']
+                items = [i for i in items+next+prev if i['quality'] == quality and i['source'] == source][:10]
+                items += [i for i in next+prev if i['quality'] == quality and not i['source'] == source][:10]
 
             self.progressDialog = control.progressDialog
             self.progressDialog.create(control.addonInfo('name'), '')
@@ -261,6 +282,7 @@ class sources:
 
                     return self.url
                 except:
+                    client.printException('')
                     pass
 
             try: self.progressDialog.close()
@@ -278,16 +300,23 @@ class sources:
         for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
         sourceDict = [i[0] for i in sourceDict if i[1] == False]
 
-        content = 'movie' if tvshowtitle == None else 'episode'
+        if tvshowtitle == None and title == None:
+            content = 'live'
+        else:
+            content = 'movie' if tvshowtitle == None else 'episode'
 
         if content == 'movie':
             sourceDict = [i for i in sourceDict if i.endswith(('_mv', '_mv_tv'))]
             try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
             except: sourceDict = [(i, 'true') for i in sourceDict]
-        else:
+        elif content == 'episode':
             sourceDict = [i for i in sourceDict if i.endswith(('_tv', '_mv_tv'))]
             #try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i) + '_tv')) for i in sourceDict]
             try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
+            except: sourceDict = [(i, 'true') for i in sourceDict]
+        elif content == 'live':
+            sourceDict = [i for i in sourceDict if i.endswith('_live')]
+            try: sourceDict = [(i, control.setting(re.sub('_live$', '', i))) for i in sourceDict]
             except: sourceDict = [(i, 'true') for i in sourceDict]
 
         threads = []
@@ -300,11 +329,13 @@ class sources:
         if content == 'movie':
             title = cleantitle.normalize(title)
             for source in sourceDict: threads.append(workers.Thread(self.getMovieSource, title, year, imdb, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source()))
-        else:
+        elif content == 'episode':
             tvshowtitle = cleantitle.normalize(tvshowtitle)
             season, episode = alterepisode.alterepisode().get(imdb, tmdb, tvdb, tvrage, season, episode, alter, title, date)
 
             for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source(), meta))
+        elif content == 'live':
+            for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 
         try: timeout = int(control.setting('sources_timeout_40'))
@@ -314,7 +345,7 @@ class sources:
 
         control.idle()
 
-        sourceLabel = [re.sub('_mv_tv$|_mv$|_tv$', '', i) for i in sourceDict]
+        sourceLabel = [re.sub('_mv_tv$|_mv$|_tv$|_live$', '', i) for i in sourceDict]
         sourceLabel = [re.sub('v\d+$', '', i).upper() for i in sourceLabel]
 
 
@@ -482,41 +513,6 @@ class sources:
             client.printException('sources.getEpisodeSource')
             pass
 
-    def getLiveSources(self):
-        try :
-            sourceDict = []
-            for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
-            sourceDict = [i[0] for i in sourceDict if i[1] == False]
-            sourceDict = [i for i in sourceDict if i.endswith('_live')]
-            try: sourceDict = [(i, control.setting(re.sub('_live$', '', i))) for i in sourceDict]
-            except: sourceDict = [(i, 'true') for i in sourceDict]
-
-            sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
-
-            control.makeFile(control.dataPath)
-            self.sourceFile = control.sourcescacheFile
-
-            threads = []
-            for source in sourceDict:
-                threads.append(workers.Thread(self.getLiveSource,re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
-
-            try: timeout = int(control.setting('sources_timeout_40'))
-            except: timeout = 40
-            [i.start() for i in threads]
-
-            control.idle()
-
-            for i in range(0, timeout * 2):
-                try:
-                    is_alive = [x.is_alive() for x in threads]
-                    if all(x == False for x in is_alive): break
-                    time.sleep(0.5)
-                except:
-                    pass
-
-            return self.sources
-        except:
-            return self.sources
 
     def getLiveSource(self, source, call):
         try:

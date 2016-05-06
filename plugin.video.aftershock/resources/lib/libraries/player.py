@@ -24,12 +24,12 @@ from resources.lib.libraries import control
 from resources.lib.libraries import subtitles
 from resources.lib.libraries import bookmarks
 
+from resources.lib.libraries import logger
 class player(xbmc.Player):
     def __init__ (self):
         xbmc.Player.__init__(self)
 
     def run(self, content, name, url, year, imdb, tvdb, meta):
-
         if control.window.getProperty('PseudoTVRunning') == 'True':
             return control.player.play(url, control.item(path=url))
 
@@ -38,8 +38,9 @@ class player(xbmc.Player):
         if self.folderPath.startswith('plugin://') and not meta == None:
             poster, thumb, meta = self.getMeta(meta)
         else:
-            poster, thumb, meta = self.getLibraryMeta()
+            poster, thumb, meta = self.getLibraryMeta(meta)
 
+        logger.debug(' meta %s' % (meta))
         if not type(url) == list:
             url = [url]
 
@@ -49,7 +50,12 @@ class player(xbmc.Player):
         for i in range(0,len(url)):
             if len(url) > 1:
                 meta['title'] = '%s Part # %s' % (name, str(i+1))
-            item = control.item(name, path=url[i], iconImage='DefaultVideo.png', thumbnailImage=thumb)
+            try:
+                iconImage = meta['iconImage']
+            except:
+                iconImage = 'DefaultVideo.png'
+
+            item = control.item(name, path=url[i], iconImage=iconImage, thumbnailImage=thumb)
             item.setInfo(type='Video', infoLabels = meta)
             try: item.setArt({'poster': poster, 'tvshow.poster': poster, 'season.poster': poster})
             except: pass
@@ -91,6 +97,8 @@ class player(xbmc.Player):
                 self.tvshowtitle, self.season, self.episode = re.compile('(.+?) S(\d*)E(\d*)$').findall(self.name)[0]
                 self.season, self.episode = '%01d' % int(self.season), '%01d' % int(self.episode)
                 self.file2 = '%s (%s) S%02dE%02d.strm' % (self.tvshowtitle.translate(None, '\/:*?"<>|'), self.year, int(self.season), int(self.episode))
+            elif self.content == 'live':
+                self.title = self.name
         except:
             pass
 
@@ -128,7 +136,7 @@ class player(xbmc.Player):
             poster, thumb, meta = '', '', {'title': self.name}
             return (poster, thumb, meta)
 
-    def getLibraryMeta(self):
+    def getLibraryMeta(self, meta=None):
         try:
             if self.content == 'movie':
                 meta = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "year", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "plot", "plotoutline", "tagline", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
@@ -172,6 +180,14 @@ class player(xbmc.Player):
                 poster = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter": {"field": "title", "operator": "is", "value": "%s"}, "properties": ["thumbnail"]}, "id": 1}' % showtitle)
                 poster = unicode(poster, 'utf-8', errors='ignore')
                 poster = json.loads(poster)['result']['tvshows'][0]['thumbnail']
+            elif self.content == 'live':
+                meta = json.loads(meta)
+
+                poster = meta['poster'] if 'poster' in meta else '0'
+                thumb = meta['thumb'] if 'thumb' in meta else poster
+
+                if poster == '0': poster = control.addonPoster()
+
 
             return (poster, thumb, meta)
         except:

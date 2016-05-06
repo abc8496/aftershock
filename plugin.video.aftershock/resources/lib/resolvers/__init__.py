@@ -47,7 +47,7 @@ def request(url, resolverList=None):
     except:
         pass
 
-    # URLResolvers
+    # URLResolvers 3.0.0
     u = url
     try:
         url = None

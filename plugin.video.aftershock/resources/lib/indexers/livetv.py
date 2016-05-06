@@ -18,10 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import sys,urllib
+import sys,urllib, json
 
 from resources.lib.libraries import control
-from resources.lib.libraries import client
 from resources.lib.libraries import views
 from resources.lib.sources import sources
 
@@ -31,11 +30,23 @@ class channels:
 
     def get(self):
         try :
-            self.list.extend(sources().getLiveSources())
+            name=None
+            title=None
+            year=None
+            imdb=None
+            tmdb=None
+            tvdb=None
+            tvrage=None
+            season=None
+            episode=None
+            tvshowtitle=None
+            alter=None
+            date=None
+            meta=None
+            self.list.extend(sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta))
             self.list = sorted(self.list, key=lambda k: k['name'])
             self.channelDirectory(self.list)
         except :
-            client.printException('')
             pass
 
     def channelDirectory(self, items):
@@ -51,12 +62,26 @@ class channels:
                 label = "%s" % (i['name'])
                 sysname = urllib.quote_plus(i['name'])
 
-                poster, banner = i['poster'], i['poster']
+                poster, banner, direct = i['poster'], i['poster'], i['direct']
+                try :provider=i['provider']
+                except:provider=None
                 if poster == '0': poster = addonPoster
                 if banner == '0' and poster == '0': banner = addonBanner
                 elif banner == '0': banner = poster
 
                 url = i['url']
+                if not direct:
+                    content = 'live'
+                    meta = {"poster":poster, "iconImage":poster}
+                    source = {"provider":provider,
+                              "url":url,
+                              "quality":'HD',
+                              "label":'Resolving %s' % label,
+                              "source":provider, "meta":json.dumps(meta)}
+                    syssource = urllib.quote_plus(json.dumps([source]))
+
+                    url = 'action=playItem&content=%s&name=%s&source=%s' % (content, sysname, syssource)
+                    url = '%s?%s' % (sysaddon, url)
 
                 item = control.item(label=label, iconImage=poster, thumbnailImage=poster)
 

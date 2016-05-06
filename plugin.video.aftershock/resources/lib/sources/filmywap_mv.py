@@ -45,31 +45,13 @@ class source:
                 result = client.source(query)
                 result = json.loads(result)['results']
                 r = [(i['url'], i['titleNoFormatting']) for i in result]
-                '''r = [
-                    ('http://filmywap.im/1749v/prem-ratan-dhan-payo-2015-dvdrip-superhd-.html', 'Prem Ratan Dhan Payo 2015 DVDRip SuperHD Full Movie Download'),
-                    ('http://filmywap.im/1749p/Download-Video-in-partsPrem-Ratan-Dhan-Payo-2015-DVDRip-SuperHD-.htm', 'Prem Ratan Dhan Payo 2015 DVDRip SuperHD Full Movie ...'),
-                    ('http://filmywap.im/2018v/prem-ratan-dhan-payo-2015-new-hds-rip-.html', 'Prem Ratan Dhan Payo (2015) New HDS Rip Full Movie Download ...'),
-                    ('http://filmywap.im/1hd2/BluRay-HD-DVD-Movies.html', 'Download free latest Punjabi Movies in HD and BluRay Print'),
-                    ('http://filmywap.im/1754v/yaara-silly-silly-2015-pdvd-rip-.html', 'Yaara Silly Silly (2015) pDvD Rip Full Movie Download FilmyWap'),
-                    ('http://filmywap.im/Top-40-Month.html', 'Download free latest Bollywood Movie Movies in HD and BluRay Print'),
-                    ('http://filmywap.im/2c4/Bollywood-Movie.html', 'Download free latest Bollywood Movie Movies in HD and BluRay Print'),
-                    ('http://filmywap.im/rating_detail.php%3Fsong_name_id%3D1696%26page%3D2', 'Pyaar Ka Punchnama 2 2015 B-HD DvD Rip Full Movie Download ...'),
-                    ('http://filmywap.im/rating_detail.php%3Fsong_name_id%3D1908%26page%3D2', 'Dilwale 2015 WEB HD Rip Full Movie Download FilmyWap'),
-                    ('http://filmywap.im/c49/Punjabi-Movies.html', 'FilmyWap Full Hindi Punjabi Movies Download Mp4 HD 3gp Avi')]
-                '''
-
-
                 r = [(i[0], re.compile('(.+?) [\d{4}|(\d{4})]').findall(i[1])) for i in r]
                 r = [(i[0], i[1][0]) for i in r if len(i[1]) > 0]
-                #r = [(re.sub('http.+?//.+?/','', i[0]), i[1]) for i in r]
-                #r = [('/'.join(i[0].split('/')[:2]), i[1]) for i in r]
                 r = [x for y,x in enumerate(r) if x not in r[:y]]
                 r = [i for i in r if t == cleantitle.movie(i[1])]
                 u = [i[0] for i in r][0]
 
             except:
-                import traceback
-                traceback.print_exc()
                 return
 
             url = u

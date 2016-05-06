@@ -33,6 +33,11 @@ try :
     #params = {'tmdb': '191714', 'name': 'The Lunchbox (2013)', 'title': 'The Lunchbox', 'meta': '{"rating": "7.1", "code": "tt2350496", "tmdb": "191714", "imdb": "tt2350496", "year": "2013", "duration": "6240", "plot": "A mistaken delivery in Mumbai\'s famously efficient lunchbox delivery system (Mumbai\'s Dabbawallahs) connects a young housewife to a stranger in the dusk of his life. They build a fantasy world together through notes in the lunchbox. Gradually, this fantasy threatens to overwhelm their reality.", "votes": "108", "title": "The Lunchbox", "fanart": "http://image.tmdb.org/t/p/original/k9qLDoyIogooakZsDgZF9chb6hu.jpg", "tagline": "A mistaken delivery in Mumbai\'s famously efficient lunchbox delivery system (Mumbai\'s Dabbawallahs) connects a young housewife to a stranger in the dusk of his life", "writer": "Ritesh Batra", "next": "", "poster": "http://image.tmdb.org/t/p/w500/xFJqU1W5WlJiKr4Witnb7h9HNHn.jpg", "director": "Ritesh Batra", "studio": "UTV Motion Pictures", "genre": "Drama / Romance", "metacache": false, "name": "The Lunchbox (2013)", "premiered": "2013-09-19", "originaltitle": "The Lunchbox", "cast": [["Irrfan Khan", "Saajan Fernandes"], ["Nimrat Kaur", "Ila"], ["Nawazuddin Siddiqui", "Shaikh"], ["Denzil Smith", "Mr. Shroff"], ["Bharati Achrekar", "Mrs. Deshpande"], ["Nakul Vaid", "Rajeev"], ["Yashvi Puneet Nagar", "Yavshi"], ["Lillete Dubey", "Ila\'s Mother"], ["Shruti Bapna", "Mehrunnisa"]], "mpaa": "PG", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=The+Lunchbox+%282013%29"}', 'imdb': 'tt2350496', 'year': '2013', 'action': 'sources'}
     #params = {'action': 'movies', 'lang': 'hindi', 'url': 'theaters', 'provider': 'apnaview_mv'}
     #params = {'tmdb': '0', 'name': 'Ki & Ka (2016)', 'title': 'Ki & Ka', 'meta': '{"name": "Ki & Ka (2016)", "title": "Ki & Ka", "poster": "http://www.apnaview.com/img/poster/2209aafb27601c60b4e0bf315e9764e8.jpg", "next": "/browse/hindi?year=2016&order=desc&sort=date&page=2", "originaltitle": "Ki & Ka", "imdb": "tt1037475", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Ki+%26+Ka+%282016%29", "year": "2016", "duration": "7200", "metacache": false}', 'imdb': 'tt1037475', 'year': '2016', 'action': 'sources'}
+    params = {'action': 'download', 'source': '[{"url": "https://openload.co/embed/P-irqGW8ylM/", "direct": false, "label": "01 | [B]DESIHIT[/B] | OPENLOAD | [B][I]HD [/I][/B]", "source": "openload.co", "parts": "1", "provider": "DesiHit", "quality": "HD"}]', 'image': 'http://image.tmdb.org/t/p/w500/vE9nbc4xRweq1u2SWo15RW7DmMd.jpg', 'name': 'Jai Gangaajal (2016)'}
+    params = {'action': 'playItem', 'content': 'live', 'name': 'Zee TV HD', 'source': '[{"url": "http://www.dittotv.com/livetv/linkname=Zee TV HD","provider":"ditto", "label":"ditto", "source": "ditto", "quality":"HD"}]'}
+    params = {'action': 'playItem', 'content': 'live', 'name': '&TV',       'source': "{'url': 'http://www.dittotv.com/livetv/linkname=&TV', 'source': 'ditto', 'label': 'ditto', 'quality': 'HD', 'provider': 'ditto'}"}
+    params = {'action': 'playItem', 'content': 'live', 'name': 'Raj News Telugu', 'source': "[{'url': 'http://www.dittotv.com/livetv/linkname=Raj News Telugu', 'source': 'ditto', 'label': 'ditto', 'quality': 'HD', 'provider': 'ditto'}]"}
+
 
     try:
         action = params['action']
@@ -147,15 +152,35 @@ try :
     from resources.lib.indexers import tvshows
     from resources.lib.indexers import livetv
 
+    #import json
+    #from resources.lib.sources import sources
+    #from resources.lib.libraries import downloader
+    #url = 'http://openload.co/stream/P-irqGW8ylM~1462390526~159.63.0.0~tNX8w6cV?mime=true|User-Agent=Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'
+    #try: downloader.download(name, image, url)
+    #except: pass
+
     #livetv.channels().get()
     #tvshows.tvshows().get(url, provider=provider, network=name)
     #movies.movies().get(url, provider=provider, lang=lang)
     #episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
 
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
     #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
     #sources().playItem(content, name, year, imdb, tvdb, source)
     #print re.compile()
+
+    #from resources.lib.sources.ditto_live import source
+    #source().getLiveSource()
+
+    import json, urllib
+    source = {"provider":provider, "url":url, "quality":'HD', "label":provider, "source":provider}
+    tmp=json.dumps([source])
+    print tmp
+    tmp= urllib.quote_plus(tmp)
+    print tmp
+    tmp = urllib.unquote_plus(tmp)
+    print json.loads(tmp)
+
 
 
 except:

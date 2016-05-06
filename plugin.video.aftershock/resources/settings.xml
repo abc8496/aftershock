@@ -47,4 +47,13 @@
 		<setting type="lsep" label="30913" />
 		<setting id="hotstar_ip" type="text" label="30914" default="118.94.0.1" />
 	</category>
+
+	<category label="30950">
+		<setting id="downloads" type="bool" label="30953" default="false" />
+		<setting type="sep" />
+		<setting id="movie.download.path" type="folder" label="30951" enable="!eq(-2,false)" default="" />
+		<setting type="lsep" label="[CR]" />
+		<setting type="lsep" label="30954" />
+		<setting type="lsep" label="30955" />
+	</category>
 </settings>

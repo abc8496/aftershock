@@ -172,6 +172,13 @@ elif action == 'sources':
     from resources.lib.sources import sources
     sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
+elif action == 'download':
+    import json
+    from resources.lib.sources import sources
+    from resources.lib.libraries import downloader
+    try: downloader.download(name, image, sources().sourcesResolve(json.loads(source)[0]))
+    except: pass
+
 elif action == 'play':
     from resources.lib.sources import sources
     sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
@@ -179,6 +186,10 @@ elif action == 'play':
 elif action == 'playItem':
     from resources.lib.sources import sources
     sources().playItem(content, name, year, imdb, tvdb, source)
+
+elif action == 'playLive':
+    from resources.lib.sources import sources
+    sources().playLive(content, name, source)
 
 elif action == 'trailer':
     from resources.lib.libraries import trailer
