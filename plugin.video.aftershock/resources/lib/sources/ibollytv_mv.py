@@ -37,6 +37,19 @@ class source:
         self.added_link = '/watch-%s-movies-online?'
         self.sort_link = 'order=desc&sort=latest'
         self.sources = []
+        self.genres = {'Action':'Action',
+                       'Adult':'Mature',
+                       'Children':'Animation',
+                       'Comedy':'Comedy',
+                       'Crime':'Crime',
+                       'Drama':'Drama',
+                       'Family':'Family',
+                       'Horror':'Horror',
+                       'Romance':'Romance',
+                       'Thriller':'Thriller',
+                       'Suspense':'Suspense'}
+        self.genre_url = '/watch-%s-movies-online?genre=%s'
+        self.years_url = '/watch-%s-movies-online?year=%s'
 
     def scn_full_list(self, url, lang=None, provider=None):
         self.list = []

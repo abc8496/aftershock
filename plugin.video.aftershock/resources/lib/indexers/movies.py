@@ -163,25 +163,13 @@ class movies:
     def genres(self, lang=None):
         try:
             self.list = []
-            provider = 'apnaview_mv'
-            genres = {'Action':'15',
-                      'Adult':'32',
-                      'Adventure':'22',
-                      'Biography':'29',
-                      'Children':'28',
-                      'Comedy':'10',
-                      'Crime':'21',
-                      'Drama':'12',
-                      'Family':'26',
-                      'Fantasy':'31',
-                      'History':'30',
-                      'Horror':'16',
-                      'Romance':'11',
-                      'Thriller':'13',
-                      'Suspense':'14'}
+            provider = '%s_mv' % control.setting('idx_provider')
+            call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
+            genres = call.genres
+            url = call.genre_url
             keys = genres.keys()
             for i in keys:
-                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s&lang=%s' % (provider, lang), 'url':'/browse/%s?genre=%s' % (lang, genres[i])})
+                self.list.append({'name':i, 'image':i[:3].lower()+'.png', 'action':'movies&provider=%s&lang=%s' % (provider, lang), 'url':url % (lang, genres[i])})
             self.list.sort()
             self.addDirectory(self.list)
             return self.list
@@ -190,8 +178,10 @@ class movies:
 
     def years(self, lang=None):
         year = (self.datetime.strftime('%Y'))
-        provider = 'apnaview_mv'
-        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': '/browse/%s?year=%s' % (lang, str(i)), 'image': str(i)+'.png', 'action': 'movies&provider=%s&lang=%s' % (provider, lang)})
+        provider = '%s_mv' % control.setting('idx_provider')
+        call = __import__('resources.lib.sources.%s' % provider, globals(), locals(), ['source'], -1).source()
+        year_url = call.years_url
+        for i in range(int(year)-0, int(year)-50, -1): self.list.append({'name': str(i), 'url': year_url % (lang, str(i)), 'image': str(i)+'.png', 'action': 'movies&provider=%s&lang=%s' % (provider, lang)})
         self.addDirectory(self.list)
         return self.list
 

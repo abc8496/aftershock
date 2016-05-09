@@ -3,13 +3,13 @@
 	<category label="30800">
 		<setting id="fanart" type="bool" label="30802" default="true" />
 		<setting type="sep" />
-		<setting id="idx_provider" type="labelenum" label="30801" values="apnaview" default="apnaview" enable="eq(5,false)" />
+		<setting id="idx_provider" type="labelenum" label="30801" values="apnaview|ibollytv" default="ibollytv" enable="eq(5,false)" />
 		<setting type="sep" />
 		<setting id="sources_timeout_40" type="slider" label="30804" default="40" range="10,60" option="int" />
 		<setting id="hypermode" type="bool" label="30863" default="false" />
 		<setting type="lsep" label="30805" />
 		<setting id="debug" type="bool" label="Debug" default="false" />
-		<setting id="livelocal" type="hidden" label="livelocal" default="false" />
+		<setting id="livelocal" type="text" label="livelocal" visible="false" default="false" />
 	</category>
 	<category label="30830">
 		<setting id="playback_quality" type="enum" label="30831" values="1080p|720p|HQ|MQ|LQ" default="0" />
@@ -37,8 +37,8 @@
 		<setting id="filmywap" type="bool" label="FilmyWap" default="true" />
 		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>
 		<setting id="desirulez" type="bool" label="DesiRulez" default="true" />
-		<setting id="json" type="hidden" label="json" default="true" />
-		<setting id="uktvnow" type="hidden" label="UKTVNow" default="true" />
+		<setting id="json" type="bool" label="json" visible="false" default="true" />
+		<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="true" />
 	</category>
 
 	<category label="30910">

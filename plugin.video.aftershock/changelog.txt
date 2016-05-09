@@ -1,4 +1,10 @@
 ------------------------
+Aftershock v3.7.1 (09-May-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Updated Index Provider
+
+------------------------
 Aftershock v3.7.0 (05-May-2016)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]

@@ -38,6 +38,23 @@ class source:
         self.sort_link = '&order=desc&sort=date'
         self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
         self.sources = []
+        self.genres = {'Action':'15',
+                       'Adult':'32',
+                       'Adventure':'22',
+                       'Biography':'29',
+                       'Children':'28',
+                       'Comedy':'10',
+                       'Crime':'21',
+                       'Drama':'12',
+                       'Family':'26',
+                       'Fantasy':'31',
+                       'History':'30',
+                       'Horror':'16',
+                       'Romance':'11',
+                       'Thriller':'13',
+                       'Suspense':'14'}
+        self.genre_url = '/browse/%s?genre=%s'
+        self.years_url = '/browse/%s?year=%s'
 
     def scn_full_list(self, url, lang=None, provider=None):
         self.list = []
@@ -53,7 +70,6 @@ class source:
             try: result = client.source(base_link + url)
             except:
                 result = ''
-
             if 'row movie-list' in result: break
 
         result = result.decode('iso-8859-1').encode('utf-8')

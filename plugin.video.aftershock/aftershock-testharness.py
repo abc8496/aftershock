@@ -37,6 +37,7 @@ try :
     params = {'action': 'playItem', 'content': 'live', 'name': 'Zee TV HD', 'source': '[{"url": "http://www.dittotv.com/livetv/linkname=Zee TV HD","provider":"ditto", "label":"ditto", "source": "ditto", "quality":"HD"}]'}
     params = {'action': 'playItem', 'content': 'live', 'name': '&TV',       'source': "{'url': 'http://www.dittotv.com/livetv/linkname=&TV', 'source': 'ditto', 'label': 'ditto', 'quality': 'HD', 'provider': 'ditto'}"}
     params = {'action': 'playItem', 'content': 'live', 'name': 'Raj News Telugu', 'source': "[{'url': 'http://www.dittotv.com/livetv/linkname=Raj News Telugu', 'source': 'ditto', 'label': 'ditto', 'quality': 'HD', 'provider': 'ditto'}]"}
+    params = {'action': 'movies', 'lang': 'hindi', 'url': 'theaters', 'provider': 'apnaview_mv'}
 
 
     try:
@@ -161,7 +162,7 @@ try :
 
     #livetv.channels().get()
     #tvshows.tvshows().get(url, provider=provider, network=name)
-    #movies.movies().get(url, provider=provider, lang=lang)
+    movies.movies().get(url, provider=provider, lang=lang)
     #episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
 
     #sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
