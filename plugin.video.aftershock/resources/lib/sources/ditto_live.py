@@ -55,11 +55,15 @@ class source:
             pass
 
     def resolve(self, url, resolverList):
+
         try :
             logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
             result = client.source(url, headers=self.headers)
-            result = json.loads(result)
-            url = '%s|Referer=%s' % (result['link'], url)
+            try :
+                result = json.loads(result)
+                link = result['link']
+            except:link = client.parseDOM(result, "source", attrs={"type":"application/x-mpegurl"}, ret="src")[0]
+            url = '%s|Referer=%s' % (link, url)
             logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
             return url
         except :

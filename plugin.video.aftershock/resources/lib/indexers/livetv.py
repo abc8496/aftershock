@@ -22,6 +22,7 @@ import sys,urllib, json
 
 from resources.lib.libraries import control
 from resources.lib.libraries import views
+from resources.lib.libraries import cache
 from resources.lib.sources import sources
 
 class channels:
@@ -43,7 +44,8 @@ class channels:
             alter=None
             date=None
             meta=None
-            self.list.extend(sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta))
+            sourceList = cache.get(sources().getSources, 2, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+            self.list.extend(sourceList)
             self.list = sorted(self.list, key=lambda k: k['name'])
             self.channelDirectory(self.list)
         except :
