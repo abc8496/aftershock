@@ -2,6 +2,12 @@
 Aftershock v3.8.0 (22-Sept-2016)
 ------------------------
 - [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
+- Live TV Bug fix for all platforms
+
+------------------------
+Aftershock v3.8.0 (22-Sept-2016)
+------------------------
+- [COLOR orange]NOTE: Aftershock is a free addon.[/COLOR]
 - Re-wrote Live TV module for future expansion
 
 ------------------------

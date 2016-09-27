@@ -48,7 +48,8 @@ class channels:
             meta=None
             sourceList = cache.get(sources().getSources, 2, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
-            sourceList = {cleantitle.tv(item['name']):item for item in sourceList}.values()
+            sourceList = dict((cleantitle.tv(item['name']),item) for item in sourceList).values()
+            #sourceList = {cleantitle.tv(item['name']):item for item in sourceList}.values()
             self.list.extend(sourceList)
             self.list = sorted(self.list, key=lambda k: k['name'])
 
