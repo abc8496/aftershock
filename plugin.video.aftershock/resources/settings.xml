@@ -39,8 +39,9 @@
 		<setting id="pubfilm" type="bool" label="PubFilm" default="true" />
 		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>
 		<setting id="desirulez" type="bool" label="DesiRulez" default="true" />
+		<setting id="desiplex" type="bool" label="DesiPlex" default="true" />
 		<setting id="json" type="bool" label="json" visible="false" default="true" />
-		<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="false" />
+		<!--<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="false" />-->
 		<setting id="dynns" type="bool" label="Dynns" visible="false" default="true" />
 	</category>
 
@@ -49,6 +50,21 @@
 		<setting id="imdb_user" type="text" label="30912" default="" />
 		<setting type="lsep" label="30913" />
 		<setting id="hotstar_ip" type="text" label="30914" default="118.94.0.1" />
+		<setting type="lsep" label="RealDebrid" />
+		<setting id="realdebrid.auth" type="action" option="close" label="30915" action="RunPlugin(plugin://plugin.video.aftershock/?action=rdAuthorize)" />
+		<setting id="realdebrid.id" type="text" option="hidden" visible="false" label="" default="" />
+		<setting id="realdebrid.secret" type="text" option="hidden" visible="false" label="" default="" />
+		<setting id="realdebrid.token" type="text" option="hidden" visible="false" label="" default="" />
+		<setting id="realdebrid.refresh" type="text" option="hidden" visible="false" label="" default="" />
+		<setting type="lsep" label="Premiumize" />
+		<setting id="premiumize.user" type="text" label="30916" default="" />
+		<setting id="premiumize.pin" type="text" option="hidden" label="30917" default="" />
+		<setting type="lsep" label="AllDebrid" />
+		<setting id="alldebrid.user" type="text" label="30918" default="" />
+		<setting id="alldebrid.pass" type="text" option="hidden" label="30919" default="" />
+		<setting type="lsep" label="RPnet" />
+		<setting id="rpnet.user" type="text" label="30920" default="" />
+		<setting id="rpnet.api" type="text" option="hidden" label="30921" default="" />
 	</category>
 
 	<category label="30950">

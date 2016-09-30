@@ -33,9 +33,9 @@ from resources.lib.libraries import control
 from resources.lib.libraries import cleantitle
 from resources.lib.libraries import client
 from resources.lib.libraries import workers
-from resources.lib.resolvers import realdebrid
-from resources.lib.resolvers import premiumize
+from resources.lib.libraries import debrid
 from resources.lib.libraries import alterepisode
+from resources.lib.libraries import cache
 from resources.lib import resolvers
 from resources.lib.libraries import logger
 
@@ -44,6 +44,7 @@ class sources:
         self.resolverList = self.getResolverList()
         self.hostDict = self.getHostDict()
         self.sources = []
+        self.debridDict = debrid.debridDict()
 
     def addItem(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta):
         try:
@@ -580,6 +581,9 @@ class sources:
 
             for item in sources:
                 item['name'] = cleantitle.live(item['name'])
+                poster = self.getLivePoster(item['name'])
+                if not poster == None :
+                    item['poster'] = poster
                 dbcur.execute("INSERT INTO rel_src Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', '', json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                 dbcon.commit()
 
@@ -600,6 +604,47 @@ class sources:
                 return self.sources
             except:
                 pass
+        except:
+            pass
+    def getLivePoster(self, source):
+        try:
+            dbcon = database.connect(self.sourceFile)
+            dbcur = dbcon.cursor()
+            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_logo (""source TEXT, ""poster_url TEXT, ""added TEXT, ""UNIQUE(source, poster_url)"");")
+        except:
+            pass
+
+        try:
+            logo = []
+            try:
+                # check if the source site needs to be refreshed
+                dbcur.execute("SELECT * FROM rel_logo WHERE source = '%s'" % (source))
+                match = dbcur.fetchone()
+                poster_url = match[1]
+                t1 = int(re.sub('[^0-9]', '', str(match[2])))
+                t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
+                update = abs(t2 - t1) > 1000
+            except:
+                update = True
+
+            if update == True:
+                from resources.lib.sources import live_logo
+
+                postersList = cache.get(live_logo.source().getLivePosters, 200)
+                try :
+                    poster_url = postersList[source]
+                except:
+                    poster_url = None
+                if not poster_url == None:
+                    try :
+                        dbcur.execute("DELETE FROM rel_logo WHERE source = '%s'" % (source))
+                        dbcur.execute("INSERT INTO rel_logo Values (?, ?, ?)", (source, poster_url, datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                        dbcon.commit()
+                    except:
+                        pass
+
+            return poster_url
+
         except:
             pass
 
@@ -728,6 +773,7 @@ class sources:
             dbcon = database.connect(control.sourcescacheFile)
             dbcur = dbcon.cursor()
             dbcur.execute("DROP TABLE IF EXISTS rel_src")
+            dbcur.execute("DROP TABLE IF EXISTS rel_logo")
             dbcur.execute("VACUUM")
             dbcon.commit()
 
@@ -743,37 +789,54 @@ class sources:
 
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
+        filter += [i for i in self.sources if i['direct'] == False]
         try:filter += [i for i in self.sources if i['content'] == 'live']
         except:pass
+
+        self.sources = filter
+
+        for d in self.debridDict: filter += [dict(i.items() + [('debrid', d)]) for i in self.sources if i['source'].lower() in self.debridDict[d]]
+        self.sources = filter
+
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
         self.sources = filter
 
         filter = []
-        filter += [i for i in self.sources if i['quality'] == '1080p']
-        filter += [i for i in self.sources if i['quality'] == 'HD']
-        filter += [i for i in self.sources if i['quality'] == 'SD']
+        filter += [i for i in self.sources if i['quality'] == '1080p' and 'debrid' in i]
+        filter += [i for i in self.sources if i['quality'] == 'HD' and 'debrid' in i]
+        filter += [i for i in self.sources if i['quality'] == '1080p' and not 'debrid' in i]
+        filter += [i for i in self.sources if i['quality'] == 'HD' and not 'debrid' in i]
+        filter += [i for i in self.sources if i['quality'] == 'SD' and not 'debrid' in i]
         if len(filter) < 15: filter += [i for i in self.sources if i['quality'] == 'SCR']
         if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == 'CAM']
         if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
 
         for i in range(len(self.sources)):
+
             s = self.sources[i]['source'].lower()
             p = self.sources[i]['provider']
             p = re.sub('v\d*$', '', p)
 
-
             q = self.sources[i]['quality']
 
-            try: d = self.sources[i]['info']
-            except: d = ''
-            if not d == '': d = ' | [I]%s [/I]' % d
+            try: f = (' | '.join(['[I]%s [/I]' % info.strip() for info in self.sources[i]['info'].split('|')]))
+            except: f = ''
 
-            label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
+            try: d = self.sources[i]['debrid']
+            except: d = self.sources[i]['debrid'] = ''
 
-            if q in ['1080p', 'HD']: label += '%s%s | [B][I]%s [/I][/B]' % (s.rsplit('.', 1)[0], d, q)
-            elif q == '' : label += '%s%s' % (s.rsplit('.', 1)[0], d)
-            else: label += '%s%s | [I]%s [/I]' % (s.rsplit('.', 1)[0], d, q)
+            if not d == '': label = '%02d | [B]%s[/B] | ' % (int(i+1), d)
+            else: label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
+
+            if q in ['1080p', 'HD']: label += '%s | %s | [B][I]%s [/I][/B]' % (s.rsplit('.', 1)[0], f, q)
+            elif q == 'SD': label += '%s | %s' % (s.rsplit('.', 1)[0], f)
+            else: label += '%s | %s | [I]%s [/I]' % (s.rsplit('.', 1)[0], f, q)
+            label = label.replace('| 0 |', '|').replace(' | [I]0 [/I]', '')
+            label = label.replace('[I]HEVC [/I]', 'HEVC')
+            label = re.sub('\[I\]\s+\[/I\]', ' ', label)
+            label = re.sub('\|\s+\|', '|', label)
+            label = re.sub('\|(?:\s+|)$', '', label)
 
             pts = None
             try : pts = self.sources[i]['parts']
@@ -790,22 +853,35 @@ class sources:
             u = url = item['url']
             provider = item['provider'].lower()
 
+            d = item['debrid'] ; direct = item['direct']
+
             if not provider.endswith(('_mv', '_tv', '_mv_tv')):
                 sourceDict = []
                 for package, name, is_pkg in pkgutil.walk_packages(__path__): sourceDict.append((name, is_pkg))
                 provider = [i[0] for i in sourceDict if i[1] == False and i[0].startswith(provider + '_')][0]
 
             source = __import__(provider, globals(), locals(), [], -1).source()
-            url = source.resolve(url, self.resolverList)
+            u = url = source.resolve(url, self.resolverList)
 
             if url == False: raise Exception()
 
-            try: headers = dict(urlparse.parse_qsl(url.rsplit('|', 1)[1]))
-            except: headers = dict('')
+            if not d == '':
+                if type(url) is list:
+                    url = []
+                    for tUrl in url:
+                        tUrl = debrid.resolver(url, d)
+                        url.append(tUrl)
+                else:
+                    url = debrid.resolver(url, d)
 
-            if type(url) is list :
-                self.url = url
-                return url
+            ext = url.split('?')[0].split('&')[0].split('|')[0].rsplit('.')[-1].replace('/', '').lower()
+            if ext == 'rar': raise Exception()
+
+            try: headers = url.rsplit('|', 1)[1]
+            except: headers = ''
+            headers = urllib.quote_plus(headers).replace('%3D', '=') if ' ' in headers else headers
+            headers = dict(urlparse.parse_qsl(headers))
+
             self.url = url
             return url
         except:

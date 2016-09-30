@@ -50,6 +50,7 @@ class channels:
 
             sourceList = dict((cleantitle.tv(item['name']),item) for item in sourceList).values()
             #sourceList = {cleantitle.tv(item['name']):item for item in sourceList}.values()
+
             self.list.extend(sourceList)
             self.list = sorted(self.list, key=lambda k: k['name'])
 

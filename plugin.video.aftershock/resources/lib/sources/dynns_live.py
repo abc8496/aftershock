@@ -107,7 +107,7 @@ class source:
         if self.deviceId == None or self.deviceId == '':
             # generate new DeviceID
             self.deviceId = binascii.b2a_hex(os.urandom(16)).upper()
-            control.addon().setSetting(id='dynnsDeviceId', value = self.deviceId)
+            control.setSetting(id='dynnsDeviceId', value = self.deviceId)
         else :
             return self.deviceId
 

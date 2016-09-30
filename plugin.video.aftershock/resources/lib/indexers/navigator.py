@@ -53,6 +53,7 @@ class navigator:
 
         self.addDirectoryItem(30860, 'movieLangNavigator', 'movies.png','DefaultMovies.png')
         self.addDirectoryItem(90114, 'desiLiveNavigator', 'live.png','DefaultMovies.png')
+        self.addDirectoryItem(90115, 'liveEPGNavigator', 'live.png','DefaultMovies.png')
         self.addDirectoryItem(30861, 'desiTVNavigator', 'tv.png','DefaultMovies.png')
 
         self.addDirectoryItem(90116, 'openSettings&query=0.0', 'settings.png', 'DefaultMovies.png')
@@ -60,9 +61,12 @@ class navigator:
 
         self.endDirectory()
 
+
         from resources.lib.libraries import cache
         from resources.lib.libraries import changelog
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
+        cache.get(control.resetSettings, 600000000, 'true', control.addonInfo('version'), table='changelog')
+
 
     def desiLangMovies(self):
         self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')

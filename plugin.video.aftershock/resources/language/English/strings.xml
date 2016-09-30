@@ -98,6 +98,18 @@
     <string id="30912">User</string>
     <string id="30913">Hotstar</string>
     <string id="30914">IP Address</string>
+    <string id="30915">Authorization...</string>
+    <string id="30916">ID</string>
+    <string id="30917">PIN</string>
+    <string id="30918">User</string>
+    <string id="30919">Password</string>
+    <string id="30920">User</string>
+    <string id="30921">API</string>
+
+    <string id="32531">An account already exists.</string>
+    <string id="32532">Do you want to reset?</string>
+    <string id="32533">1) Visit : [COLOR skyblue]%s[/COLOR]</string>
+    <string id="32534">2) When prompted enter : [COLOR skyblue]%s[/COLOR]</string>
 
     <string id="30950">Downloads</string>
     <string id="30951">Movies</string>
@@ -115,6 +127,7 @@
     <string id="90110">By Year</string>
     <string id="90113">Hindi Movies</string>
     <string id="90114">Live</string>
+    <string id="90115">Live (EPG)</string>
     <string id="90116">Settings</string>
     <string id="90117">Clear Cache</string>
     <string id="90118">Marathi</string>

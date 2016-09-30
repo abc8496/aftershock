@@ -19,7 +19,7 @@
 '''
 
 
-import urlparse,sys
+import urlparse,sys, xbmc
 from resources.lib.libraries import logger
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
@@ -140,6 +140,10 @@ elif action == 'desiLiveNavigator':
     from resources.lib.indexers import livetv
     livetv.channels().get()
 
+elif action == 'liveEPGNavigator':
+    xbmc.executebuiltin("RunAddon(script.aftershock.guide)")
+    exit()
+
 elif action == 'movieGenres':
     from resources.lib.indexers import movies
     movies.movies().genres(lang)
@@ -214,6 +218,10 @@ elif action == 'episodePlaycount':
 elif action == 'tvPlaycount':
     from resources.lib.libraries import playcount
     playcount.tvshows(name, year, imdb, tvdb, season, query)
+
+elif action == 'rdAuthorize':
+    from resources.lib.libraries import debrid
+    debrid.rdAuthorize()
 
 elif action == 'alterSources':
     from resources.lib.sources import sources

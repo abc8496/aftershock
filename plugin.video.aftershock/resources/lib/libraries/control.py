@@ -25,6 +25,8 @@ lang = xbmcaddon.Addon().getLocalizedString
 
 setting = xbmcaddon.Addon().getSetting
 
+setSetting = xbmcaddon.Addon().setSetting
+
 addon = xbmcaddon.Addon
 
 addItem = xbmcplugin.addDirectoryItem
@@ -196,3 +198,14 @@ def openSettings(query=None, id=addonInfo('id')):
         execute('SetFocus(%i)' % (int(f) + 200))
     except:
         return
+
+def resetSettings(forceReset, version):
+    try :
+        if xbmcvfs.exists(settingsFile):
+            xbmcvfs.delete(settingsFile)
+        return '1'
+    except:
+        import traceback
+        traceback.print_exc()
+        return '1'
+        pass

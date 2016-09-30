@@ -19,8 +19,6 @@
 '''
 
 import urlparse, urllib
-from resources.lib.resolvers import realdebrid
-from resources.lib.resolvers import premiumize
 from resources.lib.libraries import client
 from resources.lib.libraries import logger
 
