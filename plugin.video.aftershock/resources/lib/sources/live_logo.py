@@ -55,6 +55,4 @@ class source:
                     self.list[channel] = channelObj['iconimage']
             return self.list
         except:
-            import traceback
-            traceback.print_exc()
             pass

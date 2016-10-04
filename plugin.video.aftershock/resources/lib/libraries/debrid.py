@@ -84,8 +84,6 @@ def rdAuthorize():
         control.setSetting(id='realdebrid.auth', value='*************')
         raise Exception()
     except:
-        import traceback
-        traceback.print_exc()
         control.openSettings('3.16')
 
 

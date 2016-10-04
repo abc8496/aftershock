@@ -21,6 +21,7 @@
 
 import urlparse,sys, xbmc
 from resources.lib.libraries import logger
+from resources.lib.libraries import analytics
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
@@ -119,30 +120,18 @@ try:
     lang = params['lang']
 except:
     lang = None
+try:
+    select = params.get('select')
+except:
+    select=1
 
 if action == None:
     from resources.lib.indexers import navigator
     navigator.navigator().root()
 
 elif action == 'movieLangNavigator':
-    from resources.lib.indexers import navigator
-    navigator.navigator().desiLangMovies()
-
-elif action == 'movieNavigator':
-    from resources.lib.indexers import navigator
-    navigator.navigator().desiMovies(lang)
-
-elif action == 'desiTVNavigator':
-    from resources.lib.indexers import navigator
-    navigator.navigator().desiTV()
-
-elif action == 'desiLiveNavigator':
-    from resources.lib.indexers import livetv
-    livetv.channels().get()
-
-elif action == 'liveEPGNavigator':
-    xbmc.executebuiltin("RunAddon(script.aftershock.guide)")
-    exit()
+    from resources.lib.indexers import movies
+    movies.movies().languages()
 
 elif action == 'movieGenres':
     from resources.lib.indexers import movies
@@ -154,14 +143,34 @@ elif action == 'movieYears':
 
 elif action == 'movies':
     from resources.lib.indexers import movies
-    movies.movies().get(url, provider=provider, lang=lang)
+    analytics.sendAnalytics('%s-%s' % (action, lang))
+    movies.movies().get(url, lang=lang)
 
 elif action == 'movieSearch':
     from resources.lib.indexers import movies
     movies.movies().search(query, lang)
 
+elif action == 'desiTVNavigator':
+    from resources.lib.indexers import navigator
+    navigator.navigator().desiTV()
+
+elif action == 'desiLiveNavigator':
+    from resources.lib.indexers import livetv
+    analytics.sendAnalytics('%s-LIVE' % action)
+    livetv.channels().get()
+
+elif action == 'artwork':
+    from resources.lib.modules import control
+    control.artwork()
+
+elif action == 'liveEPGNavigator':
+    from resources.lib.libraries import control
+    analytics.sendAnalytics('%s-EPG' % action)
+    control.dialog.ok(control.addonInfo('name'), "Comming Soon")
+
 elif action == 'tvshows':
     from resources.lib.indexers import tvshows
+    analytics.sendAnalytics('%s-%s' % (action,name))
     tvshows.tvshows().get(url, provider=provider, network=name)
 
 elif action == 'seasons':
@@ -172,9 +181,9 @@ elif action == 'episodes':
     from resources.lib.indexers import episodes
     episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
 
-elif action == 'sources':
+elif action == 'addItem':
     from resources.lib.sources import sources
-    sources().addItem(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    sources().addItem(title, content)
 
 elif action == 'download':
     import json
@@ -185,11 +194,11 @@ elif action == 'download':
 
 elif action == 'play':
     from resources.lib.sources import sources
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
+    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
 
 elif action == 'playItem':
     from resources.lib.sources import sources
-    sources().playItem(content, name, year, imdb, tvdb, source)
+    sources().playItem(content, title, source)
 
 elif action == 'trailer':
     from resources.lib.libraries import trailer

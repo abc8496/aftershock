@@ -45,7 +45,10 @@ try :
     #params = {'action': 'play', 'content': 'live', 'name': 'Color Hd'}
     #params = {}
     params = {'tmdb': '0', 'episode': '0', 'name': '27th September 2016', 'title': '27th September 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Sasural Simar Ka', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/3948-Sasural-Simar-Ka", "title": "27th September 2016", "url": "threads/957870-Sasural-Simar-Ka-27th-September-2016-Watch-Online?s=0d84ed1dab42c4a5abd7f366af8d4b53", "tvshowtitle": "Sasural Simar Ka", "next": "forums/3948-Sasural-Simar-Ka/page2?s=0d84ed1dab42c4a5abd7f366af8d4b53", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Sasural+Simar+Ka", "name": "27th September 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'sources', 'tvrage': '0', 'alter': '0'}
-
+    params = {'tmdb': '388333', 'name': 'M.S. Dhoni: The Untold Story (2016)', 'title': 'M.S. Dhoni: The Untold Story', 'meta': '{"rating": "5.8", "code": "tt4169250", "tmdb": "388333", "imdb": "tt4169250", "year": "2016", "duration": "11040", "plot": "The film is based on the life of Indian cricketer and the current captain of the Indian national cricket team, Mahendra Singh Dhoni.", "votes": "2", "title": "M.S. Dhoni: The Untold Story", "fanart": "http://image.tmdb.org/t/p/original/2tTtuHpbROSqzqu8Zi6U0hZr6Gc.jpg", "tagline": "The man you know... The journey you don\'t.", "writer": "Neeraj Pandey / Nandu Kamte", "next": "http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=hi&count=40&start=1&start=1&sort=release_date,desc&page=2&ref_=adv_nxt", "poster": "http://image.tmdb.org/t/p/w500/311gCwnNJgyoNEPWR9GJ2JBGJAm.jpg", "director": "Neeraj Pandey", "studio": "Fox Star Studios", "genre": "Drama", "metacache": true, "premiered": "2016-09-02", "originaltitle": "M.S. Dhoni: The Untold Story", "cast": [["Anupam Kher", "Pan Singh"], ["Kiara Advani", "Sakshi Singh Rawat / Sakshi Singh Dhoni"], ["Sushant Singh Rajput", "M. S. Dhoni"], ["Herry Tangiri", "Yuvraj Singh (as Herry Tangri)"], ["Disha Patani", "Priyanka Jha"], ["Bhumika Chawla", "Jayanti Gupta, Dhoni\'s sister"], ["Rajesh Sharma", ""], ["John Abraham", "Himself (Cameo)"]], "mpaa": "UA", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=M.S.+Dhoni%3A+The+Untold+Story+%282016%29"}', 'imdb': 'tt4169250', 't': '20161003003606950000', 'year': '2016', 'action': 'play'}
+    params = {'tmdb': '39083', 'tvdb': '273190', 'tvshowtitle': 'Sasural Simar Ka', 'year': '0', 'url': 'forums/3948-Sasural-Simar-Ka', 'imdb': 'tt1934806', 'provider': 'desirulez_tv', 'action': 'episodes', 'tvrage': '0'}
+    params = {'action': 'playItem', 'source': '[{"debrid": "", "url": "http://streamin.to/embed-6qpnqixizf9r-730x480.html", "direct": false, "label": "06 | [B]IBOLLYTV[/B] | STREAMIN ", "source": "streamin.to", "parts": "1", "provider": "iBollyTV", "quality": ""}]', 'content': 'movie', 'title': 'M.S. Dhoni: The Untold Story'}
+    params = {'tmdb': '0', 'episode': '0', 'name': '29th September 2016', 'title': '29th September 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Sasural Simar Ka', 'year': '0', 'date': '0', 'meta': '{"tvshowurl": "forums/3948-Sasural-Simar-Ka", "title": "29th September 2016", "url": "threads/959493-Sasural-Simar-Ka-29th-September-2016-Watch-Online?s=83954be3616f4aab7e388876a7cb3a79", "tvshowtitle": "Sasural Simar Ka", "provider": "desirulez_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Sasural+Simar+Ka", "name": "29th September 2016"}', 'imdb': '0', 'provider': 'desirulez_tv', 'action': 'addItem', 'tvrage': '0', 'alter': '0'}
 
     try:
         action = params['action']
@@ -153,7 +156,13 @@ try :
     from resources.lib.sources import sources
     from resources.lib.sources import live_logo
     #live_logo.source().getLivePosters()
-    sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    from resources.lib.sources import dynns_live
+    from resources.lib.indexers import movies
+    #url = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=%s&count=40&start=1&sort=release_date,desc&start=1' % 'hi'
+    #movies.movies().get(url, lang='hi')
+    dynns_live.source().getLiveSource()
+    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
+    source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
     '''import json, urllib
     source = {"provider":provider, "url":url, "quality":'HD', "label":provider, "source":provider}

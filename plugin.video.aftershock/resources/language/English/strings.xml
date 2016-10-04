@@ -55,8 +55,7 @@
     <string id="30491">This view is now Default</string>
 
     <string id="30501">No stream available</string>
-    <string id="30502">Movie information</string>
-    <string id="30503">Episode information</string>
+    <string id="30502">Information</string>
     <string id="30504">Queue item</string>
     <string id="30505">Download item</string>
     <string id="30506">Refresh sources</string>
@@ -73,6 +72,7 @@
     <string id="30517">No suitable provider enabled</string>
 
     <string id="30800">General</string>
+    <string id="32311">Appearance</string>
     <string id="30801">Index Provider</string>
     <string id="30802">Enable Fanart</string>
     <string id="30804">Sources Timeout</string>
