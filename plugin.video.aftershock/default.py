@@ -133,14 +133,6 @@ elif action == 'movieLangNavigator':
     from resources.lib.indexers import movies
     movies.movies().languages()
 
-elif action == 'movieGenres':
-    from resources.lib.indexers import movies
-    movies.movies().genres(lang)
-
-elif action == 'movieYears':
-    from resources.lib.indexers import movies
-    movies.movies().years(lang)
-
 elif action == 'movies':
     from resources.lib.indexers import movies
     analytics.sendAnalytics('%s-%s' % (action, lang))

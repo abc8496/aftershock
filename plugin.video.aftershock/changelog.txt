@@ -1,10 +1,11 @@
 ------------------------
-Aftershock v4.0.0 (04-Oct-2016)
+Aftershock v4.0.0 (05-Oct-2016)
 ------------------------
 - [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
 - Updated the look n feel with new theme icons for modern look
 - Added DesiPlex ( thanks to crazzzzy for providing the source )
 - Real-Debrid Support added
+- Updated Providers
 
 ------------------------
 Aftershock v3.8.1 (22-Sept-2016)
