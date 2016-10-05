@@ -1,5 +1,5 @@
 ------------------------
-Aftershock v4.0.0 (05-Oct-2016)
+Aftershock v4.0.1 (05-Oct-2016)
 ------------------------
 - [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
 - Updated the look n feel with new theme icons for modern look

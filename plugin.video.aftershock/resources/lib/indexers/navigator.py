@@ -145,7 +145,7 @@ class navigator:
     def addDirectoryItem(self, name, query, thumb, icon, context=None, isAction=True, isFolder=True):
         try: name = control.lang(name).encode('utf-8')
         except: pass
-        url = '%s?action=%s' % (sysaddon, query) if isAction == True else query
+        url = '%s?action=%s&name=%s' % (sysaddon, query, name) if isAction == True else query
 
         if not 'http' in thumb :
             thumb = os.path.join(artPath, thumb) if not artPath == None else icon

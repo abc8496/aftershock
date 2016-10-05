@@ -158,11 +158,13 @@ try :
     #live_logo.source().getLivePosters()
     from resources.lib.sources import dynns_live
     from resources.lib.indexers import movies
+    from resources.lib.libraries import analytics
+    analytics.sendAnalytics('Installed-3.9.10')
     #url = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=%s&count=40&start=1&sort=release_date,desc&start=1' % 'hi'
     #movies.movies().get(url, lang='hi')
-    dynns_live.source().getLiveSource()
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
-    source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+    #dynns_live.source().getLiveSource()
+    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
+    #source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
     '''import json, urllib
     source = {"provider":provider, "url":url, "quality":'HD', "label":provider, "source":provider}

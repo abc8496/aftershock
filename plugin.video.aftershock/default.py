@@ -171,6 +171,7 @@ elif action == 'seasons':
 
 elif action == 'episodes':
     from resources.lib.indexers import episodes
+    analytics.sendAnalytics('%s-%s' % (action,tvshowtitle))
     episodes.episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, tvrage, season, episode, provider=provider, url=url)
 
 elif action == 'addItem':

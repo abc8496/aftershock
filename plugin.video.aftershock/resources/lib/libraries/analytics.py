@@ -18,28 +18,30 @@
 '''
 
 
-import xbmc, uuid, base64, json
+import xbmc, uuid, base64, json, urllib
 
 from resources.lib.libraries import control
 from resources.lib.libraries import client
+from resources.lib.libraries import cache
+from resources.lib.libraries import logger
 
 def sendAnalytics(screenName):
     try :
         if not (control.setting('analytics.enabled') == 'true' or 'Installed' in screenName):
             raise Exception()
-        try:
-            guid = control.setting("guid")
-            if guid == None or guid == '':
-                raise Exception()
-        except:
-            guid = uuid.uuid4()
-            control.setSetting(id="guid", value="%s" % guid)
+        guid = cache.get(getGuid, 600000000, control.addonInfo('version'), table='changelog')
         url = base64.urlsafe_b64decode("aHR0cDovL3d3dy5nb29nbGUtYW5hbHl0aWNzLmNvbS9jb2xsZWN0")
         version = control.addonInfo('version')
         post = base64.urlsafe_b64decode("eyJ2IjoiMSIsInQiOiJzY3JlZW52aWV3IiwidGlkIjoiVUEtNzQ2Mzg0NjQtMSIsImFuIjoiQWZ0ZXJzaG9jay1Lb2RpIiwiYXYiOiIlcyIsImNpZCI6IiVzIiwiY2QiOiIlcyJ9") % (version, guid, screenName)
-        post = json.loads(post)
+        post = urllib.urlencode(json.loads(post))
         client.request(url, post=post)
+        logger.debug('Sent Analytics for [%s]' % screenName)
         return '1'
     except:
+        logger.debug('Analytics disabled for [%s]' % screenName)
         return '1'
         pass
+
+def getGuid(version):
+    guid = uuid.uuid4()
+    return str(guid)
