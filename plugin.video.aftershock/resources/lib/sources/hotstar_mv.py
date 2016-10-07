@@ -75,7 +75,7 @@ class source:
             return
 
     def get_sources(self, url):
-        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
+        logger.debug('[%s] SOURCES URL %s' % (self.__class__, url))
         try:
             quality = ''
             sources = []
@@ -105,17 +105,17 @@ class source:
                             pass
             except:
                 pass
-            logger.debug('%s SOURCES [%s]' % (__name__,sources))
+            logger.debug('[%s] SOURCES [%s]' % (__name__,sources))
             return sources
         except:
             return sources
 
     def resolve(self, url, resolverList):
-        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
+        logger.debug('[%s] ORIGINAL URL [%s]' % (__name__, url))
         try:
             cookie = url.split("|")[1]
             url = '%s|Cookie=%s&%s' % (url, cookie,urllib.urlencode(self.headers))
-            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
+            logger.debug('[%s] RESOLVED URL [%s]' % (__name__, url))
             return [url]
         except:
             return False
