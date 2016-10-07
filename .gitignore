@@ -24,3 +24,4 @@
 *.iml
 .idea/vcs.xml
 *.db
+plugin.video.aftershock/resources/settings.xml.local

@@ -64,8 +64,6 @@ class sources:
 
             downloads = True if control.setting('downloads') == 'true' and not control.setting('movie.download.path') == '' else False
 
-            logger.debug('Downloads : %s' % downloads)
-
             sysaddon = sys.argv[0]
             syshandle = int(sys.argv[1])
 
@@ -102,8 +100,6 @@ class sources:
                     logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label))
                 except:
                     parts = 2
-
-                logger.debug('Downloads : %s Parts : %s' % (downloads, parts))
 
                 label = items[i]['label']
 
@@ -317,7 +313,6 @@ class sources:
             except: sourceDict = [(i, 'true') for i in sourceDict]
         elif content == 'episode':
             sourceDict = [i for i in sourceDict if i.endswith(('_tv', '_mv_tv'))]
-            #try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i) + '_tv')) for i in sourceDict]
             try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
             except: sourceDict = [(i, 'true') for i in sourceDict]
         elif content == 'live':
@@ -819,12 +814,12 @@ class sources:
 
         self.sources = filter
 
+        filter = []
         for d in self.debridDict: filter += [dict(i.items() + [('debrid', d)]) for i in self.sources if i['source'].lower() in self.debridDict[d]]
+
+        for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host and 'debridonly' not in i]
         self.sources = filter
 
-        filter = []
-        for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host]
-        self.sources = filter
 
         filter = []
         filter += [i for i in self.sources if i['quality'] == '1080p' and 'debrid' in i]
@@ -844,6 +839,7 @@ class sources:
             p = re.sub('v\d*$', '', p)
 
             q = self.sources[i]['quality']
+            logger.debug('%s %s %s' % (s, p, q))
 
             try: f = (' | '.join(['[I]%s [/I]' % info.strip() for info in self.sources[i]['info'].split('|')]))
             except: f = ''
