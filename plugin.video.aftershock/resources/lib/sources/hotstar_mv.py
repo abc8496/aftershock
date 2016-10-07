@@ -55,7 +55,7 @@ class source:
             query = self.search_link % (urllib.quote_plus(query))
             query = urlparse.urljoin(self.base_link % 'search', query)
 
-            result = client.source(query, headers=self.headers,safe=True)
+            result = client.source(query, headers=self.headers)
 
             result = result.decode('iso-8859-1').encode('utf-8')
             result = json.loads(result)
@@ -71,7 +71,8 @@ class source:
             if url == None or url == '':
                 raise Exception()
             return url
-        except:
+        except Exception as e:
+            logger.error('[%s] Exception : %s' % (self.__class__, e))
             return
 
     def get_sources(self, url):
@@ -101,9 +102,11 @@ class source:
                             quality = self.res_map[res]
                             url = '%s|Cookie=%s' % (url, cookie)
                             sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'Hotstar', 'url': url, 'direct':True})
-                        except:
+                        except Exception as e:
+                            logger.error('[%s] Exception : %s' % (self.__class__, e))
                             pass
-            except:
+            except Exception as e:
+                logger.error('[%s] Exception : %s' % (self.__class__, e))
                 pass
             logger.debug('[%s] SOURCES [%s]' % (__name__,sources))
             return sources

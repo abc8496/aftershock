@@ -42,8 +42,8 @@
 		<setting id="json" type="bool" label="json" visible="false" default="true" />
 		<!--<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="false" />-->
 		<setting id="dynns" type="bool" label="Dynns" visible="true" default="true" />
-		<setting id="hevcfilm" type="bool" label="HEVC" visible="true" default="true" />
-		<setting id="crazy4ad" type="bool" label="CRAZY4AD" visible="true" default="true" />
+		<setting id="hevcfilm" type="bool" label="HEVC" visible="false" default="true" />
+		<setting id="crazy4ad" type="bool" label="CRAZY4AD" visible="false" default="true" />
 	</category>
 
 	<category label="30910">
