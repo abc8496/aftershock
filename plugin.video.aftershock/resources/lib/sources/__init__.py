@@ -805,7 +805,6 @@ class sources:
         filter += [i for i in self.sources if i['direct'] == True]
         self.sources = filter
 
-
         filter = []
         if quality == '0': filter += [i for i in self.sources if i['quality'] == '1080p' and 'debrid' in i]
         if quality == '0': filter += [i for i in self.sources if i['quality'] == '1080p' and not 'debrid' in i]
@@ -836,7 +835,7 @@ class sources:
             else: label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
 
             if q in ['1080p', 'HD']: label += '%s | %s | [B][I]%s [/I][/B]' % (s.rsplit('.', 1)[0], f, q)
-            elif q == 'SD': label += '%s | %s' % (s.rsplit('.', 1)[0], f)
+            #elif q == 'SD': label += '%s | %s' % (s.rsplit('.', 1)[0], f)
             else: label += '%s | %s | [I]%s [/I]' % (s.rsplit('.', 1)[0], f, q)
             label = label.replace('| 0 |', '|').replace(' | [I]0 [/I]', '')
             label = label.replace('[I]HEVC [/I]', 'HEVC')

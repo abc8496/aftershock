@@ -87,7 +87,7 @@ class source:
             return
 
 
-    def get_sources(self, url, hostDict, hostprDict):
+    def get_sources(self, urlS):
         try:
             sources = []
 

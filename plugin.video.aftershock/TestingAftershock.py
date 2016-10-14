@@ -22,6 +22,7 @@ from resources.lib.sources import playindiafilms_mv
 from resources.lib.sources import pubfilm_mv
 from resources.lib.sources import putlocker_mv
 from resources.lib.sources import primewire_mv
+from resources.lib.sources import desirulez_mv_tv
 
 class TestingMovies(unittest.TestCase):
     def setUp(self):
@@ -138,6 +139,10 @@ class TestingMovies(unittest.TestCase):
     @unittest.skip("Working")
     def test_putlocker(self):
         call = putlocker_mv.source()
+        self.source(call)
+
+    def test_putlocker(self):
+        call = desirulez_mv_tv.source()
         self.source(call)
 
 if __name__ == '__main__' :

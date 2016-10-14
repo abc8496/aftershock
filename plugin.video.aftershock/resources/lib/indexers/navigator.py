@@ -124,7 +124,7 @@ class navigator:
     def desiTV(self):
         listItems = []
         logoBaseURL='http://www.lyngsat-logo.com/logo/tv'
-        provider = 'desirulez_tv'
+        provider = 'desirulez_mv_tv'
         listItems.append({'provider':provider, 'name':90200, 'image': logoBaseURL+'/ss/star_plus.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=42'})
         listItems.append({'provider':provider, 'name':90201, 'image': logoBaseURL+'/zz/zee_tv.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=73'})
         listItems.append({'provider':provider, 'name':90203, 'image': logoBaseURL+'/ss/set_in.png', 'action': 'tvshows', 'url':'forumdisplay.php?f=63'})

@@ -24,6 +24,8 @@ import re,urlparse, datetime
 from resources.lib.libraries import client
 from resources.lib import resolvers
 from resources.lib.libraries import logger
+from resources.lib.libraries import cache
+from resources.lib.libraries import cleantitle
 
 class source:
     def __init__(self):
@@ -32,7 +34,6 @@ class source:
         self.base_link_3 = 'http://www.desirulez.net'
         self.search_link = '/feed/?s=%s&submit=Search'
 
-        self.search_link = '/feed/?s=%s&submit=Search'
         self.info_link = ''
         self.now = datetime.datetime.now()
 
@@ -55,6 +56,31 @@ class source:
         self.colors_bangla_link = 'forumdisplay.php?f=2117'
 
         self.list = []
+
+    def get_movie(self, imdb, title, year):
+        try :
+            movies = cache.get(self.desiRulezCache, 168)
+            url = [i['url'] for i in movies if cleantitle.movie(i['title']) == cleantitle.movie(title)][0]
+            return url
+        except:
+            pass
+
+    def desiRulezCache(self):
+        try :
+            base_link = 'http://www.desirulez.me/forums/20-Latest-Exclusive-Movie-HQ'
+            result = client.source(base_link)
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = client.parseDOM(result, "li", attrs = {"class":"threadbit hot"})
+            movies = []
+            for link in result:
+                link = client.parseDOM(link, "h3", attrs={"class":"threadtitle"})[0]
+                url = client.parseDOM(link, "a", ret="href")[0]
+                title = client.parseDOM(link, "a")[0]
+                title = cleantitle.movie(title).replace('watchonline/download', '')
+                movies.append({'url':url, 'title':title})
+            return movies
+        except:
+            pass
 
     def get_shows(self, name, url):
         try:
@@ -95,7 +121,7 @@ class source:
 
                 if not 'Past Shows' in title:
                     # name , title, poster, imdb, tmdb, tvdb, tvrage, year, poster, banner, fanart, duration
-                    shows.append({'name':title, 'channel':name, 'title':title, 'url':url, 'poster': '0', 'banner': '0', 'fanart': '0', 'next': '0', 'tvrage':'0','year':'0','duration':'0','provider':'desirulez_tv'})
+                    shows.append({'name':title, 'channel':name, 'title':title, 'url':url, 'poster': '0', 'banner': '0', 'fanart': '0', 'next': '0', 'tvrage':'0','year':'0','duration':'0','provider':'desirulez_mv_tv'})
             return shows
         except:
             client.printException('')
@@ -132,7 +158,7 @@ class source:
                 if "Online" not in name: continue
                 name = re.compile('.+? ([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
                 name = name.strip()
-                episodes.append({'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'desirulez_tv', 'tvshowurl':tvshowurl})
+                episodes.append({'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'desirulez_mv_tv', 'tvshowurl':tvshowurl})
 
             next = client.parseDOM(rawResult, "span", attrs={"class":"prev_next"})
             next = client.parseDOM(next, "a", attrs={"rel":"next"}, ret="href")[0]
@@ -192,8 +218,11 @@ class source:
                         sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url, 'direct':False})
                         urls = []
                     quality = child.getText()
+                    print 'QUALITY >>> %s' % quality
                     if '720p HD' in quality:
                         quality = 'HD'
+                    elif quality == None :
+                        quality = ''
                     else :
                         quality = 'SD'
                 elif (child.name =='a') and not child.getText() == 'registration':

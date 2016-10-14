@@ -333,6 +333,7 @@ def getVideoID(url):
 
 def urlRewrite(url):
     urlReWriteDict = [{'host':'letwatch.php','url':'http://letwatch.us/embed-%s-650x400.html'},
+                      {'host':'lw.php','url':'http://letwatch.us/embed-%s-650x400.html'},
                       {'host':'playwire.php','url':'http://config.playwire.com/%s/player.json'},
                       {'host':'dailymotion.php','url':'http://www.dailymotion.com/embed/video/%s'},
                       {'host':'speedplay.php','url':'http://speedplay.me/embed-%s.html'},
@@ -342,9 +343,15 @@ def urlRewrite(url):
                       {'host':'idowatch.php','url':'http://idowatch.us/embed-%s.html'},
                       {'host':'playu.php','url':'http://playu.net/embed-%s-700x440.html'},
                       {'host':'nowvideo.php','url':'http://embed.nowvideo.sx/embed.php?v=%s&amp;wmode=direct&amp;autoplay=true&controls=false'},
+                      {'host':'nv.php','url':'http://embed.nowvideo.sx/embed.php?v=%s&amp;wmode=direct&amp;autoplay=true&controls=false'},
                       {'host':'openload.php','url':'https://openload.co/embed/%s/'},
                       {'host':'thevideo.php','url':'http://www.thevideo.me/embed-%s-650x400.html'},
-                      {'host':'vodlocker.php','url':'http://vodlocker.com/embed-%s-650x400.html'}]
+                      {'host':'vodlocker.php','url':'http://vodlocker.com/embed-%s-650x400.html'},
+                      {'host':'vidto.php','url':'http://vidto.me/embed-%s-640x360.html'},
+                      {'host':'vidzi.php','url':'http://vidzi.tv/embed-%s-640x360.html'},
+                      {'host':'vidgg.php','url':'http://www.vidgg.to/embed/?id=%s&amp;px=1'},
+                      {'host':'aurora.php','url':'http://www.auroravid.to/embed/?v=%s&amp;px=1'},
+                      {'host':'cloudtime.php','url':'http://www.cloudtime.to/embed/?v=%s&amp;px=1'}]
     try :
         videoID = getVideoID(url)
         for i in urlReWriteDict:
