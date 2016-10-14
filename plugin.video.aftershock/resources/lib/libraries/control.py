@@ -164,6 +164,10 @@ def artPath():
     elif condVisibility('System.HasAddon(script.aftershock.artwork)'):
         return os.path.join(xbmcaddon.Addon('script.aftershock.artwork').getAddonInfo('path'), 'resources', 'media', theme)
 
+def logoPath():
+    if condVisibility('System.HasAddon(script.aftershock.artwork)'):
+        return os.path.join(xbmcaddon.Addon('script.aftershock.artwork').getAddonInfo('path'), 'resources', 'media', 'logos')
+
 def infoDialog(message, heading=addonInfo('name'), icon=addonIcon(), time=3000):
     try: dialog.notification(heading, message, icon, time, sound=False)
     except: execute("Notification(%s,%s, %s, %s)" % (heading, message, time, icon))

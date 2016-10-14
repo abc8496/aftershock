@@ -25,3 +25,4 @@
 .idea/vcs.xml
 *.db
 plugin.video.aftershock/resources/settings.xml.local
+data/plugin.video.aftershock/livestreams.json

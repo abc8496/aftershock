@@ -30,7 +30,7 @@ class source:
     def __init__(self):
         self.base_link_1 = 'http://%s.hotstar.com'
         self.base_link_2 = self.base_link_1
-        self.search_link = '/AVS/besc?action=GetSuggestionsStar&query=%s&type=vod'
+        self.search_link = '/AVS/besc?action=SearchContents&channel=PCTV&maxResult=34&query=%s&startIndex=0&type=MOVIE,SERIES,SPORT,SPORT_LIVE'
         self.cdn_link = 'http://getcdn.hotstar.com/AVS/besc?action=GetCDN&asJson=Y&channel=PCTV&id=%s&type=VOD'
         self.info_link = ''
         self.now = datetime.datetime.now()
@@ -44,15 +44,15 @@ class source:
         else :
             ips = ['118.94.0.%s' % str(i) for i in range(0,100)]
             self.ip = random.choice(ips)
-
-        self.headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'Connection':'keep-alive', 'X-Forwarded-For': self.ip}
+        self.headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'Accept-Encoding':'gzip, deflate, sdch', 'Connection':'keep-alive', 'User-Agent':'AppleCoreMedia/1.0.0.12B411 (iPhone; U; CPU OS 8_1 like Mac OS X; en_gb)', 'X-Forwarded-For': self.ip}
 
     def get_movie(self, imdb, title, year):
         try:
             self.base_link = random.choice([self.base_link_1, self.base_link_2])
 
             query = '%s %s' % (title, year)
-            query = self.search_link % (urllib.quote_plus(query))
+            query = urllib.quote_plus(query)
+            query = self.search_link % (query)
             query = urlparse.urljoin(self.base_link % 'search', query)
 
             result = client.source(query, headers=self.headers)
@@ -60,11 +60,11 @@ class source:
             result = result.decode('iso-8859-1').encode('utf-8')
             result = json.loads(result)
 
-            result = result['resultObj']['suggestion']
+            result = result['resultObj']['response']['docs']
 
             title = cleantitle.movie(title)
             for item in result:
-                searchTitle = cleantitle.movie(item['title'])
+                searchTitle = cleantitle.movie(item['contentTitle'])
                 if title == searchTitle:
                     url = self.cdn_link % item['contentId']
                     break
@@ -92,7 +92,9 @@ class source:
                 url = result['resultObj']['src']
                 url = url.replace('http://','https://').replace('/z/','/i/').replace('manifest.f4m', 'master.m3u8').replace('2000,_STAR.','2000,3000,4500,_STAR.')
                 cookie = client.source(url, headers=self.headers, output='cookie')
-                result = client.source(url, headers=self.headers)
+                result = client.source(url, headers=self.headers, cookie=cookie)
+
+                abc = client.source(url, headers=self.headers, output='extended', close=False)
 
                 match = re.compile("BANDWIDTH=[0-9]+,RESOLUTION=[0-9]+x(.+?),[^\n]*\n([^\n]*)\n").findall(result)
                 if match:
@@ -116,9 +118,8 @@ class source:
     def resolve(self, url, resolverList):
         logger.debug('[%s] ORIGINAL URL [%s]' % (__name__, url))
         try:
-            cookie = url.split("|")[1]
-            url = '%s|Cookie=%s&%s' % (url, cookie,urllib.urlencode(self.headers))
+            url = '%s&X-Forwarded-For=%s' % (url, self.ip)
             logger.debug('[%s] RESOLVED URL [%s]' % (__name__, url))
-            return [url]
+            return url
         except:
             return False

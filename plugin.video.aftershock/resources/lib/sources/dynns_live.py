@@ -73,6 +73,7 @@ class source:
             result = client.parseDOM(result, "items")
 
             for channel in result:
+
                 category = client.parseDOM(channel, "programCategory")[0]
                 if category == 'Indian':
                     channelName = client.parseDOM(channel,"programTitle")[0]

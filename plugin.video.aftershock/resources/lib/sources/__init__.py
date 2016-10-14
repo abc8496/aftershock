@@ -523,18 +523,18 @@ class sources:
         try:
             dbcon = database.connect(self.sourceFile)
             dbcur = dbcon.cursor()
-            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_src (""source TEXT, ""imdb_id TEXT, ""season TEXT, ""episode TEXT, ""hosts TEXT, ""added TEXT, ""UNIQUE(source, imdb_id, season, episode, hosts)"");")
+            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_live (""source TEXT, ""imdb_id TEXT, ""season TEXT, ""episode TEXT, ""hosts TEXT, ""added TEXT, ""UNIQUE(source, imdb_id, season, episode, hosts)"");")
         except:
             pass
 
         try:
             sources = []
-            dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
+            dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
             for row in dbcur:
                 match = row
                 t1 = int(re.sub('[^0-9]', '', str(match[5])))
                 t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
-                update = abs(t2 - t1) > 300
+                update = abs(t2 - t1) > 336
                 if update == False:
                     logger.debug('[%s] Fetched sources from cache for [%s]'% (call.__class__, name))
                     sources = json.loads(match[4])
@@ -554,11 +554,11 @@ class sources:
             sources = []
             try:
                 # check if the source site needs to be refreshed
-                dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND season = '%s'" % (source, 'live'))
+                dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
                 match = dbcur.fetchone()
                 t1 = int(re.sub('[^0-9]', '', str(match[5])))
                 t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
-                update = abs(t2 - t1) > 300
+                update = abs(t2 - t1) > 336
             except:
                 update = True
             if update == False:
@@ -568,13 +568,13 @@ class sources:
                logger.debug('[%s] Fetching Live source ' % (call.__class__))
                sources = call.getLiveSource()
 
-               dbcur.execute("DELETE FROM rel_src WHERE source = '%s' AND season = '%s'" % (source, 'live'))
+               dbcur.execute("DELETE FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
                dbcon.commit()
 
-            if sources == None:
+            if sources == None and not name == None:
                 raise Exception('No Sources Found')
                 sources = []
-            else:
+            elif not name == None:
                 logger.debug('(%s) Fetched Live sources : %s' % (call.__class__, len(sources)))
             idx = 0
 
@@ -583,19 +583,20 @@ class sources:
                 poster = self.getLivePoster(item['name'])
                 if not poster == None :
                     item['poster'] = poster
-                dbcur.execute("INSERT INTO rel_src Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                dbcur.execute("INSERT INTO rel_live Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                 dbcon.commit()
                 idx = idx + 1
 
             try:
                 sources = []
                 if name == None or name == '' :
-                    dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND season = '%s'" % (source, 'live'))
+                    dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
                     for row in dbcur:
                         match = row[4]
                         self.sources.append(json.loads(match))
+                    logger.debug('(%s) Fetched Live sources : %s' % (call.__class__, len(self.sources)))
                 else :
-                    dbcur.execute("SELECT * FROM rel_src WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
+                    dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
                     for row in dbcur:
                         match = row
                         sources = json.loads(match[4])
@@ -780,31 +781,15 @@ class sources:
         except:
             pass
 
-    def clearSources(self):
-        try:
-            control.idle()
-
-            yes = control.yesnoDialog(control.lang(30510).encode('utf-8'), '', '')
-            if not yes: return
-
-            control.makeFile(control.dataPath)
-            dbcon = database.connect(control.sourcescacheFile)
-            dbcur = dbcon.cursor()
-            dbcur.execute("DROP TABLE IF EXISTS rel_src")
-            dbcur.execute("DROP TABLE IF EXISTS rel_logo")
-            dbcur.execute("VACUUM")
-            dbcon.commit()
-
-            control.infoDialog(control.lang(30511).encode('utf-8'))
-        except:
-            pass
-
     def sourcesFilter(self):
         logger.debug('[%s] Calling sources.filter()' % self.__class__)
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
         random.shuffle(self.sources)
+
+        quality = control.setting('playback_quality')
+        if quality == '': quality = '0'
 
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
@@ -816,16 +801,16 @@ class sources:
 
         filter = []
         for d in self.debridDict: filter += [dict(i.items() + [('debrid', d)]) for i in self.sources if i['source'].lower() in self.debridDict[d]]
-
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host and 'debridonly' not in i]
+        filter += [i for i in self.sources if i['direct'] == True]
         self.sources = filter
 
 
         filter = []
-        filter += [i for i in self.sources if i['quality'] == '1080p' and 'debrid' in i]
-        filter += [i for i in self.sources if i['quality'] == 'HD' and 'debrid' in i]
-        filter += [i for i in self.sources if i['quality'] == '1080p' and not 'debrid' in i]
-        filter += [i for i in self.sources if i['quality'] == 'HD' and not 'debrid' in i]
+        if quality == '0': filter += [i for i in self.sources if i['quality'] == '1080p' and 'debrid' in i]
+        if quality == '0': filter += [i for i in self.sources if i['quality'] == '1080p' and not 'debrid' in i]
+        if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and 'debrid' in i]
+        if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and not 'debrid' in i]
         filter += [i for i in self.sources if i['quality'] == 'SD' and not 'debrid' in i]
         if len(filter) < 15: filter += [i for i in self.sources if i['quality'] == 'SCR']
         if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == 'CAM']
@@ -883,7 +868,6 @@ class sources:
 
             source = __import__(provider, globals(), locals(), [], -1).source()
             u = url = source.resolve(url, self.resolverList)
-
             if url == False: raise Exception()
 
             if not d == '':
@@ -905,6 +889,18 @@ class sources:
             headers = urllib.quote_plus(headers).replace('%3D', '=') if ' ' in headers else headers
             headers = dict(urlparse.parse_qsl(headers))
 
+            try :
+                if url.startswith('http') and '.m3u8' in url:
+                    result = client.request(url.split('|')[0], headers=headers, output='geturl', timeout='20')
+                    if result == None: raise Exception()
+
+                elif url.startswith('http'):
+                    result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20')
+                    if result == None: raise Exception()
+            except:
+                import traceback
+                traceback.print_exc()
+                pass
             self.url = url
             return url
         except:

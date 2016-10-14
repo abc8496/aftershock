@@ -94,4 +94,5 @@ class source:
             return sources
 
     def resolve(self, url, resolverList):
+        #url =  '%s|%s' % (url, 'Referer=http://www.einthusan.com')
         return url

@@ -63,7 +63,8 @@ class movies:
         self.tmdb_image = 'http://image.tmdb.org/t/p/original'
         self.tmdb_poster = 'http://image.tmdb.org/t/p/w500'
 
-        self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
+        #self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
+        self.search_link = 'http://www.imdb.com/search/title?sort=release_date,desc&title=%s'
         self.language_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=%s&count=40&start=1&sort=release_date,desc&start=1'
         self.genre_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=100,&release_date=date[730],date[30]&genres=%s&sort=release_date,desc&count=40&start=1'
         self.year_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=100,&production_status=released&year=%s,%s&sort=release_date,desc&count=40&start=1'
@@ -295,8 +296,10 @@ class movies:
 
             if (self.query == None or self.query == ''): return
 
-            url = self.search_link % ('%s', urllib.quote_plus(self.query))
-            self.list = cache.get(self.tmdb_list, 0, url)
+            #url = self.search_link % ('%s', urllib.quote_plus(self.query))
+            url = self.search_link % (urllib.quote_plus(self.query))
+            logger.debug('URL : %s' % url)
+            self.list = cache.get(self.imdb_list, 0, url)
 
             self.worker()
             self.movieDirectory(self.list)

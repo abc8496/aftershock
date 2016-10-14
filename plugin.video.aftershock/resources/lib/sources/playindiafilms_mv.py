@@ -29,7 +29,7 @@ from resources.lib.libraries import logger
 
 class source:
     def __init__(self):
-        self.base_link_1 = 'http://www.playindiafilms.com'
+        self.base_link_1 = 'http://www.playsominaltv.com'
         self.base_link_2 = self.base_link_1
         self.search_link = '/feed/?s=%s&submit=Search'
         self.movie_link = '%s/%s/'

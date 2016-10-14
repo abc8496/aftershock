@@ -69,8 +69,7 @@ class source:
             if url == None: return sources
 
             result = client.source(url)
-            result = client.parseDOM(result, 'table', attrs = {'class': 'rows differ_download'})[0]
-            links = client.parseDOM(result, 'tr')
+            links = client.parseDOM(result, 'div', attrs = {'class': 'listed'})
 
             for link in links:
                 try: quality = client.parseDOM(link, 'span', attrs = {'class': 'quality_1'})[0].lower()

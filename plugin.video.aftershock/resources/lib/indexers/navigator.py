@@ -68,6 +68,29 @@ class navigator:
         cache.get(analytics.sendAnalytics, 600000000, ("Installed-%s" % control.addonInfo('version')), table='changelog')
 
 
+    def clearCache(self, url=None):
+        if url == None:
+            self.addDirectoryItem(90124, 'clearCache&url=main', 'clearcache.png','DefaultMovies.png')
+            self.addDirectoryItem(90125, 'clearCache&url=providers', 'clearcache.png','DefaultMovies.png')
+            self.addDirectoryItem(90126, 'clearCache&url=live', 'clearcache.png','DefaultMovies.png')
+            self.addDirectoryItem(90127, 'clearCache&url=meta', 'clearcache.png','DefaultMovies.png')
+
+            self.endDirectory(viewMode='list')
+        elif url == 'main':
+            from resources.lib.libraries import cache
+            cache.clear()
+        elif url == 'providers':
+            from resources.lib.libraries import cache
+            cache.clear()
+            cache.clear(['rel_src'], control.sourcescacheFile)
+        elif url == 'live' :
+            from resources.lib.libraries import cache
+            cache.clear()
+            cache.clear(['rel_live','rel_logo'], control.sourcescacheFile)
+        elif url == 'meta':
+            from resources.lib.libraries import cache
+            cache.clear()
+            cache.clear(['meta', 'meta_imdb'], control.metacacheFile)
 
     def desiLangMovies(self):
         self.addDirectoryItem(30201, 'movieSearch', 'search.png', 'DefaultMovies.png')
@@ -157,6 +180,6 @@ class navigator:
         if not addonFanart == None: item.setProperty('Fanart_Image', addonFanart)
         control.addItem(handle=int(sys.argv[1]), url=url, listitem=item, isFolder=isFolder)
 
-    def endDirectory(self, cacheToDisc=True):
-        views.setView('movies', {'skin.confluence': control.viewMode['thumbnails']})
+    def endDirectory(self, cacheToDisc=True, viewMode='thumbnails'):
+        views.setView('movies', {'skin.confluence': control.viewMode[viewMode]})
         control.directory(int(sys.argv[1]), cacheToDisc=cacheToDisc)

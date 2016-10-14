@@ -27,6 +27,11 @@ from resources.lib.libraries import cache
 from resources.lib.sources import sources
 from resources.lib.libraries import cleantitle
 
+try:
+    from sqlite3 import dbapi2 as database
+except:
+    from pysqlite2 import dbapi2 as database
+
 class channels:
     def __init__(self):
         self.list = []
@@ -46,7 +51,7 @@ class channels:
             alter=None
             date=None
             meta=None
-            sourceList = cache.get(sources().getSources, 2, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
+            sourceList = cache.get(sources().getSources, 24, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
             sourceList = dict((cleantitle.live(item['name']),item) for item in sourceList).values()
 

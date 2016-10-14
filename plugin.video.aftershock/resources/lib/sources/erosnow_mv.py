@@ -34,8 +34,8 @@ class source:
         self.info_link = '/catalog/movie/%s/cc=US'
         self.login_link = 'https://erosnow.com/secured/dologin'
         self.now = datetime.datetime.now()
-        self.user = control.setting('eros_user')
-        self.password = control.setting('eros_pwd')
+        self.user = control.setting('eros.user')
+        self.password = control.setting('eros.pwd')
         self.list = []
 
     def get_movie(self, imdb, title, year):
@@ -90,7 +90,8 @@ class source:
     def login(self):
         try :
             post = {'el':self.user, 'pw':self.password, 'mobile':'', 'callingcode':'', 'type':'json', 'fbid':''}
-            h = {'Referer':self.base_link_1}
+            h = {'Referer':self.base_link_1,
+                 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}
 
             result = client.source(self.login_link, post=urllib.urlencode(post), close=False)
 
