@@ -24,35 +24,30 @@ from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.libraries import logger
 from resources.lib.libraries import cleantitle
+from resources.lib.libraries.fileFetcher import *
+from resources.lib.libraries.liveParser import  *
 
 class source:
     def __init__(self):
         self.live_link = base64.b64decode('aHR0cHM6Ly9vZmZzaG9yZWdpdC5jb20vdmluZWVndS9hZnRlcnNob2NrLXJlcG8vbGl2ZXN0cmVhbXMuanNvbg==')
         self.now = datetime.datetime.now()
+        self.fileName = ''
         self.list = []
 
-    def getLiveSource(self):
+    def getLiveSource(self, generateJSON=False):
         try :
-            logger.debug('[%s] json local : %s' % (self.__class__, control.setting('livelocal')))
+            logger.debug('json local : %s' % control.setting('livelocal'), __name__)
             if control.setting('livelocal') == 'true':
                 dataPath = control.dataPath
-                filename = os.path.join(dataPath, 'livestreams_wip.json')
-                filename = open(filename)
-                result = filename.read()
-                filename.close()
+                filename = 'static_wip.json'
             else :
-                result = client.request(self.live_link)
+                fileName = 'static.json'
+                fileFetcher = FileFetcher(fileName, control.addon)
+                if fileFetcher.fetchFile() < 0:
+                    raise Exception ()
 
-            channels = json.loads(result)
-
-            channelNames = channels.keys()
-            channelNames.sort()
-
-            for channel in channelNames:
-                channelObj = channels[channel]
-                if not channelObj['enabled'] == 'false':
-                    channelName = cleantitle.live(channel).title()
-                    self.list.append({'name':channelName, 'poster':channelObj['iconimage'],'url':channelObj['channelUrl'],'provider':'json','source':'json','direct':True})
+                liveParser = LiveParser(fileName, control.addon)
+                self.list = liveParser.parseFile()
             return self.list
         except:
             pass

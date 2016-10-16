@@ -24,6 +24,12 @@ from resources.lib.sources import putlocker_mv
 from resources.lib.sources import primewire_mv
 from resources.lib.sources import desirulez_mv_tv
 
+from resources.lib.sources import json_live
+from resources.lib.sources import ditto_live
+from resources.lib.sources import dynns_live
+from resources.lib.sources import cinefun_live
+
+
 class TestingMovies(unittest.TestCase):
     def setUp(self):
         self.imdb = 'tt3595298'
@@ -144,6 +150,29 @@ class TestingMovies(unittest.TestCase):
     def test_putlocker(self):
         call = desirulez_mv_tv.source()
         self.source(call)
+
+class TestingLive(unittest.TestCase):
+
+    def source(self, call, generateJSON):
+        sourceurl = call.getLiveSource(generateJSON)
+        self.assertGreater(len(sourceurl), 0, 'No Sources found')
+
+    @unittest.skip("Working")
+    def test_json(self):
+        call = json_live.source()
+        self.source(call, False)
+    @unittest.skip("Working")
+    def test_ditto(self):
+        call = ditto_live.source()
+        self.source(call, False)
+    @unittest.skip("Working")
+    def test_dittoGenerateJSON(self):
+        call = ditto_live.source()
+        self.source(call, True)
+
+    def test_cinefunGenerateJSON(self):
+        call = cinefun_live.source()
+        self.source(call, True)
 
 if __name__ == '__main__' :
     unittest.main()

@@ -62,7 +62,7 @@ class source:
             return
 
     def get_sources(self, url):
-        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
+        logger.debug('SOURCES URL %s' % url, __name__)
         try:
             sources = []
 
@@ -84,7 +84,7 @@ class source:
 
                 sources.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'filmywap', 'url': url, 'direct': False, 'debridonly': False})
 
-            logger.debug('%s SOURCES [%s]' % (__name__,sources))
+            logger.debug('SOURCES [%s]' % sources, __name__)
             return sources
         except:
             return sources

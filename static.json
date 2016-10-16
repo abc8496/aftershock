@@ -1,0 +1,155 @@
+{
+	"Mtunes": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/mm/m_tunes_hd.png",
+		"type": "IND",
+		"url": "http://hlshinextra-lh.akamaihd.net/i/ams4_mtunes@124572/index_1100_av-b.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9XM": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_music.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xmusic_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9XTashan": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_tashan.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xtashan_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9XJalwa": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jalwa.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xjalwa_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9XJhakaas": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jhakaas.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xjhakaas_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"IBN7": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/ibn7.png",
+		"type": "IND",
+		"url": "http://ibn7_hls-lh.akamaihd.net/i/ibn7_hls_n_1@174951/index_3_av-b.m3u8?sd=10&play-only=backup&rebase=on",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"India TV": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/india_tv_in.png",
+		"type": "IND",
+		"url": "http://indiatvnews-lh.akamaihd.net/i/ITV_1@199237/master.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"CNBC TV18": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/cc/cnbc_tv18.png",
+		"type": "IND",
+		"url": "rtsp://web18.live-s.cdn.bitgravity.com/cdn-live-b3/_definst_/web18/live/pub08",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Vevo Music": {
+		"icon": "http://koditips.com/wp-content/uploads/2015/06/VEVO-Android-App-For-Music.png",
+		"type": "IND",
+		"url": "http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/03/prog_index.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Joo Music": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/jj/joo_music_pk.png",
+		"type": "IND",
+		"url": "http://wowzacontrol.com:1935/8038/8038/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Zee News": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_news_in.png",
+		"type": "IND",
+		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeenews/chunklist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "false"
+	},
+	"Zing TV": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_zing_asia.png",
+		"type": "IND",
+		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zing/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "false"
+	},
+	"Zee Smile": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_smile.png",
+		"type": "IND",
+		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeesmile/chunklist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "false"
+	},
+	"Aaj Tak Tez": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
+		"type": "IND",
+		"url": "plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE&name=AajTakTez",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Aaj Tak Delhi": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak_delhi.png",
+		"type": "IND",
+		"url": "plugin://plugin.video.livestream/?mode=104&owner_id=14014394&event_id=4198951&url=http://example.com&video_id=LIVE&name=AajTakDelhi",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Zee Cinema": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_cinema_in_hd.png",
+		"type": "IND",
+		"url": "http://stream.zliving.online/zeecinema/index.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "false"
+	},
+	"Zee TV": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_tv_in_hd.png",
+		"type": "IND",
+		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeetvhdus2243/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "false"
+	}
+}

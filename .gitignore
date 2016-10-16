@@ -6,7 +6,7 @@
 *.iml
 **/.idea/
 */data
-*.idea
+*.idea*
 **/urlresolver/
 
 .idea/workspace.xml
@@ -26,3 +26,6 @@
 *.db
 plugin.video.aftershock/resources/settings.xml.local
 data/plugin.video.aftershock/livestreams.json
+data/plugin.video.aftershock/tmp
+data/plugin.video.aftershock/ditto.json
+data/plugin.video.aftershock/dynns.json

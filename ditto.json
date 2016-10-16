@@ -1,0 +1,362 @@
+{
+	"Zee Salaam": {
+		"url": "http://origin.dittotv.com/livetv/zee-salaam",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-salaam_115x95.png.jpg"
+	},
+	"Raj News Telugu": {
+		"url": "http://origin.dittotv.com/livetv/raj-news-telugu",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Raj_News_Telugu_115x95.png.jpg"
+	},
+	"Raj News Kannada": {
+		"url": "http://origin.dittotv.com/livetv/raj-news-kannada",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Raj-News-Kannada1_115x95.png.jpg"
+	},
+	"Raj Tv": {
+		"url": "http://origin.dittotv.com/livetv/raj-tv",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/rajtv_115x95.png.jpg"
+	},
+	"Raj Music": {
+		"url": "http://origin.dittotv.com/livetv/raj-music",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/raj-music-kanada_115x95.png.jpg"
+	},
+	"Raj Musix": {
+		"url": "http://origin.dittotv.com/livetv/raj-musix",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/raj-musix_115x95.png.jpg"
+	},
+	"Zee Business": {
+		"url": "http://origin.dittotv.com/livetv/zee-business",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-business_115x95.png.jpg"
+	},
+	"Zee 24 Taas": {
+		"url": "http://origin.dittotv.com/livetv/zee-24-taas",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_24taas_115x95.png.jpg"
+	},
+	"Zee Purvaiya": {
+		"url": "http://origin.dittotv.com/livetv/zee-purvaiya",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee_purvaiya_115x95.png.jpg"
+	},
+	"Zee Telugu": {
+		"url": "http://origin.dittotv.com/livetv/zee-telugu",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/01_ZEE-TELUGU-115x95.png.jpg"
+	},
+	"Zee Classic": {
+		"url": "http://origin.dittotv.com/livetv/zee-classic",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-classic_115x95.png.jpg"
+	},
+	"Raj News 24X7": {
+		"url": "http://origin.dittotv.com/livetv/raj-news-24x7",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/raj_news_tamil_115x95.png.jpg"
+	},
+	"Zee Kannada": {
+		"url": "http://origin.dittotv.com/livetv/zee-kannada",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_Kannada_115x95.png.jpg"
+	},
+	"Living Foodz": {
+		"url": "http://origin.dittotv.com/livetv/living-foodz",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/LIVING-FOOD-115x95.png.jpg"
+	},
+	"Raj Musix Telugu": {
+		"url": "http://origin.dittotv.com/livetv/raj-musix-telugu",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Raj_Musix_Telugu_115x95.png.jpg"
+	},
+	"Zee Alwan": {
+		"url": "http://origin.dittotv.com/livetv/zee-alwan",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zeealwan_115x95.jpg.jpg"
+	},
+	"Zee News": {
+		"url": "http://origin.dittotv.com/livetv/zee-news",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-news_115x95.png.jpg"
+	},
+	"And Tv Hd": {
+		"url": "http://origin.dittotv.com/livetv/and-tv-hd",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/AndTV_HD_115x95.png.jpg"
+	},
+	"Zee Bangla Cinema": {
+		"url": "http://origin.dittotv.com/livetv/zee-bangla-cinema",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/ZBC-_115x95.jpg.jpg"
+	},
+	"Zee Marathi": {
+		"url": "http://origin.dittotv.com/livetv/zee-marathi",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-marathi_115x95.png.jpg"
+	},
+	"Makkal Tv": {
+		"url": "http://origin.dittotv.com/livetv/makkal-tv",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Makkal-TV-Logo-115x95.png.jpg"
+	},
+	"Zee Rajasthan News": {
+		"url": "http://origin.dittotv.com/livetv/zee-rajasthan-news",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee-Raj-115x95.png.jpg"
+	},
+	"India 24X7": {
+		"url": "http://origin.dittotv.com/livetv/india-24x7",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/India24x7-115x95.jpg.jpg"
+	},
+	"Etc": {
+		"url": "http://origin.dittotv.com/livetv/etc",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zetc-115x95.png.jpg"
+	},
+	"Zee Tv Hd": {
+		"url": "http://origin.dittotv.com/livetv/zee-tv-hd",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/01_ZEETV-HD-India-115x95.png.jpg"
+	},
+	"Zee Phhp": {
+		"url": "http://origin.dittotv.com/livetv/zee-phhp",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_PHHP_115x95.png.jpg"
+	},
+	"Zee Mpcg": {
+		"url": "http://origin.dittotv.com/livetv/zee-mpcg",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/MPCG_115x95.png.jpg"
+	},
+	"Zee Tamil": {
+		"url": "http://origin.dittotv.com/livetv/zee-tamil",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee_tamil-115x95.png.jpg"
+	},
+	"Vissa Tv": {
+		"url": "http://origin.dittotv.com/livetv/vissa-tv",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Raj_Vissa_115x95.jpg.jpg"
+	},
+	"Z Living": {
+		"url": "http://origin.dittotv.com/livetv/z-living",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_Living_115x95.png.jpg"
+	},
+	"Zee Cinema Hd": {
+		"url": "http://origin.dittotv.com/livetv/zee-cinema-hd",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_Cinema_HD_115x95.png.jpg"
+	},
+	"Zee Kalinga News": {
+		"url": "http://origin.dittotv.com/livetv/zee-kalinga-news",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/01_ZEE_KALINGA_NEWS_LOGO_FINAL_2016_115x95.png.jpg"
+	},
+	"Zee Aflam": {
+		"url": "http://origin.dittotv.com/livetv/zee-aflam",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee_Aflam115x95.png.jpg"
+	},
+	"Raj Digital Plus": {
+		"url": "http://origin.dittotv.com/livetv/raj-digital-plus",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/raj_digital_plus.115x95.png.jpg"
+	},
+	"Divya Tv": {
+		"url": "http://origin.dittotv.com/livetv/divya-tv",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/divya_tv_115x95.png.jpg"
+	},
+	"Zing": {
+		"url": "http://origin.dittotv.com/livetv/zing",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zing_115x95.jpg.jpg"
+	},
+	"Zee Bangla": {
+		"url": "http://origin.dittotv.com/livetv/zee-bangla",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee-bangla_115x95.png.jpg"
+	},
+	"Raj News Malayalam": {
+		"url": "http://origin.dittotv.com/livetv/raj-news-malayalam",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Raj_News_Malayalam_115x95.png.jpg"
+	},
+	"Zee Talkies": {
+		"url": "http://origin.dittotv.com/livetv/zee-talkies",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/zee_talkies_115x95.png.jpg"
+	},
+	"24 Ghanta": {
+		"url": "http://origin.dittotv.com/livetv/24-ghanta",
+		"enabled": "true",
+		"direct": "false",
+		"source": "ditto",
+		"provider": "ditto",
+		"quality": "HD",
+		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/24_ghanta_115x95.png.jpg"
+	}
+}

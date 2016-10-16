@@ -41,10 +41,11 @@
 		<setting id="desiplex" type="bool" label="DesiPlex" default="true" />
 		<setting id="json" type="bool" label="json" visible="false" default="true" />
 		<!--<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="false" />-->
-		<setting id="dynns" type="bool" label="Dynns" visible="true" default="true" />
+		<setting id="dynns" type="bool" label="Dynns" visible="true" default="false" />
 		<setting id="hevcfilm" type="bool" label="HEVC" visible="false" default="true" />
 		<setting id="crazy4ad" type="bool" label="CRAZY4AD" visible="false" default="true" />
 		<setting id="primewire" type="bool" label="PrimeWire" visible="true" default="true" />
+		<setting id="cinefun" type="bool" label="CineFun" visible="true" default="true" />
 	</category>
 
 	<category label="30910">

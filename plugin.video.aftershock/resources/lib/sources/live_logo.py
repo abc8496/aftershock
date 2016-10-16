@@ -32,7 +32,7 @@ class source:
 
     def getLivePosters(self):
         try :
-            logger.debug('[%s] logos local : %s' % (self.__class__, control.setting('livelocal')))
+            logger.debug('logos local : %s' % control.setting('livelocal'), __name__)
             artPath = control.logoPath()
 
             if control.setting('livelocal') == 'true':

@@ -150,7 +150,7 @@ class source:
             return
 
     def get_sources(self, url):
-        logger.debug('%s SOURCES URL %s' % (self.__class__, url))
+        logger.debug('SOURCES URL %s' % url, __name__)
         try:
             if url == None: return self.sources
 
@@ -182,7 +182,7 @@ class source:
                 while stillWorking:
                     stillWorking = False
                     stillWorking = [True for x in threads if x.is_alive() == True]
-            logger.debug('%s SOURCES [%s]' % (__name__,self.sources))
+            logger.debug('SOURCES [%s]' % self.sources, __name__)
             return self.sources
         except:
             return self.sources
@@ -211,7 +211,7 @@ class source:
             pass
 
     def resolve(self, url, resolverList):
-        logger.debug('%s ORIGINAL URL [%s]' % (__name__, url))
+        logger.debug('ORIGINAL URL [%s]' % url, __name__)
         try:
             tUrl = url.split('##')
             if len(tUrl) > 0:
@@ -226,7 +226,7 @@ class source:
                     raise Exception()
                 links.append(r)
             url = links
-            logger.debug('%s RESOLVED URL [%s]' % (__name__, url))
+            logger.debug('RESOLVED URL [%s]' % url, __name__)
             return url
         except:
             return False

@@ -1,0 +1,242 @@
+{
+	"Enterr10 Movies": {
+		"url": "218",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Enterr10_Movies.jpg"
+	},
+	"Sony Set Max HD (Local Time)": {
+		"url": "105465",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/SonySetMaxHD_1027.jpg"
+	},
+	"NDTV 24x7": {
+		"url": "232",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/NDTV_24x7.jpg"
+	},
+	"Zee Cinema HD (Local Time)": {
+		"url": "105466",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/ZeeCinemaHD(Local)_3124.jpg"
+	},
+	"Life OK HD (Local Time)": {
+		"url": "112361",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/life_ok_hd_local.jpg"
+	},
+	"Zee TV HD (Local Time)": {
+		"url": "104297",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/ZeeTVHD(LocalTime)_5043.jpg"
+	},
+	"DD National": {
+		"url": "62545",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/DD_National_320x180.jpg"
+	},
+	"Manoranjan Movies": {
+		"url": "221",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Manoranjan_Movies.png"
+	},
+	"Sony Entertainment HD (Local Time)": {
+		"url": "103377",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/SonyEntertainmentHD_1515.jpg"
+	},
+	"Rishtey Cineplex": {
+		"url": "59107",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/cineplex.jpg"
+	},
+	"Sony Entertainment HD": {
+		"url": "73834",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/SonyTest_1059.jpg"
+	},
+	"SAB TV": {
+		"url": "24672",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Sony_Sab.png"
+	},
+	"And TV HD": {
+		"url": "95616",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/&_TV-Logo_320x180.jpg"
+	},
+	"Astha TV": {
+		"url": "197",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Astha_TV.jpg"
+	},
+	"E24": {
+		"url": "188",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/E24.jpg"
+	},
+	"Music Xpress": {
+		"url": "62269",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/music_express_320x180.jpg"
+	},
+	"And TV HD (Local Time)": {
+		"url": "105454",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/&TV(LocalTime)_2608.jpg"
+	},
+	"Zee Cinema HD": {
+		"url": "97889",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/ZeeCinema_1083.jpg"
+	},
+	"Life OK HD": {
+		"url": "112011",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/LifeOKHD_3144.jpg"
+	},
+	"Zee TV HD": {
+		"url": "73833",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/ZeeTVTest_6978.jpg"
+	},
+	"Rishtey UK": {
+		"url": "243",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Rishtey_UK.jpg"
+	},
+	"ABP News": {
+		"url": "226",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/ABP_News.jpg"
+	},
+	"Colors UK": {
+		"url": "235",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Colors_New_Logo_320x180.jpg"
+	},
+	"Mastiii": {
+		"url": "62266",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Mastiii_channel_320x180.jpg"
+	},
+	"News18": {
+		"url": "244",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/News18_logo_320x180.jpg"
+	},
+	"Aaj Tak UK": {
+		"url": "15972",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Aaj_Tak_UK.png"
+	},
+	"Music India": {
+		"url": "227",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Music_India.jpg"
+	},
+	"Dangal": {
+		"url": "198",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Dangal.jpg"
+	},
+	"Sony Set Max HD": {
+		"url": "97898",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/SonySetMax_6195.jpg"
+	},
+	"Maha Movies": {
+		"url": "196",
+		"direct": "false",
+		"source": "cinefun",
+		"provider": "cinefun",
+		"quality": "HD",
+		"icon": "https://cinefuntv.com/files/content/Maha_Movies.jpg"
+	}
+}

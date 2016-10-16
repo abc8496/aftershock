@@ -71,7 +71,7 @@ class movies:
 
 
     def get(self, url, idx=True, provider=None, lang=None):
-        logger.debug('[%s] url [%s] provider [%s] lang [%s] ' % (self.__class__, url, provider, lang))
+        logger.debug('url [%s] provider [%s] lang [%s] ' % (url, provider, lang), self.__class__)
         try:
             try: u = urlparse.urlparse(url).netloc.lower()
             except: pass
@@ -298,7 +298,7 @@ class movies:
 
             #url = self.search_link % ('%s', urllib.quote_plus(self.query))
             url = self.search_link % (urllib.quote_plus(self.query))
-            logger.debug('URL : %s' % url)
+            logger.debug('URL : %s' % url, self.__class__)
             self.list = cache.get(self.imdb_list, 0, url)
 
             self.worker()

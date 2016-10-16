@@ -1,0 +1,522 @@
+{
+	"ABP NEWS": {
+		"url": "http://live1.dynns.com:8081/iptv/abpnews/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/abp_news_in.png"
+	},
+	"MTUNES HD": {
+		"url": "http://live1.dynns.com:8081/iptv/MtunesHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/mm/m_tunes_hd.png"
+	},
+	"ENTERR 10": {
+		"url": "http://live1.dynns.com:8081/iptv/enter10/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ee/enterr_10.png"
+	},
+	"LIFE OK": {
+		"url": "Life OK USA",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ll/life_ok_in.png"
+	},
+	"ZEE ANMMOL": {
+		"url": "http://live1.dynns.com:8081/iptv/zeeanmol/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_anmol_in.png"
+	},
+	"ZEE ANMOL": {
+		"url": "http://live1.dynns.com:8081/iptv/zeeanmol/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_anmol_in.png"
+	},
+	"HIGH ALERT": {
+		"url": "http://live2.dynns.com:8081/vod/Voxtv.mp4/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/0663a4ddceacb40b095eda264a85f15chigh.jpg"
+	},
+	"ZEE ACTION": {
+		"url": "http://live1.dynns.com:8081/iptv/ZEETVACTION/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_action.png"
+	},
+	"ZOOM": {
+		"url": "http://live1.dynns.com:8081/iptv/ZoomUK/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zoom_tv_in.png"
+	},
+	"DANGAAL": {
+		"url": "http://live1.dynns.com:8081/iptv/DANGAAL/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/dd/dangal_in.png"
+	},
+	"ZING": {
+		"url": "http://live1.dynns.com:8081/iptv/ZingUK/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_zing_asia.png"
+	},
+	"SONYD": {
+		"url": "http://live1.dynns.com:8081/iptv/SonyTVAUD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/d69768b3da745b77e82cdbddcc8bac98sonyAUD.jpg"
+	},
+	"B4U MOVIES": {
+		"url": "http://live1.dynns.com:8081/iptv/b4umovies/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/bb/b4u_movies_in.png"
+	},
+	"BINDASS PLAY": {
+		"url": "http://live1.dynns.com:8081/iptv/BindassPlay/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/bb/bindass_play_in.png"
+	},
+	"STAR MOVIES": {
+		"url": "http://live1.dynns.com:8081/iptv/starmovies/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/043ab21fc5a1607b381ac3896176dac6star.jpg"
+	},
+	"AASTHA BHAJAN": {
+		"url": "http://live1.dynns.com:8081/iptv/AasthaBhajan/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aastha_in_bhajan.png"
+	},
+	"STAR GOLD HD": {
+		"url": "http://live1.dynns.com:8081/iptv/stargoldHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/star_gold_hk_hd.png"
+	},
+	"STAR WORLD HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDSTARWORLD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/star_world_hk_hd.png"
+	},
+	"ZEE SALAAM": {
+		"url": "http://live1.dynns.com:8081/iptv/zeesalam/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_salaam.png"
+	},
+	"ETV NOW": {
+		"url": "http://live1.dynns.com:8081/iptv/ETVNOW/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ee/et_now.png"
+	},
+	"SEPL MOVIES HINDI": {
+		"url": "http://live1.dynns.com:8081/iptv/SEPLMoviesHindi/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/edcdaad57f7f4a4d3826728f009bcf24Seplemovies.gif"
+	},
+	"ZEE CINEMA HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDsonymax2/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_cinema_in_hd.png"
+	},
+	"COLOR": {
+		"url": "http://live1.dynns.com:8081/iptv/ColorsEurope/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/cc/colors_in.png"
+	},
+	"SAB": {
+		"url": "http://live1.dynns.com:8081/iptv/sabtv/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/789ba2ae4d335e8a2ad283a3f7effcedsonysab.jpg"
+	},
+	"STAR GOLD": {
+		"url": "http://live1.dynns.com:8081/iptv/stargoldind/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/star_gold_hk.png"
+	},
+	"SET MAX": {
+		"url": "asdf",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/99cad265a1768cc2dd013f0e740300aesonymax.png"
+	},
+	"UTV BINDASS": {
+		"url": "http://live1.dynns.com:8081/iptv/UTVBindass/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/84d2004bf28a2095230e8e14993d398dutvbindas.jpg"
+	},
+	"NDTV": {
+		"url": "http://live1.dynns.com:8081/iptv/NDTV/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/nn/ndtv_india.png"
+	},
+	"ZEE HD": {
+		"url": "http://live1.dynns.com:8081/iptv/ZeeTVHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_tv_in_hd_plus1.png"
+	},
+	"LIFE OK HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDLIFEOK/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ll/life_ok_in.png"
+	},
+	"9X JHAKAAS": {
+		"url": "http://live1.dynns.com:8081/iptv/9xJhakaas/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jhakaas.png"
+	},
+	"COLOR HD": {
+		"url": "http://live1.dynns.com:8081/iptv/ColorsHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/cc/colors_in.png"
+	},
+	"D2H CINEMA HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDD2HCINEMA/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/b9937273f2b46912b56d09c8faa7da23d2hcenima.jpg"
+	},
+	"IBN 7": {
+		"url": "http://live1.dynns.com:8081/iptv/IBNLokmat/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/ibn7.png"
+	},
+	"UMP MOVIES": {
+		"url": "http://live1.dynns.com:8081/iptv/UMPMOVIES/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/uu/ump_movies.png"
+	},
+	"SONY HD": {
+		"url": "http://live1.dynns.com:8081/iptv/SonyTVHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4a3fd911279cd8bc597fa13222ef83besonyHd.jpg"
+	},
+	"M TUNES HD": {
+		"url": "http://live1.dynns.com:8081/iptv/MtunesHD/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/8dcf2420e78a64333a59674678fb283bMtune.png"
+	},
+	"RISHTEY": {
+		"url": "http://live1.dynns.com:8081/iptv/RishteyUK/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/rr/rishtey_in_asia.png"
+	},
+	"MOD MOVIES HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDMODMOVIES/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/74bba22728b6185eec06286af6bec36dmodmovies.jpg"
+	},
+	"B4U PLUS": {
+		"url": "http://arabic.dynns.com:8081/arabic/B4UPlus/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/bb/b4u_plus_ae.png"
+	},
+	"SONY SAB HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDSonySab/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/sony_sab_tv_in.png"
+	},
+	"STAR IND": {
+		"url": "http://live1.dynns.com:8081/iptv/stargoldind/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/154f596a0e4aec4cf23ee4b76ae3d34aStarGold.jpg"
+	},
+	"AAJ TAK": {
+		"url": "http://live1.dynns.com:8081/iptv/aajtak/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png"
+	},
+	"STAR PLUS": {
+		"url": "Star Plus USA",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/star_plus_hk.png"
+	},
+	"ZEE SMILE": {
+		"url": "http://live1.dynns.com:8081/iptv/zeesmile/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_smile.png"
+	},
+	"IBN LOKMAT": {
+		"url": "http://live1.dynns.com:8081/iptv/IBNLokmat/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/ibn_lokmat_in.png"
+	},
+	"MUSIC XPRESS": {
+		"url": "http://live1.dynns.com:8081/iptv/MusicXpress/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/mm/music_xpress_in.png"
+	},
+	"POGO": {
+		"url": "http://live1.dynns.com:8081/iptv/pogo/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/pp/pogo.png"
+	},
+	"SAB IND": {
+		"url": "http://live1.dynns.com:8081/iptv/sabtvind/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/75df63609809c7a2052fdffe5c00a84esonysab.jpg"
+	},
+	"TIMES NOW": {
+		"url": "http://live1.dynns.com:8081/iptv/timenow/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/tt/times_now.png"
+	},
+	"DUBBED": {
+		"url": "http://live1.dynns.com:8081/iptv/DUBBED/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4c4ea5258ef3fb3fb1fc48fee9b4408cdubbed.jpg"
+	},
+	"STAR PLUS IND": {
+		"url": "http://live1.dynns.com:8081/iptv/staplusind/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ss/star_plus_hk_hd.png"
+	},
+	"ZEE": {
+		"url": "http://live1.dynns.com:8081/iptv/ZeeTVUK/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_tv_in.png"
+	},
+	"UTV MOVIES INT": {
+		"url": "http://live1.dynns.com:8081/iptv/UTVMoviesInternational/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/uu/utv_movies_international.png"
+	},
+	"ZEE BUSINESS": {
+		"url": "http://live1.dynns.com:8081/iptv/ZeeBusiness/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_business.png"
+	},
+	"ZEE CINEMA": {
+		"url": "Cinema UK",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_cinema_asia.png"
+	},
+	"NDTV PROFIT": {
+		"url": "http://live1.dynns.com:8081/iptv/ndtvprofit/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/nn/ndtv_profit.png"
+	},
+	"9X JALWA": {
+		"url": "http://live1.dynns.com:8081/iptv/9xJalwa/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jalwa.png"
+	},
+	"MUSIC INDIA": {
+		"url": "http://live1.dynns.com:8081/iptv/MusicIndia/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/mm/music_india.png"
+	},
+	"INDIA TODAY": {
+		"url": "INDIA TODAY",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/2596a54cdbb555cfd09cd5d991da0f55india.jpg"
+	},
+	"ZEE LIVING FOODZ": {
+		"url": "http://live1.dynns.com:8081/iptv/livingfood/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_living_in_asia.png"
+	},
+	"FOOD NETWORK": {
+		"url": "http://live1.dynns.com:8081/iptv/food/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/fa2431bf9d65058fe34e9713e32d60e6food.jpg"
+	},
+	"MTV INDIA": {
+		"url": "http://live1.dynns.com:8081/iptv/MTVIndia/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/6195f47dcff14b8f242aa333cdb2703emtvmusic.jpg"
+	},
+	"AND TV": {
+		"url": "http://live1.dynns.com:8081/iptv/lamhe/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/and_tv_in.png"
+	},
+	"STAR SELECT HD": {
+		"url": "http://live1.dynns.com:8081/iptv/HDSTARSELECT/playlist.m3u8",
+		"direct": "false",
+		"source": "dynns",
+		"provider": "dynns",
+		"quality": "HD",
+		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/3bbfdde8842a5c44a0323518eec97cbestarslecthd.jpg"
+	}
+}

@@ -76,7 +76,7 @@ class source:
             return
 
     def get_sources(self, url):
-        logger.debug('[%s] SOURCES URL %s' % (self.__class__, url))
+        logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
             sources = []
@@ -110,16 +110,16 @@ class source:
             except Exception as e:
                 logger.error('[%s] Exception : %s' % (self.__class__, e))
                 pass
-            logger.debug('[%s] SOURCES [%s]' % (__name__,sources))
+            logger.debug('SOURCES [%s]' % sources, __name__)
             return sources
         except:
             return sources
 
     def resolve(self, url, resolverList):
-        logger.debug('[%s] ORIGINAL URL [%s]' % (__name__, url))
+        logger.debug('ORIGINAL URL [%s]' % url, __name__)
         try:
             url = '%s&X-Forwarded-For=%s' % (url, self.ip)
-            logger.debug('[%s] RESOLVED URL [%s]' % (__name__, url))
+            logger.debug('RESOLVED URL [%s]' % url, __name__)
             return url
         except:
             return False

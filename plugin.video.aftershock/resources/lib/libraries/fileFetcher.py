@@ -29,7 +29,7 @@ import urllib2
 import datetime
 import zlib
 
-import control
+import control, logger
 
 MAIN_URL = 'https://offshoregit.com/vineegu/aftershock-repo/'
 
@@ -50,11 +50,9 @@ class FileFetcher(object):
     filePath = ''
     fileUrl = ''
     fileStat = None
-    addon = None
     fileType = TYPE_DEFAULT
 
     def __init__(self, fileName, addon):
-        self.addon = addon
 
         if fileName.startswith("http://") or fileName.startswith("sftp://") or fileName.startswith("ftp://") or \
                 fileName.startswith("https://") or fileName.startswith("ftps://") or fileName.startswith("smb://") or \
@@ -74,43 +72,43 @@ class FileFetcher(object):
     def fetchFile(self):
         retVal = self.FETCH_NOT_NEEDED
         fetch = False
-        if not os.path.exists(self.filePath):  # always fetch if file doesn't exist!
-            fetch = True
-        else:
-            self.fileStat = xbmcvfs.Stat(self.filePath)
-            remoteModTime = self.fileStat.st_mtime()
-            #remoteModTime.
-            print datetime.datetime.fromtimestamp(remoteModTime)
-            print str(remoteModTime)
-            #modTime = datetime.datetime.fromtimestamp(os.path.getmtime(self.filePath))
-            modTime = os.path.getmtime(self.filePath)
-            print datetime.datetime.fromtimestamp(modTime)
-            if (remoteModTime > modTime):
+        logger.debug('Remote File : [%s] LocalFile : [%s]' %  (self.fileUrl, self.filePath), __name__)
+        try :
+            if not os.path.exists(self.filePath):  # always fetch if file doesn't exist!
                 fetch = True
             else:
-                fetch = False
+                self.fileStat = xbmcvfs.Stat(self.fileUrl)
+                remoteModTime = self.fileStat.st_mtime()
+                modTime = os.path.getmtime(self.filePath)
+                logger.debug('Mod Time : Remote File [%s] Local File [%s]' % (datetime.datetime.fromtimestamp(remoteModTime), datetime.datetime.fromtimestamp(modTime)), __name__)
+                if (remoteModTime > modTime):
+                    fetch = True
+                else:
+                    fetch = False
 
-        if fetch:
-            tmpFile = os.path.join(self.basePath, 'tmp')
-            if self.fileType == self.TYPE_REMOTE:
-                xbmc.log('[script.aftershocknow.guide] file is in remote location: %s' % self.fileUrl, xbmc.LOGDEBUG)
-                if not xbmcvfs.copy(self.fileUrl, tmpFile):
-                    xbmc.log('[script.aftershocknow.guide] Remote file couldn\'t be copied: %s' % self.fileUrl, xbmc.LOGERROR)
-            else:
-                f = open(tmpFile, 'wb')
-                xbmc.log('[script.aftershocknow.guide] file is on the internet: %s' % self.fileUrl, xbmc.LOGDEBUG)
-                tmpData = urllib2.urlopen(self.fileUrl)
-                data = tmpData.read()
-                if tmpData.info().get('content-encoding') == 'gzip':
-                    data = zlib.decompress(data, zlib.MAX_WBITS + 16)
-                f.write(data)
-                f.close()
-            if os.path.getsize(tmpFile) > 20:
-                if os.path.exists(self.filePath):
-                    os.remove(self.filePath)
-                os.rename(tmpFile, self.filePath)
-                retVal = self.FETCH_OK
-                xbmc.log('[script.aftershocknow.guide] file %s was downloaded' % self.filePath, xbmc.LOGDEBUG)
-            else:
-                retVal = self.FETCH_ERROR
+            if fetch:
+                tmpFile = os.path.join(self.basePath, 'tmp')
+                if self.fileType == self.TYPE_REMOTE:
+                    logger.debug('file is in remote location: %s' % self.fileUrl,__name__)
+                    if not xbmcvfs.copy(self.fileUrl, tmpFile):
+                        logger.error('Remote file couldn\'t be copied: %s' % self.fileUrl)
+                else:
+                    f = open(tmpFile, 'wb')
+                    logger.debug('file is on the internet: %s' % self.fileUrl, __name__)
+                    tmpData = urllib2.urlopen(self.fileUrl)
+                    data = tmpData.read()
+                    if tmpData.info().get('content-encoding') == 'gzip':
+                        data = zlib.decompress(data, zlib.MAX_WBITS + 16)
+                    f.write(data)
+                    f.close()
+                if os.path.getsize(tmpFile) > 20:
+                    if os.path.exists(self.filePath):
+                        os.remove(self.filePath)
+                    os.rename(tmpFile, self.filePath)
+                    retVal = self.FETCH_OK
+                    logger.debug('file %s was downloaded' % self.filePath, __name__)
+                else:
+                    retVal = self.FETCH_ERROR
+        except:
+            pass
         return retVal

@@ -97,7 +97,7 @@ class sources:
             for i in range(len(items)):
                 try :
                     parts = int(items[i]['parts'])
-                    logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label))
+                    logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label), __name__)
                 except:
                     parts = 2
 
@@ -152,12 +152,15 @@ class sources:
 
             try :
                 if content == 'live':
+                    select = '1'
                     meta = self.sources[0]['meta']
-                    select = 2
+                    logger.debug('Content is live hence setting select = 1')
             except:
                 pass
 
             items = self.sourcesFilter()
+            for item in items:
+                logger.debug(item)
             if len(items) > 0:
 
                 if select == '1' and 'plugin' in control.infoLabel('Container.PluginName'):
@@ -327,7 +330,7 @@ class sources:
 
         sourceDict = [i[0] for i in sourceDict if i[1] == 'true']
 
-        logger.debug('[%s] Content [%s] Source Dict : %s' % (self.__class__, content, sourceDict))
+        logger.debug('Content [%s] Source Dict : %s' % (content, sourceDict), __name__)
 
         if content == 'movie':
             title = cleantitle.normalize(title)
@@ -536,7 +539,7 @@ class sources:
                 t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
                 update = abs(t2 - t1) > 336
                 if update == False:
-                    logger.debug('[%s] Fetched sources from cache for [%s]'% (call.__class__, name))
+                    logger.debug('Fetched sources from cache for [%s]'% name, call.__class__)
                     sources = json.loads(match[4])
                     sources['content'] = 'live'
                     poster = sources['poster']
@@ -548,7 +551,7 @@ class sources:
             if update == False:
                 return self.sources
         except:
-            logger.debug('[%s] Source from cache not found for [%s]'% (call.__class__, name))
+            logger.debug('Source from cache not found for [%s]'% name, call.__class__)
             pass
         try:
             sources = []
@@ -561,21 +564,24 @@ class sources:
                 update = abs(t2 - t1) > 336
             except:
                 update = True
+
             if update == False:
                 sources == None
-                logger.debug('[%s] No Update required ' % (call.__class__))
+                logger.debug('No Update required ', call.__class__)
             else :
-               logger.debug('[%s] Fetching Live source ' % (call.__class__))
+               logger.debug('Fetching Live source ', call.__class__)
                sources = call.getLiveSource()
 
                dbcur.execute("DELETE FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
                dbcon.commit()
 
+            #logger.debug('source %s' % sources, call.__class__)
+
             if sources == None and not name == None:
                 raise Exception('No Sources Found')
                 sources = []
             elif not name == None:
-                logger.debug('(%s) Fetched Live sources : %s' % (call.__class__, len(sources)))
+                logger.debug('Fetched Live sources : %s' % len(sources), call.__class__)
             idx = 0
 
             for item in sources:
@@ -594,7 +600,7 @@ class sources:
                     for row in dbcur:
                         match = row[4]
                         self.sources.append(json.loads(match))
-                    logger.debug('(%s) Fetched Live sources : %s' % (call.__class__, len(self.sources)))
+                    logger.debug('Fetched Live sources : %s' % len(self.sources), call.__class__)
                 else :
                     dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
                     for row in dbcur:
@@ -738,6 +744,8 @@ class sources:
             except: pass
 
         except:
+            import traceback
+            traceback.print_exc()
             try: progressDialog.close()
             except: pass
 
@@ -782,7 +790,7 @@ class sources:
             pass
 
     def sourcesFilter(self):
-        logger.debug('[%s] Calling sources.filter()' % self.__class__)
+        logger.debug('Calling sources.filter()', __name__)
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
@@ -794,15 +802,17 @@ class sources:
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
         filter += [i for i in self.sources if i['direct'] == False]
-        try:filter += [i for i in self.sources if i['content'] == 'live']
-        except:pass
+        #try:filter += [i for i in self.sources if i['content'] == 'live']
+        #except:pass
 
         self.sources = filter
 
         filter = []
         for d in self.debridDict: filter += [dict(i.items() + [('debrid', d)]) for i in self.sources if i['source'].lower() in self.debridDict[d]]
         for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host and 'debridonly' not in i]
-        filter += [i for i in self.sources if i['direct'] == True]
+        filter += [i for i in self.sources if i['direct'] == True and not i['content'] == 'live']
+        try:filter += [i for i in self.sources if i['content'] == 'live']
+        except:pass
         self.sources = filter
 
         filter = []
@@ -811,9 +821,9 @@ class sources:
         if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and 'debrid' in i]
         if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and not 'debrid' in i]
         filter += [i for i in self.sources if i['quality'] == 'SD' and not 'debrid' in i]
-        if len(filter) < 15: filter += [i for i in self.sources if i['quality'] == 'SCR']
-        if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == 'CAM']
-        if len(filter) < 15:filter += [i for i in self.sources if i['quality'] == '']
+        if len(filter) < 25: filter += [i for i in self.sources if i['quality'] == 'SCR']
+        if len(filter) < 25:filter += [i for i in self.sources if i['quality'] == 'CAM']
+        if len(filter) < 25:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
 
         for i in range(len(self.sources)):
@@ -823,7 +833,6 @@ class sources:
             p = re.sub('v\d*$', '', p)
 
             q = self.sources[i]['quality']
-            logger.debug('%s %s %s' % (s, p, q))
 
             try: f = (' | '.join(['[I]%s [/I]' % info.strip() for info in self.sources[i]['info'].split('|')]))
             except: f = ''
