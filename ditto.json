@@ -224,24 +224,6 @@
 		"quality": "HD",
 		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/01_ZEETV-HD-India-115x95.png.jpg"
 	},
-	"Zee Phhp": {
-		"url": "http://origin.dittotv.com/livetv/zee-phhp",
-		"enabled": "true",
-		"direct": "false",
-		"source": "ditto",
-		"provider": "ditto",
-		"quality": "HD",
-		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/Zee_PHHP_115x95.png.jpg"
-	},
-	"Zee Mpcg": {
-		"url": "http://origin.dittotv.com/livetv/zee-mpcg",
-		"enabled": "true",
-		"direct": "false",
-		"source": "ditto",
-		"provider": "ditto",
-		"quality": "HD",
-		"icon": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/http://akamai.dittotv.vidz.zeecdn.com/secure/draco/Shows/Ditto_tv_optimised_logos/115_optimized/MPCG_115x95.png.jpg"
-	},
 	"Zee Tamil": {
 		"url": "http://origin.dittotv.com/livetv/zee-tamil",
 		"enabled": "true",

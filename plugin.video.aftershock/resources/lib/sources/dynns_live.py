@@ -95,12 +95,13 @@ class source:
                         json.dump(channelList, outfile)
 
             fileFetcher = FileFetcher(self.fileName,control.addon)
-            if fileFetcher.fetchFile() < 0:
+            retValue = fileFetcher.fetchFile()
+            if retValue < 0 :
                 raise Exception()
 
             liveParser = LiveParser(self.fileName, control.addon)
             self.list = liveParser.parseFile()
-            return self.list
+            return (retValue, self.list)
         except:
             import traceback
             traceback.print_exc()

@@ -29,8 +29,6 @@ from resources.lib.libraries.liveParser import  *
 
 class source:
     def __init__(self):
-        self.live_link = base64.b64decode('aHR0cHM6Ly9vZmZzaG9yZWdpdC5jb20vdmluZWVndS9hZnRlcnNob2NrLXJlcG8vbGl2ZXN0cmVhbXMuanNvbg==')
-        self.now = datetime.datetime.now()
         self.fileName = ''
         self.list = []
 
@@ -38,16 +36,17 @@ class source:
         try :
             logger.debug('json local : %s' % control.setting('livelocal'), __name__)
             if control.setting('livelocal') == 'true':
-                dataPath = control.dataPath
-                filename = 'static_wip.json'
+                self.filename = 'static_wip.json'
             else :
-                fileName = 'static.json'
-                fileFetcher = FileFetcher(fileName, control.addon)
-                if fileFetcher.fetchFile() < 0:
-                    raise Exception ()
+                self.fileName = 'static.json'
 
-                liveParser = LiveParser(fileName, control.addon)
-                self.list = liveParser.parseFile()
-            return self.list
+            fileFetcher = FileFetcher(self.fileName, control.addon)
+            retValue = fileFetcher.fetchFile()
+            if retValue < 0 :
+                raise Exception()
+
+            liveParser = LiveParser(self.fileName, control.addon)
+            self.list = liveParser.parseFile()
+            return (retValue, self.list)
         except:
             pass

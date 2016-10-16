@@ -210,6 +210,14 @@ def openSettings(query=None, id=addonInfo('id')):
     except:
         return
 
+def delete(fileName):
+    try :
+        filePath = os.path.join(dataPath, fileName)
+        if xbmcvfs.exists(filePath):
+            xbmcvfs.delete(filePath)
+        return '1'
+    except:
+        return '1'
 
 def resetSettings(forceReset, version):
     try :

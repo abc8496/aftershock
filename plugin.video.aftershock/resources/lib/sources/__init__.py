@@ -152,7 +152,7 @@ class sources:
 
             try :
                 if content == 'live':
-                    select = '1'
+                    select = 2
                     meta = self.sources[0]['meta']
                     logger.debug('Content is live hence setting select = 1')
             except:
@@ -530,15 +530,32 @@ class sources:
         except:
             pass
 
-        try:
-            sources = []
-            dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
-            for row in dbcur:
-                match = row
-                t1 = int(re.sub('[^0-9]', '', str(match[5])))
-                t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
-                update = abs(t2 - t1) > 336
-                if update == False:
+        retValue, sources = call.getLiveSource()
+
+        if retValue == 1:
+            try:
+                logger.debug('Updated file download from internet', __name__)
+                dbcur.execute("DELETE FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
+                dbcon.commit()
+
+                idx = 0
+                for item in sources:
+                    item['name'] = cleantitle.live(item['name'])
+                    poster = self.getLivePoster(item['name'])
+                    if not poster == None :
+                        item['poster'] = poster
+
+                    dbcur.execute("INSERT INTO rel_live Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                    idx = idx + 1
+                    dbcon.commit()
+            except:
+                pass
+        elif retValue == 0:
+            try:
+                sources = []
+                dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
+                for row in dbcur:
+                    match = row
                     logger.debug('Fetched sources from cache for [%s]'% name, call.__class__)
                     sources = json.loads(match[4])
                     sources['content'] = 'live'
@@ -546,72 +563,27 @@ class sources:
                     meta = {"poster":poster, "iconImage":poster, 'thumb': poster}
                     sources['meta'] = json.dumps(meta)
                     self.sources.append(sources)
-                else:
-                    raise Exception()
-            if update == False:
-                return self.sources
-        except:
-            logger.debug('Source from cache not found for [%s]'% name, call.__class__)
-            pass
+                    return self.sources
+            except:
+                logger.debug('Source from cache not found for [%s]'% name, call.__class__)
+                pass
+
         try:
             sources = []
-            try:
-                # check if the source site needs to be refreshed
+            if name == None or name == '' :
                 dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
-                match = dbcur.fetchone()
-                t1 = int(re.sub('[^0-9]', '', str(match[5])))
-                t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
-                update = abs(t2 - t1) > 336
-            except:
-                update = True
-
-            if update == False:
-                sources == None
-                logger.debug('No Update required ', call.__class__)
+                for row in dbcur:
+                    match = row[4]
+                    self.sources.append(json.loads(match))
+                logger.debug('Fetched Live sources : %s' % len(self.sources), call.__class__)
             else :
-               logger.debug('Fetching Live source ', call.__class__)
-               sources = call.getLiveSource()
-
-               dbcur.execute("DELETE FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
-               dbcon.commit()
-
-            #logger.debug('source %s' % sources, call.__class__)
-
-            if sources == None and not name == None:
-                raise Exception('No Sources Found')
-                sources = []
-            elif not name == None:
-                logger.debug('Fetched Live sources : %s' % len(sources), call.__class__)
-            idx = 0
-
-            for item in sources:
-                item['name'] = cleantitle.live(item['name'])
-                poster = self.getLivePoster(item['name'])
-                if not poster == None :
-                    item['poster'] = poster
-                dbcur.execute("INSERT INTO rel_live Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                dbcon.commit()
-                idx = idx + 1
-
-            try:
-                sources = []
-                if name == None or name == '' :
-                    dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
-                    for row in dbcur:
-                        match = row[4]
-                        self.sources.append(json.loads(match))
-                    logger.debug('Fetched Live sources : %s' % len(self.sources), call.__class__)
-                else :
-                    dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
-                    for row in dbcur:
-                        match = row
-                        sources = json.loads(match[4])
-                        sources['content'] = 'live'
-                        self.sources.append(sources)
-                return self.sources
-            except Exception as e:
-                logger.error('(%s) Exception processing posters from sources : %s' % (call.__class__, e.args))
-                pass
+                dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
+                for row in dbcur:
+                    match = row
+                    sources = json.loads(match[4])
+                    sources['content'] = 'live'
+                    self.sources.append(sources)
+            return self.sources
         except Exception as e:
             logger.error('(%s) Exception Live sources : %s' % (call.__class__, e.args))
             pass

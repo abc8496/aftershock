@@ -71,7 +71,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zoom_tv_in.png"
 	},
-	"DANGAAL": {
+	"DANGAL": {
 		"url": "http://live1.dynns.com:8081/iptv/DANGAAL/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",
@@ -159,14 +159,6 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/ee/et_now.png"
 	},
-	"SEPL MOVIES HINDI": {
-		"url": "http://live1.dynns.com:8081/iptv/SEPLMoviesHindi/playlist.m3u8",
-		"direct": "false",
-		"source": "dynns",
-		"provider": "dynns",
-		"quality": "HD",
-		"icon": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/edcdaad57f7f4a4d3826728f009bcf24Seplemovies.gif"
-	},
 	"ZEE CINEMA HD": {
 		"url": "http://live1.dynns.com:8081/iptv/HDsonymax2/playlist.m3u8",
 		"direct": "false",
@@ -175,7 +167,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_cinema_in_hd.png"
 	},
-	"COLOR": {
+	"COLORS": {
 		"url": "http://live1.dynns.com:8081/iptv/ColorsEurope/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",
@@ -183,7 +175,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/cc/colors_in.png"
 	},
-	"SAB": {
+	"SAB TV": {
 		"url": "http://live1.dynns.com:8081/iptv/sabtv/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",
@@ -247,7 +239,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jhakaas.png"
 	},
-	"COLOR HD": {
+	"COLORS HD": {
 		"url": "http://live1.dynns.com:8081/iptv/ColorsHD/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",
@@ -319,7 +311,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/bb/b4u_plus_ae.png"
 	},
-	"SONY SAB HD": {
+	"SAB HD": {
 		"url": "http://live1.dynns.com:8081/iptv/HDSonySab/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",
@@ -383,7 +375,7 @@
 		"quality": "HD",
 		"icon": "http://www.lyngsat-logo.com/logo/tv/pp/pogo.png"
 	},
-	"SAB IND": {
+	"SAB TV": {
 		"url": "http://live1.dynns.com:8081/iptv/sabtvind/playlist.m3u8",
 		"direct": "false",
 		"source": "dynns",

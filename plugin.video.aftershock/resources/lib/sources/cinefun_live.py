@@ -53,12 +53,13 @@ class source:
                     json.dump(channelList, outfile)
 
             fileFetcher = FileFetcher(self.fileName,control.addon)
-            if fileFetcher.fetchFile() < 0:
+            retValue = fileFetcher.fetchFile()
+            if retValue < 0 :
                 raise Exception()
 
             liveParser = LiveParser(self.fileName, control.addon)
             self.list = liveParser.parseFile()
-            return self.list
+            return (retValue, self.list)
         except:
             import traceback
             traceback.print_exc()
@@ -77,7 +78,7 @@ class source:
                 u = links[0]['PanasonicURL']
             url = "%s|%s" % (u, 'User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)')
             logger.debug('RESOLVED URL [%s]' % url, __name__)
-            return url
+            return [url]
         except Exception as e:
             logger.error(e)
             return False

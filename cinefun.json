@@ -1,5 +1,5 @@
 {
-	"Enterr10 Movies": {
+	"Enterr10": {
 		"url": "218",
 		"direct": "false",
 		"source": "cinefun",
@@ -7,7 +7,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/Enterr10_Movies.jpg"
 	},
-	"Sony Set Max HD (Local Time)": {
+	"Set Max HD": {
 		"url": "105465",
 		"direct": "false",
 		"source": "cinefun",
@@ -31,7 +31,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/ZeeCinemaHD(Local)_3124.jpg"
 	},
-	"Life OK HD (Local Time)": {
+	"Life OK HD": {
 		"url": "112361",
 		"direct": "false",
 		"source": "cinefun",
@@ -55,15 +55,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/DD_National_320x180.jpg"
 	},
-	"Manoranjan Movies": {
-		"url": "221",
-		"direct": "false",
-		"source": "cinefun",
-		"provider": "cinefun",
-		"quality": "HD",
-		"icon": "https://cinefuntv.com/files/content/Manoranjan_Movies.png"
-	},
-	"Sony Entertainment HD (Local Time)": {
+	"Sony Entertainment HD": {
 		"url": "103377",
 		"direct": "false",
 		"source": "cinefun",
@@ -127,7 +119,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/music_express_320x180.jpg"
 	},
-	"And TV HD (Local Time)": {
+	"And TV HD": {
 		"url": "105454",
 		"direct": "false",
 		"source": "cinefun",
@@ -175,21 +167,13 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/ABP_News.jpg"
 	},
-	"Colors UK": {
+	"Colors": {
 		"url": "235",
 		"direct": "false",
 		"source": "cinefun",
 		"provider": "cinefun",
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/Colors_New_Logo_320x180.jpg"
-	},
-	"Mastiii": {
-		"url": "62266",
-		"direct": "false",
-		"source": "cinefun",
-		"provider": "cinefun",
-		"quality": "HD",
-		"icon": "https://cinefuntv.com/files/content/Mastiii_channel_320x180.jpg"
 	},
 	"News18": {
 		"url": "244",
@@ -223,7 +207,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/Dangal.jpg"
 	},
-	"Sony Set Max HD": {
+	"Set Max HD": {
 		"url": "97898",
 		"direct": "false",
 		"source": "cinefun",
