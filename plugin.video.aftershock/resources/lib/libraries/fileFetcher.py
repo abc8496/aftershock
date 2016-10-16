@@ -28,6 +28,7 @@ import os
 import urllib2
 import datetime
 import zlib
+import client
 
 import control, logger
 
@@ -64,6 +65,7 @@ class FileFetcher(object):
             self.fileType = self.TYPE_DEFAULT
             self.fileUrl = MAIN_URL + fileName
             self.filePath = os.path.join(self.basePath, fileName)
+            self.fileName = fileName
 
         # make sure the folder is actually there already!
         if not os.path.exists(self.basePath):
@@ -87,7 +89,7 @@ class FileFetcher(object):
                     fetch = False
 
             if fetch:
-                tmpFile = os.path.join(self.basePath, 'tmp')
+                tmpFile = os.path.join(self.basePath, self.fileName + '_tmp')
                 if self.fileType == self.TYPE_REMOTE:
                     logger.debug('file is in remote location: %s' % self.fileUrl,__name__)
                     if not xbmcvfs.copy(self.fileUrl, tmpFile):
@@ -95,13 +97,16 @@ class FileFetcher(object):
                 else:
                     f = open(tmpFile, 'wb')
                     logger.debug('file is on the internet: %s' % self.fileUrl, __name__)
-                    tmpData = urllib2.urlopen(self.fileUrl)
-                    data = tmpData.read()
-                    if tmpData.info().get('content-encoding') == 'gzip':
-                        data = zlib.decompress(data, zlib.MAX_WBITS + 16)
+                    data = client.source(self.fileUrl)
+                    #logger.debug(data, __name__)
+                    #tmpData = urllib2.urlopen(self.fileUrl)
+                    #data = tmpData.read()
+                    #if tmpData.info().get('content-encoding') == 'gzip':
+                    #    data = zlib.decompress(data, zlib.MAX_WBITS + 16)
                     f.write(data)
                     f.close()
-                if os.path.getsize(tmpFile) > 20:
+                logger.debug('file %s size %s' % (self.fileName, os.path.getsize(tmpFile)), __name__)
+                if os.path.getsize(tmpFile) > 10:
                     if os.path.exists(self.filePath):
                         os.remove(self.filePath)
                     os.rename(tmpFile, self.filePath)
@@ -110,5 +115,7 @@ class FileFetcher(object):
                 else:
                     retVal = self.FETCH_ERROR
         except:
+            import traceback
+            traceback.print_exc()
             pass
         return retVal
