@@ -23,7 +23,7 @@
 		"quality": "HD",
 		"icon": "https://cinefuntv.com/files/content/NDTV_24x7.jpg"
 	},
-	"Zee Cinema HD (Local Time)": {
+	"Zee Cinema HD": {
 		"url": "105466",
 		"direct": "false",
 		"source": "cinefun",

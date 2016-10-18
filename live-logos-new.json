@@ -1,115 +1,478 @@
-{"24 GHANTA":{"iconimage":"zee_24_ghanta.png", "enabled":"true"},
-"9X JALWA":{"iconimage":"9x_jalwa.png", "enabled":"true"},
-"9XJALWA":{"iconimage":"9x_jalwa.png", "enabled":"true"},
-"9X JHAKAAS":{"iconimage":"9x_jhakaas.png", "enabled":"true"},
-"9XJHAKAAS":{"iconimage":"9x_jhakaas.png", "enabled":"true"},
-"9XM":{"iconimage":"9x_music.png", "enabled":"true"},
-"9XTASHAN":{"iconimage":"9x_tashan.png", "enabled":"true"},
-"AAJ TAK DELHI":{"iconimage":"aaj_tak_delhi.png", "enabled":"true"},
-"AAJ TAK":{"iconimage":"aaj_tak.png", "enabled":"true"},
-"AAJ TAK TEZ":{"iconimage":"aaj_tak.png", "enabled":"true"},
-"AASTHA BHAJAN":{"iconimage":"aastha_in_bhajan.png", "enabled":"true"},
-"ABP NEWS":{"iconimage":"abp_news_in.png", "enabled":"true"},
-"AND TV HD":{"iconimage":"and_tv_in.png", "enabled":"true"},
-"AND TV":{"iconimage":"and_tv_in.png", "enabled":"true"},
-"B4U MOVIES":{"iconimage":"b4u_movies_in.png", "enabled":"true"},
-"B4U PLUS":{"iconimage":"b4u_plus_ae.png", "enabled":"true"},
-"BINDASS PLAY":{"iconimage":"bindass_play_in.png", "enabled":"true"},
-"CHARDIKLA TIME TV":{"iconimage":"chardikla_time_tv_in.png", "enabled":"true"},
-"CNBC TV18":{"iconimage":"cnbc_tv18.png", "enabled":"true"},
-"COLOR HD":{"iconimage":"colors_in.png", "enabled":"true"},
-"COLOR":{"iconimage":"colors_in.png", "enabled":"true"},
-"D2H CINEMA HD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/b9937273f2b46912b56d09c8faa7da23d2hcenima.jpg", "enabled":"true"},
-"DANGAAL":{"iconimage":"dangal_in.png", "enabled":"true"},
-"DIVYA TV":{"iconimage":"divya_tv_in.png", "enabled":"true"},
-"DUBBED":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4c4ea5258ef3fb3fb1fc48fee9b4408cdubbed.jpg", "enabled":"true"},
-"ENTERR 10":{"iconimage":"enterr_10.png", "enabled":"true"},
-"ETC":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10152.jpg", "enabled":"true"},
-"ETV NOW":{"iconimage":"et_now.png", "enabled":"true"},
-"FLOWERS TV":{"iconimage":"flowers_in.png", "enabled":"true"},
-"FOOD NETWORK":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/fa2431bf9d65058fe34e9713e32d60e6food.jpg", "enabled":"true"},
-"HIGH ALERT":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/0663a4ddceacb40b095eda264a85f15chigh.jpg", "enabled":"true"},
-"IBN 7":{"iconimage":"ibn7.png", "enabled":"true"},
-"IBN7":{"iconimage":"ibn7.png", "enabled":"true"},
-"IBN LOKMAT":{"iconimage":"ibn_lokmat_in.png", "enabled":"true"},
-"INDIA TODAY":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/2596a54cdbb555cfd09cd5d991da0f55india.jpg", "enabled":"true"},
-"INDIA TV":{"iconimage":"india_tv_in.png", "enabled":"true"},
-"JOO MUSIC":{"iconimage":"joo_music_pk.png", "enabled":"true"},
-"LIFE OK HD":{"iconimage":"life_ok_in.png", "enabled":"true"},
-"LIFE OK":{"iconimage":"life_ok_in.png", "enabled":"true"},
-"LIVING FOODZ":{"iconimage":"living_foodz_in.png", "enabled":"true"},
-"MAKKAL TV":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10193.jpg", "enabled":"true"},
-"MOD MOVIES HD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/74bba22728b6185eec06286af6bec36dmodmovies.jpg", "enabled":"true"},
-"M TUNES HD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/8dcf2420e78a64333a59674678fb283bMtune.png", "enabled":"true"},
-"MTUNES HD":{"iconimage":"m_tunes_hd.png", "enabled":"true"},
-"MTUNES":{"iconimage":"m_tunes_hd.png", "enabled":"true"},
-"MTV INDIA":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/6195f47dcff14b8f242aa333cdb2703emtvmusic.jpg", "enabled":"true"},
-"MUSIC INDIA":{"iconimage":"music_india.png", "enabled":"true"},
-"MUSIC XPRESS":{"iconimage":"music_xpress_in.png", "enabled":"true"},
-"NDTV":{"iconimage":"ndtv_india.png", "enabled":"true"},
-"NDTV PROFIT":{"iconimage":"ndtv_profit.png", "enabled":"true"},
-"POGO":{"iconimage":"pogo.png", "enabled":"true"},
-"RAJ DIGITAL PLUS":{"iconimage":"raj_digital_plus.png", "enabled":"true"},
-"RAJ MUSIC":{"iconimage":"raj_musix_in.png", "enabled":"true"},
-"RAJ MUSIX":{"iconimage":"raj_musix_in.png", "enabled":"true"},
-"RAJ MUSIX TELUGU":{"iconimage":"raj_musix_telugu.png", "enabled":"true"},
-"RAJ NEWS 24X7":{"iconimage":"raj_news_24x7.png", "enabled":"true"},
-"RAJ NEWS KANNADA":{"iconimage":"raj_news_kannada.png", "enabled":"true"},
-"RAJ NEWS MALAYALAM":{"iconimage":"raj_news_malayalam.png", "enabled":"true"},
-"RAJ NEWS TELUGU":{"iconimage":"raj_news_telugu.png", "enabled":"true"},
-"RAJ TV":{"iconimage":"raj_tv.png", "enabled":"true"},
-"RISHTEY":{"iconimage":"rishtey_in_asia.png", "enabled":"true"},
-"SAB":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/789ba2ae4d335e8a2ad283a3f7effcedsonysab.jpg", "enabled":"true"},
-"SAB IND":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/75df63609809c7a2052fdffe5c00a84esonysab.jpg", "enabled":"true"},
-"SEPL MOVIES HINDI":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/edcdaad57f7f4a4d3826728f009bcf24Seplemovies.gif", "enabled":"true"},
-"SET MAX":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/99cad265a1768cc2dd013f0e740300aesonymax.png", "enabled":"true"},
-"SONYD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/d69768b3da745b77e82cdbddcc8bac98sonyAUD.jpg", "enabled":"true"},
-"SONY HD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4a3fd911279cd8bc597fa13222ef83besonyHd.jpg", "enabled":"true"},
-"SONY SAB HD":{"iconimage":"sony_sab_tv_in.png", "enabled":"true"},
-"STAR GOLD HD":{"iconimage":"star_gold_hk_hd.png", "enabled":"true"},
-"STAR GOLD":{"iconimage":"star_gold_hk.png", "enabled":"true"},
-"STAR IND":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/154f596a0e4aec4cf23ee4b76ae3d34aStarGold.jpg", "enabled":"true"},
-"STAR MOVIES":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/043ab21fc5a1607b381ac3896176dac6star.jpg", "enabled":"true"},
-"STAR PLUS":{"iconimage":"star_plus_hk.png", "enabled":"true"},
-"STAR PLUS IND":{"iconimage":"star_plus_hk_hd.png", "enabled":"true"},
-"STAR SELECT HD":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/3bbfdde8842a5c44a0323518eec97cbestarslecthd.jpg", "enabled":"true"},
-"STAR WORLD HD":{"iconimage":"star_world_hk_hd.png", "enabled":"true"},
-"TIMES NOW":{"iconimage":"times_now.png", "enabled":"true"},
-"UMP MOVIES":{"iconimage":"ump_movies.jpg", "enabled":"true"},
-"UTV BINDASS":{"iconimage":"http://appimg.dynns.com/app_panelnew/prog_data/thumbs/84d2004bf28a2095230e8e14993d398dutvbindas.jpg", "enabled":"true"},
-"UTV MOVIES INT":{"iconimage":"utv_movies_international.png", "enabled":"true"},
-"VEVO MUSIC":{"iconimage":"http://koditips.com/wp-content/uploads/2015/06/VEVO-Android-App-For-Music.png", "enabled":"true"},
-"VISSA TV":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10167.jpg", "enabled":"true"},
-"WION":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10210.jpg", "enabled":"true"},
-"ZEE 24 TAAS":{"iconimage":"zee_24_taas.png", "enabled":"true"},
-"ZEE ACTION":{"iconimage":"zee_action.png", "enabled":"true"},
-"ZEE AFLAM":{"iconimage":"zee_aflam.png", "enabled":"true"},
-"ZEE ALWAN":{"iconimage":"zee_alwan_in.png", "enabled":"true"},
-"ZEE ANMMOL":{"iconimage":"zee_anmol_in.png", "enabled":"true"},
-"ZEE ANMOL":{"iconimage":"zee_anmol_in.png", "enabled":"true"},
-"ZEE BANGLA CINEMA":{"iconimage":"zee_bangla_cinema_in.png", "enabled":"true"},
-"ZEE BANGLA":{"iconimage":"zee_bangla.png", "enabled":"true"},
-"ZEE BUSINESS":{"iconimage":"zee_business.png", "enabled":"true"},
-"ZEE CINEMA HD":{"iconimage":"zee_cinema_in_hd.png", "enabled":"true"},
-"ZEE CINEMA":{"iconimage":"zee_cinema_asia.png", "enabled":"true"},
-"ZEE CLASSIC":{"iconimage":"zee_classic_in.png", "enabled":"true"},
-"ZEE HD":{"iconimage":"zee_tv_in_hd.png", "enabled":"true"},
-"ZEE":{"iconimage":"zee_tv_in.png", "enabled":"true"},
-"ZEE KANNADA":{"iconimage":"zee_kannada.png", "enabled":"true"},
-"ZEE LIVING FOODZ":{"iconimage":"zee_living_in_asia.png", "enabled":"true"},
-"ZEE MARATHI":{"iconimage":"zee_marathi.png", "enabled":"true"},
-"ZEE NEWS":{"iconimage":"zee_news_in.png", "enabled":"true"},
-"ZEE SALAAM":{"iconimage":"zee_salaam.png", "enabled":"true"},
-"ZEE SMILE":{"iconimage":"zee_smile.png", "enabled":"true"},
-"ZEE TALKIES":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10011.jpg", "enabled":"true"},
-"ZEE TAMIL":{"iconimage":"http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10015.jpg", "enabled":"true"},
-"ZEE TELUGU":{"iconimage":"zee_telugu.png", "enabled":"true"},
-"ZEE TV HD":{"iconimage":"zee_tv_in_hd.png", "enabled":"true"},
-"ZEE TV":{"iconimage":"zee_tv_in.png", "enabled":"true"},
-"ZEE YUVA":{"iconimage":"zee_yuva_in.png", "enabled":"true"},
-"ZING":{"iconimage":"zee_zing_asia.png", "enabled":"true"},
-"ZING INDIA":{"iconimage":"zee_zing_asia.png", "enabled":"true"},
-"ZING TV":{"iconimage":"zee_zing_asia.png", "enabled":"true"},
-"ZLIVING":{"iconimage":"zee_living_in_asia.png", "enabled":"true"},
-"ZOOM":{"iconimage":"zoom_tv_in.png", "enabled":"true"}
+{
+  "24 GHANTA": {
+    "iconimage": "zee_24_ghanta.png",
+    "enabled": "true"
+  },
+  "9X JALWA": {
+    "iconimage": "9x_jalwa.png",
+    "enabled": "true"
+  },
+  "9X JHAKAAS": {
+    "iconimage": "9x_jhakaas.png",
+    "enabled": "true"
+  },
+  "9X M": {
+    "iconimage": "9x_music.png",
+    "enabled": "true"
+  },
+  "9X TASHAN": {
+    "iconimage": "9x_tashan.png",
+    "enabled": "true"
+  },
+  "AAJ TAK DELHI": {
+    "iconimage": "aaj_tak_delhi.png",
+    "enabled": "true"
+  },
+  "AAJ TAK": {
+    "iconimage": "aaj_tak.png",
+    "enabled": "true"
+  },
+  "AAJ TAK TEZ": {
+    "iconimage": "aaj_tak.png",
+    "enabled": "true"
+  },
+  "AASTHA TV": {
+    "iconimage": "aastha_in.png",
+    "enabled": "true"
+  },
+  "AASTHA BHAJAN": {
+    "iconimage": "aastha_in_bhajan.png",
+    "enabled": "true"
+  },
+  "ABP NEWS": {
+    "iconimage": "abp_news_in.png",
+    "enabled": "true"
+  },
+  "AND TV HD": {
+    "iconimage": "and_tv_in.png",
+    "enabled": "true"
+  },
+  "AND TV": {
+    "iconimage": "and_tv_in.png",
+    "enabled": "true"
+  },
+  "B4U MOVIES": {
+    "iconimage": "b4u_movies_in.png",
+    "enabled": "true"
+  },
+  "B4U PLUS": {
+    "iconimage": "b4u_plus_ae.png",
+    "enabled": "true"
+  },
+  "BINDASS PLAY": {
+    "iconimage": "bindass_play_in.png",
+    "enabled": "true"
+  },
+  "CHARDIKLA TIME TV": {
+    "iconimage": "chardikla_time_tv_in.png",
+    "enabled": "true"
+  },
+  "CHANNEL V": {
+    "iconimage": "channel_v_in.png",
+    "enabled": "true"
+  },
+  "CNBC TV18": {
+    "iconimage": "cnbc_tv18.png",
+    "enabled": "true"
+  },
+  "COLORS HD": {
+    "iconimage": "colors_in.png",
+    "enabled": "true"
+  },
+  "COLORS": {
+    "iconimage": "colors_in.png",
+    "enabled": "true"
+  },
+  "D2H CINEMA HD": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/b9937273f2b46912b56d09c8faa7da23d2hcenima.jpg",
+    "enabled": "true"
+  },
+  "DANGAL": {
+    "iconimage": "dangal_in.png",
+    "enabled": "true"
+  },
+  "DIVYA TV": {
+    "iconimage": "divya_tv_in.png",
+    "enabled": "true"
+  },
+  "DUBBED": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4c4ea5258ef3fb3fb1fc48fee9b4408cdubbed.jpg",
+    "enabled": "true"
+  },
+  "ENTERR 10": {
+    "iconimage": "enterr_10.png",
+    "enabled": "true"
+  },
+  "ETC": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10152.jpg",
+    "enabled": "true"
+  },
+  "ETV NOW": {
+    "iconimage": "et_now.png",
+    "enabled": "true"
+  },
+  "FLOWERS TV": {
+    "iconimage": "flowers_in.png",
+    "enabled": "true"
+  },
+  "FOOD NETWORK": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/fa2431bf9d65058fe34e9713e32d60e6food.jpg",
+    "enabled": "true"
+  },
+  "HIGH ALERT": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/0663a4ddceacb40b095eda264a85f15chigh.jpg",
+    "enabled": "true"
+  },
+  "IBN 7": {
+    "iconimage": "ibn7.png",
+    "enabled": "true"
+  },
+  "IBN LOKMAT": {
+    "iconimage": "ibn_lokmat_in.png",
+    "enabled": "true"
+  },
+  "INDIA 24X7": {
+    "iconimage": "india_24x7_in.png",
+    "enabled": "true"
+  },
+  "INDIA TODAY": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/2596a54cdbb555cfd09cd5d991da0f55india.jpg",
+    "enabled": "true"
+  },
+  "INDIA TV": {
+    "iconimage": "india_tv_in.png",
+    "enabled": "true"
+  },
+  "JOO MUSIC": {
+    "iconimage": "joo_music_pk.png",
+    "enabled": "true"
+  },
+  "LIFE OK HD": {
+    "iconimage": "life_ok_in.png",
+    "enabled": "true"
+  },
+  "LIFE OK": {
+    "iconimage": "life_ok_in.png",
+    "enabled": "true"
+  },
+  "LIVING FOODZ": {
+    "iconimage": "living_foodz_in.png",
+    "enabled": "true"
+  },
+  "MAKKAL TV": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10193.jpg",
+    "enabled": "true"
+  },
+  "MOD MOVIES HD": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/74bba22728b6185eec06286af6bec36dmodmovies.jpg",
+    "enabled": "true"
+  },
+  "M TUNES HD": {
+    "iconimage": "m_tunes_hd.png",
+    "enabled": "true"
+  },
+  "M TUNES": {
+    "iconimage": "m_tunes_hd.png",
+    "enabled": "true"
+  },
+  "MTV INDIA": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/6195f47dcff14b8f242aa333cdb2703emtvmusic.jpg",
+    "enabled": "true"
+  },
+  "MUSIC INDIA": {
+    "iconimage": "music_india.png",
+    "enabled": "true"
+  },
+  "MUSIC XPRESS": {
+    "iconimage": "music_xpress_in.png",
+    "enabled": "true"
+  },
+  "NDTV": {
+    "iconimage": "ndtv_india.png",
+    "enabled": "true"
+  },
+  "MOVIES OK": {
+    "iconimage": "movies_ok_in.png",
+    "enabled": "true"
+  },
+  "NDTV PROFIT": {
+    "iconimage": "ndtv_profit.png",
+    "enabled": "true"
+  },
+  "POGO": {
+    "iconimage": "pogo.png",
+    "enabled": "true"
+  },
+  "RAJ DIGITAL PLUS": {
+    "iconimage": "raj_digital_plus.png",
+    "enabled": "true"
+  },
+  "RAJ MUSIC": {
+    "iconimage": "raj_musix_in.png",
+    "enabled": "true"
+  },
+  "RAJ MUSIX": {
+    "iconimage": "raj_musix_in.png",
+    "enabled": "true"
+  },
+  "RAJ MUSIX TELUGU": {
+    "iconimage": "raj_musix_telugu.png",
+    "enabled": "true"
+  },
+  "RAJ NEWS 24X7": {
+    "iconimage": "raj_news_24x7.png",
+    "enabled": "true"
+  },
+  "RAJ NEWS KANNADA": {
+    "iconimage": "raj_news_kannada.png",
+    "enabled": "true"
+  },
+  "RAJ NEWS MALAYALAM": {
+    "iconimage": "raj_news_malayalam.png",
+    "enabled": "true"
+  },
+  "RAJ NEWS TELUGU": {
+    "iconimage": "raj_news_telugu.png",
+    "enabled": "true"
+  },
+  "RAJ TV": {
+    "iconimage": "raj_tv.png",
+    "enabled": "true"
+  },
+  "RISHTEY": {
+    "iconimage": "rishtey_in_asia.png",
+    "enabled": "true"
+  },
+  "SAB": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/789ba2ae4d335e8a2ad283a3f7effcedsonysab.jpg",
+    "enabled": "true"
+  },
+  "SAB IND": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/75df63609809c7a2052fdffe5c00a84esonysab.jpg",
+    "enabled": "true"
+  },
+  "SEPL MOVIES HINDI": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/edcdaad57f7f4a4d3826728f009bcf24Seplemovies.gif",
+    "enabled": "true"
+  },
+  "SET MAX": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/99cad265a1768cc2dd013f0e740300aesonymax.png",
+    "enabled": "true"
+  },
+  "SONYD": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/d69768b3da745b77e82cdbddcc8bac98sonyAUD.jpg",
+    "enabled": "true"
+  },
+  "SONY HD": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/4a3fd911279cd8bc597fa13222ef83besonyHd.jpg",
+    "enabled": "true"
+  },
+  "SONY SAB HD": {
+    "iconimage": "sony_sab_tv_in.png",
+    "enabled": "true"
+  },
+  "STAR GOLD HD": {
+    "iconimage": "star_gold_hk_hd.png",
+    "enabled": "true"
+  },
+  "STAR GOLD": {
+    "iconimage": "star_gold_hk.png",
+    "enabled": "true"
+  },
+  "STAR IND": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/154f596a0e4aec4cf23ee4b76ae3d34aStarGold.jpg",
+    "enabled": "true"
+  },
+  "STAR MOVIES": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/043ab21fc5a1607b381ac3896176dac6star.jpg",
+    "enabled": "true"
+  },
+  "STAR PLUS": {
+    "iconimage": "star_plus_hk.png",
+    "enabled": "true"
+  },
+  "STAR PLUS HD": {
+    "iconimage": "star_plus_hk_hd.png",
+    "enabled": "true"
+  },
+  "STAR PRAVAH": {
+    "iconimage": "star_pravah.png",
+    "enabled": "true"
+  },
+  "STAR PRAVAH": {
+    "iconimage": "star_utsav.png",
+    "enabled": "true"
+  },
+  "STAR SELECT HD": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/3bbfdde8842a5c44a0323518eec97cbestarslecthd.jpg",
+    "enabled": "true"
+  },
+  "STAR WORLD HD": {
+    "iconimage": "star_world_hk_hd.png",
+    "enabled": "true"
+  },
+  "TIMES NOW": {
+    "iconimage": "times_now.png",
+    "enabled": "true"
+  },
+  "UMP MOVIES": {
+    "iconimage": "ump_movies.jpg",
+    "enabled": "true"
+  },
+  "UTV BINDASS": {
+    "iconimage": "http://appimg.dynns.com/app_panelnew/prog_data/thumbs/84d2004bf28a2095230e8e14993d398dutvbindas.jpg",
+    "enabled": "true"
+  },
+  "UTV MOVIES INT": {
+    "iconimage": "utv_movies_international.png",
+    "enabled": "true"
+  },
+  "VEVO MUSIC": {
+    "iconimage": "http://koditips.com/wp-content/uploads/2015/06/VEVO-Android-App-For-Music.png",
+    "enabled": "true"
+  },
+  "VISSA TV": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10167.jpg",
+    "enabled": "true"
+  },
+  "WION": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10210.jpg",
+    "enabled": "true"
+  },
+  "ZEE 24 TAAS": {
+    "iconimage": "zee_24_taas.png",
+    "enabled": "true"
+  },
+  "ZEE ACTION": {
+    "iconimage": "zee_action.png",
+    "enabled": "true"
+  },
+  "ZEE AFLAM": {
+    "iconimage": "zee_aflam.png",
+    "enabled": "true"
+  },
+  "ZEE ALWAN": {
+    "iconimage": "zee_alwan_in.png",
+    "enabled": "true"
+  },
+  "ZEE ANMMOL": {
+    "iconimage": "zee_anmol_in.png",
+    "enabled": "true"
+  },
+  "ZEE ANMOL": {
+    "iconimage": "zee_anmol_in.png",
+    "enabled": "true"
+  },
+  "ZEE BANGLA CINEMA": {
+    "iconimage": "zee_bangla_cinema_in.png",
+    "enabled": "true"
+  },
+  "ZEE BANGLA": {
+    "iconimage": "zee_bangla.png",
+    "enabled": "true"
+  },
+  "ZEE BUSINESS": {
+    "iconimage": "zee_business.png",
+    "enabled": "true"
+  },
+  "ZEE CINEMA HD": {
+    "iconimage": "zee_cinema_in_hd.png",
+    "enabled": "true"
+  },
+  "ZEE CINEMA": {
+    "iconimage": "zee_cinema_asia.png",
+    "enabled": "true"
+  },
+  "ZEE CLASSIC": {
+    "iconimage": "zee_classic_in.png",
+    "enabled": "true"
+  },
+  "ZEE HD": {
+    "iconimage": "zee_tv_in_hd.png",
+    "enabled": "true"
+  },
+  "ZEE": {
+    "iconimage": "zee_tv_in.png",
+    "enabled": "true"
+  },
+  "ZEE KANNADA": {
+    "iconimage": "zee_kannada.png",
+    "enabled": "true"
+  },
+  "ZEE KALINGA NEWS": {
+    "iconimage": "zee_kalinga_in.png",
+    "enabled": "true"
+  },
+  "ZEE PURVAIYA": {
+    "iconimage": "zee_purvaiya_in.png",
+    "enabled": "true"
+  },
+  "ZEE RAJASTHAN NEWS": {
+    "iconimage": "zee_rajastan_news_in.png",
+    "enabled": "true"
+  },
+  "ZEE LIVING FOODZ": {
+    "iconimage": "zee_living_in_asia.png",
+    "enabled": "true"
+  },
+  "ZEE MARATHI": {
+    "iconimage": "zee_marathi.png",
+    "enabled": "true"
+  },
+  "ZEE NEWS": {
+    "iconimage": "zee_news_in.png",
+    "enabled": "true"
+  },
+  "ZEE SALAAM": {
+    "iconimage": "zee_salaam.png",
+    "enabled": "true"
+  },
+  "ZEE SMILE": {
+    "iconimage": "zee_smile.png",
+    "enabled": "true"
+  },
+  "ZEE TALKIES": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10011.jpg",
+    "enabled": "true"
+  },
+  "ZEE TAMIL": {
+    "iconimage": "http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/10015.jpg",
+    "enabled": "true"
+  },
+  "ZEE TELUGU": {
+    "iconimage": "zee_telugu.png",
+    "enabled": "true"
+  },
+  "ZEE TV HD": {
+    "iconimage": "zee_tv_in_hd.png",
+    "enabled": "true"
+  },
+  "ZEE TV": {
+    "iconimage": "zee_tv_in.png",
+    "enabled": "true"
+  },
+  "ZEE YUVA": {
+    "iconimage": "zee_yuva_in.png",
+    "enabled": "true"
+  },
+  "ZING": {
+    "iconimage": "zee_zing_asia.png",
+    "enabled": "true"
+  },
+  "ZING INDIA": {
+    "iconimage": "zee_zing_asia.png",
+    "enabled": "true"
+  },
+  "ZING TV": {
+    "iconimage": "zee_zing_asia.png",
+    "enabled": "true"
+  },
+  "Z LIVING": {
+    "iconimage": "zee_living_in_asia.png",
+    "enabled": "true"
+  },
+  "ZOOM": {
+    "iconimage": "zoom_tv_in.png",
+    "enabled": "true"
+  }
 }

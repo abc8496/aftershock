@@ -89,33 +89,6 @@
 		"quality": "HD",
 		"enabled": "true"
 	},
-	"Zee News": {
-		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_news_in.png",
-		"type": "IND",
-		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeenews/chunklist.m3u8",
-		"provider": "json",
-		"direct": "true",
-		"quality": "HD",
-		"enabled": "false"
-	},
-	"Zing TV": {
-		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_zing_asia.png",
-		"type": "IND",
-		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zing/playlist.m3u8",
-		"provider": "json",
-		"direct": "true",
-		"quality": "HD",
-		"enabled": "false"
-	},
-	"Zee Smile": {
-		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_smile.png",
-		"type": "IND",
-		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeesmile/chunklist.m3u8",
-		"provider": "json",
-		"direct": "true",
-		"quality": "HD",
-		"enabled": "false"
-	},
 	"Aaj Tak Tez": {
 		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
 		"type": "IND",
@@ -134,22 +107,67 @@
 		"quality": "HD",
 		"enabled": "true"
 	},
-	"Zee Cinema": {
-		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_cinema_in_hd.png",
+	"Life OK HD": {
+		"icon": "",
 		"type": "IND",
-		"url": "http://stream.zliving.online/zeecinema/index.m3u8",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Life_OK_HD_hs.smil/.m3u8",
 		"provider": "json",
 		"direct": "true",
 		"quality": "HD",
-		"enabled": "false"
+		"enabled": "true"
 	},
-	"Zee TV": {
-		"icon": "http://www.lyngsat-logo.com/logo/tv/zz/zee_tv_in_hd.png",
+	"Movies OK": {
+		"icon": "",
 		"type": "IND",
-		"url": "http://zeefamily-i.akamaihd.net/hls/live/227854/zeetvhdus2243/playlist.m3u8",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Movies_OK_hs.smil/.m3u8",
 		"provider": "json",
 		"direct": "true",
 		"quality": "HD",
-		"enabled": "false"
+		"enabled": "true"
+	},
+	"Channel V": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Channel_V_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Plus HD": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Plus_HD_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Gold HD": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Gold_HD_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Utsav": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Utsav_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Pravah": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Pravah_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
 	}
 }
