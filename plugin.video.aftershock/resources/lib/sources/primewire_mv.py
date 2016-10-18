@@ -121,7 +121,7 @@ class source:
                     elif quality == 'quality_dvd': quality = 'SD'
                     else:  raise Exception()
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'Primewire', 'url': url, 'direct': False, 'debridonly': False})
+                    sources.append({'source': host, 'parts' : '1','quality': quality, 'provider': 'Primewire', 'url': url, 'direct': False, 'debridonly': False})
                 except:
                     pass
 

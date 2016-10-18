@@ -80,7 +80,7 @@ class source:
                 raise Exception()
 
             liveParser = LiveParser(self.fileName, control.addon)
-            self.list = liveParser.parseFile()
+            self.list = liveParser.parseFile(decode=True)
             return (retValue, self.list)
         except:
             import traceback
@@ -99,12 +99,12 @@ class source:
                 key = result['live']['key']
                 link = link.decode('base64')
                 key = key.decode('base64')
-
                 de = pyaes.new(key, pyaes.MODE_CBC, IV='\0'*16)
                 link = de.decrypt(link).replace('\x00', '').split('\0')[0]
                 link = re.sub('[^\s!-~]', '', link)
             except:link = client.parseDOM(result, "source", attrs={"type":"application/x-mpegurl"}, ret="src")[0]
-            url = '%s|Referer=%s' % (link, url)
+            logger.debug('URL : [%s]' % link, __name__)
+            url = '%s|Referer=%s' % (link.strip(), url)
             logger.debug('RESOLVED URL [%s]' % url, __name__)
             return url
         except :

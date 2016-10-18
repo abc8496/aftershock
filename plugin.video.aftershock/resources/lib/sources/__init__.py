@@ -63,7 +63,6 @@ class sources:
             infoMenu = control.lang(30502).encode('utf-8')
 
             downloads = True if control.setting('downloads') == 'true' and not control.setting('movie.download.path') == '' else False
-
             sysaddon = sys.argv[0]
             syshandle = int(sys.argv[1])
 
@@ -77,7 +76,6 @@ class sources:
             systitle = urllib.quote_plus(title.encode('utf-8'))
 
             sysname = urllib.quote_plus(name.encode('utf-8'))
-
 
             poster = meta['poster'] if 'poster' in meta else '0'
             banner = meta['banner'] if 'banner' in meta else '0'
@@ -99,7 +97,7 @@ class sources:
                     parts = int(items[i]['parts'])
                     logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label), __name__)
                 except:
-                    parts = 2
+                    parts = 1
 
                 label = items[i]['label']
 
@@ -113,10 +111,10 @@ class sources:
                 cm.append((control.lang(30504).encode('utf-8'), 'RunPlugin(%s?action=queueItem)' % sysaddon))
                 if (downloads == True and parts <= 1):
                     cm.append((control.lang(30505).encode('utf-8'), 'RunPlugin(%s?action=download&name=%s&image=%s&source=%s)' % (sysaddon, systitle, sysimage, syssource)))
-                cm.append((infoMenu, 'Action(Info)'))
-                cm.append((control.lang(30506).encode('utf-8'), 'RunPlugin(%s?action=refresh)' % sysaddon))
-                cm.append((control.lang(30507).encode('utf-8'), 'RunPlugin(%s?action=openSettings)' % sysaddon))
-                cm.append((control.lang(30508).encode('utf-8'), 'RunPlugin(%s?action=openPlaylist)' % sysaddon))
+                #cm.append((infoMenu, 'Action(Info)'))
+                #cm.append((control.lang(30506).encode('utf-8'), 'RunPlugin(%s?action=refresh)' % sysaddon))
+                #cm.append((control.lang(30507).encode('utf-8'), 'RunPlugin(%s?action=openSettings)' % sysaddon))
+                #cm.append((control.lang(30508).encode('utf-8'), 'RunPlugin(%s?action=openPlaylist)' % sysaddon))
                 item.setArt({'icon': thumb, 'thumb': thumb, 'poster': poster, 'tvshow.poster': poster, 'season.poster': poster, 'banner': banner, 'tvshow.banner': banner, 'season.banner': banner})
 
                 if not fanart == None: item.setProperty('Fanart_Image', fanart)
@@ -127,7 +125,8 @@ class sources:
                 control.addItem(handle=syshandle, url=sysurl, listitem=item, isFolder=False)
 
             control.directory(int(sys.argv[1]), cacheToDisc=True)
-        except:
+        except Exception as e:
+            logger.error(e.message)
             control.infoDialog(control.lang(30501).encode('utf-8'))
 
     def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select=None):
@@ -152,15 +151,15 @@ class sources:
 
             try :
                 if content == 'live':
-                    select = 2
+                    select = '2'
+                    title = name
                     meta = self.sources[0]['meta']
-                    logger.debug('Content is live hence setting select = 1')
-            except:
+                    logger.debug('Content is live hence setting Auto-Play')
+            except Exception as e:
+                logger.error(e.message)
                 pass
 
             items = self.sourcesFilter()
-            for item in items:
-                logger.debug(item)
             if len(items) > 0:
 
                 if select == '1' and 'plugin' in control.infoLabel('Container.PluginName'):
@@ -193,7 +192,7 @@ class sources:
 
             return url
         except Exception as e:
-            logger.error(e)
+            logger.error(e.message)
             control.infoDialog(control.lang(30501).encode('utf-8'))
 
     def playItem(self, content, title, source):
@@ -295,7 +294,8 @@ class sources:
 
             raise Exception()
 
-        except:
+        except Exception as e:
+            logger.error(e.message)
             control.infoDialog(control.lang(30501).encode('utf-8'))
             pass
 
@@ -383,6 +383,8 @@ class sources:
                 pass
 
         self.progressDialog.close()
+
+        for i in range(0, len(self.sources)): self.sources[i].update({'content': content})
 
         return self.sources
 
@@ -548,7 +550,8 @@ class sources:
                     dbcur.execute("INSERT INTO rel_live Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                     idx = idx + 1
                     dbcon.commit()
-            except:
+            except Exception as e:
+                logger.error(e.message)
                 pass
         elif retValue == 0:
             try:
@@ -631,12 +634,10 @@ class sources:
 
     def sourcesDialog(self, items):
         try:
-            sources = [{'label': '00 | [B]%s[/B]' % control.lang(30509).encode('utf-8').upper()}] + items
 
             labels = [i['label'] for i in items]
 
             select = control.selectDialog(labels)
-            if select == 0: return self.sourcesDirect()
             if select == -1: return 'close://'
 
             next = [y for x,y in enumerate(items) if x >= select]
@@ -715,9 +716,8 @@ class sources:
             try: progressDialog.close()
             except: pass
 
-        except:
-            import traceback
-            traceback.print_exc()
+        except Exception as e:
+            logger.error(e.message)
             try: progressDialog.close()
             except: pass
 
@@ -774,14 +774,12 @@ class sources:
         filter = []
         filter += [i for i in self.sources if i['direct'] == True]
         filter += [i for i in self.sources if i['direct'] == False]
-        #try:filter += [i for i in self.sources if i['content'] == 'live']
-        #except:pass
 
         self.sources = filter
 
         filter = []
         for d in self.debridDict: filter += [dict(i.items() + [('debrid', d)]) for i in self.sources if i['source'].lower() in self.debridDict[d]]
-        for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host and 'debridonly' not in i]
+        for host in self.hostDict : filter += [i for i in self.sources if i['direct'] == False and i['source'] in host and 'debridonly' not in i and not i['content'] == 'live']
         filter += [i for i in self.sources if i['direct'] == True and not i['content'] == 'live']
         try:filter += [i for i in self.sources if i['content'] == 'live']
         except:pass
@@ -836,6 +834,7 @@ class sources:
 
     def sourcesResolve(self, item):
         try:
+            logger.debug('selected url : %s' % item['url'])
             u = url = item['url']
             provider = item['provider'].lower()
 
@@ -869,7 +868,7 @@ class sources:
             headers = urllib.quote_plus(headers).replace('%3D', '=') if ' ' in headers else headers
             headers = dict(urlparse.parse_qsl(headers))
 
-            try :
+            if not type(url) is list:
                 if url.startswith('http') and '.m3u8' in url:
                     result = client.request(url.split('|')[0], headers=headers, output='geturl', timeout='20')
                     if result == None: raise Exception()
@@ -877,13 +876,10 @@ class sources:
                 elif url.startswith('http'):
                     result = client.request(url.split('|')[0], headers=headers, output='chunk', timeout='20')
                     if result == None: raise Exception()
-            except:
-                import traceback
-                traceback.print_exc()
-                pass
             self.url = url
             return url
-        except:
+        except Exception as e:
+            logger.error(e.message)
             return
 
     def getResolverList(self):

@@ -111,7 +111,7 @@ class source:
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'Movie25', 'url': url, 'direct': False, 'debridonly': False})
+                    sources.append({'source': host, 'parts' : '1','quality': quality, 'provider': 'Movie25', 'url': url, 'direct': False, 'debridonly': False})
                 except:
                     pass
             logger.debug('SOURCES [%s]' % sources, __name__)

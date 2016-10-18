@@ -100,7 +100,7 @@ class source:
                 raise Exception()
 
             liveParser = LiveParser(self.fileName, control.addon)
-            self.list = liveParser.parseFile()
+            self.list = liveParser.parseFile(decode=True)
             return (retValue, self.list)
         except:
             import traceback

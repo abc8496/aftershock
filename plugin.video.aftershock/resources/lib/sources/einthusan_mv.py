@@ -87,7 +87,7 @@ class source:
             url = 'http://cdn.einthusan.com/geturl/%s/hd/%s/' % (url, ip)
             url = client.request(url, referer=referer)
 
-            sources.append({'source': 'einthusan', 'quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
+            sources.append({'source': 'einthusan', 'parts' : '1','quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
             logger.debug('SOURCES [%s]' % sources, __name__)
             return sources
         except:

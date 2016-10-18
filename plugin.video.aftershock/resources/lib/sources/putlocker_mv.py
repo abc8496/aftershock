@@ -115,7 +115,7 @@ class source:
                 try: links += [{'source': 'gvideo', 'quality': directstream.googletag(i)[0]['quality'], 'url': i, 'direct': True}]
                 except: pass
 
-            links += [{'source': 'openload.co', 'quality': 'SD', 'url': i, 'direct': False} for i in r if 'openload.co' in i]
+            links += [{'source': 'openload.co', 'parts' : '1','quality': 'SD', 'url': i, 'direct': False} for i in r if 'openload.co' in i]
 
             for i in links: sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url'], 'direct': i['direct'], 'debridonly': False})
 

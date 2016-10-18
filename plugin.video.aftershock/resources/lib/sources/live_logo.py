@@ -23,11 +23,11 @@ import datetime, base64, os, json
 from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.libraries import logger
+from resources.lib.libraries.fileFetcher import *
 
 class source:
     def __init__(self):
-        self.live_link = base64.b64decode('aHR0cHM6Ly9vZmZzaG9yZWdpdC5jb20vdmluZWVndS9hZnRlcnNob2NrLXJlcG8vbGl2ZS1sb2dvcy1uZXcuanNvbg==')
-        self.now = datetime.datetime.now()
+        self.fileName = None
         self.list = {}
 
     def getLivePosters(self):
@@ -36,13 +36,22 @@ class source:
             artPath = control.logoPath()
 
             if control.setting('livelocal') == 'true':
-                dataPath = control.dataPath
-                filename = os.path.join(dataPath, 'live-logos-new.json')
-                filename = open(filename)
-                result = filename.read()
-                filename.close()
+                self.fileName = 'live-logos-new.json'
             else :
-                result = client.request(self.live_link)
+                self.fileName = 'live-logos-new.json'
+
+            fileFetcher = FileFetcher(self.fileName, control.addon)
+
+            retValue = fileFetcher.fetchFile()
+            if retValue < 0 :
+                raise Exception()
+
+            filePath = os.path.join(control.dataPath, self.fileName)
+            file = open(filePath)
+            result = file.read()
+            file.close()
+
+            result = base64.urlsafe_b64decode(result)
 
             channels = json.loads(result)
 

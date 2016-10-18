@@ -157,7 +157,6 @@ class TestingLive(unittest.TestCase):
         sourceurl = call.getLiveSource(generateJSON)
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
 
-    @unittest.skip("Working")
     def test_json(self):
         call = json_live.source()
         self.source(call, False)

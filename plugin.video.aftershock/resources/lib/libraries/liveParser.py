@@ -15,8 +15,8 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
-import os
-import control, json, cleantitle
+import os, base64
+import control, json, cleantitle, logger
 
 
 class LiveParser(object):
@@ -27,11 +27,15 @@ class LiveParser(object):
         self.filePath = os.path.join(self.basePath, fileName)
         return
 
-    def parseFile(self):
+    def parseFile(self, decode=True):
         try :
             filename = open(self.filePath)
             result = filename.read()
             filename.close()
+            if decode:
+                try : result = base64.urlsafe_b64decode(result)
+                except : pass
+
             channels = json.loads(result)
 
             channelNames = channels.keys()

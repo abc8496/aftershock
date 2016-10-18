@@ -86,7 +86,7 @@ class movies:
             if idx == True: self.movieDirectory(self.list, lang=lang)
             return self.list
         except Exception as e:
-            logger.error(e)
+            logger.error(e.message)
             pass
     def imdb_list(self, url):
         try:
@@ -298,7 +298,6 @@ class movies:
 
             #url = self.search_link % ('%s', urllib.quote_plus(self.query))
             url = self.search_link % (urllib.quote_plus(self.query))
-            logger.debug('URL : %s' % url, self.__class__)
             self.list = cache.get(self.imdb_list, 0, url)
 
             self.worker()
@@ -370,7 +369,6 @@ class movies:
         self.meta = []
         total = len(self.list)
         for i in range(0, total): self.list[i].update({'metacache': False})
-        self.list = metacache.fetchImdb(self.list)
         self.list = metacache.fetch(self.list, self.info_lang)
 
         itemsPerPage = 25
@@ -380,8 +378,6 @@ class movies:
                 if i <= total: threads.append(workers.Thread(self.super_info, i))
             [i.start() for i in threads]
             [i.join() for i in threads]
-
-        metacache.insertImdb(self.list)
 
         if len(self.meta) > 0: metacache.insert(self.meta)
 

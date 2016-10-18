@@ -96,7 +96,7 @@ class source:
                     url += [{'url': i[0], 'quality': 'HD'} for i in result if '720' in i[1]]
 
                     for i in url:
-                        sources.append({'source': 'gvideo', 'quality': i['quality'], 'provider': 'Pubfilm', 'url': i['url'], 'direct': True, 'debridonly': False})
+                        sources.append({'source': 'gvideo', 'parts' : '1','quality': i['quality'], 'provider': 'Pubfilm', 'url': i['url'], 'direct': True, 'debridonly': False})
                 except:
                     pass
             logger.debug('SOURCES URL %s' % sources, __name__)

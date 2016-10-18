@@ -156,15 +156,19 @@ class source:
                 if type(url) is list:
                     url = url[0]
                 if "Online" not in name: continue
-                name = re.compile('.+? ([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
+                name = name.replace(title, '')
+                name = re.compile('([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
                 name = name.strip()
                 episodes.append({'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'desirulez_mv_tv', 'tvshowurl':tvshowurl})
 
             next = client.parseDOM(rawResult, "span", attrs={"class":"prev_next"})
             next = client.parseDOM(next, "a", attrs={"rel":"next"}, ret="href")[0]
             episodes[0].update({'next':next})
+
             return episodes
         except:
+            import traceback
+            traceback.print_exc()
             return episodes
 
     def get_episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
@@ -197,7 +201,7 @@ class source:
             if soup.has_key('div'):
                 soup = soup.findChild('div', recursive=False)
             urls = []
-            quality = 'SD'
+            quality = ''
             for child in soup.findChildren():
                 if (child.getText() == '') or ((child.name == 'font' or child.name == 'a') and re.search('DesiRulez', str(child.getText()),re.IGNORECASE)):
                     continue
@@ -216,17 +220,29 @@ class source:
                         host = client.host(urls[0])
                         url = "##".join(urls)
                         sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url, 'direct':False})
+                        quality = ''
                         urls = []
                     quality = child.getText()
-                    print 'QUALITY >>> %s' % quality
+                    logger.debug('QUALITY >>> %s' % quality)
                     if '720p HD' in quality:
                         quality = 'HD'
-                    elif quality == None :
-                        quality = ''
+                    elif 'Scr' in quality :
+                        quality = 'SCR'
                     else :
-                        quality = 'SD'
+                        quality = ''
                 elif (child.name =='a') and not child.getText() == 'registration':
                     urls.append(str(child['href']))
+                    logger.debug('CHILD >>> %s' % child.getText())
+                    if quality == '' :
+                        quality = child.getText()
+                        if '720p HD' in quality:
+                            quality = 'HD'
+                        elif 'Scr' in quality :
+                            quality = 'SCR'
+                        elif 'Dvd' in quality :
+                            quality = 'SD'
+                        else :
+                            quality = ''
 
             if len(urls) > 0:
                 for i in range(0,len(urls)):
