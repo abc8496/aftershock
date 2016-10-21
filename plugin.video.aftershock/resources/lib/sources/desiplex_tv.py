@@ -87,9 +87,9 @@ class source:
                             rUrl = links["src"]
                             urls[j] = rUrl
                             host = client.host(urls[0])
-                            url = "##".join(urls)
-                            sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiPlex','url':url, 'direct':False})
-                        urls = []
+                    url = "##".join(urls)
+                    sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiPlex','url':url, 'direct':False})
+                    urls = []
                 except:
                     pass
             logger.debug('SOURCES [%s]' % sources, __name__)

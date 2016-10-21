@@ -1,5 +1,11 @@
 ------------------------
-Aftershock v4.1.1 ()
+Aftershock v4.2.1 (XX-Oct-2016)
+------------------------
+- [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
+- Updated Resolvers
+
+------------------------
+Aftershock v4.2.0 (18-Oct-2016)
 ------------------------
 - [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
 - Minor Bug Fixes

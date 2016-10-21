@@ -29,3 +29,5 @@ data/plugin.video.aftershock/livestreams.json
 data/plugin.video.aftershock/tmp
 data/plugin.video.aftershock/ditto.json
 data/plugin.video.aftershock/dynns.json
+data/plugin.video.aftershock/cinefun.json
+data/plugin.video.aftershock/static.json
