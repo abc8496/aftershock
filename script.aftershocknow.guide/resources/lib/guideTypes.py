@@ -33,6 +33,7 @@ import xml.etree.ElementTree as ET
 from fileFetcher import *
 from strings import *
 from operator import itemgetter
+import logger
 
 ADDON = xbmcaddon.Addon(id='script.aftershocknow.guide')
 
@@ -56,6 +57,7 @@ class GuideTypes(object):
             if fetcher.fetchFile() < 0:
                 xbmcgui.Dialog().ok(strings(FETCH_ERROR_TITLE), strings(FETCH_ERROR_LINE1), strings(FETCH_ERROR_LINE2))
 
+            print self.filePath
             self.guideParser.read(self.filePath)
             guideTypes = []
             defaultGuideId = 0  # fallback to the first guide in case no default is actually set in the ini file
@@ -70,11 +72,11 @@ class GuideTypes(object):
                     defaultGuideId = id
                 guideTypes.append((id, sortOrder, section, fName, default))
             self.guideTypes = sorted(guideTypes, key=itemgetter(self.GUIDE_SORT))
-            xbmc.log('[script.aftershocknow.guide] GuideTypes collected: %s' % str(self.guideTypes), xbmc.LOGDEBUG)
+            logger.debug('GuideTypes collected: %s' % str(self.guideTypes), __name__)
 
             ADDON.setSetting('xmltv.type', str(defaultGuideId))
         except:
-            print 'unable to parse guides.ini'
+            logger.error('unable to parse guides.ini', __name__)
 
     def SectionMap(self, section):
         dict1 = {}
@@ -83,7 +85,7 @@ class GuideTypes(object):
             try:
                 dict1[option] = self.guideParser.get(section, option)
                 if dict1[option] == -1:
-                    xbmc.log('[script.aftershocknow.guide] skip: %s' % option, xbmc.LOGDEBUG)
+                    logger.debug('skip: %s' % option, __name__)
             except:
                 print("exception on %s!" % option)
                 dict1[option] = None
@@ -96,17 +98,17 @@ class GuideTypes(object):
         try:
             value = guide[item]
         except IndexError:
-            xbmc.log('[script.aftershocknow.guide] DataItem with index %s not found' % item, xbmc.LOGDEBUG)
+            logger.debug('DataItem with index %s not found' % item, __name__)
         return value
 
 
     def getGuideById(self, id):
-        xbmc.log('[script.aftershocknow.guide] Finding Guide with ID: %s' % id, xbmc.LOGDEBUG)
+        logger.debug('Finding Guide with ID: %s' % id, __name__)
         ret = []
         for guide in self.guideTypes:
             if guide[self.GUIDE_ID] == int(id):
                 ret = guide
-                xbmc.log('[script.aftershocknow.guide] Found Guide with data: %s' % str(guide), xbmc.LOGDEBUG)
+                logger.debug('Found Guide with data: %s' % str(guide), __name__)
         return ret
 
 
@@ -137,7 +139,7 @@ if __name__ == '__main__':
             # This workaround is needed due to a Bug in the Kodi Android implementation
             # where setSetting() does not have any effect:
             #  #13913 - [android/python] addons can not save settings  [http://trac.kodi.tv/ticket/13913]
-            xbmc.log('[script.aftershocknow.guide] Running on ANDROID with Kodi v%s --> using workaround!' % str(ver), xbmc.LOGDEBUG)
+            logger.debug('Running on ANDROID with Kodi v%s --> using workaround!' % str(ver), __name__)
             filePath = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.aftershocknow.guide', 'settings.xml'))
             tree = ET.parse(filePath)
             root = tree.getroot()

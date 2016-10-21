@@ -28,6 +28,7 @@ import os
 import urllib2
 import datetime
 import zlib
+import logger
 
 if xbmc.getCondVisibility('System.HasAddon(plugin.video.aftershock)'):
     aftershock_type = xbmcaddon.Addon('plugin.video.aftershock')

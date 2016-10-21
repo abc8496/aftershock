@@ -855,7 +855,7 @@ class XMLTVSource(Source):
 
         self.needReset = False
         self.fetchError = False
-        self.xmltvType = 0
+        self.xmltvType = int(addon.getSetting('xmltv.type'))
         self.xmltvInterval = int(addon.getSetting('xmltv.interval'))
         self.logoSource = 0
         self.addonsType = 0
@@ -867,7 +867,19 @@ class XMLTVSource(Source):
 
         self.logoFolder = MAIN_URL + 'logos/'
 
-        self.xmltvFile = self.updateLocalFile(gType.getGuideDataItem(self.xmltvType, gType.GUIDE_FILE), addon)
+        if self.xmltvType == gType.CUSTOM_FILE_ID:
+            customFile = str(addon.getSetting('xmltv.file'))
+            if os.path.exists(customFile):
+                # uses local file provided by user!
+                xbmc.log('[script.ftvguide] Use local file: %s' % customFile, xbmc.LOGDEBUG)
+                self.xmltvFile = customFile
+            else:
+                # Probably a remote file
+                xbmc.log('[script.ftvguide] Use remote file: %s' % customFile, xbmc.LOGDEBUG)
+                self.updateLocalFile(customFile, addon)
+                self.xmltvFile = os.path.join(XMLTVSource.PLUGIN_DATA, customFile.split('/')[-1])
+        else:
+            self.xmltvFile = self.updateLocalFile(gType.getGuideDataItem(self.xmltvType, gType.GUIDE_FILE), addon)
 
         # make sure the ini file is fetched as well if necessary
         self.updateLocalFile(XMLTVSource.INI_FILE, addon, True)
