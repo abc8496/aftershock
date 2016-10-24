@@ -85,6 +85,8 @@ class source:
                         item = BeautifulSoup.BeautifulSoup(result, parseOnlyThese=BeautifulSoup.SoupStrainer("iframe"))
                         for links in item:
                             rUrl = links["src"]
+                            if rUrl.startswith('//'):
+                                rUrl='http:%s'%rUrl
                             urls[j] = rUrl
                             host = client.host(urls[0])
                     url = "##".join(urls)

@@ -856,9 +856,8 @@ class sources:
 
             if not d == '':
                 if type(url) is list:
-                    url = []
                     for tUrl in url:
-                        tUrl = debrid.resolver(url, d)
+                        tUrl = debrid.resolver(tUrl, d)
                         url.append(tUrl)
                 else:
                     url = debrid.resolver(url, d)

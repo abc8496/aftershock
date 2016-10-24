@@ -113,4 +113,5 @@ def info():
         , {'class': 'filmywap', 'host': ['storeinusa.com']}
         , {'class': 'ditto', 'host': ['dittotv.com']}
         , {'class': 'dynns', 'host': ['dynns.com']}
+        , {'class': 'dailymotion', 'host': ['dailymotion.com']}
     ]
