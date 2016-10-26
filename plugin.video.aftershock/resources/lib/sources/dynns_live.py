@@ -88,7 +88,7 @@ class source:
                         title = title.title()
                         poster = client.parseDOM(channel, "programImage")[0]
                         url = client.parseDOM(channel, "programURL")[0]
-                        channelList[title] ={'icon':poster,'url':url,'provider':'dynns','source':'dynns','direct':'false', 'quality':'HD'}
+                        channelList[title] ={'icon':poster,'url':url,'provider':'dynns','source':'dynns','direct':False, 'quality':'HD'}
 
                     filePath = os.path.join(control.dataPath, self.fileName)
                     with open(filePath, 'w') as outfile:

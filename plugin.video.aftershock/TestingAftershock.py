@@ -56,6 +56,9 @@ class TestingMovies(unittest.TestCase):
         self.source(call)
 
     def test_desihdmovies(self):
+        self.imdb = 'tt5165344'
+        self.title = 'Rustom'
+        self.year = '2016'
         call = desihdmovies_mv.source()
         self.source(call)
 
@@ -123,10 +126,16 @@ class TestingMovies(unittest.TestCase):
 
 
     def test_pubfilm(self):
+        self.imdb = 'tt4387040'
+        self.title = 'Airlift'
+        self.year = '2016'
         call = pubfilm_mv.source()
         self.source(call)
 
     def test_primewire(self):
+        self.imdb = 'tt5165344'
+        self.title = 'Rustom'
+        self.year = '2016'
         call = primewire_mv.source()
         self.source(call)
 
@@ -147,15 +156,17 @@ class TestingLive(unittest.TestCase):
     def test_json(self):
         call = json_live.source()
         self.source(call, False)
-    @unittest.skip("Working")
     def test_ditto(self):
         call = ditto_live.source()
+        self.source(call, False)
+    def test_cinefun(self):
+        call = cinefun_live.source()
         self.source(call, False)
     @unittest.skip("Working")
     def test_dittoGenerateJSON(self):
         call = ditto_live.source()
         self.source(call, True)
-
+    @unittest.skip("Working")
     def test_cinefunGenerateJSON(self):
         call = cinefun_live.source()
         self.source(call, True)

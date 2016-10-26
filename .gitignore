@@ -24,7 +24,7 @@
 *.iml
 .idea/vcs.xml
 *.db
-plugin.video.aftershock/resources/settings.xml.local
+settings.xml.local
 data/plugin.video.aftershock/livestreams.json
 data/plugin.video.aftershock/tmp
 data/plugin.video.aftershock/ditto.json

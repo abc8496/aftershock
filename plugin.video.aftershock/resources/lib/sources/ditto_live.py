@@ -68,7 +68,7 @@ class source:
                         continue
                     url = self.channel_link % url
                     poster = self.poster_link % str(logo)
-                    channelList[title] ={'icon':poster,'url':url,'provider':'ditto','source':'ditto','direct':'false', 'quality':'HD', 'enabled':'true'}
+                    channelList[title] ={'icon':poster,'url':url,'provider':'ditto','source':'ditto','direct':False, 'quality':'HD', 'enabled':'true'}
 
                 filePath = os.path.join(control.dataPath, self.fileName)
                 with open(filePath, 'w') as outfile:

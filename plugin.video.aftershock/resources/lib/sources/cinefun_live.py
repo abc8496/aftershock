@@ -46,7 +46,7 @@ class source:
                 channelList = {}
                 for channel in result:
                     title = channel['Title']
-                    channelList[title] ={'icon':channel['ThumbnailURL'],'url':channel['ContentId'],'provider':'cinefun','source':'cinefun','direct':'false', 'quality':'HD'}
+                    channelList[title] ={'icon':channel['ThumbnailURL'],'url':channel['ContentId'],'provider':'cinefun','source':'cinefun','direct':False, 'quality':'HD'}
 
                 filePath = os.path.join(control.dataPath, self.fileName)
                 with open(filePath, 'w') as outfile:
