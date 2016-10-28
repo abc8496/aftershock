@@ -91,6 +91,7 @@ class source:
 
     def get_sources(self, url):
         try:
+            logger.debug('Test')
             sources = []
 
             if url == None: return sources

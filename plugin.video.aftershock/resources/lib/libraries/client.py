@@ -57,12 +57,12 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
         else:
             headers['User-Agent'] = 'Apple-iPhone/701.341'
-        if 'referer' in headers:
+        if 'Referer' in headers:
             pass
         elif referer == None:
-            headers['referer'] = url
+            headers['Referer'] = url
         else:
-            headers['referer'] = referer
+            headers['Referer'] = referer
         if not 'Accept-Language' in headers:
             headers['Accept-Language'] = 'en-US'
         if 'cookie' in headers:
