@@ -1,1 +1,218 @@
-ew0KCSJFbnRlcnIxMCI6IHsNCgkJInVybCI6ICIyMTgiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L0VudGVycjEwX01vdmllcy5qcGciDQoJfSwNCgkiU2V0IE1heCBIRCI6IHsNCgkJInVybCI6ICIxMDU0NjUiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L1NvbnlTZXRNYXhIRF8xMDI3LmpwZyINCgl9LA0KCSJORFRWIDI0eDciOiB7DQoJCSJ1cmwiOiAiMjMyIiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9ORFRWXzI0eDcuanBnIg0KCX0sDQoJIlplZSBDaW5lbWEgSEQiOiB7DQoJCSJ1cmwiOiAiMTA1NDY2IiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9aZWVDaW5lbWFIRChMb2NhbClfMzEyNC5qcGciDQoJfSwNCgkiTGlmZSBPSyBIRCI6IHsNCgkJInVybCI6ICIxMTIzNjEiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L2xpZmVfb2tfaGRfbG9jYWwuanBnIg0KCX0sDQoJIlplZSBUViBIRCAoTG9jYWwgVGltZSkiOiB7DQoJCSJ1cmwiOiAiMTA0Mjk3IiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9aZWVUVkhEKExvY2FsVGltZSlfNTA0My5qcGciDQoJfSwNCgkiREQgTmF0aW9uYWwiOiB7DQoJCSJ1cmwiOiAiNjI1NDUiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L0REX05hdGlvbmFsXzMyMHgxODAuanBnIg0KCX0sDQoJIlNvbnkgRW50ZXJ0YWlubWVudCBIRCI6IHsNCgkJInVybCI6ICIxMDMzNzciLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L1NvbnlFbnRlcnRhaW5tZW50SERfMTUxNS5qcGciDQoJfSwNCgkiUmlzaHRleSBDaW5lcGxleCI6IHsNCgkJInVybCI6ICI1OTEwNyIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvY2luZXBsZXguanBnIg0KCX0sDQoJIlNvbnkgRW50ZXJ0YWlubWVudCBIRCI6IHsNCgkJInVybCI6ICI3MzgzNCIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvU29ueVRlc3RfMTA1OS5qcGciDQoJfSwNCgkiU0FCIFRWIjogew0KCQkidXJsIjogIjI0NjcyIiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9Tb255X1NhYi5wbmciDQoJfSwNCgkiQW5kIFRWIEhEIjogew0KCQkidXJsIjogIjk1NjE2IiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC8mX1RWLUxvZ29fMzIweDE4MC5qcGciDQoJfSwNCgkiQXN0aGEgVFYiOiB7DQoJCSJ1cmwiOiAiMTk3IiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9Bc3RoYV9UVi5qcGciDQoJfSwNCgkiRTI0Ijogew0KCQkidXJsIjogIjE4OCIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvRTI0LmpwZyINCgl9LA0KCSJNdXNpYyBYcHJlc3MiOiB7DQoJCSJ1cmwiOiAiNjIyNjkiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L211c2ljX2V4cHJlc3NfMzIweDE4MC5qcGciDQoJfSwNCgkiQW5kIFRWIEhEIjogew0KCQkidXJsIjogIjEwNTQ1NCIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvJlRWKExvY2FsVGltZSlfMjYwOC5qcGciDQoJfSwNCgkiWmVlIENpbmVtYSBIRCI6IHsNCgkJInVybCI6ICI5Nzg4OSIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvWmVlQ2luZW1hXzEwODMuanBnIg0KCX0sDQoJIkxpZmUgT0sgSEQiOiB7DQoJCSJ1cmwiOiAiMTEyMDExIiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9MaWZlT0tIRF8zMTQ0LmpwZyINCgl9LA0KCSJaZWUgVFYgSEQiOiB7DQoJCSJ1cmwiOiAiNzM4MzMiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L1plZVRWVGVzdF82OTc4LmpwZyINCgl9LA0KCSJSaXNodGV5IFVLIjogew0KCQkidXJsIjogIjI0MyIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvUmlzaHRleV9VSy5qcGciDQoJfSwNCgkiQUJQIE5ld3MiOiB7DQoJCSJ1cmwiOiAiMjI2IiwNCgkJImRpcmVjdCI6ICJmYWxzZSIsDQoJCSJzb3VyY2UiOiAiY2luZWZ1biIsDQoJCSJwcm92aWRlciI6ICJjaW5lZnVuIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiaWNvbiI6ICJodHRwczovL2NpbmVmdW50di5jb20vZmlsZXMvY29udGVudC9BQlBfTmV3cy5qcGciDQoJfSwNCgkiQ29sb3JzIjogew0KCQkidXJsIjogIjIzNSIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvQ29sb3JzX05ld19Mb2dvXzMyMHgxODAuanBnIg0KCX0sDQoJIk5ld3MxOCI6IHsNCgkJInVybCI6ICIyNDQiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L05ld3MxOF9sb2dvXzMyMHgxODAuanBnIg0KCX0sDQoJIkFhaiBUYWsgVUsiOiB7DQoJCSJ1cmwiOiAiMTU5NzIiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L0Fhal9UYWtfVUsucG5nIg0KCX0sDQoJIk11c2ljIEluZGlhIjogew0KCQkidXJsIjogIjIyNyIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvTXVzaWNfSW5kaWEuanBnIg0KCX0sDQoJIkRhbmdhbCI6IHsNCgkJInVybCI6ICIxOTgiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L0RhbmdhbC5qcGciDQoJfSwNCgkiU2V0IE1heCBIRCI6IHsNCgkJInVybCI6ICI5Nzg5OCIsDQoJCSJkaXJlY3QiOiAiZmFsc2UiLA0KCQkic291cmNlIjogImNpbmVmdW4iLA0KCQkicHJvdmlkZXIiOiAiY2luZWZ1biIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImljb24iOiAiaHR0cHM6Ly9jaW5lZnVudHYuY29tL2ZpbGVzL2NvbnRlbnQvU29ueVNldE1heF82MTk1LmpwZyINCgl9LA0KCSJNYWhhIE1vdmllcyI6IHsNCgkJInVybCI6ICIxOTYiLA0KCQkiZGlyZWN0IjogImZhbHNlIiwNCgkJInNvdXJjZSI6ICJjaW5lZnVuIiwNCgkJInByb3ZpZGVyIjogImNpbmVmdW4iLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJpY29uIjogImh0dHBzOi8vY2luZWZ1bnR2LmNvbS9maWxlcy9jb250ZW50L01haGFfTW92aWVzLmpwZyINCgl9DQp9
+{
+  "ABP News": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/ABP_News.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:abpnewsuk.stream/playlist.m3u8"
+  }, 
+  "Aaj Tak UK": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Aaj_Tak_UK.png", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:aajtakuk.stream/playlist.m3u8"
+  }, 
+  "And Tv HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/&_TV-Logo_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.156.234:1935/tcode1/smil:andtv.smil/playlist.m3u8"
+  }, 
+  "Astha TV": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Astha_TV.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:asthatvuk.stream/playlist.m3u8"
+  }, 
+  "Colors UK": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Colors_New_Logo_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.30.228:1935/tcode2/smil:colorsuk.smil/playlist.m3u8"
+  }, 
+  "DD National": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/DD_National_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:ddnat.stream/playlist.m3u8"
+  }, 
+  "Dangal": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Dangal.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:dangal.stream/playlist.m3u8"
+  }, 
+  "E24": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/E24.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:e24.stream/playlist.m3u8"
+  }, 
+  "Enterr10 Movies": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Enterr10_Movies.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.30.228:1935/tcode2/smil:enter10_29776.smil/playlist.m3u8"
+  }, 
+  "Life OK HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/LifeOKHD_3144.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.31.158:1935/tcode1/smil:lifeokhd.smil/playlist.m3u8"
+  }, 
+  "Maha Movies": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Maha_Movies.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:mahamovie.stream/playlist.m3u8"
+  }, 
+  "Manoranjan Movies": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Manoranjan_Movies.png", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:manoranjan.stream/playlist.m3u8"
+  }, 
+  "Mastiii": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Mastiii_channel_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:mastii.stream/playlist.m3u8"
+  }, 
+  "Music India": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Music_India.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:musicindia.stream/playlist.m3u8"
+  }, 
+  "Music Xpress": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/music_express_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/lon1/mp4:xpress.stream/playlist.m3u8"
+  }, 
+  "NDTV 24x7": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/NDTV_24x7.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:ndtvuk.stream/playlist.m3u8"
+  }, 
+  "News18": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/News18_logo_320x180.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:news18uk.stream/playlist.m3u8"
+  }, 
+  "Rishtey Cineplex": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/cineplex.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:umpmoviesuk.stream/playlist.m3u8"
+  }, 
+  "Rishtey UK": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Rishtey_UK.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.30.228:1935/tcode2/smil:rishteyuk.smil/playlist.m3u8"
+  }, 
+  "SAB TV": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/Sony_Sab.png", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://195.154.46.92/pub1new/mp4:sabuk.stream/playlist.m3u8"
+  }, 
+  "Sony Entertainment HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/SonyTest_1059.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.31.158:1935/tcode2/smil:sonyhd.smil/playlist.m3u8"
+  }, 
+  "Sony Set Max HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/SonySetMax_6195.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.31.140:1935/tcode2/smil:setmax.smil/playlist.m3u8"
+  }, 
+  "Zee Cinema HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/ZeeCinema_1083.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.31.140:1935/tcode1/smil:zeecinema.smil/playlist.m3u8"
+  }, 
+  "Zee TV HD": {
+    "content": "live", 
+    "direct": false, 
+    "icon": "https://cinefuntv.com/files/content/ZeeTVTest_6978.jpg", 
+    "provider": "cinefun", 
+    "quality": "HD", 
+    "source": "cinefun", 
+    "url": "http://163.172.31.140:1935/tcode2/smil:zeetvhd.smil/playlist.m3u8"
+  }
+}

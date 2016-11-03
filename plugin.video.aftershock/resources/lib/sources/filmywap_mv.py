@@ -76,6 +76,9 @@ class source:
 
             result = re.compile('Download Full Movie In:(.+?)Download Movie into Parts').findall(result)
             links = client.parseDOM(result, name="td")
+            if len(links) == 0:
+                links = client.parseDOM(result, name="div", attrs={'class':'listed'})
+
 
             for link in links:
                 try: quality = client.parseDOM(link, 'span', attrs = {'class': 'quality_1'})[0].lower()

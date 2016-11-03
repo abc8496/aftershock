@@ -24,7 +24,12 @@ import control
 import traceback
 from resources.lib.libraries import cache
 
-def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='30', debug=False, compression=False, limit=None):
+class NoRedirection(urllib2.HTTPErrorProcessor):
+    def http_response(self, request, response):
+        return response
+    https_response = http_response
+
+def request(url, close=True, error=False, proxy=None, post=None, headers=None, mobile=False, referer=None, cookie=None, output='', timeout='30', debug=False, compression=False, limit=None, allowredirect=True):
     try:
         handlers = []
         if not proxy == None:
@@ -36,6 +41,9 @@ def request(url, close=True, error=False, proxy=None, post=None, headers=None, m
             cookies = cookielib.LWPCookieJar()
             handlers += [urllib2.HTTPHandler(), urllib2.HTTPSHandler(), urllib2.HTTPCookieProcessor(cookies)]
             opener = urllib2.build_opener(*handlers)
+            opener = urllib2.install_opener(opener)
+        if allowredirect == False :
+            opener = urllib2.build_opener(NoRedirection)
             opener = urllib2.install_opener(opener)
         try:
             if sys.version_info < (2, 7, 9): raise Exception()

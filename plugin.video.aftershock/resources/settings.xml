@@ -49,6 +49,7 @@
 		<setting id="pubfilm" type="bool" label="PubFilm" default="true" />
 		<setting id="putlocker" type="bool" label="PutLocker" default="true" />
 		<setting id="rlsmovies" type="bool" label="RLSMovies" default="true" />
+		<setting id="swift" type="bool" label="Swift" default="true" />
 		<!--<setting id="uktvnow" type="bool" label="UKTVNow" visible="false" default="false" />-->
 		<setting id="ymovies" type="bool" label="YMovies" default="true" />
 		<setting id="yodesi" type="bool" label="YoDesi" default="true"/>

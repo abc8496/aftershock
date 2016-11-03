@@ -1,1 +1,173 @@
-ew0KCSJNIHR1bmVzIjogew0KCQkiaWNvbiI6ICJodHRwOi8vd3d3Lmx5bmdzYXQtbG9nby5jb20vbG9nby90di9tbS9tX3R1bmVzX2hkLnBuZyIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL2hsc2hpbmV4dHJhLWxoLmFrYW1haWhkLm5ldC9pL2FtczRfbXR1bmVzQDEyNDU3Mi9pbmRleF8xMTAwX2F2LWIubTN1OCIsDQoJCSJwcm92aWRlciI6ICJqc29uIiwNCgkJImRpcmVjdCI6ICJ0cnVlIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiZW5hYmxlZCI6ICJ0cnVlIg0KCX0sDQoJIjlYIE0iOiB7DQoJCSJpY29uIjogImh0dHA6Ly93d3cubHluZ3NhdC1sb2dvLmNvbS9sb2dvL3R2L251bS85eF9tdXNpYy5wbmciLA0KCQkidHlwZSI6ICJJTkQiLA0KCQkidXJsIjogImh0dHA6Ly9kMmNrazQydHJ3MjljeS5jbG91ZGZyb250Lm5ldC85eG1lZGlhL25ncnA6OXhtdXNpY19hbGwvcGxheWxpc3QubTN1OCIsDQoJCSJwcm92aWRlciI6ICJqc29uIiwNCgkJImRpcmVjdCI6ICJ0cnVlIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiZW5hYmxlZCI6ICJ0cnVlIg0KCX0sDQoJIjlYIFRhc2hhbiI6IHsNCgkJImljb24iOiAiaHR0cDovL3d3dy5seW5nc2F0LWxvZ28uY29tL2xvZ28vdHYvbnVtLzl4X3Rhc2hhbi5wbmciLA0KCQkidHlwZSI6ICJJTkQiLA0KCQkidXJsIjogImh0dHA6Ly9kMmNrazQydHJ3MjljeS5jbG91ZGZyb250Lm5ldC85eG1lZGlhL25ncnA6OXh0YXNoYW5fYWxsL3BsYXlsaXN0Lm0zdTgiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSI5WCBKYWx3YSI6IHsNCgkJImljb24iOiAiaHR0cDovL3d3dy5seW5nc2F0LWxvZ28uY29tL2xvZ28vdHYvbnVtLzl4X2phbHdhLnBuZyIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL2QyY2trNDJ0cncyOWN5LmNsb3VkZnJvbnQubmV0Lzl4bWVkaWEvbmdycDo5eGphbHdhX2FsbC9wbGF5bGlzdC5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiOVggSmhha2FhcyI6IHsNCgkJImljb24iOiAiaHR0cDovL3d3dy5seW5nc2F0LWxvZ28uY29tL2xvZ28vdHYvbnVtLzl4X2poYWthYXMucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vZDJja2s0MnRydzI5Y3kuY2xvdWRmcm9udC5uZXQvOXhtZWRpYS9uZ3JwOjl4amhha2Fhc19hbGwvcGxheWxpc3QubTN1OCIsDQoJCSJwcm92aWRlciI6ICJqc29uIiwNCgkJImRpcmVjdCI6ICJ0cnVlIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiZW5hYmxlZCI6ICJ0cnVlIg0KCX0sDQoJIklCTiA3Ijogew0KCQkiaWNvbiI6ICJodHRwOi8vd3d3Lmx5bmdzYXQtbG9nby5jb20vbG9nby90di9paS9pYm43LnBuZyIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL2libjdfaGxzLWxoLmFrYW1haWhkLm5ldC9pL2libjdfaGxzX25fMUAxNzQ5NTEvaW5kZXhfM19hdi1iLm0zdTg/c2Q9MTAmcGxheS1vbmx5PWJhY2t1cCZyZWJhc2U9b24iLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSJJbmRpYSBUViI6IHsNCgkJImljb24iOiAiaHR0cDovL3d3dy5seW5nc2F0LWxvZ28uY29tL2xvZ28vdHYvaWkvaW5kaWFfdHZfaW4ucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vaW5kaWF0dm5ld3MtbGguYWthbWFpaGQubmV0L2kvSVRWXzFAMTk5MjM3L21hc3Rlci5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiQ05CQyBUVjE4Ijogew0KCQkiaWNvbiI6ICJodHRwOi8vd3d3Lmx5bmdzYXQtbG9nby5jb20vbG9nby90di9jYy9jbmJjX3R2MTgucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJydHNwOi8vd2ViMTgubGl2ZS1zLmNkbi5iaXRncmF2aXR5LmNvbS9jZG4tbGl2ZS1iMy9fZGVmaW5zdF8vd2ViMTgvbGl2ZS9wdWIwOCIsDQoJCSJwcm92aWRlciI6ICJqc29uIiwNCgkJImRpcmVjdCI6ICJ0cnVlIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiZW5hYmxlZCI6ICJ0cnVlIg0KCX0sDQoJIlZldm8gTXVzaWMiOiB7DQoJCSJpY29uIjogImh0dHA6Ly9rb2RpdGlwcy5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMTUvMDYvVkVWTy1BbmRyb2lkLUFwcC1Gb3ItTXVzaWMucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vdmV2b3BsYXlsaXN0LWxpdmUuaGxzLmFkYXB0aXZlLmxldmVsMy5uZXQvdmV2by9jaDEvMDMvcHJvZ19pbmRleC5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiSm9vIE11c2ljIjogew0KCQkiaWNvbiI6ICJodHRwOi8vd3d3Lmx5bmdzYXQtbG9nby5jb20vbG9nby90di9qai9qb29fbXVzaWNfcGsucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vd293emFjb250cm9sLmNvbToxOTM1LzgwMzgvODAzOC9wbGF5bGlzdC5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiQWFqIFRhayBUZXoiOiB7DQoJCSJpY29uIjogImh0dHA6Ly93d3cubHluZ3NhdC1sb2dvLmNvbS9sb2dvL3R2L2FhL2Fhal90YWsucG5nIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJwbHVnaW46Ly9wbHVnaW4udmlkZW8ubGl2ZXN0cmVhbS8/bW9kZT0xMDQmb3duZXJfaWQ9MTM5OTU4MzMmZXZlbnRfaWQ9NDE5ODk1NyZ1cmw9aHR0cDovL2V4YW1wbGUuY29tJnZpZGVvX2lkPUxJVkUmbmFtZT1BYWpUYWtUZXoiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSJBYWogVGFrIERlbGhpIjogew0KCQkiaWNvbiI6ICJodHRwOi8vd3d3Lmx5bmdzYXQtbG9nby5jb20vbG9nby90di9hYS9hYWpfdGFrX2RlbGhpLnBuZyIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAicGx1Z2luOi8vcGx1Z2luLnZpZGVvLmxpdmVzdHJlYW0vP21vZGU9MTA0Jm93bmVyX2lkPTE0MDE0Mzk0JmV2ZW50X2lkPTQxOTg5NTEmdXJsPWh0dHA6Ly9leGFtcGxlLmNvbSZ2aWRlb19pZD1MSVZFJm5hbWU9QWFqVGFrRGVsaGkiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSJMaWZlIE9LIEhEIjogew0KCQkiaWNvbiI6ICIiLA0KCQkidHlwZSI6ICJJTkQiLA0KCQkidXJsIjogImh0dHA6Ly9taGQubGl2ZXR2b25tb2JpbGUuaW4vaG90c3Rhci5saXZlLmNkbi5qaW8uY29tL2R2cm9yaWdpbi9fZGVmaW5zdF8vc21pbDpMaWZlX09LX0hEX2hzLnNtaWwvLm0zdTgiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSJNb3ZpZXMgT0siOiB7DQoJCSJpY29uIjogIiIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL3NtdW1jZG5lbXMwMi5jZG5zcnYuamlvLmNvbS9ob3RzdGFyLmxpdmUuY2RuLmppby5jb20vZHZyb3JpZ2luL19kZWZpbnN0Xy9zbWlsOk1vdmllc19PS19ocy5zbWlsLy5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiQ2hhbm5lbCBWIjogew0KCQkiaWNvbiI6ICIiLA0KCQkidHlwZSI6ICJJTkQiLA0KCQkidXJsIjogImh0dHA6Ly9zbXVtY2RuZW1zMDIuY2Ruc3J2Lmppby5jb20vaG90c3Rhci5saXZlLmNkbi5qaW8uY29tL2R2cm9yaWdpbi9fZGVmaW5zdF8vc21pbDpDaGFubmVsX1ZfaHMuc21pbC8ubTN1OCIsDQoJCSJwcm92aWRlciI6ICJqc29uIiwNCgkJImRpcmVjdCI6ICJ0cnVlIiwNCgkJInF1YWxpdHkiOiAiSEQiLA0KCQkiZW5hYmxlZCI6ICJ0cnVlIg0KCX0sDQoJIlN0YXIgUGx1cyBIRCI6IHsNCgkJImljb24iOiAiIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vc211bWNkbmVtczAyLmNkbnNydi5qaW8uY29tL2hvdHN0YXIubGl2ZS5jZG4uamlvLmNvbS9kdnJvcmlnaW4vX2RlZmluc3RfL3NtaWw6U3Rhcl9QbHVzX0hEX2hzLnNtaWwvLm0zdTgiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9LA0KCSJTdGFyIEdvbGQgSEQiOiB7DQoJCSJpY29uIjogIiIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL3NtdW1jZG5lbXMwMi5jZG5zcnYuamlvLmNvbS9ob3RzdGFyLmxpdmUuY2RuLmppby5jb20vZHZyb3JpZ2luL19kZWZpbnN0Xy9zbWlsOlN0YXJfR29sZF9IRF9ocy5zbWlsLy5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiU3RhciBVdHNhdiI6IHsNCgkJImljb24iOiAiIiwNCgkJInR5cGUiOiAiSU5EIiwNCgkJInVybCI6ICJodHRwOi8vbWhkLmxpdmV0dm9ubW9iaWxlLmluL2hvdHN0YXIubGl2ZS5jZG4uamlvLmNvbS9kdnJvcmlnaW4vX2RlZmluc3RfL3NtaWw6U3Rhcl9VdHNhdl9ocy5zbWlsLy5tM3U4IiwNCgkJInByb3ZpZGVyIjogImpzb24iLA0KCQkiZGlyZWN0IjogInRydWUiLA0KCQkicXVhbGl0eSI6ICJIRCIsDQoJCSJlbmFibGVkIjogInRydWUiDQoJfSwNCgkiU3RhciBQcmF2YWgiOiB7DQoJCSJpY29uIjogIiIsDQoJCSJ0eXBlIjogIklORCIsDQoJCSJ1cmwiOiAiaHR0cDovL21oZC5saXZldHZvbm1vYmlsZS5pbi9ob3RzdGFyLmxpdmUuY2RuLmppby5jb20vZHZyb3JpZ2luL19kZWZpbnN0Xy9zbWlsOlN0YXJfUHJhdmFoX2hzLnNtaWwvLm0zdTgiLA0KCQkicHJvdmlkZXIiOiAianNvbiIsDQoJCSJkaXJlY3QiOiAidHJ1ZSIsDQoJCSJxdWFsaXR5IjogIkhEIiwNCgkJImVuYWJsZWQiOiAidHJ1ZSINCgl9DQp9
+{
+	"M tunes": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/mm/m_tunes_hd.png",
+		"type": "IND",
+		"url": "http://hlshinextra-lh.akamaihd.net/i/ams4_mtunes@124572/index_1100_av-b.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9X M": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_music.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xmusic_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9X Tashan": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_tashan.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xtashan_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9X Jalwa": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jalwa.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xjalwa_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"9X Jhakaas": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/num/9x_jhakaas.png",
+		"type": "IND",
+		"url": "http://d2ckk42trw29cy.cloudfront.net/9xmedia/ngrp:9xjhakaas_all/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"IBN 7": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/ibn7.png",
+		"type": "IND",
+		"url": "http://ibn7_hls-lh.akamaihd.net/i/ibn7_hls_n_1@174951/index_3_av-b.m3u8?sd=10&play-only=backup&rebase=on",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"India TV": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/ii/india_tv_in.png",
+		"type": "IND",
+		"url": "http://indiatvnews-lh.akamaihd.net/i/ITV_1@199237/master.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"CNBC TV18": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/cc/cnbc_tv18.png",
+		"type": "IND",
+		"url": "rtsp://web18.live-s.cdn.bitgravity.com/cdn-live-b3/_definst_/web18/live/pub08",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Vevo Music": {
+		"icon": "http://koditips.com/wp-content/uploads/2015/06/VEVO-Android-App-For-Music.png",
+		"type": "IND",
+		"url": "http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/03/prog_index.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Joo Music": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/jj/joo_music_pk.png",
+		"type": "IND",
+		"url": "http://wowzacontrol.com:1935/8038/8038/playlist.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Aaj Tak Tez": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak.png",
+		"type": "IND",
+		"url": "plugin://plugin.video.livestream/?mode=104&owner_id=13995833&event_id=4198957&url=http://example.com&video_id=LIVE&name=AajTakTez",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Aaj Tak Delhi": {
+		"icon": "http://www.lyngsat-logo.com/logo/tv/aa/aaj_tak_delhi.png",
+		"type": "IND",
+		"url": "plugin://plugin.video.livestream/?mode=104&owner_id=14014394&event_id=4198951&url=http://example.com&video_id=LIVE&name=AajTakDelhi",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Life OK HD": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Life_OK_HD_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Movies OK": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Movies_OK_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Channel V": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Channel_V_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Plus HD": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Plus_HD_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Gold HD": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://smumcdnems02.cdnsrv.jio.com/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Gold_HD_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Utsav": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Utsav_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	},
+	"Star Pravah": {
+		"icon": "",
+		"type": "IND",
+		"url": "http://mhd.livetvonmobile.in/hotstar.live.cdn.jio.com/dvrorigin/_definst_/smil:Star_Pravah_hs.smil/.m3u8",
+		"provider": "json",
+		"direct": "true",
+		"quality": "HD",
+		"enabled": "true"
+	}
+}

@@ -1,0 +1,794 @@
+{
+  "9x Jalwa": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/31400_9XJalwa.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/9xjalwa/playlist.m3u8"
+  }, 
+  "9x Jhakaas": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/43131_9xJhakas.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/9xJhakaas/playlist.m3u8"
+  }, 
+  "9x Music": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/62972_9xm.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/9xMusic/playlist.m3u8"
+  }, 
+  "AAJ TAKK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/83493_aajtak.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/aajtak/playlist.m3u8"
+  }, 
+  "ABP News": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/73346_ABPLive.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/abpnews/playlist.m3u8"
+  }, 
+  "Aastha Bhajan": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/40735_AasthaBhajan.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/AasthaBhajan/playlist.m3u8"
+  }, 
+  "Aastha TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/930_AasthaTV.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/aasthatv/playlist.m3u8"
+  }, 
+  "And Pic HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/17875_andpichd.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/andpic/playlist.m3u8"
+  }, 
+  "And Pic SD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/82905_andpicnew.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/andpicsd/playlist.m3u8"
+  }, 
+  "And TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/891_&tv.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/andtv/playlist.m3u8"
+  }, 
+  "B4U MOVIES": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/80888_B4Umovies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/b4umovies/playlist.m3u8"
+  }, 
+  "B4U MUSIC": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/71614_B4Umusic.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/b4umusic/playlist.m3u8"
+  }, 
+  "BINDASS PLAY": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/62184_BindassPlay.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/BindassPlay/playlist.m3u8"
+  }, 
+  "Big Magic": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/14065_bigmagic.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://pcapplive.nexg.tv/pcapplive/bigmagicts.smil/playlist.m3u8"
+  }, 
+  "CARE WORLD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/12831_CareWorld.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://173.199.120.59:1935/CAREWORLDTVL/CAREWORLDTVL.stream-ios/playlist.m3u8"
+  }, 
+  "COLORS IN": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/89322_COlorIN.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/colorsin/playlist.m3u8"
+  }, 
+  "Cartoon Network": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/8567_CN.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/cartoonhindi/playlist.m3u8"
+  }, 
+  "Channel V": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/91684_channelv.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/channelv/playlist.m3u8"
+  }, 
+  "Colors EU": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/75599_COLOREU.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ColorsEurope/playlist.m3u8"
+  }, 
+  "Colors HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/13880_ColorsHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ColorsHD/playlist.m3u8"
+  }, 
+  "DD News": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/54548_DDnews.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/ddnews/playlist.m3u8"
+  }, 
+  "DELHI AAJ TAK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/67752_DelhiAajTak.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://dbuqq908y3dcs.cloudfront.net/Live/_definst_/amlst:sweetbcha1novD68L240P/playlist.m3u8"
+  }, 
+  "Dangal Tv": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/23373_dangaltv.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/dangaltv/playlist.m3u8"
+  }, 
+  "Dhammal Tv": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/44371_dhammal.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://pcapplive.nexg.tv/pcapplive/dhamaaltvts.smil/playlist.m3u8"
+  }, 
+  "Dillagi": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/96545_dillagi.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://pcapplive.nexg.tv/pcapplive/dillagits.smil/playlist.m3u8"
+  }, 
+  "E24": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/77169_e24.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://d3ibnxavurfby0.cloudfront.net/bagnetworks/ngrp:e24_all/playlist.m3u8"
+  }, 
+  "Housefull Action": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/10098_housefullaction.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/housefullaction/playlist.m3u8"
+  }, 
+  "Housefull Movies": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/64533_housefull.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/housefullmovies/playlist.m3u8"
+  }, 
+  "IBN 7": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/51488_IBN7.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://ibn7_hls-lh.akamaihd.net/i/ibn7_hls_n_1@174951/index_3.m3u8"
+  }, 
+  "IBN Lokmat": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/47040_IBNLokmat.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://ibn_lokmat_hls-lh.akamaihd.net/i/ibn_lokmat_hls_n_1@178974/index_3.m3u8"
+  }, 
+  "India News": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/30662_newsodisha.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://pcapplive.nexg.tv/pcapplive/indianewsts.smil/playlist.m3u8"
+  }, 
+  "India TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/68523_IndiaTV.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/indiatv/playlist.m3u8"
+  }, 
+  "India Today": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/67581_IndiaToday.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://d1hya96e2cm7qi.cloudfront.net/Live/_definst_/amlst:sweetbcha1novD72L240P/playlist.m3u8"
+  }, 
+  "LIFE OK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/62671_LifeOk.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/lifeok/playlist.m3u8"
+  }, 
+  "M tunes HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/13915_MtuneHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/MtunesHD/playlist.m3u8"
+  }, 
+  "MTV India": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/78702_MTVIndia.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/MTVIndia/playlist.m3u8"
+  }, 
+  "Maha Movies": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/98855_mahamovies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/mahamovies/playlist.m3u8"
+  }, 
+  "Mastiii": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/37710_masti.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://pcapplive.nexg.tv/pcapplive/mastiits.smil/playlist.m3u8"
+  }, 
+  "Movie Ok": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/56897_movieok.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/movieok/playlist.m3u8"
+  }, 
+  "Music India": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/65305_MusicIndia.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/MusicIndia/playlist.m3u8"
+  }, 
+  "Music Xpress": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/37192_xpress.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/MusicXpress/playlist.m3u8"
+  }, 
+  "NDTV 24x7": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/50926_NDtv24x7.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/NDTV/playlist.m3u8"
+  }, 
+  "NDTV Profit": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/38733_NDTVProfit.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ndtvprofit/playlist.m3u8"
+  }, 
+  "NEWS 24": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/36534_news24.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://d20vhs4gtao945.cloudfront.net/bagnetworks/ngrp:news24_all/playlist.m3u8"
+  }, 
+  "Otv India": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/22879_otv.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "rtmp://otvdigitalhd.in:1935/unevent/otvdigitalhd_720p"
+  }, 
+  "POGO TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/98625_pogo.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://d13b2zf4mx8cep.cloudfront.net/Live/_definst_/amlst:sweetbcha1novD29L240P/playlist.m3u8"
+  }, 
+  "RISHTAY CINEPLEX": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/81770_rishteycine.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/rishtaycine/playlist.m3u8"
+  }, 
+  "RISHTEY": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/58406_RishteyUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/rishty/playlist.m3u8"
+  }, 
+  "RISHTEY UK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/69424_RishteyUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/RishteyUK/playlist.m3u8"
+  }, 
+  "RT MOVIES": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/24032_RTmovies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/rtmovies/playlist.m3u8"
+  }, 
+  "SONY HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/7593_SonyHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/SonyTVHD/playlist.m3u8"
+  }, 
+  "SONY SAB": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/25758_SonySAB.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/sabtv/playlist.m3u8"
+  }, 
+  "SONY SAB IN": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/77820_SonySabIN.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/sabtvind/playlist.m3u8"
+  }, 
+  "STAR GOLD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/46871_StarGold.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/stargoldind/playlist.m3u8"
+  }, 
+  "STAR MOVIES": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/38116_starmovies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/starmovies/playlist.m3u8"
+  }, 
+  "STAR Plus": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/38159_StarPluse.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/staplusind/playlist.m3u8"
+  }, 
+  "Sahara MP": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/90147_saharamp.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://yupptvrtmp-lh.akamaihd.net/i/blore1_saharamp21@135297/master.m3u8"
+  }, 
+  "Sanskar TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/88839_sanskar.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sanskartv/playlist.m3u8"
+  }, 
+  "Set MAX": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/93964_sonymax.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/setmaxin/playlist.m3u8"
+  }, 
+  "Set MAX UK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/54445_sonymaxUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/SATMAXX/playlist.m3u8"
+  }, 
+  "Sony Max 2": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/39327_sonymax2.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sonymax2/playlist.m3u8"
+  }, 
+  "Sony Mix": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/23702_sonymix.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sonymix/playlist.m3u8"
+  }, 
+  "Sony Pal": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/86764_sonypal.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sonypal/playlist.m3u8"
+  }, 
+  "Sony Pix HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/77598_sonypixhd.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sonypix/playlist.m3u8"
+  }, 
+  "Sony TV IN": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/31060_SonyIN.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/sonytvin/playlist.m3u8"
+  }, 
+  "Sony TV UK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/41840_sonyUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/SonyTVUK/playlist.m3u8"
+  }, 
+  "Star Plus HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/84270_StarPluseHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/StarPlusHD/playlist.m3u8"
+  }, 
+  "Star Ustuv": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/60505_starustuv.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/starutsuv/playlist.m3u8"
+  }, 
+  "Star World HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/51460_STARWORLD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/starworld/playlist.m3u8"
+  }, 
+  "TEZ NEWS": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/89839_Teznews1.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://yupptvrtmp-lh.akamaihd.net/i/blore_3@35266/master.m3u8"
+  }, 
+  "Times Now": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/33043_timesnow.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/timenow/playlist.m3u8"
+  }, 
+  "UTV Action": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/39030_utvaction.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/utvaction/playlist.m3u8"
+  }, 
+  "UTV Bindass": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/10065_UTVbindass.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/UTVBindass/playlist.m3u8"
+  }, 
+  "UTV Movies International": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/6784_UTVMovies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/UTVMoviesInternational/playlist.m3u8"
+  }, 
+  "ZEE ACTION": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/55140_ZeeAction.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZEETVACTION/playlist.m3u8"
+  }, 
+  "ZEE BUSINESS": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/43160_ZeeBusiness.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZeeBusiness/playlist.m3u8"
+  }, 
+  "ZEE CINEMA UK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/77733_ZeecinemaUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZeeCinema/playlist.m3u8"
+  }, 
+  "ZEE CLASSIC": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/57003_zeeclassic.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZEECLASSIC/playlist.m3u8"
+  }, 
+  "ZEE LIVING HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/60614_zeelivingHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeelivinghd/playlist.m3u8"
+  }, 
+  "ZEE NEWS": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/787_zeenews.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeenews/playlist.m3u8"
+  }, 
+  "ZEE SALAM": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/97814_zeesalam.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeesalam/playlist.m3u8"
+  }, 
+  "ZEE TV": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/88606_ZeeTV.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/zeetvin/playlist.m3u8"
+  }, 
+  "ZEE TV HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/29453_zeetvHD.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZeeTVHD/playlist.m3u8"
+  }, 
+  "ZING": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/74914_Zing.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/Zing/playlist.m3u8"
+  }, 
+  "Zee Anmol Cine": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/45685_zeeanmolcine.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/zeeanmolcine/playlist.m3u8"
+  }, 
+  "Zee Bollywood HD": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/46561_Zeebollywood.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeebollywood/playlist.m3u8"
+  }, 
+  "Zee Cafe": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/97123_zeecafe.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/zeecafe/playlist.m3u8"
+  }, 
+  "Zee Cinema": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/61183_Zeecinema.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/HDsonymax2/playlist.m3u8"
+  }, 
+  "Zee ETC": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/61967_zeeetc.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeesmile/playlist.m3u8"
+  }, 
+  "Zee India 24x": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/12469_india24x7.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeesangam/playlist.m3u8"
+  }, 
+  "Zee Living Foodz": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/74501_livingfoods.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/food/playlist.m3u8"
+  }, 
+  "Zee Studio": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/44090_zeestudio.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/zeestudio/playlist.m3u8"
+  }, 
+  "Zee TV APAC": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/22289_zeetvapac.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZeeTVAPAC/playlist.m3u8"
+  }, 
+  "Zee TV UK": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/21158_ZeetvUK.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/ZeeTVUK/playlist.m3u8"
+  }, 
+  "Zee Talkies": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/84549_ZeeTalkies.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeetalkies/playlist.m3u8"
+  }, 
+  "Zee Zindagi": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/64189_zeezindagi.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://163.172.142.242:8081/swiftnew/zeezindagi/playlist.m3u8"
+  }, 
+  "ZeeAnmol": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/49203_ZeeAnmol.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/zeeanmol/playlist.m3u8"
+  }, 
+  "Zoom Tv": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/43003_Zoom.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://130.185.144.63:8081/stream/Zoom/playlist.m3u8"
+  }, 
+  "manoranjan": {
+    "direct": false, 
+    "icon": "http://swiftstreamz.com/SwiftStream/images/thumbs/23804_manoranjan.jpg", 
+    "provider": "swift", 
+    "quality": "HD", 
+    "source": "swift", 
+    "url": "http://218.248.64.82:1935/live/manoranjantv_webA.sdp/playlist.m3u8"
+  }
+}

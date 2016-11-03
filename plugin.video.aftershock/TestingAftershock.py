@@ -34,6 +34,7 @@ from resources.lib.sources import json_live
 from resources.lib.sources import ditto_live
 from resources.lib.sources import dynns_live
 from resources.lib.sources import cinefun_live
+from resources.lib.sources import swift_live
 
 
 class TestingMovies(unittest.TestCase):
@@ -178,6 +179,23 @@ class TestingMovies(unittest.TestCase):
         self.source(call)
 
 class TestingLive(unittest.TestCase):
+    def test_getLiveSources(self):
+        from resources.lib.sources import sources
+        name = None
+        title = None
+        year = None
+        imdb = None
+        tmdb = None
+        tvdb = None
+        tvrage = None
+        season = None
+        episode = None
+        tvshowtitle = None
+        alter = None
+        date = None
+        meta = None
+        sourceList = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle,
+                                          alter, date, meta)
 
     def source(self, call, generateJSON):
         sourceurl = call.getLiveSource(generateJSON)
@@ -186,22 +204,57 @@ class TestingLive(unittest.TestCase):
     def test_json(self):
         call = json_live.source()
         self.source(call, False)
+
     def test_ditto(self):
         call = ditto_live.source()
         self.source(call, False)
+
     def test_cinefun(self):
         call = cinefun_live.source()
         self.source(call, False)
 
-    @unittest.skip("Working")
+    def test_cinefunGenerateJSON(self):
+        call = cinefun_live.source()
+        self.source(call, True)
+
     def test_dittoGenerateJSON(self):
         call = ditto_live.source()
         self.source(call, True)
 
-    @unittest.skip("Working")
-    def test_cinefunGenerateJSON(self):
-        call = cinefun_live.source()
+    def test_swiftGenerateJSON(self):
+        call = swift_live.source()
         self.source(call, True)
+
+    def test_dydnsGenerateJSON(self):
+        call = dynns_live.source()
+        self.source(call, True)
+
+    def test_swiftGenerateJSON(self):
+        call = swift_live.source()
+        self.source(call, True)
+
+    def test_cinefunZeeTVHD(self):
+        from resources.lib.sources import sources
+        item = {"name": "ZEE TV HD", "url": "73833", "debrid": '', "direct": False, "source": "cinefun",
+                "provider": "cinefun", "quality": "HD"}
+        sources().sourcesResolve(item)
+
+    def test_dydnsPlayAajTak(self):
+        from resources.lib.sources import sources
+        item = {"name": "AAJ TAK", "url": "http://live1.dyndns.tv:8081/iptv/aajtak/playlist.m3u8", "debrid": '',
+                "direct": False, "source": "dynns", "provider": "dynns", "quality": "HD"}
+        sources().sourcesResolve(item)
+
+    def test_swiftPlay9XJalwa(self):
+        from resources.lib.sources import sources
+        item = {"name": "9X JALWA", "url": "http://163.172.142.242:8081/swiftnew/9xjalwa/playlist.m3u8", "debrid": '',
+                "poster": "C:\\Users\\vgupta2\\AppData\\Roaming\\Kodi\\addons\\script.aftershock.artwork\\resources\\media\\logos\\9x_jalwa.png",
+                "direct": False, "source": "swift",
+                "meta": "{\"poster\": \"C:\\\\Users\\\\vgupta2\\\\AppData\\\\Roaming\\\\Kodi\\\\addons\\\\script.aftershock.artwork\\\\resources\\\\media\\\\logos\\\\9x_jalwa.png\", \"iconImage\": \"C:\\\\Users\\\\vgupta2\\\\AppData\\\\Roaming\\\\Kodi\\\\addons\\\\script.aftershock.artwork\\\\resources\\\\media\\\\logos\\\\9x_jalwa.png\", \"thumb\": \"C:\\\\Users\\\\vgupta2\\\\AppData\\\\Roaming\\\\Kodi\\\\addons\\\\script.aftershock.artwork\\\\resources\\\\media\\\\logos\\\\9x_jalwa.png\"}",
+                "provider": "swift", "quality": "HD"}
+        sources().sourcesResolve(item)
+
+
 
 if __name__ == '__main__' :
     unittest.main()
