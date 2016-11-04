@@ -148,20 +148,20 @@ class sources:
 
             self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
-            select = control.setting('host_select') if select == None else select
-
-            try :
-                if content == 'live':
-                    select = '2'
-                    title = name
-                    meta = self.sources[0]['meta']
-                    logger.debug('Content is live hence setting Auto-Play')
-            except Exception as e:
-                logger.error(e.message)
-                pass
-
             items = self.sourcesFilter()
             if len(items) > 0:
+                select = control.setting('host_select') if select == None else select
+
+                try :
+                    if content == 'live':
+                        select = control.setting('live_host_select')
+                        select = '2' if len(items) == 1 else select
+                        title = name
+                        meta = self.sources[0]['meta']
+                        logger.debug('Content is live hence setting %s' % select, __name__)
+                except Exception as e:
+                    logger.error(e.message)
+                    pass
 
                 if select == '1' and 'plugin' in control.infoLabel('Container.PluginName'):
                     control.window.clearProperty(self.itemProperty)
@@ -760,7 +760,7 @@ class sources:
 
     def sourcesFilter(self):
         logger.debug('Calling sources.filter()', __name__)
-        logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.sources))
+        logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.sources), __name__)
         for i in range(len(self.sources)): self.sources[i]['source'] = self.sources[i]['source'].lower()
         self.sources = sorted(self.sources, key=lambda k: k['source'])
 
@@ -787,7 +787,7 @@ class sources:
         except:pass
         self.sources = filter
 
-        logger.debug('FINAL SOURCE COUNT : %s' % len(self.sources))
+        logger.debug('FINAL SOURCE COUNT : %s' % len(self.sources), __name__)
 
         random.shuffle(self.sources)
 
@@ -802,7 +802,7 @@ class sources:
         if len(filter) < 25:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
 
-        logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.sources))
+        logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.sources), __name__)
 
         for i in range(len(self.sources)):
 
@@ -842,7 +842,7 @@ class sources:
 
     def sourcesResolve(self, item):
         try:
-            logger.debug('selected url : %s' % item['url'])
+            logger.debug('selected url : %s' % item['url'], __name__)
             u = url = item['url']
             provider = item['provider'].lower()
 
@@ -874,8 +874,6 @@ class sources:
             except: headers = ''
             headers = urllib.quote_plus(headers).replace('%3D', '=').replace('%26','&') if ' ' in headers else headers
             headers = dict(urlparse.parse_qsl(headers))
-
-            logger.debug('type[url] : %s HEADERS : %s' % (type(url), headers))
 
             if not type(url) is list:
                 if url.startswith('http') and '.m3u8' in url:
