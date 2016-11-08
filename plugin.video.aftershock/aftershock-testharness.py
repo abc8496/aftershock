@@ -120,8 +120,13 @@ try :
     from resources.lib.indexers import tvshows
     from resources.lib import sources
     from resources.lib.libraries import debrid
+    from resources.lib.libraries import client
     from resources.lib.resolvers import dailymotion
     from resources.lib import resolvers
+    from resources.lib.sources import einthusan_mv
+    url = einthusan_mv.source().get_sources('9068')
+    result = client.request(url[0]['url'])
+    if result == None: raise Exception()
     resolvers.request('http://playu.net/embed-azyk92idrbcj-700x440.html', None)
     #debrid.resolver('http://www.dailymotion.com/embed/video/x50xm71', 'realdebrid')
     debrid.resolve('http://www.dailymotion.com/video/x29cn4o', 'realdebrid')

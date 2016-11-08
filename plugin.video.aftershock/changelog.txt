@@ -4,7 +4,7 @@ Aftershock v4.2.3 (07-Nov-2016)
 - Updated Providers
 - Debrid Bug Fixes
 - Fixed Resolvers
--
+- Fixed Einthusan
 
 ------------------------
 Aftershock v4.2.2 (03-Nov-2016)

@@ -855,7 +855,7 @@ class sources:
             if not d == '':
                 logger.debug('DEBRID : Resolving debrid', __name__)
                 u = debrid.resolve(url, d)
-                logger.debug('DEBRID u : %s', __name__)
+                logger.debug('DEBRID u : %s' % u, __name__)
 
             if d == '' or u == False :
                 logger.debug('Resolving through provider',__name__)
