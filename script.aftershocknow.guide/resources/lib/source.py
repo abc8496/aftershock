@@ -32,9 +32,11 @@ import time
 from xml.etree import ElementTree
 import re
 
+from resources.lib import control
 from strings import *
 from guideTypes import *
 from fileFetcher import *
+from locationFetcher import *
 
 import xbmc
 import xbmcgui
@@ -865,7 +867,7 @@ class XMLTVSource(Source):
             os.makedirs(XMLTVSource.PLUGIN_DATA)
 
 
-        self.logoFolder = MAIN_URL + 'logos/'
+        self.logoFolder = control.logoPath()
 
         if self.xmltvType == gType.CUSTOM_FILE_ID:
             customFile = str(addon.getSetting('xmltv.file'))
@@ -890,6 +892,14 @@ class XMLTVSource(Source):
 
     def updateLocalFile(self, name, addon, isIni=False):
         path = os.path.join(XMLTVSource.PLUGIN_DATA, name)
+        if not isIni:
+            userEmail = ADDON.getSetting('xmltv.useremail')
+            fetcher = LocationFetcher(userEmail, addon)
+            basePath = fetcher.fetchLocation()
+            if not basePath :
+                raise Exception('User not registered')
+            else:
+                name = os.path.join(basePath, name)
         fetcher = FileFetcher(name, addon)
         retVal = fetcher.fetchFile()
         if retVal == fetcher.FETCH_OK and not isIni:

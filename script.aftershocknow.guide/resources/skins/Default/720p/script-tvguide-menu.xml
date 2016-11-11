@@ -51,13 +51,8 @@
 			<wrapmultiline>true</wrapmultiline>
 			<autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
 			<label>
-Use the Record option to schedule the selected program for recording. Shows that are scheduled for recording will be highlighted red. If you set a show to recurring from this EPG only the current show that you have scheduled to record will be highlighted in red. 
-
-If you would like to cancel the recording simply open this menu while the program is selected and click "Don't Record". If you need to turn off recurring for a show use the Recurring section of AftershockNow.
-
-Keep in mind that shows that are set to record within AftershockNow itself will not show as scheduled to record in this EPG. If a recording is cancelled in AftershockNow it will not show as not being scheduled to record in this EPG if it was originally scheduled from this EPG.
-
-</label>
+For additional help please visit:
+https://www.facebook.com/aftershockpy/</label>
         </control>
 			
         <control type="image" id="4100">
@@ -134,91 +129,12 @@ Keep in mind that shows that are set to record within AftershockNow itself will 
             <textcolor>ffffffff</textcolor>
 			<visible>false</visible>
         </control>
-        <control type="button" id="4002"><!-- REMINDER -->
-            <posx>160</posx>
-            <posy>228</posy>
-            <width>240</width>
-            <height>50</height>
-            <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>
-            <texturenofocus>aftershocknow-menu-grey.png</texturenofocus>
-            <onup>4001</onup>
-            <ondown>4003</ondown>
-            <align>center</align>
-            <aligny>center</aligny>
-            <font>font13</font>
-            <textcolor>ffffffff</textcolor>
-        </control>
-        <control type="button" id="4003"><!-- View Recordings -->
-            <posx>160</posx>
-            <posy>278</posy>
-            <width>240</width>
-            <height>50</height>
-            <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>
-            <texturenofocus>aftershocknow-menu-grey.png</texturenofocus>
-            <onup>4002</onup>
-            <ondown>80000</ondown>
-            <align>center</align>
-            <aligny>center</aligny>
-            <font>font13</font>
-            <textcolor>ffffffff</textcolor>
-            <label>$ADDON[script.aftershocknow.guide 30307]</label>
-        </control>
 
-        <control type="button" id="4005"><!-- watch from beginning -->
-            <posx>160</posx>
-            <posy>178</posy>
-            <width>240</width>
-            <height>50</height>
-            <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>
-            <texturenofocus>aftershocknow-menu-grey.png</texturenofocus>
-            <onup>8002</onup>
-            <ondown>4000</ondown>
-            <align>center</align>
-            <aligny>center</aligny>
-            <font>font13</font>
-            <textcolor>ffffffff</textcolor>
-            <label>Watch from beginning</label>
-			<visible>false</visible>
-        </control>
-		
-        <control type="button" id="80000"><!-- View Scheduled -->
-            <posx>160</posx>
-            <posy>328</posy>
-            <width>240</width>
-            <height>50</height>
-            <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>
-            <texturenofocus>aftershocknow-menu-grey.png</texturenofocus>
-            <onup>4002</onup>
-            <ondown>80001</ondown>
-            <align>center</align>
-            <aligny>center</aligny>
-            <font>font13</font>
-            <textcolor>ffffffff</textcolor>
-			<label>$ADDON[script.aftershocknow.guide 80000]</label>
 
-        </control>
 
-        <control type="button" id="80001"><!-- View Recurring -->
-            <posx>160</posx>
-            <posy>378</posy>
-            <width>240</width>
-            <height>50</height>
-            <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>
-            <texturenofocus>aftershocknow-menu-grey.png</texturenofocus>
-            <onup>80000</onup>
-            <ondown>80002</ondown>
-            <align>center</align>
-            <aligny>center</aligny>
-            <font>font13</font>
-            <textcolor>ffffffff</textcolor>
-			<label>$ADDON[script.aftershocknow.guide 80001]</label>
-			<visible>true</visible>
-
-        </control>
-		
 		<control type="button" id="80002"><!-- GUIDE SETTINGS -->
             <posx>160</posx>
-            <posy>428</posy>
+            <posy>160</posy>
             <width>240</width>
             <height>50</height>
             <texturefocus>aftershocknow-menu-grey-focus.png</texturefocus>

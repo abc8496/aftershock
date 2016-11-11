@@ -1,5 +1,12 @@
-# AftershockNow Guide
-# Developed by IDev
+# USTVnow Guide
+# Developed by mhancoc7
+# Forked from FTV Guide:
+#
+#      Copyright (C) 2014 Tommy Winther
+#      http://tommy.winther.nu
+#
+#      Modified for FTV Guide (09/2014 onwards)
+#      by Thomas Geppert [bluezed] - bluezed.apps@gmail.com
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -197,7 +204,7 @@ class TVGuide(xbmcgui.WindowXML):
                 self.close()
                 return
             self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
-            
+
         self.updateTimebar()
 
     def onAction(self, action):
@@ -333,7 +340,7 @@ class TVGuide(xbmcgui.WindowXML):
             if program is not None:
                 self._showContextMenu(program)
         else:
-            xbmc.log('[script.aftershocknow.guide] Unhandled ActionId: ' + str(action.getId()), xbmc.LOGDEBUG)
+            xbmc.log('[script.ustvnow.plus.guide] Unhandled ActionId: ' + str(action.getId()), xbmc.LOGDEBUG)
 
     def onClick(self, controlId):
         if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSE_EXIT]:
@@ -431,7 +438,7 @@ class TVGuide(xbmcgui.WindowXML):
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBTV:
             xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.ustvnow.tva/?mode=recurring")')
-			
+
         elif buttonClicked == PopupMenu.C_POPUP_VIDEOADDONS:
             xbmc.executebuiltin('Addon.OpenSettings(script.aftershocknow.guide)')
 
@@ -508,7 +515,7 @@ class TVGuide(xbmcgui.WindowXML):
         if program.imageSmall is not None:
             self.setControlImage(self.C_MAIN_IMAGE, program.imageSmall)
         else:
-            self.setControlImage(self.C_MAIN_IMAGE, 'ustvnowguide-logo-epg.png')
+            self.setControlImage(self.C_MAIN_IMAGE, 'aftershocknow-logo-epg.png')
 
 
         if not self.osdEnabled and self.player.isPlaying():
@@ -718,11 +725,11 @@ class TVGuide(xbmcgui.WindowXML):
 
             if cellWidth > 1:
                 if program.notificationScheduled:
-                    noFocusTexture = 'ustvnowguide-program-red.png'
-                    focusTexture = 'ustvnowguide-program-red-focus.png'
+                    noFocusTexture = 'aftershocknow-program-red.png'
+                    focusTexture = 'aftershocknow-program-red-focus.png'
                 else:
-                    noFocusTexture = 'ustvnowguide-program-grey.png'
-                    focusTexture = 'ustvnowguide-program-grey-focus.png'
+                    noFocusTexture = 'aftershocknow-program-grey.png'
+                    focusTexture = 'aftershocknow-program-grey-focus.png'
 
                 if cellWidth < 25:
                     title = ''  # Text will overflow outside the button if it is too narrow
@@ -750,11 +757,11 @@ class TVGuide(xbmcgui.WindowXML):
                 (self.epgView.right - self.epgView.left) - 2,
                 self.epgView.cellHeight - 2,
                 strings(NO_PROGRAM_AVAILABLE),
-                noFocusTexture='ustvnowguide-program-grey.png',
-                focusTexture='ustvnowguide-program-grey-focus.png'
+                noFocusTexture='aftershocknow-program-grey.png',
+                focusTexture='aftershocknow-program-grey-focus.png'
             )
 
-            program = src.Program(channel, strings(NO_PROGRAM_AVAILABLE), None, None, None)
+            program = src.Program(channel, strings(NO_PROGRAM_AVAILABLE), None, None, None, None, None, None, None)
             self.controlAndProgramList.append(ControlAndProgram(control, program))
 
         # add program controls
@@ -1002,8 +1009,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_LIBMOV = 80000
     C_POPUP_LIBTV = 80001
     C_POPUP_VIDEOADDONS = 80002
-	
-	
+
+
     def __new__(cls, database, program, showRemind):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'), SKIN)
 
@@ -1097,7 +1104,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         self.database = database
         self.channelList = database.getChannelList(onlyVisible=False)
         self.swapInProgress = False
-        
+
         self.selectedChannel = 0
 
     def onInit(self):
@@ -1123,7 +1130,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
             self.getControl(self.C_CHANNELS_SELECTION_VISIBLE).setVisible(True)
             xbmc.sleep(350)
             self.setFocusId(self.C_CHANNELS_LIST)
-            
+
         elif self.getFocusId() == self.C_CHANNELS_SELECTION and action.getId() in [ACTION_PREVIOUS_MENU, KEY_CONTEXT_MENU]:
             listControl = self.getControl(self.C_CHANNELS_LIST)
             idx = listControl.getSelectedPosition()
@@ -1152,9 +1159,9 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
             channel.visible = not channel.visible
 
             if channel.visible:
-                iconImage = 'ustvnowguide-channel-visible.png'
+                iconImage = 'aftershocknow-channel-visible.png'
             else:
-                iconImage = 'ustvnowguide-channel-hidden.png'
+                iconImage = 'aftershocknow-channel-hidden.png'
             item.setIconImage(iconImage)
 
         elif controlId == self.C_CHANNELS_SAVE:
@@ -1171,9 +1178,9 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         listControl.reset()
         for idx, channel in enumerate(self.channelList):
             if channel.visible:
-                iconImage = 'ustvnowguide-channel-visible.png'
+                iconImage = 'aftershocknow-channel-visible.png'
             else:
-                iconImage = 'ustvnowguide-channel-hidden.png'
+                iconImage = 'aftershocknow-channel-hidden.png'
 
             item = xbmcgui.ListItem('%3d. %s' % (idx + 1, channel.title), iconImage=iconImage)
             item.setProperty('idx', str(idx))
@@ -1184,9 +1191,9 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         item.setLabel('%3d. %s' % (idx + 1, channel.title))
 
         if channel.visible:
-            iconImage = 'ustvnowguide-channel-visible.png'
+            iconImage = 'aftershocknow-channel-visible.png'
         else:
-            iconImage = 'ustvnowguide-channel-hidden.png'
+            iconImage = 'aftershocknow-channel-hidden.png'
         item.setIconImage(iconImage)
         item.setProperty('idx', str(idx))
 

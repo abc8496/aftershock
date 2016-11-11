@@ -231,7 +231,7 @@ msgid "Custom File"
 msgstr ""
 
 msgctxt "#30143"
-msgid "USTVnow Guide"
+msgid "AftershockNow Guide"
 msgstr ""
 
 msgctxt "#30144"
@@ -494,7 +494,7 @@ msgid "Recurring"
 msgstr ""
 
 msgctxt "#80002"
-msgid "USTVnow Guide Settings"
+msgid "AftershockNow Guide Settings"
 msgstr ""
 
 msgctxt "#80003"

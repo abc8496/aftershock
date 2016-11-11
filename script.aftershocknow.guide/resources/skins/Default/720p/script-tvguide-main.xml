@@ -92,7 +92,7 @@
 				<width>3</width>
 				<height>400</height>
 				<visible>false</visible>
-				<texture>ustvnow-background-cover2.png</texture>
+				<texture>aftershocknow-background-cover2.png</texture>
 			</control>
 			
 			<control type="image">
@@ -102,7 +102,7 @@
 				<width>5</width>
 				<height>400</height>
 				<visible>false</visible>
-				<texture>ustvnow-background-cover2.png</texture>
+				<texture>aftershocknow-background-cover2.png</texture>
 			</control>
 			
 			<control type="image">
@@ -723,7 +723,7 @@
                 <posy>0</posy>
                 <width>1280</width>
                 <height>220</height>
-                <texture>ustvnow-osd-main.png</texture>
+                <texture>aftershocknow-osd-main.png</texture>
             </control>
 
             <!-- Program description -->
