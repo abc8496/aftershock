@@ -100,7 +100,7 @@ class tvshows:
                 try :
                     # try searching the id from tvdb
                     url = self.tvdb_search_link % title
-                    result = client.source(url)
+                    result = client.request(url)
                     series = client.parseDOM(result, "Series")
                     for show in series:
                         seriesName = client.parseDOM(show, "SeriesName")[0]
@@ -113,7 +113,7 @@ class tvshows:
                     try:
                         # try searching in tmdb
                         url = self.tmdb_search_link % title
-                        result = client.source(url)
+                        result = client.request(url)
                         result = json.loads(result)
                         result = result['results']
 
@@ -521,7 +521,7 @@ class tvshows:
         query = showName.lower() + ' poster'
         url = baseURL.format(query=urllib.quote_plus(query))
         try:
-            result = client.source(url, headers=headers)
+            result = client.request(url, headers=headers)
 
             results = json.loads(result)['d']['results']
 

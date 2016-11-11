@@ -68,7 +68,7 @@ class source:
     def desiRulezCache(self):
         try :
             base_link = 'http://www.desirulez.me/forums/20-Latest-Exclusive-Movie-HQ'
-            result = client.source(base_link)
+            result = client.request(base_link)
             result = result.decode('iso-8859-1').encode('utf-8')
             result = client.parseDOM(result, "li", attrs = {"class":"threadbit hot"})
             movies = []
@@ -89,7 +89,7 @@ class source:
             links = [self.base_link_1, self.base_link_2, self.base_link_3]
             for base_link in links:
                 try:
-                    result = client.source('%s/%s' % (base_link,url))
+                    result = client.request('%s/%s' % (base_link,url))
                 except: result = ''
                 if 'forumtitle' in result: break
 
@@ -138,7 +138,7 @@ class source:
             tvshowurl = url
             for base_link in links:
                 try:
-                    result = client.source(base_link + '/' + url)
+                    result = client.request(base_link + '/' + url)
                 except: result = ''
                 if 'threadtitle' in result: break
 
@@ -184,7 +184,7 @@ class source:
             result = ''
             links = [self.base_link_1, self.base_link_2, self.base_link_3]
             for base_link in links:
-                try: result = client.source(base_link + '/' + url)
+                try: result = client.request(base_link + '/' + url)
                 except: result = ''
                 if 'blockquote' in result: break
 
@@ -209,7 +209,7 @@ class source:
                     if len(urls) > 0:
                         for i in range(0,len(urls)):
                             try :
-                                result = client.source(urls[i])
+                                result = client.request(urls[i])
                                 item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
                                 rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                                 rUrl = client.urlRewrite(rUrl)
@@ -245,7 +245,7 @@ class source:
             if len(urls) > 0:
                 for i in range(0,len(urls)):
                     try :
-                        result = client.source(urls[i])
+                        result = client.request(urls[i])
                         item = client.parseDOM(result, name="div", attrs={"style":"float:right;margin-bottom:10px"})[0]
                         rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
                         rUrl = client.urlRewrite(rUrl)
