@@ -136,10 +136,15 @@ try :
     #source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
     #sources.sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
     #from resources.lib.indexers import tvshows
-    tvshows.tvshows().get(url, provider=provider, network=name)
+    #tvshows.tvshows().get(url, provider=provider, network=name)
     #episodes.episodes().get('Bigg Boss', year, imdb, tmdb, tvdb, tvrage, provider='yodesi_tv', url='http://www.yodesi.net/category/colors/bigg-boss-season-10/')
-    from resources.lib.sources import filmywap_mv
-    filmywap_mv.source().get_sources('abc')
+    #from resources.lib.sources import filmywap_mv
+    #filmywap_mv.source().get_sources('abc')
+
+    season = 'Bigg Boss Season 9'.lower()
+    season = re.compile('[0-9]+').findall(season)[0]
+    print season
+
 
 except:
     from resources.lib.libraries import client

@@ -66,6 +66,8 @@ class source:
 
                 poster = client.parseDOM(item, "img", ret="src")[0]
 
+                if 'concert' in title.lower():
+                    continue
                 shows.append({'name':title, 'channel':name, 'title':title, 'url':url, 'poster': poster, 'banner': poster, 'fanart': poster, 'next': '0', 'tvrage':'0','year':'0','duration':'0','provider':'yodesi_tv'})
             return shows
         except:
@@ -78,25 +80,25 @@ class source:
 
     def get_episodes(self, title, url):
         try :
+            try :
+                season = title.lower()
+                season = re.compile('[0-9]+').findall(season)[0]
+                #season = season.replace('season ', '')
+            except :
+                import traceback
+                traceback.print_exc()
+                season = '0'
             episodes = []
-            #links = [self.base_link_1, self.base_link_2, self.base_link_3]
-            #tvshowurl = url
-            #for base_link in links:
-                #try:
-                    #result = client.request(base_link + '/' + url)
-                #except: result = ''
-                #if 'threadtitle' in result: break
+
             tvshowurl = url
             rawResult = client.request(url)
             rawResult = rawResult.decode('iso-8859-1').encode('utf-8')
             rawResult = rawResult.replace('\n','').replace('\t','').replace('\r','')
 
-            #result = client.parseDOM(rawResult, "")
             result = client.parseDOM(rawResult, "article")
-            #result += client.parseDOM(rawResult, "h3", attrs = {"class" : "threadtitle"})
 
             for item in result:
-                if "promo" in item:
+                if "promo" in item or '(Day' in item:
                     continue
                 item = client.parseDOM(item, "h2")[0]
                 name = client.parseDOM(item, "a", ret = "title")
@@ -111,7 +113,7 @@ class source:
                 except:pass
                 name = re.compile('([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
                 name = name.strip()
-                episodes.append({'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'yodesi_tv', 'tvshowurl':tvshowurl})
+                episodes.append({'season' : season, 'tvshowtitle':title, 'title':name, 'name':name,'url' : url, 'provider':'yodesi_tv', 'tvshowurl':tvshowurl})
 
             next = client.parseDOM(rawResult, "nav")
             next = client.parseDOM(next, "a", attrs={"class":"next page-numbers"}, ret="href")[0]
@@ -119,8 +121,6 @@ class source:
 
             return episodes
         except:
-            import traceback
-            traceback.print_exc()
             return episodes
 
 
