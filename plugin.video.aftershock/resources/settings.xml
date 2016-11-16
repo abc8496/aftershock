@@ -9,6 +9,7 @@
 		<setting id="hypermode" type="bool" label="30863" default="true" />
 		<setting type="lsep" label="30805" />
 		<setting id="debug" type="bool" label="Debug" default="false" />
+		<setting id="tvshow.provider" type="select" label="TV Show Provider" values="desirulez|yodesi" default="desirulez" />
 		<setting id="livelocal" type="text" label="livelocal" visible="false" default="false" />
 		<setting id="analytics.enabled" type="bool" label="Collect Analytics" visible="true" default="true" />
 	</category>

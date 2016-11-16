@@ -20,6 +20,7 @@ try :
     params = {'action': 'tvshows', 'url': 'star-plus', 'name': 'Star Plus', 'provider': 'yodesi_tv'}
     #params = {'tmdb': '0', 'episode': '0', 'name': '20th October 2016', 'title': '20th October 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "20th October 2016", "url": "threads/968883-Bigg-Boss-10-20th-October-2016-Watch-Online-2-hours-maha-episode?s=e002c7988b973fe76e8ffe8d634f89a0", "tvshowtitle": "Bigg Boss 10", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "20th October 2016"}', 'imdb': '0', 't': '20161020230608467000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
     #params = {'tmdb': '0', 'episode': '0', 'name': '20th October 2016', 'title': '20th October 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Sasural Simar Ka', 'date': '0', 'meta': '{"tvshowurl": "forums/3948-Sasural-Simar-Ka", "title": "20th October 2016", "url": "threads/968880-Sasural-Simar-Ka-20th-October-2016-Watch-Online?s=6bfa8a53e72f5c9666a8bf487f22eb8c", "tvshowtitle": "Sasural Simar Ka", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Sasural+Simar+Ka", "name": "20th October 2016"}', 'imdb': '0', 't': '20161023225302497000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+    params = {'action': 'tvshows', 'url': 'colors', 'name': 'Colors TV', 'provider': 'yodesi_tv'}
 
 
     try:
@@ -131,7 +132,7 @@ try :
     #resolvers.request('http://playu.net/embed-azyk92idrbcj-700x440.html', None)
     #debrid.resolver('http://www.dailymotion.com/embed/video/x50xm71', 'realdebrid')
     #debrid.resolve('http://www.dailymotion.com/video/x29cn4o', 'realdebrid')
-    #tvshows.tvshows().get(url, provider=provider, network=name)
+    tvshows.tvshows().get(url, provider=provider, network=name)
     # test search sources
     #source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
     #sources.sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
@@ -141,9 +142,9 @@ try :
     #from resources.lib.sources import filmywap_mv
     #filmywap_mv.source().get_sources('abc')
 
-    season = 'Bigg Boss Season 9'.lower()
-    season = re.compile('[0-9]+').findall(season)[0]
-    print season
+    #season = 'Bigg Boss Season 9'.lower()
+    #season = re.compile('[0-9]+').findall(season)[0]
+    #print season
 
 
 except:

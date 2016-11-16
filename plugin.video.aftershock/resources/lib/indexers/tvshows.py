@@ -94,6 +94,7 @@ class tvshows:
                 title = self.list[i]['title'].lower()
                 if 'season' in title:
                     title = title[:title.index('season')-1]
+
                 origSeriesName = title
                 title = urllib.quote_plus(title)
 
