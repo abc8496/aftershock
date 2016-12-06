@@ -30,10 +30,11 @@ def tv(title):
 
 def live(title):
     title = title.upper()
-    title = re.sub('USA| US | UK| AU|APAC|EUROPE', '', title)
-    title = re.sub('CENIMA', 'CINEMA', title)
-    title = re.sub('&TV', 'AND TV', title)
     title = title.strip()
+    try : tmpTitle = cleanedNames[title]
+    except: tmpTitle = None
+    if not tmpTitle == None:
+        title = tmpTitle
     return title
 
 def get(title):
@@ -79,4 +80,77 @@ def normalize(title):
         return str( ''.join(c for c in unicodedata.normalize('NFKD', unicode( title.decode('utf-8') )) if unicodedata.category(c) != 'Mn') )
     except:
         return title
+
+cleanedNames = {'& PICTURE':'AND PICTURE HD',
+                '&TV HD':'AND TV HD',
+                '9X M':'9X MUSIC',
+                'AAJ TAK NEWS':'AAJ TAK',
+                'AAJ TAKK':'AAJ TAK',
+                'AASTHA TV':'AASHTA BHAJAN',
+                'AND PIC SD':'& PICTURE',
+                'AND PIC HD':'& PICTURE HD',
+                'AND TV HD (LOCAL TIME)':'AND TV HD',
+                'AND PICTURE HD (INDIA )':'AND PICTURE HD',
+                'ASTHA BHAJAN':'AASTHA BHAJAN',
+                'ASTHA TV':'AASTHA BHAJAN',
+                'AASHTA BHAJAN':'AASTHA BHAJAN',
+                'BHOJPURI CINEMA':'SKIP',
+                'BOLLYWOOD MASALA':'SKIP',
+                'CARE WORLD':'SKIP',
+                'CARTOON NETWORK HINDI':'CARTOON NETWORK',
+                'CINEMA TV':'SKIP',
+                'COLORS EU':'COLORS',
+                'COLORS IN':'COLORS',
+                'COLORS TV':'COLORS',
+                'COLORS TV HD':'COLORS HD',
+                'COLORS TV HD ( ENTERTAINMENT )':'COLORS HD',
+                'COLORS TV INDIA':'COLORS',
+                'COLORS TV APAC':'COLORS',
+                'COLORS UK':'COLORS',
+                'DANGAL TV':'DANGAL',
+                'DELHI AAJ TAK':'AAJ AAJ TAK DELHI',
+                'DESI TV PUNJABI':'SKIP',
+                'DILLAGI':'SKIP',
+                'DISCOVERY HD HINDI':'DISCOVERY HD',
+                'ENTERR 10':'ENTER 10',
+                'ENTERR10 MOVIES':'ENTER 10',
+                'JUS PUNJABI':'JUS ONE TV PUNJABI',
+                'LIFE OK SD':'LIFE OK',
+                'LIFE OK HD (LOCAL TIME)':'LIFE OK HD',
+                'MOVIE OK':'MOVIES OK',
+                'NATIONAL GEOGRAPHIC HD HINDI':'NATIONAL GEOGRAPHIC HD',
+                'NATIONAL GEOGRAPHIC HINDI':'NATIONAL GEOGRAPHIC',
+                'NDTV 24x7 NEWS':'NDTV 24X7',
+                'NDTV NEWS ENGLISH':'NDTV NEWS',
+                'NEWS18':'NEWS 18',
+                'RAJ MUSIX':'RAJ MUSIC',
+                'RISHTAY ASIA':'RISHTEY',
+                'RISHTAY CINEPLEX':'RISHTEY CINEPLEX',
+                'SAB TV HD INDIA':'SAB TV HD',
+                'SONY ENTERTAINMENT HD (LOCAL TIME)':'SONY ENTERTAINMENT HD',
+                'SONY MAX2':'SONY MAX 2',
+                'SONY SAB IN':'SONY SAB',
+                'SONY SET MAX HD (LOCAL TIME)':'SONY SET MAX HD',
+                'SONY SIX HD (INDIA )':'SONY SIX HD',
+                'SONY TV IN':'SONY TV',
+                'STAR GOLD SD':'STAR GOLD',
+                'STAR JALSHA US':'STAR JALSHA',
+                'STAR PLUS IND':'STAR PLUS',
+                'STAR PLUS SD':'STAR PLUS',
+                'STAR PRAVAAHMARATHI':'STAR PRAVAH',
+                'STAR PRAVAAH US MARATHI':'STAR PRAVAH',
+                'STAR SPORTS1-SD':'STAR SPORTS',
+                'STAR SPORTS2-SD':'STAR SPORTS',
+                'STAR USTUV':'STAR UTSAV',
+                'TEZ NEWS':'AAJ TAK TEZ',
+                'TIMES NOW NEWS':'TIMES NOW',
+                'UTV MOVIES INTERNATIONAL':'UTV MOVIES',
+                'ZEE ANMOL CINE':'ZEE ANMOL',
+                'ZEE CINEMA HD (LOCAL TIME)':'ZEE CINEMA HD',
+                'ZEE CINEMA INTERNATIONAL':'ZEE CINEMA',
+                'ZEE SALAM' : 'ZEE SALAAM',
+                'ZEE TV HD (LOCAL TIME)':'ZEE TV HD',
+                'ZEE TV SD':'ZEE TV',
+                'ZINDAGI':'ZEE ZINDAGI',
+                'ZING TV':'ZING'}
 

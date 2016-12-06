@@ -523,7 +523,6 @@ class sources:
             client.printException('sources.getEpisodeSource')
             pass
 
-
     def getLiveSource(self, name, source, call):
         try:
             dbcon = database.connect(self.sourceFile)
@@ -542,7 +541,6 @@ class sources:
 
                 idx = 0
                 for item in sources:
-                    item['name'] = cleantitle.live(item['name'])
                     poster = self.getLivePoster(item['name'])
                     if not poster == None :
                         item['poster'] = poster
@@ -610,7 +608,7 @@ class sources:
             if update == True:
                 from resources.lib.sources import live_logo
 
-                postersList = cache.get(live_logo.source().getLivePosters, 200)
+                postersList = cache.get(live_logo.source().getLivePosters, 200, table='live_cache')
                 try :
                     poster_url = postersList[source]
                 except:

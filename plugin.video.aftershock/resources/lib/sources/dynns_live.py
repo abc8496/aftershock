@@ -40,12 +40,20 @@ class source:
         self.deviceId = None
         self.ipAddress = None
         self.fileName = 'dynns.json'
+        self.filePath = os.path.join(control.dataPath, self.fileName)
 
-    def getLiveSource(self, generateJSON=False):
+    def removeJSON(self, name):
+        control.delete(self.fileName)
+        return 0
+
+    def getLiveSource(self):
         try :
+            generateJSON = cache.get(self.removeJSON, 168, __name__, table='live_cache')
+            if not os.path.exists(self.filePath):
+                generateJSON = 1
 
             if generateJSON:
-
+                logger.debug('Generating %s JSON' % __name__, __name__)
                 url = urlparse.urljoin(self.base_link,self.ip_check)
 
                 result = client.request(url, headers=self.headers)
@@ -76,7 +84,8 @@ class source:
                     if category == 'Indian':
                         title = client.parseDOM(channel,"programTitle")[0]
                         title = cleantitle.live(title)
-                        title = title.title()
+                        if title == 'SKIP':
+                            continue
                         poster = client.parseDOM(channel, "programImage")[0]
                         url = client.parseDOM(channel, "programURL")[0]
                         channelList[title] ={'icon':poster,'url':url,'provider':'dynns','source':'dynns','direct':False, 'quality':'HD'}
@@ -85,18 +94,12 @@ class source:
                 with open(filePath, 'w') as outfile:
                     json.dump(channelList, outfile, sort_keys=True, indent=2)
 
-            fileFetcher = FileFetcher(self.fileName,control.addon)
-            if control.setting('livelocal') == 'true':
-                retValue = 1
-            else :
-                retValue = fileFetcher.fetchFile()
             liveParser = LiveParser(self.fileName, control.addon)
-            self.list = liveParser.parseFile()
+            self.list = liveParser.parseFile(decode=False)
 
-            return (retValue, self.list)
+            return (generateJSON, self.list)
         except:
-            import traceback
-            traceback.print_exc()
+
             pass
 
     def resolve(self, url, resolverList):
