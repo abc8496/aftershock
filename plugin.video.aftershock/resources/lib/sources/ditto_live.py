@@ -38,7 +38,7 @@ class source:
                         'Accept-Language':'en-US,en;q=0.5',
                         'Accept-Encoding':'gzip, deflate',
                         'Connection':'keep-alive',
-                        'User-Agent': cache.get(client.randomagent, 1) ,
+                        'User-Agent': cache.get(client.randomagent, 1, table='live_cache') ,
                         'Referer':'http://www.dittotv.com/livetv'}
         self.list = []
         self.fileName = 'ditto.json'

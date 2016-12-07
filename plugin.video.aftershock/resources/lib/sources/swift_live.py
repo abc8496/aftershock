@@ -46,7 +46,7 @@ class source:
 
             if generateJSON:
                 logger.debug('Generating %s JSON' % __name__, __name__)
-                result = cache.get(self.getSwiftCache, 600000)
+                result = cache.get(self.getSwiftCache, 600000, table='live_cache')
 
                 password = base64.b64encode(result["DATA"][0]["Password"])
                 headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
@@ -86,13 +86,13 @@ class source:
         return usagents
 
     def getSwiftPlayUserAgent(self):
-        result = cache.get(self.getSwiftCache, 600000)
+        result = cache.get(self.getSwiftCache, 600000, table='live_cache')
         usagents = result["DATA"][0]["Agent"]
         return usagents
 
     def getSwiftAuth(self, url):
         stripping=True
-        result = cache.get(self.getSwiftCache, 600000)
+        result = cache.get(self.getSwiftCache, 600000, table='live_cache')
         if result["DATA"][0]["HelloUrl"] in url or result["DATA"][0]["HelloUrl1"] in url:
             postUrl=result["DATA"][0]["HelloLogin"]
             auth='Basic %s'%base64.b64encode(result["DATA"][0]["PasswordHello"])
@@ -111,7 +111,7 @@ class source:
             auth='Basic %s'%base64.b64encode(result["DATA"][0]["Password"])
 
         if postUrl:
-            return cache.get(self.getSwiftAuthToken, 1, postUrl, auth, stripping)
+            return cache.get(self.getSwiftAuthToken, 1, postUrl, auth, stripping, table='live_cache')
         return url
 
     def getSwiftAuthToken(self, postUrl, auth, stripping):

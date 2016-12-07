@@ -69,7 +69,7 @@ class source:
                 token=base64.b64encode(base64.b64decode('JXNAMm5kMkAlcw==') % (str(first),second))
 
                 headers = {'Authorization': base64.b64decode('QmFzaWMgWVdSdGFXNDZRV3hzWVdneFFBPT0='),
-                           base64.b64decode("VXNlci1BZ2VudA=="):cache.get(self.getDeviceID, 600000)}
+                           base64.b64decode("VXNlci1BZ2VudA=="):cache.get(self.getDeviceID, 600000, table='live_cache')}
 
                 url = 'https://app.dyndns.tv/app_panelnew/output.php/playlist?type=xml&deviceSn=%s&token=%s' % (self.deviceId, token)
 
@@ -128,7 +128,7 @@ class source:
     def getUserAgent(self, option):
         useragent=''
         if option == 0:
-            headers={'User-Agent':cache.get(self.getDeviceID, 8),
+            headers={'User-Agent':cache.get(self.getDeviceID, 8, table='live_cache'),
                      'Authorization':base64.b64decode('QmFzaWMgWVcxMU9rQmtia0J1T0RRNQ==')}
             return client.request('https://app.dynns.com/keys/pakindiahdv2ff.php',headers=headers)
         elif option==1:
@@ -136,9 +136,9 @@ class source:
                      'Authorization':base64.b64decode('QmFzaWMgWVcxMU9rQmtia0J1T0RRNQ==')}
             useragent = client.request(base64.b64decode('aHR0cHM6Ly9hcHAuZHlubnMuY29tL2tleXMvYXJhYmljdHZoZHYxcC5waHA='),headers=headers)
         elif option == -1:
-            return cache.get(self.getDeviceID, 8)
+            return cache.get(self.getDeviceID, 8, table='live_cache')
         else:
-            headers={'User-Agent':cache.get(self.getDeviceID, 8),
+            headers={'User-Agent':cache.get(self.getDeviceID, 8, table='live_cache'),
                      'Authorization':base64.b64decode('QmFzaWMgWVcxMU9rQmtia0J1T0RRNQ==')}
             useragent = client.request(base64.b64decode('aHR0cHM6Ly9hcHAuZHlubnMuY29tL2tleXMvYXJhYmljdHZoZHYxZmYucGhw'),headers=headers)
         logger.debug('UserAgent : %s' % useragent, __name__)
@@ -165,7 +165,7 @@ class source:
             dd=base64.b64decode("c2VydmVyX3RpbWU9JXMmaGFzaF92YWx1ZT0lcyZ2YWxpZG1pbnV0ZXM9JXM=")%(timesegment,base64.b64encode(hashlib.md5(s).hexdigest().lower()),validtime )
             url=(url%filename)+base64.b64encode(dd)
 
-            headers={'User-Agent':cache.get(self.getDeviceID, 600000)}
+            headers={'User-Agent':cache.get(self.getDeviceID, 600000, table='live_cache')}
             res = client.request(url, headers=headers)
             s=list(res)
             for i in range( (len(s)-59)/12):
