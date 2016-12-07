@@ -25,6 +25,9 @@ try :
     params = {'action': 'movies', 'url': 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=hi&count=40&start=1&sort=release_date,desc&start=1'}
     params = {'action': 'play', 'content': 'live', 'name': 'ABP NEWS'}
 
+    params = {'action': 'play', 'content': 'live', 'name': '& PICTURE HD'}
+
+    select = None
 
     try:
         action = params['action']
@@ -129,6 +132,10 @@ try :
     from resources.lib.resolvers import dailymotion
     from resources.lib import resolvers
     from resources.lib.sources import einthusan_mv
+
+
+    from resources.lib.sources import sources
+    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
     #url = einthusan_mv.source().get_sources('9068')
     #result = client.request(url[0]['url'])
     #if result == None: raise Exception()
@@ -153,7 +160,7 @@ try :
     #print season
 
     from resources.lib.indexers import livetv
-    #livetv.channels().get()
+    livetv.channels().get()
 
     from resources.lib.sources import cinefun_live
     #cinefun_live.source().resolve("95616", None)
@@ -165,7 +172,7 @@ try :
     #control.delete('*.json')
 
     from resources.lib.sources import swift_live
-    swift_live.source().resolve('http://163.172.142.242:8081/swiftiptv/9xjalwa/playlist.m3u8', None)
+    #swift_live.source().resolve('http://163.172.142.242:8081/swiftiptv/9xjalwa/playlist.m3u8', None)
 
 
 except:

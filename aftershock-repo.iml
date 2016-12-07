@@ -36,5 +36,14 @@
         <jarDirectory url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../kodi-repo/script.module.livestreamer/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

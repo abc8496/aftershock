@@ -551,6 +551,8 @@ class sources:
                         item['poster'] = poster
                     meta = {"poster":poster, "iconImage":poster, 'thumb': poster}
                     item['meta'] = json.dumps(meta)
+                    if '||' in item['name']:
+                        item['name'] = item['name'].split('||')[0]
                     dbcur.execute("INSERT INTO rel_live Values (?, ?, ?, ?, ?, ?)", (source, item['name'], 'live', str(idx), json.dumps(item), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                     idx = idx + 1
                     dbcon.commit()
@@ -566,7 +568,7 @@ class sources:
                     logger.debug('Fetched sources from cache for [%s]'% name, call.__class__)
                     sources = json.loads(match[4])
                     self.sources.append(sources)
-                    return self.sources
+                return self.sources
             except:
                 logger.debug('Source from cache not found for [%s]'% name, call.__class__)
                 pass
@@ -849,8 +851,10 @@ class sources:
     def sourcesResolve(self, item):
         try:
             logger.debug('selected url : %s' % item['url'], __name__)
+            logger.debug('selected item : %s' % item, __name__)
             u = url = item['url']
             provider = item['provider'].lower()
+
 
             d = item['debrid'] ; direct = item['direct']
 
@@ -868,6 +872,14 @@ class sources:
 
                 source = __import__(provider, globals(), locals(), [], -1).source()
                 u = source.resolve(url, self.resolverList)
+                if 'plugin.video.f4mTester' in u:
+                    try :
+                        title = item['name']
+                        title = urllib.quote_plus(title.encode('utf-8'))
+                        iconImage = item['poster']
+                    except:
+                        pass
+                    u += '&name=%s&iconImage=%s' % (title, iconImage)
                 logger.debug('Resolved through provider [%s]' % u ,__name__)
                 if u == False: raise Exception()
 

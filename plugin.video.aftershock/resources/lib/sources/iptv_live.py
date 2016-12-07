@@ -29,11 +29,11 @@ from resources.lib.libraries.liveParser import *
 
 class source:
     def __init__(self):
-        self.base_link = ['http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u',
-                          'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1',
-                          'http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls',
-                          'http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls',
-                          'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1']
+        self.base_link = [{'mc-ts','http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u'},
+                          {'itf-ts','http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1'},
+                          {'str-hls','http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls'},
+                          {'mc-hls','http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls'},
+                          {'itf-hls','http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1'}]
         self.list = []
         self.fileName = 'iptv.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
@@ -52,7 +52,7 @@ class source:
             if generateJSON:
                 logger.debug('Generating %s JSON' % __name__, __name__)
                 channelList = {}
-                for link in self.base_link:
+                for type, link in self.base_link:
                     try:
                         headers = link.rsplit('|', 1)[1]
                         link = link.rsplit('|', 1)[0]
@@ -73,7 +73,7 @@ class source:
                             continue
                         if not headers == None:
                             cUrl = '%s|%s' % (cUrl, headers)
-                        channelList[title] ={'icon':'','url':cUrl,'provider':'iptv','source':'iptv','direct':False, 'quality':'HD'}
+                        channelList['%s||%s' % (title, type)] ={'icon':'','url':cUrl,'provider':'iptv','source':type,'direct':False, 'quality':'HD'}
 
 
                 filePath = os.path.join(control.dataPath, self.fileName)
@@ -88,28 +88,6 @@ class source:
             pass
 
     def resolve(self, url, resolverList):
-        #url = url.replace('http://', 'httpstream://')
-        '''
-        rootPath = xbmc.translatePath(control.addonInfo('path')).decode('utf-8')
-        libPath = os.path.join(rootPath, 'resources','lib', 'libraries')
-        serverPath = os.path.join(libPath, 'livestreamerXBMCLocalProxy.py')
-        logger.debug(serverPath, __name__)
-        try:
-            result = client.request('http://127.0.0.1:19000/version')
-            if not result == None:
-                proxyIsRunning = True
-            else:
-                proxyIsRunning = False
-        except Exception as e:
-            logger.debug(e)
-            proxyIsRunning = False
-            logger.debug('Server not running...... Starting it', __name__)
-        if not proxyIsRunning:
-            xbmc.executebuiltin('RunScript(' + serverPath + ')')
-            logger.debug(client.request('http://127.0.0.1:19000/version'), __name__)
-            logger.debug('Server running......', __name__)
-        #url = 'http://127.0.0.1:19000/livestreamer/httpstream://%s|User-Agent=%s' % (url, self.vlc_user_agent)
-        '''
         if not 'User-Agent' in url:
             url = '%s|User-Agent=%s' % (url, self.vlc_user_agent)
             if '.ts' in url or '.mpegts' in url:

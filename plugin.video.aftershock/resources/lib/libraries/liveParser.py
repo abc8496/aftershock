@@ -57,7 +57,10 @@ class LiveParser(object):
                     except:
                         channelObj['direct'] = True
 
-                    liveList.append({'name':channelName, 'poster':channelObj['icon'],'url':channelObj['url'],'provider':channelObj['provider'],'source':channelObj['provider'],'direct':channelObj['direct'], 'quality':quality})
+                    try : source = channelObj['source']
+                    except: source = channelObj['provider']
+
+                    liveList.append({'name':channelName, 'poster':channelObj['icon'],'url':channelObj['url'],'provider':channelObj['provider'],'source':source,'direct':channelObj['direct'], 'quality':quality})
             return liveList
         except :
             pass
