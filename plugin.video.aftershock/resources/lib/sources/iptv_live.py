@@ -55,7 +55,8 @@ class source:
                 for item in self.base_link:
                     try:
                         type = item['source']
-                        headers = item['link'].rsplit('|', 1)[1]
+                        link = item['link']
+                        headers = link.rsplit('|', 1)[1]
                         link = link.rsplit('|', 1)[0]
                     except: headers = None
 
