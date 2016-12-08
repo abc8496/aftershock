@@ -341,8 +341,7 @@ class sources:
 
             for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source(), meta))
         elif content == 'live':
-            import live_logo
-            cache.get(live_logo.source().getLivePosters, 200, table='live_cache')
+            self.getLivePoster('9X JALWA')
             for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,channelName, re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 
@@ -589,6 +588,7 @@ class sources:
                     self.sources.append(sources)
             return self.sources
         except Exception as e:
+
             logger.error('(%s) Exception Live sources : %s' % (call.__class__, e.args))
             pass
     def getLivePoster(self, source):

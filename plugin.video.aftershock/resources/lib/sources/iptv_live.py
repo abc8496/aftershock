@@ -29,11 +29,11 @@ from resources.lib.libraries.liveParser import *
 
 class source:
     def __init__(self):
-        self.base_link = [{'mc-ts','http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u'},
-                          {'itf-ts','http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1'},
-                          {'str-hls','http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls'},
-                          {'mc-hls','http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls'},
-                          {'itf-hls','http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1'}]
+        self.base_link = [{'source':'mc-ts','link':'http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u'},
+                          {'source':'itf-ts','link':'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1'},
+                          {'source':'str-hls','link':'http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls'},
+                          {'source':'mc-hls','link':'http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls'},
+                          {'source':'itf-hls','link':'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1'}]
         self.list = []
         self.fileName = 'iptv.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
@@ -52,9 +52,10 @@ class source:
             if generateJSON:
                 logger.debug('Generating %s JSON' % __name__, __name__)
                 channelList = {}
-                for type, link in self.base_link:
+                for item in self.base_link:
                     try:
-                        headers = link.rsplit('|', 1)[1]
+                        type = item['source']
+                        headers = item['link'].rsplit('|', 1)[1]
                         link = link.rsplit('|', 1)[0]
                     except: headers = None
 
