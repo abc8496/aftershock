@@ -30,7 +30,7 @@ import xbmc
 import xbmcgui
 import source as src
 
-from strings import *
+from resources.lib.strings import *
 
 
 class Notification(object):

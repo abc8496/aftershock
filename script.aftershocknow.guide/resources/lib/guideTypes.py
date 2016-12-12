@@ -30,10 +30,10 @@ import json
 import ConfigParser
 import xml.etree.ElementTree as ET
 
-from fileFetcher import *
-from strings import *
+from resources.lib.fileFetcher import *
+from resources.lib.strings import *
 from operator import itemgetter
-import logger
+from resources.lib import logger
 
 ADDON = xbmcaddon.Addon(id='script.aftershocknow.guide')
 
@@ -74,7 +74,7 @@ class GuideTypes(object):
             self.guideTypes = sorted(guideTypes, key=itemgetter(self.GUIDE_SORT))
             logger.debug('GuideTypes collected: %s' % str(self.guideTypes), __name__)
 
-            #ADDON.setSetting('xmltv.type', str(defaultGuideId))
+            ADDON.setSetting('xmltv.type', str(defaultGuideId))
         except:
             logger.error('unable to parse guides.ini', __name__)
 

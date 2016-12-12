@@ -198,7 +198,7 @@ class TestingLive(unittest.TestCase):
                                           alter, date, meta)
 
     def source(self, call, generateJSON):
-        sourceurl = call.getLiveSource(generateJSON)
+        sourceurl = call.getLiveSource()
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
 
     def test_json(self):

@@ -204,7 +204,7 @@ class TVGuide(xbmcgui.WindowXML):
                 self.close()
                 return
             self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
-
+            
         self.updateTimebar()
 
     def onAction(self, action):
@@ -340,7 +340,7 @@ class TVGuide(xbmcgui.WindowXML):
             if program is not None:
                 self._showContextMenu(program)
         else:
-            xbmc.log('[script.ustvnow.plus.guide] Unhandled ActionId: ' + str(action.getId()), xbmc.LOGDEBUG)
+            xbmc.log('[script.aftershocknow.guide] Unhandled ActionId: ' + str(action.getId()), xbmc.LOGDEBUG)
 
     def onClick(self, controlId):
         if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSE_EXIT]:
@@ -402,18 +402,18 @@ class TVGuide(xbmcgui.WindowXML):
 
         if buttonClicked == PopupMenu.C_POPUP_REMIND:
             if program.notificationScheduled:
-                ustvnow_plus = xbmcaddon.Addon('plugin.video.ustvnow.tva')
-                ret = xbmcgui.Dialog().yesno("USTVnow Plus", "Are you sure you want to cancel this recording?")
+                ustvnow_plus = xbmcaddon.Addon('plugin.video.aftershock')
+                ret = xbmcgui.Dialog().yesno("AftershockNow", "Are you sure you want to cancel this recording?")
                 if ret == 1:
                     self.notification.removeNotification(program)
-                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.ustvnow.tva/?mode=delete&del=%s&guide=true)" % (
+                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.aftershock/?mode=delete&del=%s&guide=true)" % (
                         urllib.quote(program.rec_url + '&token=' + ustvnow_plus.getSetting('token') + '&action=remove')))
             else:
-                ustvnow_plus = xbmcaddon.Addon('plugin.video.ustvnow.tva')
-                ret = xbmcgui.Dialog().yesno("USTVnow Plus", "Are you sure you want to record this show?")
+                ustvnow_plus = xbmcaddon.Addon('plugin.video.aftershock')
+                ret = xbmcgui.Dialog().yesno("AftershockNow", "Are you sure you want to record this show?")
                 if ret == 1:
                     self.notification.addNotification(program)
-                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.ustvnow.tva/?mode=record&rec=%s&set=%s&mt=%s&guide=true)" % (
+                    xbmc.executebuiltin("RunPlugin(plugin://plugin.video.aftershock/?mode=record&rec=%s&set=%s&mt=%s&guide=true)" % (
                         urllib.quote(program.rec_url + '&token=' + ustvnow_plus.getSetting('token') + '&action=add'), urllib.quote(program.set_url + '&token=' + ustvnow_plus.getSetting('token') + '&action=add'), program.media_type))
 
 
@@ -428,17 +428,20 @@ class TVGuide(xbmcgui.WindowXML):
             self.playChannel(program.channel, program)
 
         elif buttonClicked == PopupMenu.C_POPUP_CHANNELS:
-            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.ustvnow.tva/?mode=recordings")')
+            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.aftershock/?mode=recordings")')
 
         elif buttonClicked == PopupMenu.C_POPUP_QUIT:
-            self.close()
+            self.viewStartDate = datetime.datetime.today()
+            self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+            return
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBMOV:
-            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.ustvnow.tva/?mode=scheduled")')
+            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.aftershock/?mode=scheduled")')
 
         elif buttonClicked == PopupMenu.C_POPUP_LIBTV:
-            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.ustvnow.tva/?mode=recurring")')
-
+            xbmc.executebuiltin('ActivateWindow(10025,"plugin://plugin.video.aftershock/?mode=recurring")')
+			
         elif buttonClicked == PopupMenu.C_POPUP_VIDEOADDONS:
             xbmc.executebuiltin('Addon.OpenSettings(script.aftershocknow.guide)')
 
@@ -761,7 +764,7 @@ class TVGuide(xbmcgui.WindowXML):
                 focusTexture='aftershocknow-program-grey-focus.png'
             )
 
-            program = src.Program(channel, strings(NO_PROGRAM_AVAILABLE), None, None, None, None, None, None, None)
+            program = src.Program(channel, strings(NO_PROGRAM_AVAILABLE), None, None, None)
             self.controlAndProgramList.append(ControlAndProgram(control, program))
 
         # add program controls
@@ -1009,8 +1012,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_LIBMOV = 80000
     C_POPUP_LIBTV = 80001
     C_POPUP_VIDEOADDONS = 80002
-
-
+	
+	
     def __new__(cls, database, program, showRemind):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', ADDON.getAddonInfo('path'), SKIN)
 
@@ -1104,7 +1107,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         self.database = database
         self.channelList = database.getChannelList(onlyVisible=False)
         self.swapInProgress = False
-
+        
         self.selectedChannel = 0
 
     def onInit(self):
@@ -1130,7 +1133,7 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
             self.getControl(self.C_CHANNELS_SELECTION_VISIBLE).setVisible(True)
             xbmc.sleep(350)
             self.setFocusId(self.C_CHANNELS_LIST)
-
+            
         elif self.getFocusId() == self.C_CHANNELS_SELECTION and action.getId() in [ACTION_PREVIOUS_MENU, KEY_CONTEXT_MENU]:
             listControl = self.getControl(self.C_CHANNELS_LIST)
             idx = listControl.getSelectedPosition()

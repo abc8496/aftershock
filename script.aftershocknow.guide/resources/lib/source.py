@@ -32,11 +32,9 @@ import time
 from xml.etree import ElementTree
 import re
 
-from resources.lib import control
-from strings import *
-from guideTypes import *
-from fileFetcher import *
-from locationFetcher import *
+from resources.lib.strings import *
+from resources.lib.guideTypes import *
+from resources.lib.fileFetcher import *
 
 import xbmc
 import xbmcgui
@@ -351,7 +349,7 @@ class Database(object):
         dateStr = date.strftime('%Y-%m-%d')
         c = self.conn.cursor()
         try:
-            xbmc.log('[script.aftershocknow.guide] Updating caches...', xbmc.LOGDEBUG)
+            xbmc.log('[script.ustvnow.plus.guide] Updating caches...', xbmc.LOGDEBUG)
             if progress_callback:
                 progress_callback(0)
 
@@ -457,6 +455,7 @@ class Database(object):
         self._updateChannelAndProgramListCaches(date, progress_callback, clearExistingProgramList)
 
         channels = self._getChannelList(onlyVisible=True)
+
         if channelStart < 0:
             channelStart = len(channels) - 1
         elif channelStart > len(channels) - 1:
@@ -519,9 +518,9 @@ class Database(object):
         c = self.conn.cursor()
         channelList = list()
         if onlyVisible:
-            c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+            c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY title', [self.source.KEY, True])
         else:
-            c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
+            c.execute('SELECT * FROM channels WHERE source=? ORDER BY title', [self.source.KEY])
         for row in c:
             channel = Channel(row['id'], row['title'], row['logo'], row['stream_url'], row['visible'], row['weight'])
             channelList.append(channel)
@@ -593,7 +592,7 @@ class Database(object):
         @type startTime: datetime.datetime
         @return:
         """
-        endTime = startTime + datetime.timedelta(hours=12)
+        endTime = startTime + datetime.timedelta(hours=2)
         programList = list()
 
         channelMap = dict()
@@ -614,6 +613,7 @@ class Database(object):
                               row['description'], row['rec_url'], row['set_url'], row['media_type'], row['scheduleid'], row['image_large'], row['image_small'], row['notification_scheduled'],
                               row['season'], row['episode'], row['is_movie'], row['language'])
             programList.append(program)
+
         return programList
 
     def _isProgramListCacheExpired(self, date=datetime.datetime.now()):
@@ -848,7 +848,7 @@ class XMLTVSource(Source):
     KEY = 'xmltv'
     INI_TYPE_FTV = 0
     INI_TYPE_CUSTOM = 1
-    INI_FILE = 'addons.ini'
+    INI_FILE = 'aftershock_addons.ini'
     LOGO_SOURCE_FTV = 0
     LOGO_SOURCE_CUSTOM = 1
 
@@ -857,7 +857,7 @@ class XMLTVSource(Source):
 
         self.needReset = False
         self.fetchError = False
-        self.xmltvType = int(addon.getSetting('xmltv.type'))
+        self.xmltvType = 0
         self.xmltvInterval = int(addon.getSetting('xmltv.interval'))
         self.logoSource = 0
         self.addonsType = 0
@@ -867,39 +867,19 @@ class XMLTVSource(Source):
             os.makedirs(XMLTVSource.PLUGIN_DATA)
 
 
-        self.logoFolder = control.logoPath()
+        self.logoFolder = MAIN_URL + 'logos/'
 
-        if self.xmltvType == gType.CUSTOM_FILE_ID:
-            customFile = str(addon.getSetting('xmltv.file'))
-            if os.path.exists(customFile):
-                # uses local file provided by user!
-                xbmc.log('[script.ftvguide] Use local file: %s' % customFile, xbmc.LOGDEBUG)
-                self.xmltvFile = customFile
-            else:
-                # Probably a remote file
-                xbmc.log('[script.ftvguide] Use remote file: %s' % customFile, xbmc.LOGDEBUG)
-                self.updateLocalFile(customFile, addon)
-                self.xmltvFile = os.path.join(XMLTVSource.PLUGIN_DATA, customFile.split('/')[-1])
-        else:
-            self.xmltvFile = self.updateLocalFile(gType.getGuideDataItem(self.xmltvType, gType.GUIDE_FILE), addon)
+        self.xmltvFile = self.updateLocalFile(gType.getGuideDataItem(self.xmltvType, gType.GUIDE_FILE), addon)
 
         # make sure the ini file is fetched as well if necessary
         self.updateLocalFile(XMLTVSource.INI_FILE, addon, True)
        
-
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
 
     def updateLocalFile(self, name, addon, isIni=False):
+        logger.log('PLUGIN_DATA %s name %s' % (XMLTVSource.PLUGIN_DATA, name), __name__)
         path = os.path.join(XMLTVSource.PLUGIN_DATA, name)
-        if not isIni:
-            userEmail = ADDON.getSetting('xmltv.useremail')
-            fetcher = LocationFetcher(userEmail, addon)
-            basePath = fetcher.fetchLocation()
-            if not basePath :
-                raise Exception('User not registered')
-            else:
-                name = os.path.join(basePath, name)
         fetcher = FileFetcher(name, addon)
         retVal = fetcher.fetchFile()
         if retVal == fetcher.FETCH_OK and not isIni:
@@ -1064,6 +1044,7 @@ class XMLTVSource(Source):
 
             root.clear()
         f.close()
+
 
 class FileWrapper(object):
     def __init__(self, filename):

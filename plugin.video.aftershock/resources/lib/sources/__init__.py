@@ -91,12 +91,9 @@ class sources:
             if control.setting('fanart') == 'true' and not fanart == '0': pass
             else: fanart = control.addonFanart()
 
-            sysimage = urllib.quote_plus(poster.encode('utf-8'))
-
             for i in range(len(items)):
                 try :
                     parts = int(items[i]['parts'])
-                    logger.debug('Download : %s, Parts : %s, Label : %s' % (downloads, parts, label), __name__)
                 except:
                     parts = 1
 
@@ -110,12 +107,10 @@ class sources:
 
                 cm = []
                 cm.append((control.lang(30504).encode('utf-8'), 'RunPlugin(%s?action=queueItem)' % sysaddon))
-                if (downloads == True and parts <= 1):
-                    cm.append((control.lang(30505).encode('utf-8'), 'RunPlugin(%s?action=download&name=%s&image=%s&source=%s)' % (sysaddon, systitle, sysimage, syssource)))
-                #cm.append((infoMenu, 'Action(Info)'))
-                #cm.append((control.lang(30506).encode('utf-8'), 'RunPlugin(%s?action=refresh)' % sysaddon))
-                #cm.append((control.lang(30507).encode('utf-8'), 'RunPlugin(%s?action=openSettings)' % sysaddon))
-                #cm.append((control.lang(30508).encode('utf-8'), 'RunPlugin(%s?action=openPlaylist)' % sysaddon))
+                if content != 'live':
+                    if downloads == True and parts <= 1:
+                        sysimage = urllib.quote_plus(poster.encode('utf-8'))
+                        cm.append((control.lang(30505).encode('utf-8'), 'RunPlugin(%s?action=download&name=%s&image=%s&source=%s)' % (sysaddon, systitle, sysimage, syssource)))
                 item.setArt({'icon': thumb, 'thumb': thumb, 'poster': poster, 'tvshow.poster': poster, 'season.poster': poster, 'banner': banner, 'tvshow.banner': banner, 'season.banner': banner})
 
                 if not fanart == None: item.setProperty('Fanart_Image', fanart)
@@ -150,15 +145,18 @@ class sources:
 
             items = self.sourcesFilter()
             if len(items) > 0:
-                select = control.setting('host_select') if select == None else select
+
 
                 try :
                     if content == 'live':
-                        select = control.setting('live_host_select')
+                        if select == None:
+                            select = control.setting('live_host_select')
                         select = '2' if len(items) == 1 else select
                         title = name
                         meta = self.sources[0]['meta']
                         logger.debug('Content is live hence setting %s' % select, __name__)
+                    else:
+                        select = control.setting('host_select') if select == None else select
                 except:
                     pass
 
@@ -535,6 +533,7 @@ class sources:
         if name == None:
             retValue, sources = call.getLiveSource()
         else:
+            name = name.upper()
             retValue = 0
 
         if retValue == 1:
@@ -548,6 +547,8 @@ class sources:
                     poster = self.getLivePoster(item['name'])
                     if not poster == None :
                         item['poster'] = poster
+                    else:
+                        item['poster'] = '0'
                     meta = {"poster":poster, "iconImage":poster, 'thumb': poster}
                     item['meta'] = json.dumps(meta)
                     if '||' in item['name']:

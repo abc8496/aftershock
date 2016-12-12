@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
 	<category label="30101">
-		<setting id="xmltv.useremail" label="User Email" type="text" value="" default="vineetg@gmail.com"/>
-		<setting id="xmltv.type_select" label="30123" type="action" action="RunScript($CWD/resources/lib/guideTypes.py)"/>
-		<setting id="xmltv.interval" label="30128" type="enum" default="3" lvalues="30129|30130|30131|30132" />
-		<setting id="xmltv.type" type="number" enable="false" visible="false"/>
-		<setting id="xmltv.file" label="30103" type="file" visible="eq(-1,6)" />
-		<setting id="xmltv.refresh" label="30149" type="bool" default="false" visible="eq(-2,6)"/>
-		<setting id="debug" label="Debug" type="bool" visible="true" value="" default="true"/>
+        <setting id="xmltv.interval" label="30128" type="enum" default="2" lvalues="30129|30130" />
 	</category>
 	
 	
@@ -17,7 +11,7 @@
 		<setting label="30119" type="lsep" />
 	</category>
 
-		<setting id="notifications.enabled" label="30106" type="bool" default="false" />
+	<setting id="notifications.enabled" label="30106" type="bool" default="false" />
 
 	<category label="30140">
 		<setting type="lsep" label="30137"/>

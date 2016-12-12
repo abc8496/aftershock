@@ -62,8 +62,8 @@ def delete_file(filename):
 if __name__ == '__main__':
     if deleteDB():
         d = xbmcgui.Dialog()
-        d.ok('USTVnow Guide', 'The database has been successfully deleted.', 'It will be re-created next time you start the guide.')
+        d.ok('AftershockNow Guide', 'The database has been successfully deleted.', 'It will be re-created next time you start the guide.')
     else:
         d = xbmcgui.Dialog()
-        d.ok('USTVnow Guide', 'Failed to delete database.', 'Database may be locked,', 'please restart XBMC and try again')
+        d.ok('AftershockNow Guide', 'Failed to delete database.', 'Database may be locked,', 'please restart Kodi and try again')
 

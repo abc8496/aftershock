@@ -27,7 +27,7 @@
 import xbmcaddon
 import notification
 import xbmc
-import source
+from resources.lib import source
 
 
 class Service(object):

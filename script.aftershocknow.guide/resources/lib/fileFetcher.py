@@ -28,16 +28,16 @@ import os
 import urllib2
 import datetime
 import zlib
-import logger
 
 if xbmc.getCondVisibility('System.HasAddon(plugin.video.aftershock)'):
-    aftershock_type = xbmcaddon.Addon('plugin.video.aftershock')
-    #if aftershock_type.getSetting('local') == 'true':
-    #    MAIN_URL = 'https://raw.githubusercontent.com/vineegu/kodi-repo/master/releases/script.aftershocknow.guide/'
+    ustvnow_type = xbmcaddon.Addon('plugin.video.aftershock')
+    #if ustvnow_type.getSetting('free_package') == 'true':
+    #    MAIN_URL = 'http://mhancoc7.offshorepastebin.com/guide/free/'
     #else:
-    MAIN_URL = 'https://raw.githubusercontent.com/aftershockpy/aftershock-repo/master/releases/script.aftershocknow.guide/guides/'
+    #    MAIN_URL = 'http://mhancoc7.offshorepastebin.com/guide/premium/'
+    MAIN_URL = 'https://offshoregit.com/vineegu/aftershock-repo/guides/'
 else:
-    MAIN_URL = 'https://raw.githubusercontent.com/aftershockpy/aftershock-repo/master/releases/script.aftershocknow.guide/guides/'
+    MAIN_URL = 'https://offshoregit.com/vineegu/aftershock-repo/guides/'
 
 class FileFetcher(object):
     INTERVAL_ALWAYS = 0
@@ -63,7 +63,7 @@ class FileFetcher(object):
 
         if fileName.startswith("http://") or fileName.startswith("sftp://") or fileName.startswith("ftp://") or \
                 fileName.startswith("https://") or fileName.startswith("ftps://") or fileName.startswith("smb://") or \
-                fileName.startswith("nfs://"):
+                fileName.startswith("nfs://") :
             self.fileType = self.TYPE_REMOTE
             self.fileUrl = fileName
             self.filePath = os.path.join(self.basePath, fileName.split('/')[-1])
@@ -76,17 +76,14 @@ class FileFetcher(object):
         if not os.path.exists(self.basePath):
             os.makedirs(self.basePath)
 
-    def fetchFile(self, remoteUpdate=False):
+    def fetchFile(self):
         retVal = self.FETCH_NOT_NEEDED
         fetch = False
         if not os.path.exists(self.filePath):  # always fetch if file doesn't exist!
             fetch = True
         else:
             interval = int(self.addon.getSetting('xmltv.interval'))
-            if remoteUpdate == True :
-                # check for remote file modification and set fetch accordingly
-                fetch = True
-            elif interval != self.INTERVAL_ALWAYS:
+            if interval != self.INTERVAL_ALWAYS:
                 modTime = datetime.datetime.fromtimestamp(os.path.getmtime(self.filePath))
                 td = datetime.datetime.now() - modTime
                 # need to do it this way cause Android doesn't support .total_seconds() :(
@@ -99,26 +96,30 @@ class FileFetcher(object):
                 fetch = True
 
         if fetch:
-            tmpFile = os.path.join(self.basePath, 'tmp')
-            if self.fileType == self.TYPE_REMOTE:
-                xbmc.log('[script.aftershocknow.guide] file is in remote location: %s' % self.fileUrl, xbmc.LOGNOTICE)
-                if not xbmcvfs.copy(self.fileUrl, tmpFile):
-                    xbmc.log('[script.aftershocknow.guide] Remote file couldn\'t be copied: %s' % self.fileUrl, xbmc.LOGERROR)
-            else:
-                f = open(tmpFile, 'wb')
-                xbmc.log('[script.aftershocknow.guide] file is on the internet: %s' % self.fileUrl, xbmc.LOGNOTICE)
-                tmpData = urllib2.urlopen(self.fileUrl)
-                data = tmpData.read()
-                if tmpData.info().get('content-encoding') == 'gzip':
-                    data = zlib.decompress(data, zlib.MAX_WBITS + 16)
-                f.write(data)
-                f.close()
-            if os.path.getsize(tmpFile) > 20:
-                if os.path.exists(self.filePath):
-                    os.remove(self.filePath)
-                os.rename(tmpFile, self.filePath)
-                retVal = self.FETCH_OK
-                xbmc.log('[script.aftershocknow.guide] file %s was downloaded' % self.filePath, xbmc.LOGNOTICE)
-            else:
-                retVal = self.FETCH_ERROR
+            try :
+                tmpFile = os.path.join(self.basePath, 'tmp')
+                if self.fileType == self.TYPE_REMOTE:
+                    xbmc.log('[script.aftershocknow.guide] file is in remote location: %s' % self.fileUrl, xbmc.LOGDEBUG)
+                    if not xbmcvfs.copy(self.fileUrl, tmpFile):
+                        xbmc.log('[script.aftershocknow.guide] Remote file couldn\'t be copied: %s' % self.fileUrl, xbmc.LOGERROR)
+                else:
+                    f = open(tmpFile, 'wb')
+                    xbmc.log('[script.aftershocknow.guide] file is on the internet: %s' % self.fileUrl, xbmc.LOGDEBUG)
+                    tmpData = urllib2.urlopen(self.fileUrl)
+                    data = tmpData.read()
+                    if tmpData.info().get('content-encoding') == 'gzip':
+                        data = zlib.decompress(data, zlib.MAX_WBITS + 16)
+                    f.write(data)
+                    f.close()
+                if os.path.getsize(tmpFile) > 10:
+                    if os.path.exists(self.filePath):
+                        os.remove(self.filePath)
+                    os.rename(tmpFile, self.filePath)
+                    retVal = self.FETCH_OK
+                    xbmc.log('[script.aftershocknow.guide] file %s was downloaded' % self.filePath, xbmc.LOGDEBUG)
+                else:
+                    retVal = self.FETCH_ERROR
+            except:
+                import traceback
+                traceback.print_exc()
         return retVal

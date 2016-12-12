@@ -33,8 +33,8 @@ import xbmcaddon
 
 class StreamsService(object):
     def __init__(self, addon):
-        path = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.aftershocknow.guide', 'addons.ini'))
-        xbmc.log('[script.aftershocknow.guide] FTV addons.ini is used', xbmc.LOGDEBUG)
+        path = xbmc.translatePath(os.path.join('special://profile', 'addon_data', 'script.aftershocknow.guide', 'aftershock_addons.ini'))
+        xbmc.log('[script.aftershocknow.guide] Aftershock addons.ini is used', xbmc.LOGDEBUG)
 
         self.addonsParser = ConfigParser.ConfigParser(dict_type=OrderedDict)
         self.addonsParser.optionxform = lambda option: option

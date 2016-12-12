@@ -160,7 +160,7 @@ try :
     #print season
 
     from resources.lib.indexers import livetv
-    livetv.channels().get()
+    #livetv.channels().get()
 
     from resources.lib.sources import cinefun_live
     #cinefun_live.source().resolve("95616", None)
@@ -173,6 +173,12 @@ try :
 
     from resources.lib.sources import swift_live
     #swift_live.source().resolve('http://163.172.142.242:8081/swiftiptv/9xjalwa/playlist.m3u8', None)
+
+    from resources.lib.libraries import cleantitle
+    print cleantitle.live('COLORS TV HD ( ENTERTAINMENT )')
+    print cleantitle.live('COLORS TV INDIA')
+    print cleantitle.live('COLORS TV APAC')
+    print cleantitle.live('COLORS TV (LOCAL TIME)')
 
 
 except:

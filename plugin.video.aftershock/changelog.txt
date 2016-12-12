@@ -2,6 +2,7 @@ Aftershock v4.2.6 (07-Dec-2016)
 ------------------------
 - [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
 - Updated LIVE TV Providers
+- Updates for Live EPG Integration
 
 Aftershock v4.2.5 (02-Dec-2016)
 ------------------------

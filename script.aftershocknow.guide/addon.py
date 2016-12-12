@@ -18,15 +18,9 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
-import sys, xbmc
 from resources.lib import gui
-from resources.lib import logger
-from resources.lib.strings import *
 
 try:
-    if ADDON.getSetting('xmltv.useremail') == '' :
-        logger.log('NO USEREMAIL EXITING', 'main', xbmc.LOGNOTICE)
-        sys.exit()
     w = gui.TVGuide()
     w.doModal()
     del w

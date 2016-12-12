@@ -20,7 +20,7 @@
 
 import os,xbmc, traceback
 
-import control
+from resources.lib import control
 import inspect
 
 LOGDEBUG = xbmc.LOGDEBUG
@@ -66,8 +66,7 @@ def error(msg, caller=None):
 
 def log(msg, caller, level=LOGDEBUG):
     # override message level to force logging when addon logging turned on
-    if control.setting('debug') == 'true' and level == LOGDEBUG:
-        level = LOGNOTICE
+    level = LOGNOTICE
 
     try:
         if isinstance(msg, unicode):
