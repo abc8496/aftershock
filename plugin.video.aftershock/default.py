@@ -159,10 +159,11 @@ elif action == 'liveEPGNavigator':
     from resources.lib.libraries import control
     analytics.sendAnalytics('%s-EPG' % action)
     try :
-        control.addon('script.aftershocknow.guide')
+        tmpAddon = control.addon('script.aftershocknow.guide')
         xbmc.executebuiltin("RunAddon(script.aftershocknow.guide)")
-        exit()
     except:
+        import traceback
+        traceback.print_exc()
         control.dialog.ok(control.addonInfo('name'), "Please make a $5 donation to aftershockpy@gmail.com via PayPal to get access !!")
 
 elif action == 'tvshows':

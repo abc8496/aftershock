@@ -26,6 +26,8 @@ try :
     params = {'action': 'play', 'content': 'live', 'name': 'ABP NEWS'}
 
     params = {'action': 'play', 'content': 'live', 'name': '& PICTURE HD'}
+    params = {'tmdb': '0', 'episode': '0', 'name': '12th December 2016', 'title': '12th December 2016', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "12th December 2016", "url": "threads/987786-Bigg-Boss-10-12th-December-2016-Watch-Online?s=cc583847a54ad97a7ef547a9da3fcf8f", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=cc583847a54ad97a7ef547a9da3fcf8f", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "12th December 2016"}', 'imdb': '0', 't': '20161212203135593000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+
 
     select = None
 
@@ -135,7 +137,7 @@ try :
 
 
     from resources.lib.sources import sources
-    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
+    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
     #url = einthusan_mv.source().get_sources('9068')
     #result = client.request(url[0]['url'])
     #if result == None: raise Exception()

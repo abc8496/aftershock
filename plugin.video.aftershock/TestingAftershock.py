@@ -3,7 +3,7 @@ sys.argv = ['plugin.video.aftershock', '1']
 
 from resources.lib.libraries import logger
 from resources.lib.sources import apnaview_mv
-from resources.lib.sources import crazy4ad_mv_tv
+from resources.lib.sources import crazy4ad_mv
 from resources.lib.sources import desihdmovies_mv
 from resources.lib.sources import desihit_mv
 from resources.lib.sources import ditto_mv
@@ -26,9 +26,9 @@ from resources.lib.sources import desirulez_mv_tv
 from resources.lib.sources import dltube_mv
 from resources.lib.sources import miradetodo_mv
 from resources.lib.sources import movies14_mv
-from resources.lib.sources import movieshd_mv_tv
-from resources.lib.sources import rlsmovies_mv_tv
-from resources.lib.sources import ymovies_mv_tv
+from resources.lib.sources import movieshd_mv
+from resources.lib.sources import rlsmovies_mv
+from resources.lib.sources import ymovies_mv
 
 from resources.lib.sources import json_live
 from resources.lib.sources import ditto_live
@@ -59,7 +59,7 @@ class TestingMovies(unittest.TestCase):
         self.imdb = 'tt5165344'
         self.title = 'Rustom'
         self.year = '2016'
-        call = crazy4ad_mv_tv.source()
+        call = crazy4ad_mv.source()
         self.source(call)
 
     def test_desihdmovies(self):
@@ -169,13 +169,13 @@ class TestingMovies(unittest.TestCase):
         self.imdb = 'tt5165344'
         self.title = 'Rustom'
         self.year = '2016'
-        call = movieshd_mv_tv.source()
+        call = movieshd_mv.source()
         self.source(call)
     def test_rlsmovies_mv_tv(self):
-        call = rlsmovies_mv_tv.source()
+        call = rlsmovies_mv.source()
         self.source(call)
     def test_ymovies_mv_tv(self):
-        call = ymovies_mv_tv.source()
+        call = ymovies_mv.source()
         self.source(call)
 
 class TestingLive(unittest.TestCase):
