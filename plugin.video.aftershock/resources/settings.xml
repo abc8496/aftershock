@@ -24,7 +24,7 @@
 
 	<category label="30862">
 		<setting id="apnaview" type="bool" label="ApnaView" default="true" />
-		<setting id="badtameezdil" type="bool" label="Bad" default="false" />
+		<setting id="badtameezdil" type="bool" label="Bad" default="true" />
 		<setting id="cinefun" type="bool" label="CineFun" visible="true" default="true" />
 		<setting id="crazy4ad" type="bool" label="CRAZY4AD" visible="false" default="true" />
 		<setting id="desihdmovies" type="bool" label="DesiHDMovies" default="true" />
