@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.aftershocknow.guide" name="Aftershock Now" version="0.1.0" provider-name="IDev">
+<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.0.0" provider-name="IDev">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="plugin.video.aftershock" version="4.2.4" optional="false" />
+		<import addon="plugin.video.aftershock" version="4.2.6" optional="false" />
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
             <provides>executable</provides>
     </extension>
-    <!--<extension point="xbmc.service" library="service.py" start="login"/>-->
-	<extension point="xbmc.addon.metadata">
+    <extension point="xbmc.addon.metadata">
 
 		<description lang="en">The AftershockNow Guide provides an EPG for the AftershockNow addon.</description>
 		
@@ -19,6 +18,6 @@
 		<license>GPLv2</license>
         <forum></forum>
         <website>http://www.facebook.com/aftershockpy</website>
-		<email>aftershockpu@gmail.com</email>
+		<email>aftershockpy@gmail.com</email>
 	</extension>
 </addon>

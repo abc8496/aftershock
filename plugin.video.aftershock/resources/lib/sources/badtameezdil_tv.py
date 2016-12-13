@@ -40,6 +40,7 @@ class source:
 
     def get_show(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
         if tvshowurl:
+
             return tvshowtitle
 
     def get_episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
@@ -96,7 +97,6 @@ class source:
     def resolve(self, url, resolverList):
         try:
             logger.debug('ORIGINAL URL [%s]' % url, __name__)
-            #url = urlparse.urlparse(url).path
 
             r = resolvers.request(url, resolverList)
             if not r :

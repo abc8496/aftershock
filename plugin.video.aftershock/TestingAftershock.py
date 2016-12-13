@@ -35,6 +35,7 @@ from resources.lib.sources import ditto_live
 from resources.lib.sources import dynns_live
 from resources.lib.sources import cinefun_live
 from resources.lib.sources import swift_live
+from resources.lib.sources import iptv_live
 
 
 class TestingMovies(unittest.TestCase):
@@ -231,6 +232,10 @@ class TestingLive(unittest.TestCase):
 
     def test_swiftGenerateJSON(self):
         call = swift_live.source()
+        self.source(call, True)
+
+    def test_iptvGenerateJSON(self):
+        call = iptv_live.source()
         self.source(call, True)
 
     def test_cinefunZeeTVHD(self):

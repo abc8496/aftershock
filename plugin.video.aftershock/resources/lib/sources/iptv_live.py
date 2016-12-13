@@ -19,7 +19,7 @@
 '''
 
 
-import re, urllib, urlparse
+import re, urllib, urlparse, json
 from resources.lib.libraries import client
 from resources.lib.libraries import control
 from resources.lib.libraries import logger
@@ -29,11 +29,9 @@ from resources.lib.libraries.liveParser import *
 
 class source:
     def __init__(self):
-        self.base_link = [{'source':'mc-ts','link':'http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u'},
-                          {'source':'itf-ts','link':'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1'},
-                          {'source':'str-hls','link':'http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls'},
-                          {'source':'mc-hls','link':'http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls'},
-                          {'source':'itf-hls','link':'http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1'}]
+        #self.base_location = 'https://offshoregit.com/vineegu/aftershock-repo/iptv_base.json'
+        self.base_location = 'https://raw.githubusercontent.com/aftershockpy/aftershock-repo/master/iptv_base.json'
+        self.base_link = []
         self.list = []
         self.fileName = 'iptv.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
@@ -51,7 +49,20 @@ class source:
 
             if generateJSON:
                 logger.debug('Generating %s JSON' % __name__, __name__)
+                '''
+                filePath = os.path.join(control.dataPath, self.fileName)
+                with open(filePath, 'w') as outfile:
+                    json.dump(self.base_link, outfile, sort_keys=True, indent=2)
+
+                filename = open(self.filePath)
+                result = filename.read()
+                filename.close()
+
+                self.base_link = json.loads(result)
+                '''
                 channelList = {}
+                result = client.request(self.base_location)
+                self.base_link = json.loads(result)
                 for item in self.base_link:
                     try:
                         type = item['source']

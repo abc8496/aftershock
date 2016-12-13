@@ -99,7 +99,7 @@ msgid "Remember to clear the cache when you change source"
 msgstr ""
 
 msgctxt "#30110"
-msgid "Update program information on XBMC startup"
+msgid "Update program information on Kodi startup"
 msgstr ""
 
 msgctxt "#30111"
@@ -343,7 +343,7 @@ msgid "Recordings"
 msgstr ""
 
 msgctxt "#30308"
-msgid "Quit"
+msgid "Go To Now"
 msgstr ""
 
 #empty strings from id 30309 to 30399
@@ -431,7 +431,7 @@ msgid "Browse..."
 msgstr ""
 
 msgctxt "#30611"
-msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in Kodi."
 msgstr ""
 
 #empty strings from id 30612 to 30619
