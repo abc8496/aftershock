@@ -530,11 +530,11 @@ class sources:
         except:
             pass
 
-        if name == None:
-            retValue, sources = call.getLiveSource()
-        else:
-            name = name.upper()
-            retValue = 0
+        logger.debug('Calling getLiveSource for %s' % call, __name__)
+        retValue = 0
+        retValue, sources = call.getLiveSource()
+        logger.debug('Finished getLiveSource for %s' % call, __name__)
+        if not name == None : name = name.upper()
 
         if retValue == 1:
             try:
@@ -559,7 +559,7 @@ class sources:
             except Exception as e:
                 logger.error(e.message)
                 pass
-        elif retValue == 0:
+        elif retValue == 0 and name != None:
             try:
                 sources = []
                 dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND imdb_id = '%s' AND season = '%s'" % (source, name, 'live'))
@@ -589,7 +589,6 @@ class sources:
                     self.sources.append(sources)
             return self.sources
         except Exception as e:
-
             logger.error('(%s) Exception Live sources : %s' % (call.__class__, e.args))
             pass
     def getLivePoster(self, source):

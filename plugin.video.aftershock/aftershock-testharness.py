@@ -138,32 +138,28 @@ try :
 
 
     from resources.lib.sources import sources
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
-    #url = einthusan_mv.source().get_sources('9068')
-    #result = client.request(url[0]['url'])
-    #if result == None: raise Exception()
-    #resolvers.request('http://playu.net/embed-azyk92idrbcj-700x440.html', None)
-    #debrid.resolver('http://www.dailymotion.com/embed/video/x50xm71', 'realdebrid')
-    #debrid.resolve('http://www.dailymotion.com/video/x29cn4o', 'realdebrid')
-    #tvshows.tvshows().get(url, provider=provider, network=name)
-    # test search sources
-    #source = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
-    #from resources.lib.indexers import movies
-    #idx = True
+    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
+
     #movies.movies().get(url, idx, provider, lang)
+
     #sources.sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
+
     #from resources.lib.indexers import tvshows
     #tvshows.tvshows().get(url, provider=provider, network=name)
     #episodes.episodes().get('Bigg Boss', year, imdb, tmdb, tvdb, tvrage, provider='yodesi_tv', url='http://www.yodesi.net/category/colors/bigg-boss-season-10/')
     #from resources.lib.sources import filmywap_mv
     #filmywap_mv.source().get_sources('abc')
 
-    #season = 'Bigg Boss Season 9'.lower()
-    #season = re.compile('[0-9]+').findall(season)[0]
-    #print season
+    from resources.lib.sources import badtameezdil_tv
+    url = 'http://badtameezdil.net/watch-video-bigg-boss-10-14th-december-2016-full-episode-60/'
+    badtameezdil_tv.source().get_sources(url)
+    from resources.lib.sources import dynns_live
+    #dynns_live.source().getLiveSource()
+    url = 'http://live1.dyndns.tv:8081/maid/lamhe/playlist.m3u8'
+    dynns_live.source().resolve(url, None)
 
     from resources.lib.indexers import livetv
-    #livetv.channels().get()
+    livetv.channels().get()
 
     from resources.lib.sources import cinefun_live
     #cinefun_live.source().resolve("95616", None)
