@@ -4,19 +4,7 @@
     "source": "mc-ts"
   }, 
   {
-    "link": "http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=ts|User-Agent=iptvrestream.net1", 
-    "source": "itf-ts"
-  }, 
-  {
-    "link": "http://foxiptv.stream.tf:5050/get.php?username=123456&password=123456&type=m3u&output=hls", 
-    "source": "str-hls"
-  }, 
-  {
     "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls", 
     "source": "mc-hls"
-  }, 
-  {
-    "link": "http://IPTVFREE1.COM:6969/get.php?username===>_www.iptvrestream.net_<==&password===>_www.iptvrestream.net_<==&type=m3u&output=hls|User-Agent=iptvrestream.net1", 
-    "source": "itf-hls"
   }
 ]

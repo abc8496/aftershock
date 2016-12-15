@@ -136,15 +136,20 @@ try :
     from resources.lib import resolvers
     from resources.lib.sources import einthusan_mv
 
+    from resources.lib.libraries import user
+
+    #user.registerUser('vineetg@gmail.com')
+    valid = user.validateUser('vineetg@gmail.com')
+
 
     from resources.lib.sources import sources
-    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
+    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
 
     #movies.movies().get(url, idx, provider, lang)
 
     #sources.sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url)
 
-    #from resources.lib.indexers import tvshows
+    from resources.lib.indexers import tvshows
     #tvshows.tvshows().get(url, provider=provider, network=name)
     #episodes.episodes().get('Bigg Boss', year, imdb, tmdb, tvdb, tvrage, provider='yodesi_tv', url='http://www.yodesi.net/category/colors/bigg-boss-season-10/')
     #from resources.lib.sources import filmywap_mv

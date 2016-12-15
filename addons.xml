@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.aftershock" name="Aftershock" version="4.2.6.1" provider-name="Aftershock">
+<addon id="plugin.video.aftershock" name="Aftershock" version="4.2.6.2" provider-name="Aftershock">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
         <import addon="repository.aftershock" version="2.0.1"/>
@@ -12,6 +12,7 @@
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
+    <extension point="xbmc.python.module" library="." />
     <extension point="xbmc.addon.metadata">
     <summary lang="en">Watch Hindi Movies &amp; TV Shows</summary>
     <description lang="en">Addon to browse and play a wide selection of Desi Movies, TV Shows and Live Streams. The author doesn't have any affiliation with the content providers nor uploads any content to the providers.</description>
