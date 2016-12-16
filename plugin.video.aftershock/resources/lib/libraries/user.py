@@ -29,34 +29,13 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-def registerUser(user, emailAddress, expiresInDays=180):
-    try:
-        control.makeFile(control.dataPath)
-        userFile = os.path.join(control.dataPath, control.userFile.split('/')[-1])
-        dbcon = database.connect(userFile)
-        dbcur = dbcon.cursor()
-
-        dbcur.execute("CREATE TABLE IF NOT EXISTS af_users (""user TEXT, ""email TEXT, ""reg_date TEXT, ""expires TEXT, ""added TEXT, ""UNIQUE(user, email)"");")
-        t = int(time.time())
-        expires = t + (int(expiresInDays) * 3600 * 24)
-
-        import hashlib
-        m = hashlib.md5()
-        m.update(emailAddress.lower())
-        emailMd5 = m.hexdigest()
-
-        dbcur.execute("INSERT INTO af_users Values (?, ?, ?, ?, ?)", (user, emailMd5, t, expires, t))
-        dbcon.commit()
-    except Exception as e:
-        logger.error(e)
-        pass
-
 def validateUser(emailAddress=None, showRegisteration=False):
     try:
         url = None
         if (emailAddress == None or emailAddress == ''):
             emailAddress = control.setting('user.email')
         if (emailAddress == None or emailAddress == '') and showRegisteration:
+            control.dialog.ok(control.addonInfo('name'), "User not registered. Please provide the email address used to make the donation")
             t = control.lang(30275).encode('utf-8')
             k = control.keyboard('', t) ; k.doModal()
             emailAddress = k.getText() if k.isConfirmed() else None
@@ -72,6 +51,7 @@ def validateUser(emailAddress=None, showRegisteration=False):
     except Exception as e:
         logger.error(e)
         control.dialog.ok(control.addonInfo('name'), "User not registered. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
+        control.setSetting('user.email', '')
         return (control.INVALID, url)
 
 def validate(emailAddress):
