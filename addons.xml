@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.aftershock" name="Aftershock" version="4.2.6.6" provider-name="Aftershock">
+<addon id="plugin.video.aftershock" name="Aftershock" version="4.2.6.7" provider-name="Aftershock">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
         <import addon="repository.aftershock" version="2.0.1"/>
@@ -8,7 +8,7 @@
         <import addon="script.module.urlresolver"  version="3.0.21"/>
 		<import addon="script.module.metahandler"  version="1.0.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
-        <import addon="script.aftershocknow.guide" version="1.1.0" optional="true"/>
+        <import addon="script.aftershocknow.guide" version="1.1.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
