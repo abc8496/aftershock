@@ -805,9 +805,9 @@ class sources:
         if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and 'debrid' in i]
         if quality == '0' or quality == '1': filter += [i for i in self.sources if i['quality'] == 'HD' and not 'debrid' in i]
         filter += [i for i in self.sources if i['quality'] == 'SD' and not 'debrid' in i]
-        if len(filter) < 25: filter += [i for i in self.sources if i['quality'] == 'SCR']
-        if len(filter) < 25:filter += [i for i in self.sources if i['quality'] == 'CAM']
-        if len(filter) < 25:filter += [i for i in self.sources if i['quality'] == '']
+        if len(filter) < 35: filter += [i for i in self.sources if i['quality'] == 'SCR']
+        if len(filter) < 35:filter += [i for i in self.sources if i['quality'] == 'CAM']
+        if len(filter) < 35:filter += [i for i in self.sources if i['quality'] == '']
         self.sources = filter
 
         logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.sources), __name__)

@@ -66,16 +66,19 @@ def validateUser(emailAddress, showRegisteration=False):
         dbcur.execute("SELECT * FROM af_users WHERE email = '%s'" % (emailAddress.lower()))
         match = dbcur.fetchone()
 
+        logger.debug('emailAddress : %s Match : %s' % (emailAddress, match))
+
         t1 = int(match[2])
         t2 = int(time.time())
         expired = t1 - t2
         expiredDays = expired / (3600 * 24)
-        if expired <=0 :
+        if expired <= 0 :
             control.dialog.ok(control.addonInfo('name'), "Your access has expired. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
             return control.EXPIRED
         else:
-            control.setSetting['user.email'] = emailAddress
+            control.setSetting('user.email', emailAddress)
             return control.VALID
-    except:
+    except Exception as e:
+        logger.error(e)
         control.dialog.ok(control.addonInfo('name'), "User not registered. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
         return control.INVALID
