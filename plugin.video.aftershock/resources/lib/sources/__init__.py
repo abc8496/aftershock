@@ -523,6 +523,11 @@ class sources:
             pass
 
     def getLiveSource(self, name, source, call):
+        from resources.lib.libraries import user
+        valid, url = user.validateUser(control.setting('user.email'))
+        if valid <= 0:
+            return
+
         try:
             dbcon = database.connect(self.sourceFile)
             dbcur = dbcon.cursor()

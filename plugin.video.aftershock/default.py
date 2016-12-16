@@ -160,7 +160,8 @@ elif action == 'liveEPGNavigator':
     from resources.lib.libraries import user
     analytics.sendAnalytics('%s-EPG' % action)
     email = control.setting('user.email')
-    if user.validateUser(email, True) > 0:
+    valid, url = user.validateUser(email, True)
+    if valid > 0:
         xbmc.executebuiltin("RunAddon(script.aftershocknow.guide)")
 
 elif action == 'tvshows':

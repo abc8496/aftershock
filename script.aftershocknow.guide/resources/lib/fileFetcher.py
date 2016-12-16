@@ -29,15 +29,12 @@ import urllib2
 import datetime
 import zlib
 
+from lib.libraries import user
 if xbmc.getCondVisibility('System.HasAddon(plugin.video.aftershock)'):
-    ustvnow_type = xbmcaddon.Addon('plugin.video.aftershock')
-    #if ustvnow_type.getSetting('free_package') == 'true':
-    #    MAIN_URL = 'http://mhancoc7.offshorepastebin.com/guide/free/'
-    #else:
-    #    MAIN_URL = 'http://mhancoc7.offshorepastebin.com/guide/premium/'
-    MAIN_URL = 'https://offshoregit.com/vineegu/aftershock-repo/guides/'
+    aftershock = xbmcaddon.Addon('plugin.video.aftershock')
+    valid, MAIN_URL = user.validateUser(aftershock.getSetting('user.email'))
 else:
-    MAIN_URL = 'https://offshoregit.com/vineegu/aftershock-repo/guides/'
+    MAIN_URL = ''
 
 class FileFetcher(object):
     INTERVAL_ALWAYS = 0

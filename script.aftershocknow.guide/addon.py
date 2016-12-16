@@ -18,15 +18,22 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
-from resources.lib import gui
+
+import sys, xbmcaddon
 
 try:
+    from lib.libraries import user
+    from resources.lib import gui
+    valid, url = user.validateUser(xbmcaddon.Addon('plugin.video.aftershock').getSetting('user.email'))
+    if valid <= 0:
+        import xbmcgui
+        xbmcgui.Dialog().ok('Aftershock Now', "Please register your email in Aftershock. [CR][CR] [COLOR red]Video->Add-ons->Aftershock->Live (EPG)[/COLOR]")
+        sys.exit(0)
     w = gui.TVGuide()
     w.doModal()
     del w
 
 except:
-    import sys
     import traceback as tb
     (etype, value, traceback) = sys.exc_info()
     tb.print_exception(etype, value, traceback)
