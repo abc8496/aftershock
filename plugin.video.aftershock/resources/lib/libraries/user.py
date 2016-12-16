@@ -43,8 +43,8 @@ def validateUser(emailAddress=None, showRegisteration=False):
             return (control.INVALID, url)
 
         valid = cache.get(validate, 168, emailAddress, table='live_cache')
-        if valid < 0 :
-            raise Exception()
+        if valid <= 0 :
+            return valid, ''
         url = base64.b64decode('aHR0cHM6Ly9vZmZzaG9yZWdpdC5jb20vdmluZWVndS9hZnRlcnNob2NrLXJlcG8vZ3VpZGVzLw==')
         return (valid, url)
 
@@ -76,7 +76,7 @@ def validate(emailAddress):
     t2 = int(time.time())
     expired = t1 - t2
     expiredDays = expired / (3600 * 24)
-    if expired <= 0 :
+    if expired < 0 :
         control.dialog.ok(control.addonInfo('name'), "Your access has expired. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
         return control.EXPIRED
     else:
