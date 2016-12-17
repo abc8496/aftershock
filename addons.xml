@@ -8,7 +8,7 @@
         <import addon="script.module.urlresolver"  version="3.0.21"/>
 		<import addon="script.module.metahandler"  version="1.0.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
-        <import addon="script.aftershocknow.guide" version="1.1.0"/>
+        <import addon="script.aftershocknow.guide" version="1.1.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -55,11 +55,11 @@
 	</extension>
 </addon>
 
-<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.1.0" provider-name="IDev">
+<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.1.1" provider-name="IDev">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="plugin.video.aftershock" version="4.2.6.4"/>
+		<import addon="plugin.video.aftershock" version="4.3.0" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
             <provides>executable</provides>
