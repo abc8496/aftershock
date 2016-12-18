@@ -156,10 +156,14 @@ try :
 
     '''
     #12/18/2016
-    user.registerUser('Vasudevan Kadambi', 'vkadambi@gmail.com')
-    user.registerUser('Sachin Patel', 'sachin27581@gmail.com')
-    user.registerUser('Rajesh Kumar', 'rrajeshh@gmail.com')
+    #user.registerUser('Vasudevan Kadambi', 'vkadambi@gmail.com')
+    #user.registerUser('Sachin Patel', 'sachin27581@gmail.com')
+    #user.registerUser('Rajesh Kumar', 'rrajeshh@gmail.com')
     #valid, url = user.validateUser('vineetg@gmail.com')
+
+    user.registerUser('Arpita Lakhotia', 'arpita1586@yahoo.com')
+    user.registerUser('Rakshit Desai', 'raksspam@yahoo.com')
+
 
 
     from resources.lib.sources import sources

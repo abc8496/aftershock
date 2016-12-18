@@ -1,10 +1,18 @@
 [
   {
     "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u", 
-    "source": "mc-ts"
+    "source": "mc-ts-ja"
   }, 
   {
     "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls", 
-    "source": "mc-hls"
+    "source": "mc-hls-ja"
+  }, 
+  {
+    "link": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u",
+    "source": "mc-ts-ni"
+  }, 
+  {
+    "link": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u&output=hls",
+    "source": "mc-hls-ni"
   }
 ]

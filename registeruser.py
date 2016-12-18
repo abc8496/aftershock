@@ -29,7 +29,7 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-def registerUser(user, emailAddress, expiresInDays=180):
+def registerUser(user, emailAddress, expiresInDays=365):
     try:
         control.makeFile(control.dataPath)
         userFile = os.path.join(control.dataPath, control.userFile.split('/')[-1])
