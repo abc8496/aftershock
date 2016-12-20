@@ -1,18 +1,33 @@
 [
   {
-    "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u", 
-    "source": "mc-ts-ja"
+    "link": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u",
+    "source": "st-ts",
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
+  },
+  {
+    "link_1": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u&output=hls",
+    "source_1": "st-hls"
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
+  },
+  {
+    "link_1": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u",
+    "source_1": "mc-ts-ja"
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
   }, 
   {
-    "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls", 
-    "source": "mc-hls-ja"
+    "link_1": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u&output=hls",
+    "source_1": "mc-hls-ja"
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
   }, 
   {
-    "link": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u",
-    "source": "mc-ts-ni"
+    "link_1": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u",
+    "source_1": "mc-ts-ni"
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
   }, 
   {
-    "link": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u&output=hls",
-    "source": "mc-hls-ni"
+    "link_1": "http://iptv.monkeycline.com:25461/get.php?username=nicola&password=nicola&type=m3u&output=hls",
+    "source_1": "mc-hls-ni"
+    "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\s*:\s*(.*)\s*(.*)"
   }
+
 ]

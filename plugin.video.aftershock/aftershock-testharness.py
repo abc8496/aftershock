@@ -26,13 +26,13 @@ try :
     params = {'action': 'play', 'content': 'live', 'name': 'ABP NEWS'}
 
     params = {'action': 'play', 'content': 'live', 'name': '& PICTURE HD'}
-    params = {'tmdb': '0', 'episode': '0', 'name': '12th December 2016', 'title': '12th December 2016', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "12th December 2016", "url": "threads/987786-Bigg-Boss-10-12th-December-2016-Watch-Online?s=cc583847a54ad97a7ef547a9da3fcf8f", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=cc583847a54ad97a7ef547a9da3fcf8f", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "12th December 2016"}', 'imdb': '0', 't': '20161212203135593000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
-    params = {'tmdb': '0', 'episode': '0', 'name': '10th December 2016', 'title': '10th December 2016', 'tvdb': '0', 'season': '9', 'tvshowtitle': 'Jhalak Dikhhla Jaa Season 9', 'date': '0', 'meta': '{"tvshowurl": "forums/4034-Jhalak-Dikhhla-Jaa-Season-9", "title": "10th December 2016", "url": "threads/986369-Jhalak-Dikhhla-Jaa-Season-9-10th-December-2016-Watch-Online?s=584dc5e1564eed456f2a25be7f86e6ea", "season": "9", "tvshowtitle": "Jhalak Dikhhla Jaa Season 9", "next": "forums/4034-Jhalak-Dikhhla-Jaa-Season-9/page2?s=584dc5e1564eed456f2a25be7f86e6ea", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Jhalak+Dikhhla+Jaa+Season+9", "name": "10th December 2016"}', 'imdb': '0', 't': '20161213000802688000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+    #params = {'tmdb': '0', 'episode': '0', 'name': '12th December 2016', 'title': '12th December 2016', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "12th December 2016", "url": "threads/987786-Bigg-Boss-10-12th-December-2016-Watch-Online?s=cc583847a54ad97a7ef547a9da3fcf8f", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=cc583847a54ad97a7ef547a9da3fcf8f", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "12th December 2016"}', 'imdb': '0', 't': '20161212203135593000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+    #params = {'tmdb': '0', 'episode': '0', 'name': '10th December 2016', 'title': '10th December 2016', 'tvdb': '0', 'season': '9', 'tvshowtitle': 'Jhalak Dikhhla Jaa Season 9', 'date': '0', 'meta': '{"tvshowurl": "forums/4034-Jhalak-Dikhhla-Jaa-Season-9", "title": "10th December 2016", "url": "threads/986369-Jhalak-Dikhhla-Jaa-Season-9-10th-December-2016-Watch-Online?s=584dc5e1564eed456f2a25be7f86e6ea", "season": "9", "tvshowtitle": "Jhalak Dikhhla Jaa Season 9", "next": "forums/4034-Jhalak-Dikhhla-Jaa-Season-9/page2?s=584dc5e1564eed456f2a25be7f86e6ea", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Jhalak+Dikhhla+Jaa+Season+9", "name": "10th December 2016"}', 'imdb': '0', 't': '20161213000802688000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
 
     # desihit
-    params = {'tmdb': '0', 'episode': '0', 'name': '15th December 2016', 'title': '15th December 2016', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "15th December 2016", "url": "threads/989694-Bigg-Boss-10-15th-December-2016-Watch-Online?s=b4f2b23f90f0fbf473f679887a785b0b", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=b4f2b23f90f0fbf473f679887a785b0b", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "15th December 2016"}', 'imdb': '0', 't': '20161216013558647000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+    #params = {'tmdb': '0', 'episode': '0', 'name': '15th December 2016', 'title': '15th December 2016', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"tvshowurl": "forums/3994-Bigg-Boss-10", "title": "15th December 2016", "url": "threads/989694-Bigg-Boss-10-15th-December-2016-Watch-Online?s=b4f2b23f90f0fbf473f679887a785b0b", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=b4f2b23f90f0fbf473f679887a785b0b", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "name": "15th December 2016"}', 'imdb': '0', 't': '20161216013558647000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
     #params = {'tmdb': '0', 'episode': '0', 'name': '15th December 2016', 'title': '15th December 2016', 'tvdb': '0', 'season': '0', 'tvshowtitle': 'Yeh Rishta Kya Kehlata Hai', 'date': '0', 'meta': '{"tvshowurl": "forums/3943-Yeh-Rishta-Kya-Kehlata-Hai", "title": "15th December 2016", "url": "threads/989675-Yeh-Rishta-Kya-Kehlata-Hai-15th-December-2016-Watch-Online?s=b4f2b23f90f0fbf473f679887a785b0b", "tvshowtitle": "Yeh Rishta Kya Kehlata Hai", "next": "forums/3943-Yeh-Rishta-Kya-Kehlata-Hai/page2?s=b4f2b23f90f0fbf473f679887a785b0b", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Yeh+Rishta+Kya+Kehlata+Hai", "name": "15th December 2016"}', 'imdb': '0', 't': '20161216014224647000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
-    params = {'tmdb': '0', 'episode': '0', 'name': '11th December 2016', 'title': '11th December 2016', 'tvdb': '0', 'season': '5', 'tvshowtitle': 'Koffee With Karan Season 5 (Star World)', 'date': '0', 'meta': '{"name": "11th December 2016", "title": "11th December 2016", "url": "threads/986992-Koffee-With-Karan-Season-5-11th-December-2016-Watch-Online?s=b9f8288314dd3a877ab603c37d41a779", "season": "5", "tvshowtitle": "Koffee With Karan Season 5 (Star World)", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Koffee+With+Karan+Season+5+%28Star+World%29", "tvshowurl": "forums/4480-Koffee-With-Karan-Season-5-Star-World"}', 'imdb': '0', 't': '20161216020518662000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
+    #params = {'tmdb': '0', 'episode': '0', 'name': '11th December 2016', 'title': '11th December 2016', 'tvdb': '0', 'season': '5', 'tvshowtitle': 'Koffee With Karan Season 5 (Star World)', 'date': '0', 'meta': '{"name": "11th December 2016", "title": "11th December 2016", "url": "threads/986992-Koffee-With-Karan-Season-5-11th-December-2016-Watch-Online?s=b9f8288314dd3a877ab603c37d41a779", "season": "5", "tvshowtitle": "Koffee With Karan Season 5 (Star World)", "provider": "desirulez_mv_tv", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Koffee+With+Karan+Season+5+%28Star+World%29", "tvshowurl": "forums/4480-Koffee-With-Karan-Season-5-Star-World"}', 'imdb': '0', 't': '20161216020518662000', 'year': '0', 'action': 'play', 'tvrage': '0', 'alter': '0'}
 
 
     select = None
@@ -143,6 +143,12 @@ try :
 
     from resources.lib.libraries import user
 
+    result = '#EXTINF:-1,|VIP|HINDI:ZOOM\nhttp://live.softiptv.com:9900/live/525/525/17682.m3u8\n#EXTINF:-1,|VIP|HINDI:ZeeTv HD INddia\nhttp://live.softiptv.com:9900/live/525/525/17683.m3u8\n#EXTINF:-1,|VIP|HINDI:Zee Action\nnhttp://live.softiptv.com:9900/live/525/525/17684.m3u8'
+    reg = '#EXTINF:-1,.*(Yupp|in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI):(.*)\s*(.*)'
+    result = result.replace('\r', '')
+    result = re.findall(reg, result, re.IGNORECASE)
+    print result
+
     '''
     #12/16/2016
     user.registerUser('Charanjit Singh', 'finetouchconstructions@yahoo.com', 730)
@@ -153,18 +159,36 @@ try :
     user.registerUser('Abhinav Halen', 'ab_hal@hotmail.com')
     user.registerUser('Sougata Deb', 'sdeb7381@gmail.com')
     user.registerUser('Vineet Gupta', 'vineetg@gmail.com', 3650)
-
     '''
     #12/18/2016
     #user.registerUser('Vasudevan Kadambi', 'vkadambi@gmail.com')
     #user.registerUser('Sachin Patel', 'sachin27581@gmail.com')
     #user.registerUser('Rajesh Kumar', 'rrajeshh@gmail.com')
     #valid, url = user.validateUser('vineetg@gmail.com')
+    #user.registerUser('Arpita Lakhotia', 'arpita1586@yahoo.com')
+    #user.registerUser('Rakshit Desai', 'raksspam@yahoo.com')
+    #user.registerUser('Yasin Chinoy', 'yasinchinoy@yahoo.com')
+    #user.registerUser('Kalyan Makkena', 'ftpkalyan@gmail.com')
 
-    user.registerUser('Arpita Lakhotia', 'arpita1586@yahoo.com')
-    user.registerUser('Rakshit Desai', 'raksspam@yahoo.com')
+    #12/19/2016
+    #user.registerUser('Jitesh Ranavaya', 'jiteshranavaya@live.co.uk')
+    #user.registerUser('Hiren Patel', 'patel001@me.com')
+    #user.registerUser('Priyang Vyas','vyasp13@gmail.com')
+    #user.registerUser('Prashant Khatiwada', 'p.khatiwada@outlook.com')
+    #user.registerUser('Huzefa Talib','hstalib@hotmail.com')
+    #user.registerUser('Hiren Srivastava', 'hirubhaiya@gmail.com')
+    #user.registerUser('Sandesh Ghawghawe','sg1851@hotmail.com')
+    #user.registerUser('Romi Ahluwalia','romiahluwalia53@gmail.com')
 
+    #12/20/2016
+    #user.registerUser('Rajesh Assi','rajeshratna@msn.com')
+    #user.registerUser('Jignesh Gohel','jignesh.gohel@gmail.com')
+    #user.registerUser('Avinash Kunigal Nagabhushan','avinashkn.infa@gmail.com')
+    #user.registerUser('Prasenjit Saha','prasenjitsh@icloud.com')
+    #user.registerUser('Amsun','amsun.innovations@gmail.com')
 
+    from resources.lib.libraries import livemeta
+    livemeta.source().getLiveNames()
 
     from resources.lib.sources import sources
     sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)

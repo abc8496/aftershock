@@ -36,15 +36,14 @@ class source:
             artPath = control.logoPath()
 
             if control.setting('livelocal') == 'true':
-                self.fileName = 'live-logos-new.json'
+                self.fileName = 'live-logos-new.local'
             else :
                 self.fileName = 'live-logos-new.json'
+                fileFetcher = FileFetcher(self.fileName, control.addon)
 
-            fileFetcher = FileFetcher(self.fileName, control.addon)
-
-            retValue = fileFetcher.fetchFile()
-            if retValue < 0 :
-                raise Exception()
+                retValue = fileFetcher.fetchFile()
+                if retValue < 0 :
+                    raise Exception()
 
             filePath = os.path.join(control.dataPath, self.fileName)
             file = open(filePath)
@@ -66,6 +65,33 @@ class source:
                 else :
                     self.list[channel] = os.path.join(artPath, posterUrl)
                 #print self.list[channel]
+            return self.list
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
+    def getLiveNames(self):
+        try :
+            logger.debug('names local : %s' % control.setting('livelocal'), __name__)
+
+            if control.setting('livelocal') == 'true':
+                self.fileName = 'live-chan.local'
+            else :
+                self.fileName = 'live-chan.json'
+                fileFetcher = FileFetcher(self.fileName, control.addon)
+
+                retValue = fileFetcher.fetchFile()
+                if retValue < 0 :
+                    raise Exception()
+
+            filePath = os.path.join(control.dataPath, self.fileName)
+            file = open(filePath)
+            result = file.read()
+            file.close()
+
+            self.list = json.loads(result)
+
             return self.list
         except:
             import traceback

@@ -35,7 +35,7 @@ def validateUser(emailAddress=None, showRegisteration=False):
         if (emailAddress == None or emailAddress == ''):
             emailAddress = control.setting('user.email')
         if (emailAddress == None or emailAddress == '') and showRegisteration:
-            control.dialog.ok(control.addonInfo('name'), "User not registered. Please provide the email address used to make the donation")
+            control.dialog.ok(control.addonInfo('name'), "[COLOR red]User not registered.[/COLOR] [CR]Please provide the email address used to make the donation")
             t = control.lang(30275).encode('utf-8')
             k = control.keyboard('', t) ; k.doModal()
             emailAddress = k.getText() if k.isConfirmed() else None
@@ -50,7 +50,7 @@ def validateUser(emailAddress=None, showRegisteration=False):
 
     except Exception as e:
         logger.error(e)
-        control.dialog.ok(control.addonInfo('name'), "User not registered. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
+        control.dialog.ok(control.addonInfo('name'), "[COLOR red]User not registered.[/COLOR] [CR]Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
         control.setSetting('user.email', '')
         return (control.INVALID, url)
 
@@ -77,7 +77,7 @@ def validate(emailAddress):
     expired = t1 - t2
     expiredDays = expired / (3600 * 24)
     if expired < 0 :
-        control.dialog.ok(control.addonInfo('name'), "Your access has expired. Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
+        control.dialog.ok(control.addonInfo('name'), "[COLOR red]Your access has expired[/COLOR][CR]Please make a donation (min. $5) to aftershockpy@gmail.com via PayPal to get access !!")
         return control.EXPIRED
     else:
         if control.setting('user.email') == '':
