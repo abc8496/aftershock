@@ -55,6 +55,7 @@ class sources:
         self.debridDict = debrid.debridDict()
         self.itemProperty = "%s.itemProperty" % control.addonInfo('name')
         self.metaProperty = "%s.itemMeta" % control.addonInfo('name')
+        self.epgPlayProperty = "%s.epgPlayProperty" % control.addonInfo('name')
 
     def addItem(self, title, content):
         try:
@@ -62,6 +63,8 @@ class sources:
 
             items = control.window.getProperty(self.itemProperty)
             items = json.loads(items)
+
+            epgPlay = control.window.getProperty(self.epgPlayProperty)
 
             if items == []: raise Exception()
 
@@ -109,6 +112,8 @@ class sources:
                 syssource = urllib.quote_plus(json.dumps([items[i]]))
 
                 sysurl = '%s?action=playItem&title=%s&source=%s&content=%s' % (sysaddon, systitle, syssource, content)
+                if epgPlay:
+                    sysurl += '&epgPlay=%s' % epgPlay
 
                 item = control.item(label=label)
 
@@ -132,7 +137,7 @@ class sources:
             logger.error(e.message)
             control.infoDialog(control.lang(30501).encode('utf-8'))
 
-    def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select=None):
+    def play(self, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select=None, epgPlay=None):
         try:
             if not control.infoLabel('Container.FolderPath').startswith('plugin://'):
                 control.playlist.clear()
@@ -174,6 +179,9 @@ class sources:
                     control.window.clearProperty(self.metaProperty)
                     control.window.setProperty(self.metaProperty, meta)
 
+                    control.window.clearProperty(self.epgPlayProperty)
+                    control.window.setProperty(self.epgPlayProperty, epgPlay)
+
                     control.sleep(200)
 
                     return control.execute('Container.Update(%s?action=addItem&title=%s&content=%s)' % (sys.argv[0], urllib.quote_plus(title.encode('utf-8')), content))
@@ -193,14 +201,15 @@ class sources:
             control.sleep(200)
 
             from resources.lib.libraries.player import player
-            player().run(content, name, url, year, imdb, tvdb, meta)
+            logger.debug('EPGPLAY %s' % epgPlay, __name__)
+            player().run(content, name, url, year, imdb, tvdb, meta, epgPlay)
 
             return url
         except Exception as e:
             logger.error(e.message)
             control.infoDialog(control.lang(30501).encode('utf-8'))
 
-    def playItem(self, content, title, source):
+    def playItem(self, content, title, source, epgPlay=None):
         try:
             control.resolve(int(sys.argv[1]), True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')
@@ -288,7 +297,7 @@ class sources:
                         control.infoDialog(items[i]['label'])
 
                     from resources.lib.libraries.player import player
-                    player().run(content, title, self.url, year, imdb, tvdb, meta)
+                    player().run(content, title, self.url, year, imdb, tvdb, meta, epgPlay)
 
                     return self.url
                 except:
@@ -347,6 +356,8 @@ class sources:
             for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source(), meta))
         elif content == 'live':
             self.getLivePoster('9X JALWA')
+            from resources.lib.libraries import livemeta
+            names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
             for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,channelName, re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 

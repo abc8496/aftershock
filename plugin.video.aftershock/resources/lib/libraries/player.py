@@ -18,7 +18,7 @@
 '''
 
 
-import re,json,time,xbmc
+import re,json,time,xbmc, sys
 
 from resources.lib.libraries import control
 from resources.lib.libraries import subtitles
@@ -29,7 +29,7 @@ class player(xbmc.Player):
     def __init__ (self):
         xbmc.Player.__init__(self)
 
-    def run(self, content, title, url, year, imdb, tvdb, meta):
+    def run(self, content, title, url, year, imdb, tvdb, meta, epgPlay=None):
 
         self.getVideoInfo(content, title, year, imdb, tvdb)
 
@@ -62,19 +62,22 @@ class player(xbmc.Player):
             item.setProperty('IsPlayable', 'true')
             playlist.add(url[i], item)
 
-        control.player.play(playlist)
+        if epgPlay :
+            control.player.play(url[0], item)
+        else:
+            control.player.play(playlist)
 
-        for i in range(0, 240):
-            if self.isPlayingVideo(): break
-            xbmc.sleep(1000)
-        while self.isPlayingVideo():
-            try: self.totalTime = self.getTotalTime()
-            except: pass
-            try: self.currentTime = self.getTime()
-            except: pass
-            xbmc.sleep(1000)
-        control.window.clearProperty('script.trakt.ids')
-        time.sleep(5)
+            for i in range(0, 240):
+                if self.isPlayingVideo(): break
+                xbmc.sleep(1000)
+            while self.isPlayingVideo():
+                try: self.totalTime = self.getTotalTime()
+                except: pass
+                try: self.currentTime = self.getTime()
+                except: pass
+                xbmc.sleep(1000)
+            control.window.clearProperty('script.trakt.ids')
+            time.sleep(5)
 
     def getVideoInfo(self, content, name, year, imdb, tvdb):
         try:
