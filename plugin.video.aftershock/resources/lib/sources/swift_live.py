@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-
+import re
 from resources.lib.libraries import client
 from resources.lib.libraries import logger
 from resources.lib.libraries import cache
@@ -55,7 +55,9 @@ class source:
                 url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=2' #2,8
 
                 result = client.request(url, headers=headers)
-                result = json.loads(result)['LIVETV']
+
+                result = re.compile("{\"LIVETV\":(.+?)}{\"LIVETV\"").findall(result)
+                result = json.loads(result[0])
                 channelList = {}
                 for channel in result:
                     title = channel['channel_title']
@@ -78,8 +80,6 @@ class source:
                 self.list = liveParser.parseFile(decode=False)
             return (generateJSON, self.list)
         except:
-            import traceback
-            traceback.print_exc()
             pass
 
     def getSwiftUserAgent(self):

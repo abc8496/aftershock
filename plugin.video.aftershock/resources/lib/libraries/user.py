@@ -28,6 +28,27 @@ try:
     from sqlite3 import dbapi2 as database
 except:
     from pysqlite2 import dbapi2 as database
+def registerUser(user, emailAddress, expiresInDays=365):
+    try:
+        control.makeFile(control.dataPath)
+        userFile = os.path.join(control.dataPath, control.userFile.split('/')[-1])
+        dbcon = database.connect(userFile)
+        dbcur = dbcon.cursor()
+
+        dbcur.execute("CREATE TABLE IF NOT EXISTS af_users (""user TEXT, ""email TEXT, ""reg_date TEXT, ""expires TEXT, ""added TEXT, ""UNIQUE(user, email)"");")
+        t = int(time.time())
+        expires = t + (int(expiresInDays) * 3600 * 24)
+
+        import hashlib
+        m = hashlib.md5()
+        m.update(emailAddress.lower())
+        emailMd5 = m.hexdigest()
+
+        dbcur.execute("INSERT INTO af_users Values (?, ?, ?, ?, ?)", (user, emailMd5, t, expires, t))
+        dbcon.commit()
+    except Exception as e:
+        logger.error(e)
+        pass
 
 def validateUser(emailAddress=None, showRegisteration=False):
     try:

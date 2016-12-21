@@ -143,12 +143,14 @@ try :
 
     from resources.lib.libraries import user
 
+
+    '''
     result = '#EXTINF:-1,|VIP|HINDI:ZOOM\nhttp://live.softiptv.com:9900/live/525/525/17682.m3u8\n#EXTINF:-1,|VIP|HINDI:ZeeTv HD INddia\nhttp://live.softiptv.com:9900/live/525/525/17683.m3u8\n#EXTINF:-1,|VIP|HINDI:Zee Action\nnhttp://live.softiptv.com:9900/live/525/525/17684.m3u8'
     reg = '#EXTINF:-1,.*(Yupp|in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI):(.*)\s*(.*)'
     result = result.replace('\r', '')
     result = re.findall(reg, result, re.IGNORECASE)
     print result
-
+    '''
     '''
     #12/16/2016
     user.registerUser('Charanjit Singh', 'finetouchconstructions@yahoo.com', 730)
@@ -186,12 +188,14 @@ try :
     #user.registerUser('Avinash Kunigal Nagabhushan','avinashkn.infa@gmail.com')
     #user.registerUser('Prasenjit Saha','prasenjitsh@icloud.com')
     #user.registerUser('Amsun','amsun.innovations@gmail.com')
+    #user.registerUser('Amit Kopal','ajnabi1975@yahoo.com')
+    #user.registerUser('Yadwinder Devgan','luckydevgun@gmail.com')
 
     from resources.lib.libraries import livemeta
-    livemeta.source().getLiveNames()
+    #livemeta.source().getLiveNames()
 
     from resources.lib.sources import sources
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
+    #sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
 
     #movies.movies().get(url, idx, provider, lang)
 
@@ -203,34 +207,34 @@ try :
     #from resources.lib.sources import filmywap_mv
     #filmywap_mv.source().get_sources('abc')
 
-    from resources.lib.sources import badtameezdil_tv
-    url = 'http://badtameezdil.net/watch-video-bigg-boss-10-14th-december-2016-full-episode-60/'
-    badtameezdil_tv.source().get_sources(url)
-    from resources.lib.sources import dynns_live
+    #from resources.lib.sources import badtameezdil_tv
+    #url = 'http://badtameezdil.net/watch-video-bigg-boss-10-14th-december-2016-full-episode-60/'
+    #badtameezdil_tv.source().get_sources(url)
+    #from resources.lib.sources import dynns_live
     #dynns_live.source().getLiveSource()
-    url = 'http://live1.dyndns.tv:8081/maid/lamhe/playlist.m3u8'
-    dynns_live.source().resolve(url, None)
+    #url = 'http://live1.dyndns.tv:8081/maid/lamhe/playlist.m3u8'
+    #dynns_live.source().resolve(url, None)
 
     from resources.lib.indexers import livetv
     livetv.channels().get()
 
-    from resources.lib.sources import cinefun_live
+    #from resources.lib.sources import cinefun_live
     #cinefun_live.source().resolve("95616", None)
 
-    from resources.lib.sources import iptv_live
+    #from resources.lib.sources import iptv_live
     #iptv_live.source().getLiveSource(True)
 
-    from resources.lib.libraries import control
+    #from resources.lib.libraries import control
     #control.delete('*.json')
 
-    from resources.lib.sources import swift_live
+    #from resources.lib.sources import swift_live
     #swift_live.source().resolve('http://163.172.142.242:8081/swiftiptv/9xjalwa/playlist.m3u8', None)
 
-    from resources.lib.libraries import cleantitle
-    print cleantitle.live('COLORS TV HD ( ENTERTAINMENT )')
-    print cleantitle.live('COLORS TV INDIA')
-    print cleantitle.live('COLORS TV APAC')
-    print cleantitle.live('COLORS TV (LOCAL TIME)')
+    #from resources.lib.libraries import cleantitle
+    #print cleantitle.live('COLORS TV HD ( ENTERTAINMENT )')
+    #print cleantitle.live('COLORS TV INDIA')
+    #print cleantitle.live('COLORS TV APAC')
+    #print cleantitle.live('COLORS TV (LOCAL TIME)')
 
 
 except:
