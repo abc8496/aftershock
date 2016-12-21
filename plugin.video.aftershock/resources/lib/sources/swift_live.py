@@ -115,7 +115,7 @@ class source:
             auth='Basic %s'%base64.b64encode(result["DATA"][0]["Password"])
 
         if postUrl:
-            return cache.get(self.getSwiftAuthToken, 1, postUrl, auth, stripping, table='live_cache')
+            return self.getSwiftAuthToken(postUrl, auth, stripping)
         return url
 
     def getSwiftAuthToken(self, postUrl, auth, stripping):
