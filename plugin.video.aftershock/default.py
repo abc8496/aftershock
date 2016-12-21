@@ -25,7 +25,6 @@ from resources.lib.libraries import analytics
 
 params = dict(urlparse.parse_qsl(sys.argv[2].replace('?','')))
 
-logger.debug('plugin_handle %s' % int(sys.argv[1]), __name__)
 logger.debug(params, __name__)
 
 try:
@@ -125,12 +124,6 @@ try:
     select = params.get('select')
 except:
     select=1
-try:
-    epgPlay = params.get('epgPlay')
-    epgPlay = int(sys.argv[1])
-except:
-    epgPlay=None
-
 
 if action == None:
     from resources.lib.indexers import navigator
@@ -198,11 +191,11 @@ elif action == 'download':
 
 elif action == 'play':
     from resources.lib.sources import sources
-    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select, epgPlay)
+    sources().play(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, url, select)
 
 elif action == 'playItem':
     from resources.lib.sources import sources
-    sources().playItem(content, title, source, epgPlay)
+    sources().playItem(content, title, source)
 
 elif action == 'trailer':
     from resources.lib.libraries import trailer
