@@ -151,45 +151,7 @@ try :
     result = re.findall(reg, result, re.IGNORECASE)
     print result
     '''
-    '''
-    #12/16/2016
-    user.registerUser('Charanjit Singh', 'finetouchconstructions@yahoo.com', 730)
-    user.registerUser('Charanjit Singh', 'charanjeet3usa@yahoo.com', 730)
-    user.registerUser('Bhaumik Modi', 'klu_9bk@yahoo.com')
-    user.registerUser('Nick Vachani', 'tollandtnpk@gmail.com')
-    user.registerUser('Anil Jakkaladki', 'anilkuj@yahoo.com')
-    user.registerUser('Abhinav Halen', 'ab_hal@hotmail.com')
-    user.registerUser('Sougata Deb', 'sdeb7381@gmail.com')
-    user.registerUser('Vineet Gupta', 'vineetg@gmail.com', 3650)
-    '''
-    #12/18/2016
-    #user.registerUser('Vasudevan Kadambi', 'vkadambi@gmail.com')
-    #user.registerUser('Sachin Patel', 'sachin27581@gmail.com')
-    #user.registerUser('Rajesh Kumar', 'rrajeshh@gmail.com')
-    #valid, url = user.validateUser('vineetg@gmail.com')
-    #user.registerUser('Arpita Lakhotia', 'arpita1586@yahoo.com')
-    #user.registerUser('Rakshit Desai', 'raksspam@yahoo.com')
-    #user.registerUser('Yasin Chinoy', 'yasinchinoy@yahoo.com')
-    #user.registerUser('Kalyan Makkena', 'ftpkalyan@gmail.com')
 
-    #12/19/2016
-    #user.registerUser('Jitesh Ranavaya', 'jiteshranavaya@live.co.uk')
-    #user.registerUser('Hiren Patel', 'patel001@me.com')
-    #user.registerUser('Priyang Vyas','vyasp13@gmail.com')
-    #user.registerUser('Prashant Khatiwada', 'p.khatiwada@outlook.com')
-    #user.registerUser('Huzefa Talib','hstalib@hotmail.com')
-    #user.registerUser('Hiren Srivastava', 'hirubhaiya@gmail.com')
-    #user.registerUser('Sandesh Ghawghawe','sg1851@hotmail.com')
-    #user.registerUser('Romi Ahluwalia','romiahluwalia53@gmail.com')
-
-    #12/20/2016
-    #user.registerUser('Rajesh Assi','rajeshratna@msn.com')
-    #user.registerUser('Jignesh Gohel','jignesh.gohel@gmail.com')
-    #user.registerUser('Avinash Kunigal Nagabhushan','avinashkn.infa@gmail.com')
-    #user.registerUser('Prasenjit Saha','prasenjitsh@icloud.com')
-    #user.registerUser('Amsun','amsun.innovations@gmail.com')
-    #user.registerUser('Amit Kopal','ajnabi1975@yahoo.com')
-    #user.registerUser('Yadwinder Devgan','luckydevgun@gmail.com')
 
     from resources.lib.libraries import livemeta
     #livemeta.source().getLiveNames()
