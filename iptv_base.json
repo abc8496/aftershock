@@ -9,7 +9,7 @@
     "link": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u&output=hls",
     "source": "st-hls",
     "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\\s*:\\s*(.*)\\s*(.*)",
-    "enabled":"false"
+    "enabled":"true"
   },
   {
     "link": "http://iptv.monkeycline.com:25461/get.php?username=jasne&password=jasne&type=m3u",

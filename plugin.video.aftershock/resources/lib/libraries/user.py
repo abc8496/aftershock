@@ -30,8 +30,8 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-INVALID_MESSAGE_URL = 'https://raw.githubusercontent.com/aftershockpy/aftershock-repo/master/invalid.txt'
-EXPIRED_MESSAGE_URL = 'https://raw.githubusercontent.com/aftershockpy/aftershock-repo/master/expired.txt'
+INVALID_MESSAGE_URL = 'https://offshoregit.com/vineegu/aftershock-repo/invalid.txt'
+EXPIRED_MESSAGE_URL = 'https://offshoregit.com/vineegu/aftershock-repo/expired.txt'
 
 def validateUser(emailAddress=None, showRegisteration=False):
     try:
