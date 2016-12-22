@@ -55,7 +55,7 @@
 	</extension>
 </addon>
 
-<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.1.4" provider-name="IDev">
+<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.1.5" provider-name="IDev">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>

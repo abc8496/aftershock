@@ -52,7 +52,7 @@ class source:
                 headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
                            'Authorization': 'Basic %s' % password}
 
-                url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=2' #2,8
+                url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=32' #2,8
 
                 result = client.request(url, headers=headers)
 

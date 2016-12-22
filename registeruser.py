@@ -1,3 +1,6 @@
+import sys, re, base64
+
+sys.argv = ['plugin.video.aftershock', '1']
 # -*- coding: utf-8 -*-
 
 '''
@@ -17,7 +20,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-
+'''
 import re,hashlib,time, base64
 
 from fileFetcher import *
@@ -50,7 +53,10 @@ def registerUser(user, emailAddress, expiresInDays=365):
     except Exception as e:
         logger.error(e)
         pass
+'''
 
+from resources.lib.libraries import user
+try :
     # 12/16/2016
     '''
     user.registerUser('Charanjit Singh', 'finetouchconstructions@yahoo.com', 730)
@@ -92,3 +98,32 @@ def registerUser(user, emailAddress, expiresInDays=365):
     #user.registerUser('Amit Kopal','ajnabi1975@yahoo.com')
     #user.registerUser('Yadwinder Devgan','luckydevgun@gmail.com')
     '''
+
+    #12/21//2016
+    # user.registerUser('Ashish Chapagain','43ashish@gmail.com')
+    # user.registerUser('Baneerji Bhat','baneerji.bhat@gmail.com')
+    # user.registerUser('Prafulla Pisolkar','prafulla.pisolkar@gmail.com')
+    # user.registerUser('Rohan Verma','rohan.615@gmail.com')
+    # user.registerUser('Sagar patil','psagar001@gmail.com')
+    # user.registerUser('Basant Yadav','yadav.basantkumar83@gmail.com')
+    # user.registerUser('Raghu Murthy','raghunmurthy@gmail.com')
+    # user.registerUser('satnam singh','satnam1chandi@gmail.com')
+    # user.registerUser('Chugh Varun','varun.chugh@hotmail.com')
+
+    #12/22/2016
+    # user.registerUser('Udit Meghraj','uditmeghraj@yahoo.com')
+    # user.registerUser('Shamoel Faizullabhoy','shamoel@cox.net')
+    # #user.registerUser('Vaibhav Zaveri','vaibhavzaveri@gmail.com', expiresInDays=30) # Partial Payment $5
+    # #user.registerUser('Amita Narayanan','wear-on-the-web@sympatico.ca', expiresInDays=30) #Partial Payment $7.25
+    # user.registerUser('Nishit Rana','NRana14@gmail.com')
+    # user.registerUser('Rashmi Khosla','rashmi1.khosla@gmail.com')
+    # user.registerUser('Ramesh Govindarajan','rgovindar@gmail.com')
+    # #user.registerUser('Theresa Gomboc','janunanu2006@hotmail.com', expiresInDays=30) #Partial Payment $7.25
+    # user.registerUser('Karan Sabharwal','karans.aus@gmail.com')
+    # user.registerUser('Rafat Nabi','rafpac6@hotmail.com')
+    # user.registerUser('THEITCITY', 'accounts@theitcity.com')
+
+    print "All Done"
+except:
+    import traceback
+    traceback.print_exc()
