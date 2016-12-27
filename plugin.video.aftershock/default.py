@@ -115,7 +115,10 @@ try:
     provider = params['provider']
 except:
     provider = None
-
+try:
+    genre = params['genre']
+except:
+    genre = None
 try:
     lang = params['lang']
 except:
@@ -132,6 +135,18 @@ if action == None:
 elif action == 'movieLangNavigator':
     from resources.lib.indexers import movies
     movies.movies().languages()
+
+elif action == 'movieLangHome':
+    from resources.lib.indexers import movies
+    movies.movies().home(lang=lang)
+
+elif action == 'movieLangGenre':
+    from resources.lib.indexers import movies
+    movies.movies().genres(lang=lang)
+
+elif action == 'movieLangYears':
+    from resources.lib.indexers import movies
+    movies.movies().years(lang=lang)
 
 elif action == 'movies':
     from resources.lib.indexers import movies
@@ -157,12 +172,8 @@ elif action == 'artwork':
 
 elif action == 'liveEPGNavigator':
     from resources.lib.libraries import control
-    from resources.lib.libraries import user
     analytics.sendAnalytics('%s-EPG' % action)
-    email = control.setting('user.email')
-    valid, url = user.validateUser(email, True)
-    if valid > 0:
-        xbmc.executebuiltin("RunAddon(script.aftershocknow.guide)")
+    xbmc.executebuiltin("RunAddon(script.aftershocknow.guide)")
 
 elif action == 'tvshows':
     from resources.lib.indexers import tvshows

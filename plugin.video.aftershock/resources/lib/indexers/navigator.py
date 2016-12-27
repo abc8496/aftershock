@@ -52,10 +52,7 @@ class navigator:
     def root(self):
 
         self.addDirectoryItem(30860, 'movieLangNavigator', 'movies.png','DefaultMovies.png')
-        email = control.setting('user.email')
-        valid, url = user.validateUser(email, False)
-        if valid >= 0:
-            self.addDirectoryItem(90114, 'desiLiveNavigator', 'tv-live.png','DefaultMovies.png')
+        self.addDirectoryItem(90114, 'desiLiveNavigator', 'tv-live.png','DefaultMovies.png')
         self.addDirectoryItem(90115, 'liveEPGNavigator', 'tv-epg.png','DefaultMovies.png')
         self.addDirectoryItem(30861, 'desiTVNavigator', 'tv-vod.png','DefaultMovies.png')
 

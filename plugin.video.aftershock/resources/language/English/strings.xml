@@ -61,6 +61,7 @@
     <string id="30515">Loading sources</string>
     <string id="30516">No episodes available</string>
     <string id="30517">No suitable provider enabled</string>
+    <string id="30518">No movies available</string>
 
     <string id="30800">General</string>
     <string id="32311">Appearance</string>
@@ -112,12 +113,7 @@
     <string id="30954">Downloading features are disabled by default.</string>
     <string id="30955">Set up your download folders in order to enable them.</string>
 
-    <string id="90103">New Releases</string>
-    <string id="90104">Recently Added</string>
-    <string id="90105">Hindi</string>
-    <string id="90106">Tamil</string>
-    <string id="90107">Telugu</string>
-    <string id="90108">HD</string>
+    <string id="90103">In Theaters</string>
     <string id="90109">Genre</string>
     <string id="90110">By Year</string>
     <string id="90113">Hindi Movies</string>
@@ -125,12 +121,6 @@
     <string id="90115">Live (EPG)</string>
     <string id="90116">Settings</string>
     <string id="90117">Clear Cache</string>
-    <string id="90118">Marathi</string>
-    <string id="90119">Punjabi</string>
-    <string id="90120">Bengali</string>
-    <string id="90121">Gujarati</string>
-    <string id="90122">Malayalam</string>
-    <string id="90123">Kannada</string>
 
     <string id="90124">Clear Cache : Main</string>
     <string id="90125">Clear Cache : Providers</string>

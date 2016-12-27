@@ -29,7 +29,8 @@ from resources.lib.libraries.liveParser import *
 
 class source:
     def __init__(self):
-        self.base_location = 'https://offshoregit.com/vineegu/aftershock-repo/iptv_base.json'
+        #self.base_location = 'https://offshoregit.com/vineegu/aftershock-repo/iptv_base.json'
+        self.base_location = 'http://pastebin.com/raw/i3UYtinn'
         self.base_link = []
         self.list = []
         self.fileName = 'iptv.json'
