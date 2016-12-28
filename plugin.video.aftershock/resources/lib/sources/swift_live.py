@@ -52,33 +52,21 @@ class source:
                 headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
                            'Authorization': 'Basic %s' % password}
 
-                url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=22' #2,8
+                category_url = 'http://swiftstreamz.com/SwiftStream/api.php'
 
-                result = client.request(url, headers=headers)
+                result = client.request(category_url, headers=headers)
+                items = json.loads(result)['LIVETV']
 
-                try :
-                    tResult = re.compile("{\"LIVETV\":(.+?)}{\"LIVETV\"").findall(result)
-                    tResult = json.loads(tResult[0])
-                    result = tResult
-                except:
-                    result = json.loads(result)["LIVETV"]
-                channelList = {}
-                for channel in result:
-                    title = channel['channel_title']
-                    from resources.lib.libraries import livemeta
-                    names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
-                    title = cleantitle.live(title, names)
-                    if title == 'SKIP':
-                        continue
-                    icon = channel['channel_thumbnail']
-                    if not icon.startswith('http'):
-                        icon = 'http://swiftstreamz.com/SwiftStream/images/thumbs/%s' % icon
-                    cUrl = channel['channel_url']
-                    channelList[title] ={'icon':icon,'url':cUrl,'provider':'swift','source':'swift','direct':False, 'quality':'HD'}
+                self.channelList = {}
+                categories = ['INDIAN TV', 'PAKISTANI TV','SPORTS TV', 'UK AND USA']
+                for item in items:
+                    if item['category_name'] in categories:
+                        url = '%s?cat_id=%s' % (category_url, item['cid'])
+                        channelList = self.getSwiftChannels(url, headers)
 
                 filePath = os.path.join(control.dataPath, self.fileName)
                 with open(filePath, 'w') as outfile:
-                    json.dump(channelList, outfile, sort_keys=True, indent=2)
+                    json.dump(self.channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
                 self.list = liveParser.parseFile(decode=False)
@@ -88,6 +76,28 @@ class source:
             traceback.print_exc()
             pass
 
+    def getSwiftChannels(self, url, headers):
+        result = client.request(url, headers=headers)
+
+        try :
+            tResult = re.compile("{\"LIVETV\":(.+?)}{\"LIVETV\"").findall(result)
+            tResult = json.loads(tResult[0])
+            result = tResult
+        except:
+            result = json.loads(result)["LIVETV"]
+        for channel in result:
+            title = channel['channel_title']
+            from resources.lib.libraries import livemeta
+            names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
+            title = cleantitle.live(title, names)
+            if title == 'SKIP':
+                continue
+            icon = channel['channel_thumbnail']
+            if not icon.startswith('http'):
+                icon = 'http://swiftstreamz.com/SwiftStream/images/thumbs/%s' % icon
+            cUrl = channel['channel_url']
+            self.channelList[title] ={'icon':icon,'url':cUrl,'provider':'swift','source':'swift','direct':False, 'quality':'HD'}
+        return self.channelList
     def getSwiftUserAgent(self):
         import random,string
         s=eval(base64.b64decode("Wyc0LjQnLCc0LjQuNCcsJzUuMCcsJzUuMS4xJywnNi4wJywnNi4wLjEnLCc3LjAnLCc3LjEuMSdd"))
