@@ -152,6 +152,9 @@ try :
     print result
     '''
 
+    from resources.lib.sources import swift_live
+    swift_live.source().getLiveSource()
+
     from resources.lib.libraries import livemeta
     #livemeta.source().getLiveNames()
 

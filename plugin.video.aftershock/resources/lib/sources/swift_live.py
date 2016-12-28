@@ -52,12 +52,16 @@ class source:
                 headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
                            'Authorization': 'Basic %s' % password}
 
-                url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=32' #2,8
+                url = 'http://swiftstreamz.com/SwiftStream/api.php?cat_id=22' #2,8
 
                 result = client.request(url, headers=headers)
 
-                result = re.compile("{\"LIVETV\":(.+?)}{\"LIVETV\"").findall(result)
-                result = json.loads(result[0])
+                try :
+                    tResult = re.compile("{\"LIVETV\":(.+?)}{\"LIVETV\"").findall(result)
+                    tResult = json.loads(tResult[0])
+                    result = tResult
+                except:
+                    result = json.loads(result)["LIVETV"]
                 channelList = {}
                 for channel in result:
                     title = channel['channel_title']
@@ -80,6 +84,8 @@ class source:
                 self.list = liveParser.parseFile(decode=False)
             return (generateJSON, self.list)
         except:
+            import traceback
+            traceback.print_exc()
             pass
 
     def getSwiftUserAgent(self):
