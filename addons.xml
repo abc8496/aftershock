@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.aftershock" name="Aftershock" version="4.4.2.3" provider-name="Aftershock">
+<addon id="plugin.video.aftershock" name="Aftershock" version="4.4.2.4" provider-name="Aftershock">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
         <import addon="repository.aftershock" version="2.0.1"/>
@@ -41,7 +41,7 @@
 	</extension>
 </addon>
 
-<addon id="script.aftershock.artwork" version="1.2.0" name="Aftershock Artwork" provider-name="IDev">
+<addon id="script.aftershock.artwork" version="1.2.1" name="Aftershock Artwork" provider-name="IDev">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>

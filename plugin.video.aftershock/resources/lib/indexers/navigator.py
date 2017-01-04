@@ -117,11 +117,17 @@ class navigator:
             self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
         self.endDirectory()
 
-    def desiLiveTV(self):
+    def desiLiveTV(self, url=None):
         from resources.lib.indexers import livetv
-        email = control.setting('user.email')
-        if user.validateUser(email, True):
-            livetv.channels.get()
+        if url == None :
+            genres = livetv.sources().getLiveGenre()
+            self.addDirectoryItem('ALL', 'desiLiveNavigator&url=all', 'tv-live.png','DefaultMovies.png')
+            for genre in genres:
+                self.addDirectoryItem(genre.upper(), 'desiLiveNavigator&url=%s' % genre, 'tv-live.png','DefaultMovies.png')
+            self.addDirectoryItem('OTHERS', 'desiLiveNavigator&url=others', 'tv-live.png','DefaultMovies.png')
+            self.endDirectory(viewMode='list')
+        else:
+            livetv.channels().get(url)
 
     def desiTV(self):
         listItems = []

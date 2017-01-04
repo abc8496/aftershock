@@ -1,4 +1,7 @@
-[B]1.1.0[/B]
+[B]1.2.1[/B]
+- Added VOD Logos
+
+[B]1.2.0[/B]
 - Added Genre / Year Icons
 
 [B]1.1.0[/B]

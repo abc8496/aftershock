@@ -312,6 +312,7 @@ class sources:
 
         if tvshowtitle == None and title == None:
             content = 'live'
+            genre = meta['genre']
         else:
             content = 'movie' if tvshowtitle == None else 'episode'
 
@@ -347,7 +348,7 @@ class sources:
             for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source(), meta))
         elif content == 'live':
             self.getLivePoster('9X JALWA')
-            for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,channelName, re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
+            for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,channelName, genre, re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 
         try: timeout = int(control.setting('sources_timeout_40'))
@@ -529,7 +530,7 @@ class sources:
             client.printException('sources.getEpisodeSource')
             pass
 
-    def getLiveSource(self, name, source, call):
+    def getLiveSource(self, name, genre, source, call):
         try:
             dbcon = database.connect(self.sourceFile)
             dbcur = dbcon.cursor()
@@ -582,8 +583,14 @@ class sources:
 
         try:
             sources = []
-            if name == None or name == '' :
-                dbcur.execute("SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live'))
+            if name == None or name == '':
+                if genre == 'all':
+                    query = "SELECT * FROM rel_live WHERE source = '%s' AND season = '%s'" % (source, 'live')
+                elif genre == 'others':
+                    query = "SELECT rel_live.* FROM rel_live WHERE source = '%s' AND season = '%s' AND rel_live.imdb_id NOT IN (SELECT name FROM live_meta)"  % (source, 'live')
+                else :
+                    query = "SELECT rel_live.* FROM rel_live, live_meta WHERE rel_live.imdb_id = live_meta.name AND source = '%s' AND season = '%s' AND live_meta.genre = '%s'" % (source, 'live',genre)
+                dbcur.execute(query)
                 for row in dbcur:
                     match = row[4]
                     self.sources.append(json.loads(match))
@@ -597,6 +604,54 @@ class sources:
             return self.sources
         except Exception as e:
             logger.error('(%s) Exception Live sources : %s' % (call.__class__, e.args))
+            pass
+
+    def loadLiveMeta(self):
+        control.makeFile(control.dataPath)
+        self.sourceFile = control.sourcescacheFile
+        try:
+            dbcon = database.connect(self.sourceFile)
+            dbcur = dbcon.cursor()
+            dbcur.execute("DROP TABLE IF EXISTS live_meta")
+            dbcur.execute("VACUUM")
+            dbcon.commit()
+        except:
+            pass
+
+        try:
+            dbcur.execute("CREATE TABLE IF NOT EXISTS live_meta (""name TEXT, ""genre TEXT, ""lang TEXT, ""icon TEXT, ""added TEXT, ""UNIQUE(name, genre, lang)"");")
+        except:
+            pass
+
+        try :
+            from resources.lib.libraries import livemeta
+            meta = livemeta.source().getLiveMeta()
+
+            for item in meta:
+                dbcur.execute("INSERT INTO live_meta Values (?, ?, ?, ?, ?)", (item['name'], item['genre'], item['lang'], item['icon'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+
+            dbcon.commit()
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+        return 1
+
+    def getLiveGenre(self):
+        liveMeta = cache.get(self.loadLiveMeta, 72, table='live_cache')
+        control.makeFile(control.dataPath)
+        self.sourceFile = control.sourcescacheFile
+        try:
+            dbcon = database.connect(self.sourceFile)
+            dbcur = dbcon.cursor()
+            dbcur.execute("SELECT distinct genre FROM live_meta order by genre")
+            genre = []
+            for row in dbcur:
+                genre.append(row[0])
+            return genre
+        except:
+            import traceback
+            traceback.print_exc()
             pass
 
     def getLivePoster(self, source):

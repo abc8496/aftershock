@@ -36,34 +36,57 @@ class channels:
     def __init__(self):
         self.list = []
 
-    def get(self):
+    def getGenre(self):
+        return sources().getLiveGenre()
+
+    def get(self, url=None):
         try :
-            name=None
-            title=None
-            year=None
-            imdb=None
-            tmdb=None
-            tvdb=None
-            tvrage=None
-            season=None
-            episode=None
-            tvshowtitle=None
-            alter=None
-            date=None
-            meta=None
-            sourceList = cache.get(sources().getSources, 72, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, table='live_cache')
 
-            sourceList = dict((item['name'],item) for item in sourceList).values()
+            if url == None:
+                self.list = self.getGenre()
+            else :
+                name=None
+                title=None
+                year=None
+                imdb=None
+                tmdb=None
+                tvdb=None
+                tvrage=None
+                season=None
+                episode=None
+                tvshowtitle=None
+                alter=None
+                date=None
+                meta={'genre':url}
 
-            self.list.extend(sourceList)
-            self.list = sorted(self.list, key=lambda k: k['name'])
 
-            self.channelDirectory(self.list)
+                sourceList = cache.get(sources().getSources, 72, name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta, table='live_cache')
+                sourceList = dict((item['name'],item) for item in sourceList).values()
+
+                self.list.extend(sourceList)
+                self.list = sorted(self.list, key=lambda k: k['name'])
+
+                if url == 'all' :
+                    self.channelDirectory(self.list)
+                else:
+                    self.channelDirectory(self.list, action='desiLiveNavigator')
+            # import os
+            # filePath = os.path.join(control.dataPath, 'live-meta.json')
+            #
+            # with open(filePath, 'w') as outfile:
+            #     for item in self.list :
+            #         a = {"name":item['name'], "genre":'', 'lang':''}
+            #         json.dump(a, outfile)
+            #         outfile.write('\n')
+
+
         except Exception as e:
-            logger.error(e.message)
+            #logger.error(e.message)
+            import traceback
+            traceback.print_exc()
             pass
 
-    def channelDirectory(self, items):
+    def channelDirectory(self, items, action='play'):
         if items == None or len(items) == 0: return
 
         addonPoster, addonBanner = control.addonPoster(), control.addonBanner()
@@ -94,7 +117,7 @@ class channels:
                               "source":provider, "meta":json.dumps(meta)}
                     syssource = urllib.quote_plus(json.dumps([source]))
 
-                    url = 'action=play&content=%s&name=%s' % (content, sysname)
+                    url = 'action=%s&content=%s&name=%s' % (action, content, sysname)
                     url = '%s?%s' % (sysaddon, url)
 
                 item = control.item(label=label, iconImage=poster, thumbnailImage=poster)

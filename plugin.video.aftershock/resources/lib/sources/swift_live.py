@@ -58,7 +58,7 @@ class source:
                 items = json.loads(result)['LIVETV']
 
                 self.channelList = {}
-                categories = ['INDIAN TV', 'PAKISTANI TV','SPORTS TV', 'UK AND USA']
+                categories = ['INDIAN TV']
                 for item in items:
                     if item['category_name'] in categories:
                         url = '%s?cat_id=%s' % (category_url, item['cid'])

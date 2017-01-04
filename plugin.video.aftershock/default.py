@@ -162,9 +162,11 @@ elif action == 'desiTVNavigator':
     navigator.navigator().desiTV()
 
 elif action == 'desiLiveNavigator':
-    from resources.lib.indexers import livetv
-    analytics.sendAnalytics('%s-LIVE' % action)
-    livetv.channels().get()
+    from resources.lib.indexers import navigator
+    navigator.navigator().desiLiveTV(url)
+    #from resources.lib.indexers import livetv
+    #analytics.sendAnalytics('%s-LIVE' % action)
+    #livetv.channels().get(url)
 
 elif action == 'artwork':
     from resources.lib.modules import control

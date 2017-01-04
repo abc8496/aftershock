@@ -2,7 +2,8 @@ Aftershock v4.4.3 (27-Dec-2016)
 ------------------------
 - [COLOR orange]NOTE: If you like the addon please consider making a donation to aftershockpy@gmail.com via paypal.[/COLOR]
 - Added Genre and Year to Movies section
-- Swift Fix ( Categories )
+- Swift Fix
+- Added Live TV Genre & Categories
 
 Aftershock v4.4.2 (27-Dec-2016)
 ------------------------

@@ -71,6 +71,43 @@ class source:
             traceback.print_exc()
             pass
 
+    def getLiveMeta(self):
+        try :
+            self.list = []
+            logger.debug('meta local : %s' % control.setting('livelocal'), __name__)
+            artPath = control.logoPath()
+
+            if control.setting('livelocal') == 'true':
+                self.fileName = 'live-meta.local'
+            else :
+                self.fileName = 'live-meta.json'
+                fileFetcher = FileFetcher(self.fileName, control.addon)
+
+                retValue = fileFetcher.fetchFile()
+                if retValue < 0 :
+                    raise Exception()
+
+            filePath = os.path.join(control.dataPath, self.fileName)
+            file = open(filePath)
+            result = file.read()
+            file.close()
+
+            meta = json.loads(result)
+
+            for item in meta:
+                icon = item['icon']
+                if icon == None or icon == '':
+                    pass
+                elif not icon.startswith('http://'):
+                    item['icon'] = os.path.join(artPath, icon)
+                self.list.append(item)
+            return self.list
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
+
+
     def getLiveNames(self):
         try :
             logger.debug('names local : %s' % control.setting('livelocal'), __name__)

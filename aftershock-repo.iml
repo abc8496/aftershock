@@ -8,20 +8,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="kodi-repo" scope="PROVIDED" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.beautifulsoup/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module" module-name="kodi-repo" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.metahandler/lib" />
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.beautifulsoup/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -30,11 +21,19 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver" />
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.metahandler/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/AppData/Roaming/Kodi/addons/script.module.urlresolver" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.urlresolver" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
