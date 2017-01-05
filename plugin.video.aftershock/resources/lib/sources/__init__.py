@@ -312,7 +312,9 @@ class sources:
 
         if tvshowtitle == None and title == None:
             content = 'live'
-            genre = meta['genre']
+            genre = None
+            try :genre = meta['genre']
+            except:pass
         else:
             content = 'movie' if tvshowtitle == None else 'episode'
 
