@@ -66,7 +66,7 @@ class channels:
                 self.list.extend(sourceList)
                 self.list = sorted(self.list, key=lambda k: k['name'])
 
-                if url == 'all' :
+                if not url == None :
                     self.channelDirectory(self.list)
                 else:
                     self.channelDirectory(self.list, action='desiLiveNavigator')
