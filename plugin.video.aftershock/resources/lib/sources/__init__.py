@@ -27,6 +27,7 @@ import sys
 import time
 import urllib
 import urlparse
+import os
 
 try: import xbmc
 except: pass
@@ -151,6 +152,7 @@ class sources:
             self.sources = self.getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle, alter, date, meta)
 
             items = self.sourcesFilter()
+
             if len(items) > 0:
 
 
@@ -161,6 +163,7 @@ class sources:
                         select = '2' if len(items) == 1 else select
                         title = name
                         meta = self.sources[0]['meta']
+
                         logger.debug('Content is live hence setting %s' % select, __name__)
                     else:
                         select = control.setting('host_select') if select == None else select
@@ -349,7 +352,6 @@ class sources:
 
             for source in sourceDict: threads.append(workers.Thread(self.getEpisodeSource, title, year, imdb, tvdb, season, episode, tvshowtitle, date, re.sub('_mv_tv$|_mv$|_tv$', '', source), __import__(source, globals(), locals(), [], -1).source(), meta))
         elif content == 'live':
-            self.getLivePoster('9X JALWA')
             for source in sourceDict:threads.append(workers.Thread(self.getLiveSource,channelName, genre, re.sub('_live$', '', source), __import__(source, globals(), locals(), [], -1).source()))
 
 
@@ -558,7 +560,10 @@ class sources:
                     if not poster == None :
                         item['poster'] = poster
                     else:
-                        item['poster'] = '0'
+                        poster = item['poster']
+
+                    #else:
+                    #    item['poster'] = '0'
                     meta = {"poster":poster, "iconImage":poster, 'thumb': poster}
                     item['meta'] = json.dumps(meta)
                     if '||' in item['name']:
@@ -577,6 +582,8 @@ class sources:
                     match = row
                     logger.debug('Fetched sources from cache for [%s]'% name, call.__class__)
                     sources = json.loads(match[4])
+                    try :sources['meta'] = json.loads(sources['meta'])
+                    except:pass
                     self.sources.append(sources)
                 return self.sources
             except:
@@ -660,41 +667,11 @@ class sources:
         try:
             dbcon = database.connect(self.sourceFile)
             dbcur = dbcon.cursor()
-            dbcur.execute("CREATE TABLE IF NOT EXISTS rel_logo (""source TEXT, ""poster_url TEXT, ""added TEXT, ""UNIQUE(source, poster_url)"");")
-        except:
-            pass
-
-        try:
-            logo = []
-            try:
-                # check if the source site needs to be refreshed
-                dbcur.execute("SELECT * FROM rel_logo WHERE source = '%s'" % (source))
-                match = dbcur.fetchone()
-                poster_url = match[1]
-                t1 = int(re.sub('[^0-9]', '', str(match[2])))
-                t2 = int(datetime.datetime.now().strftime("%Y%m%d%H%M"))
-                update = abs(t2 - t1) > 1000
-            except:
-                update = True
-
-            if update == True:
-                from resources.lib.sources import livemeta
-
-                postersList = cache.get(livemeta.source().getLivePosters, 200, table='live_cache')
-                try :
-                    poster_url = postersList[source]
-                except:
-                    poster_url = None
-                if not poster_url == None:
-                    try :
-                        dbcur.execute("DELETE FROM rel_logo WHERE source = '%s'" % (source))
-                        dbcur.execute("INSERT INTO rel_logo Values (?, ?, ?)", (source, poster_url, datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                        dbcon.commit()
-                    except:
-                        pass
-
+            dbcur.execute("SELECT * FROM live_meta WHERE name = '%s'" % (source))
+            match = dbcur.fetchone()
+            poster_url = match[3]
+            poster_url = os.path.join(control.logoPath(), poster_url)
             return poster_url
-
         except:
             pass
 

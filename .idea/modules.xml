@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ShaniXBMCWork2/ShaniXBMCWork2.iml" filepath="$PROJECT_DIR$/../ShaniXBMCWork2/ShaniXBMCWork2.iml" />
       <module fileurl="file://$PROJECT_DIR$/aftershock-repo.iml" filepath="$PROJECT_DIR$/aftershock-repo.iml" />
       <module fileurl="file://$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" filepath="$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" />
       <module fileurl="file://$USER_HOME$/Library/Application Support/Kodi/addons/plugin.program.echotvguide/plugin.program.echotvguide.iml" filepath="$USER_HOME$/Library/Application Support/Kodi/addons/plugin.program.echotvguide/plugin.program.echotvguide.iml" />

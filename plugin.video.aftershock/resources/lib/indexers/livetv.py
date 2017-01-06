@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import sys,urllib, json
+import sys,urllib, json, os
 
 from resources.lib.libraries import control
 from resources.lib.libraries import views
@@ -91,6 +91,7 @@ class channels:
 
         addonPoster, addonBanner = control.addonPoster(), control.addonBanner()
         addonFanart = control.addonFanart()
+        artPath = control.logoPath()
         sysaddon = sys.argv[0]
 
 
@@ -99,12 +100,15 @@ class channels:
                 label = "%s" % (i['name'])
                 sysname = urllib.quote_plus(i['name'])
 
-                poster, banner, direct = i['poster'], i['poster'], i['direct']
+                meta = json.loads(i['meta'])
+                poster, banner, direct = meta['poster'], meta['poster'], i['direct']
                 try :provider=i['provider']
                 except:provider=None
-                if poster == '0': poster = addonPoster
-                if banner == '0' and poster == '0': banner = addonBanner
-                elif banner == '0': banner = poster
+
+                if poster.startswith('http://'):
+                    pass
+                elif not artPath == None and not poster == "": poster = os.path.join(artPath, poster)
+                else: poster = addonPoster
 
                 url = i['url']
                 if not direct:

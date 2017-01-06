@@ -66,6 +66,8 @@ class movies:
         #self.search_link = 'http://api.themoviedb.org/3/search/movie?api_key=%s&query=%s'
         self.search_link = 'http://www.imdb.com/search/title?sort=release_date,desc&title=%s'
         self.language_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=%s&count=40&start=1&sort=release_date,desc&start=1'
+        self.featured_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=1000,&production_status=released&release_date=date[365],date[60]&sort=moviemeter,asc&count=40&start=1'
+        self.popular_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=40&start=1'
         self.genre_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=100,&release_date=date[730],date[30]&genres=%s&sort=release_date,desc&count=40&start=1'
         self.year_link = 'http://www.imdb.com/search/title?title_type=feature,tv_movie&languages=%s&num_votes=100,&production_status=released&year=%s,%s&sort=release_date,desc&count=40&start=1'
 
@@ -310,7 +312,9 @@ class movies:
     def home(self, lang=None):
         self.list.append({'name': 90109, 'image': 'genre.png', 'action': 'movieLangGenre&lang=%s' % lang})
         self.list.append({'name': 90110, 'image': 'year.png', 'action': 'movieLangYears&lang=%s' % lang})
-        self.list.append({'name': 90103, 'url': self.language_link % lang, 'image': 'language.png', 'action': 'movies'})
+        self.list.append({'name': 90103, 'url': self.language_link % lang, 'image': 'theater.png', 'action': 'movies'})
+        self.list.append({'name': 90104, 'url': self.featured_link % lang, 'image': 'featured.png', 'action': 'movies'})
+        self.list.append({'name': 90105, 'url': self.popular_link % lang, 'image': 'popular.png', 'action': 'movies'})
 
         self.addDirectory(self.list, 'thumbnails')
 
@@ -327,18 +331,15 @@ class movies:
             ('Fantasy', 'fantasy'),
             ('History', 'history'),
             ('Horror', 'horror'),
-            ('Music ', 'music'),
             ('Musical', 'musical'),
             ('Mystery', 'mystery'),
             ('Romance', 'romance'),
             ('Science Fiction', 'sci_fi'),
             ('Sport', 'sport'),
-            ('Thriller', 'thriller'),
-            ('War', 'war'),
-            ('Western', 'western')
+            ('Thriller', 'thriller')
         ]
 
-        for i in genres: self.list.append({'name': i[0], 'url': self.genre_link % (lang, i[1]), 'image': 'genre.png', 'action': 'movies&lang=%s' % lang})
+        for i in genres: self.list.append({'name': i[0], 'url': self.genre_link % (lang, i[1]), 'image': '%s.png' % i[1], 'action': 'movies&lang=%s' % lang})
         self.addDirectory(self.list)
         return self.list
 

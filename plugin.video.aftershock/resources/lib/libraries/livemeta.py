@@ -95,11 +95,6 @@ class source:
             meta = json.loads(result)
 
             for item in meta:
-                icon = item['icon']
-                if icon == None or icon == '':
-                    pass
-                elif not icon.startswith('http://'):
-                    item['icon'] = os.path.join(artPath, icon)
                 self.list.append(item)
             return self.list
         except:

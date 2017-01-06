@@ -39,15 +39,6 @@ sysaddon = sys.argv[0]
 class navigator:
     def __init__(self):
         self.index_provider = control.setting('idx_provider')
-        self.langProviderMap = {'hindi':self.index_provider,
-                                'tamil':self.index_provider,
-                                'telugu':self.index_provider,
-                                'marathi':'ibollytv',
-                                'punjabi':'ibollytv',
-                                'bengali':'ibollytv',
-                                'gujarati':'ibollytv',
-                                'malayalam':'ibollytv',
-                                'kannada':'ibollytv'}
 
     def root(self):
 
@@ -65,8 +56,13 @@ class navigator:
         from resources.lib.libraries import cache
         from resources.lib.libraries import changelog
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
+        cache.get(self.donation, 600000000, control.addonInfo('version'), table='changelog')
         #cache.get(control.resetSettings, 600000000, 'true', control.addonInfo('version'), table='changelog')
         cache.get(analytics.sendAnalytics, 600000000, ("Installed-%s" % control.addonInfo('version')), table='changelog')
+
+    def donation(self, version):
+        control.okDialog("Donations for this addon [Aftershock v%s] gracefully accepted at" % version, "", "http://paypal.me/aftershockpy/10USD")
+        return 1
 
     def clearCache(self, url=None):
         if url == None:
@@ -86,7 +82,7 @@ class navigator:
             from resources.lib.libraries import cache
             control.deleteAll('.json')
             control.delete('user.db')
-            cache.clear(['rel_live','rel_logo'], control.sourcescacheFile)
+            cache.clear(['rel_live','rel_logo', 'live_meta'], control.sourcescacheFile)
             cache.clear(['live_cache'])
         elif url == 'meta':
             from resources.lib.libraries import cache
@@ -105,18 +101,6 @@ class navigator:
         self.addDirectoryItem(90123, 'movieNavigator&lang=%s' % 'kannada', 'language.png', 'DefaultMovies.png')
         self.endDirectory()
 
-    def desiMovies(self, lang):
-        index_provider = self.langProviderMap[lang]
-        if lang in 'hindi, tamil, telugu':
-            self.addDirectoryItem(90109, 'movieGenres&provider=%s_mv&lang=%s' % (index_provider, lang), 'genre.png', 'DefaultMovies.png')
-            self.addDirectoryItem(90110, 'movieYears&provider=%s_mv&lang=%s' % (index_provider, lang), 'year.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90103, 'movies&url=theaters&provider=%s_mv&lang=%s' % (index_provider, lang), 'new.png', 'DefaultMovies.png')
-        self.addDirectoryItem(90104, 'movies&url=added&provider=%s_mv&lang=%s' % (index_provider, lang), 'latest.png', 'DefaultMovies.png')
-        if lang in 'hindi, tamil, telugu':
-            index_provider = 'hdbuffer'
-            self.addDirectoryItem(90108, 'movies&url=HD&provider=%s_mv&lang=%s' % (index_provider, lang), 'dvd2hd.png', 'DefaultMovies.png')
-        self.endDirectory()
-
     def desiLiveTV(self, url=None):
         from resources.lib.indexers import livetv
         if url == None :
@@ -131,7 +115,6 @@ class navigator:
 
     def desiTV(self):
         listItems = []
-        logoBaseURL=control.logoPath() + "\\"
 
         provider = control.setting('tvshow.provider')
 
@@ -140,7 +123,7 @@ class navigator:
                 try:
                     tProvider = provider + i
                     call = __import__('resources.lib.sources.%s' % tProvider, globals(), locals(), ['source'], -1).source()
-                    listItems = call.get_networks(logoBaseURL)
+                    listItems = call.get_networks()
                     if len(listItems) > 0 :
                         break
                 except Exception as e:
@@ -148,11 +131,11 @@ class navigator:
                     pass
         else:
             from resources.lib.sources import desirulez_mv_tv
-            listItems = desirulez_mv_tv.source().get_networks(logoBaseURL)
+            listItems = desirulez_mv_tv.source().get_networks()
         listItems.sort()
 
         for item in listItems:
-            self.addDirectoryItem(item['name'], '%s&provider=%s&url=%s' % (item['action'],item['provider'], item['url']), item['image'], 'DefaultMovies.png')
+            self.addDirectoryItem(item['name'], '%s&provider=%s&url=%s' % (item['action'],item['provider'], item['url']), os.path.join(control.logoPath(), item['image']), 'DefaultMovies.png')
 
         self.endDirectory()
 
@@ -171,6 +154,7 @@ class navigator:
 
         if not 'http' in thumb :
             thumb = os.path.join(artPath, thumb) if not artPath == None else icon
+
         cm = []
 
         if not context == None: cm.append((control.lang(context[0]).encode('utf-8'), 'RunPlugin(%s?action=%s)' % (sysaddon, context[1])))

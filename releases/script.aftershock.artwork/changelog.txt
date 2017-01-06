@@ -1,3 +1,7 @@
+[B]1.2.2[/B]
+- Added Live Logos
+- Added Genre Icons
+
 [B]1.2.1[/B]
 - Added VOD Logos
 
