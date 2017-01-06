@@ -105,7 +105,7 @@ class channels:
                 try :provider=i['provider']
                 except:provider=None
 
-                if poster.startswith('http://'):
+                if poster.startswith('http'):
                     pass
                 elif not artPath == None and not poster == "": poster = os.path.join(artPath, poster)
                 else: poster = addonPoster

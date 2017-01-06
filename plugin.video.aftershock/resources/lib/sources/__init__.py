@@ -670,7 +670,10 @@ class sources:
             dbcur.execute("SELECT * FROM live_meta WHERE name = '%s'" % (source))
             match = dbcur.fetchone()
             poster_url = match[3]
-            poster_url = os.path.join(control.logoPath(), poster_url)
+            if poster_url == '':
+                poster_url = None
+            else :
+                poster_url = os.path.join(control.logoPath(), poster_url)
             return poster_url
         except:
             pass
