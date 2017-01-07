@@ -46,11 +46,14 @@ class source:
 
             if generateJSON:
                 logger.debug('Generating %s JSON' % __name__, __name__)
-                result = cache.get(self.getSwiftCache, 600000, table='live_cache')
 
-                password = base64.b64encode(result["DATA"][0]["Password"])
-                headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
-                           'Authorization': 'Basic %s' % password}
+                #result = cache.get(self.getSwiftCache, 600000, table='live_cache')
+
+                #password = base64.b64encode(result["DATA"][0]["Password"])
+                #headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)',
+                #           'Authorization': 'Basic %s' % password}
+
+                headers = {'User-Agent':'Dalvik/1.6.0 (Linux; U; Android 4.4.2; SM-G900F Build/KOT49H)'}
 
                 category_url = 'http://swiftstreamz.com/SwiftStream/api.php'
 
@@ -62,6 +65,7 @@ class source:
                 for item in items:
                     if item['category_name'] in categories:
                         url = '%s?cat_id=%s' % (category_url, item['cid'])
+                        #channelList = self.getSwiftChannels(url, headers)
                         channelList = self.getSwiftChannels(url, headers)
 
                 filePath = os.path.join(control.dataPath, self.fileName)

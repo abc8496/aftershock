@@ -871,7 +871,7 @@ class sources:
             try: d = self.sources[i]['debrid']
             except: d = self.sources[i]['debrid'] = ''
 
-            if not d == '': label = '%02d | [B]%s[/B] | ' % (int(i+1), d)
+            if not d == '': label = '%02d | [I]%s[/I] | [B]%s[/B] | ' % (int(i+1), d, p)
             else: label = '%02d | [B]%s[/B] | ' % (int(i+1), p)
 
             if q in ['1080p', 'HD']: label += '%s | %s | [B][I]%s [/I][/B]' % (s.rsplit('.', 1)[0], f, q)
@@ -906,7 +906,7 @@ class sources:
             if not d == '':
                 logger.debug('DEBRID : Resolving debrid', __name__)
                 u = debrid.resolve(url, d)
-                logger.debug('DEBRID u : %s' % u, __name__)
+                logger.debug('RESOLVED DEBRID : %s' % u, __name__)
 
             if d == '' or u == False :
                 logger.debug('Resolving through provider',__name__)

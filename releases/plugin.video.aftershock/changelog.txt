@@ -6,6 +6,7 @@ Aftershock v4.4.3 (27-Dec-2016)
 - Live TV Support added back
 - Added Live TV Genre & Categories
 - Code Cleanup / Cosmetics
+- Updated Providers
 
 Aftershock v4.4.2 (27-Dec-2016)
 ------------------------
