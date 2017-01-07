@@ -58,7 +58,7 @@ class source:
                 userAgent = self.getUserAgent()
                 deviceid = userAgent.split('.')[-1]
 
-                url = urlparse.urljoin(self.base_link,self.ip_check)
+                url = base64.b64decode("aHR0cHM6Ly9hcHMuc3l0ZXMubmV0L3RvcC9pcF9jaGVjay5waHA=")
 
                 result = client.request(url, headers=self.headers)
                 self.ipAddress = re.findall('Address: (.*)',result)[0]
@@ -71,7 +71,7 @@ class source:
                 headers = {'Authorization': base64.b64decode('QmFzaWMgWVdSdGFXNUFZWE5rWmpwaGMyUm1jWGRsY25SNQ=='),
                            base64.b64decode("VXNlci1BZ2VudA=="):cache.get(self.getDeviceID, 600000, table='live_cache')}
 
-                url = base64.b64decode('aHR0cHM6Ly9hcHAuZHluZG5zLnR2L2FwcHMvb3V0cHV0LnBocC9wbGF5bGlzdD90eXBlPXhtbCZkZXZpY2VTbj0lcw==') % deviceid
+                url = base64.b64decode('aHR0cHM6Ly9hcHMuc3l0ZXMubmV0L2FwcHMvb3V0cHV0LnBocC9wbGF5bGlzdD90eXBlPXhtbCZkZXZpY2VTbj0lcw==') % deviceid
 
                 result = client.request(url, headers=headers)
 
@@ -138,7 +138,7 @@ class source:
         return useragent
 
     def getAuthToken(self):
-        url=base64.b64decode('aHR0cHM6Ly9hcHAuZHluZG5zLnR2L3RvcC8lcy5waHA/d21zQXV0aFNpZ249')
+        url=base64.b64decode('aHR0cHM6Ly9hcHMuc3l0ZXMubmV0L3RvcC8lcy5waHA/d21zQXV0aFNpZ249')
         try:
             userAgent = self.getUserAgent()
             logger.debug('Final UserAgent : %s' % userAgent, __name__)
@@ -148,7 +148,7 @@ class source:
             timesegment = datetime.datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
             validtime=userAgent[4]
 
-            headers = {'User-Agent':base64.b64decode('UGFrJTIwVFYvMS4wIENGTmV0d29yay83NTguMC4yIERhcndpbi8xNS4wLjA=')}
+            headers = {'User-Agent':base64.b64decode('UGFrJTIwVFYvMS4wIENGTmV0d29yay84MDguMi4xNiBEYXJ3aW4vMTYuMy4w')}
             ipstring = client.request(base64.b64decode("aHR0cHM6Ly9hcHAuZHluZG5zLnR2L3RvcC9pcF9jaGVjay5waHA="), headers=headers)
             ipadd=ipstring.split('Address: ')[1]
 

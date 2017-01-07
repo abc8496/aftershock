@@ -7,6 +7,7 @@ Aftershock v4.4.3 (27-Dec-2016)
 - Added Live TV Genre & Categories
 - Code Cleanup / Cosmetics
 - Updated Providers
+- Updated Live Providers (Swift / DYDNS)
 
 Aftershock v4.4.2 (27-Dec-2016)
 ------------------------
