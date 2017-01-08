@@ -65,6 +65,8 @@ class Generator:
                 
                 for root, dirs, files in os.walk(addon):
                     for file in files:
+                        if file.endswith("pyo") or file.endswith("pyc"):
+                            continue
                         zip.write(os.path.join(root, file))
                 
                 zip.close()
