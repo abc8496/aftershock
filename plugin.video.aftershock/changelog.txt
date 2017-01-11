@@ -4,6 +4,7 @@ Aftershock v4.5.0.1 (XX-XX-2017)
 - Code cosmetics
 - Performance improvements
 - Fixed Fanart issue for Movies
+- Updated Live TV Resolvers
 #####- ADD TAMIL GUN
 #####- ADD PROVIDERS FROM ZEN
 

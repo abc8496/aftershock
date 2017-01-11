@@ -205,6 +205,11 @@ class TestingLive(unittest.TestCase):
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
         return
 
+    def test_dydnsResolve(self):
+        from resources.lib.sources import dynns_live
+        url = dynns_live.source().resolve('http://live1.zapto.org:8081/hostone/lamhe/playlist.m3u8', None)
+        self.assertIsNotNone(url, 'DYNDNS Unable to resolve')
+
     def test_json(self):
         call = json_live.source()
         self.source(call, False)
