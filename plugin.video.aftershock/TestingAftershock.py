@@ -199,6 +199,8 @@ class TestingLive(unittest.TestCase):
                                           alter, date, meta)
 
     def source(self, call, generateJSON):
+        from resources.lib.indexers import livetv
+        livetv.sources().getLiveGenre()
         sourceurl = call.getLiveSource()
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
         return

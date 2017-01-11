@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" filepath="$PROJECT_DIR$/../kodi-repo/kodi-repo.iml" />
       <module fileurl="file://$USER_HOME$/Library/Application Support/Kodi/addons/plugin.program.echotvguide/plugin.program.echotvguide.iml" filepath="$USER_HOME$/Library/Application Support/Kodi/addons/plugin.program.echotvguide/plugin.program.echotvguide.iml" />
       <module fileurl="file://$USER_HOME$/Library/Application Support/Kodi/addons/plugin.video.goodfellas/plugin.video.goodfellas.iml" filepath="$USER_HOME$/Library/Application Support/Kodi/addons/plugin.video.goodfellas/plugin.video.goodfellas.iml" />
+      <module fileurl="file://$USER_HOME$/Library/Application Support/Kodi/addons/plugin.video.zen/plugin.video.zen.iml" filepath="$USER_HOME$/Library/Application Support/Kodi/addons/plugin.video.zen/plugin.video.zen.iml" />
     </modules>
   </component>
 </project>

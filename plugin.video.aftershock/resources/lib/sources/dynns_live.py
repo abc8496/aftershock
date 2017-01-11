@@ -83,9 +83,9 @@ class source:
                     category = client.parseDOM(channel, "programCategory")[0]
                     if category == 'Indian':
                         title = client.parseDOM(channel,"programTitle")[0]
-                        from resources.lib.libraries import livemeta
-                        names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
-                        title = cleantitle.live(title, names)
+                        #from resources.lib.libraries import livemeta
+                        #names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
+                        title = cleantitle.live(title)
                         if title == 'SKIP':
                             continue
                         poster = client.parseDOM(channel, "programImage")[0]

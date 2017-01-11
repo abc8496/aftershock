@@ -1,3 +1,12 @@
+Aftershock v4.5.0.1 (XX-XX-2017)
+--------------------------------
+- Aded South Indian and Punjabi Channels to Live TV
+- Code cosmetics
+- Performance improvements
+- Fixed Fanart issue for Movies
+#####- ADD TAMIL GUN
+#####- ADD PROVIDERS FROM ZEN
+
 Aftershock v4.5.0 (08-Jan-2017)
 ------------------------
 - [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
