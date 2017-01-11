@@ -49,6 +49,7 @@ class navigator:
 
         self.addDirectoryItem(90116, 'openSettings&query=0.0', 'settings.png', 'DefaultMovies.png')
         self.addDirectoryItem(90117, 'clearCache', 'clearcache.png', 'DefaultMovies.png')
+        self.addDirectoryItem(30864, 'changelog', 'changelog.png', 'DefaultMovies.png')
 
         self.endDirectory()
 
