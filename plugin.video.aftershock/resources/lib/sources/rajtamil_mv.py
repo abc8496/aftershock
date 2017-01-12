@@ -87,7 +87,7 @@ class source:
                 for link in links:
                     url = link.get('src')
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'rajtamil', 'url': url, 'direct':False})
             except:
                 pass
 
@@ -116,7 +116,7 @@ class source:
                     if 'tv?vq=medium#/' in url:
                         url = url.replace('tv?vq=medium#/','')
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'rajtamil', 'url': url, 'direct':False})
             except:
                 pass
 

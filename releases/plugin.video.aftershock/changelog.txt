@@ -1,6 +1,5 @@
-Aftershock v4.5.0.1 (XX-XX-2017)
+Aftershock v4.5.1 (11-Jan-2017)
 --------------------------------
-- Aded South Indian and Punjabi Channels to Live TV
 - Code cosmetics
 - Performance improvements
 - Fixed Fanart issue for Movies
