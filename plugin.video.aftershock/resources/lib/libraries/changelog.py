@@ -34,6 +34,7 @@ def get(version):
             retry -= 1
             win.getControl(1).setLabel('Aftershock version: %s' %(xbmcaddon.Addon().getAddonInfo('version')))
             win.getControl(5).setText(text)
-            return
+            return 1
         except:
             pass
+    return 1
