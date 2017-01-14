@@ -49,6 +49,7 @@ class TestingMovies(unittest.TestCase):
         self.title = 'Prem Ratan Dhan Payo'
         self.year = '2015'
 
+
     def source(self, call):
         movieUrl = call.get_movie(self.imdb, self.title, self.year)
         self.assertIsNotNone(movieUrl, 'Movie URL Not Found')
@@ -244,6 +245,12 @@ class TestingLive(unittest.TestCase):
         sourceurl = call.getLiveSource()
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
         return
+
+    def test_iptv(self):
+        url = ''
+        regex = ''
+        from resources.lib.sources import iptv_live
+        iptv_live.source().getLiveSource()
 
     def test_dydnsResolve(self):
         from resources.lib.sources import dynns_live

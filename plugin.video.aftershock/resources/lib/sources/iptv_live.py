@@ -103,11 +103,10 @@ class source:
                     result = re.findall(regex, result, re.IGNORECASE)
 
                     for source, title, cUrl in result:
-                        #from resources.lib.libraries import livemeta
-                        #names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
-                        title = cleantitle.live(title)
-                        if title == 'SKIP':
-                            continue
+                        title = title.strip()
+                        #title = cleantitle.live(title)
+                        #if title == 'SKIP':
+                        #    continue
                         if not headers == None:
                             cUrl = '%s|%s' % (cUrl, headers)
                         channelList['%s||%s' % (title, type)] ={'icon':'','url':cUrl,'provider':'iptv','source':type,'direct':False, 'quality':'HD'}

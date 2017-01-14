@@ -85,9 +85,9 @@ class source:
                         title = client.parseDOM(channel,"programTitle")[0]
                         #from resources.lib.libraries import livemeta
                         #names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
-                        title = cleantitle.live(title)
-                        if title == 'SKIP':
-                            continue
+                        #title = cleantitle.live(title)
+                        #if title == 'SKIP':
+                        #    continue
                         poster = client.parseDOM(channel, "programImage")[0]
                         url = client.parseDOM(channel, "programURL")[0]
                         channelList[title] ={'icon':poster,'url':url,'provider':'dynns','source':'dynns','direct':False, 'quality':'HD'}

@@ -1,5 +1,11 @@
 [
   {
+    "link": "http://exabytetv.info/IND.m3u",
+    "source": "ex-ts",
+    "regex":"#EXTINF:-1 (.*), (.*) \\(.*\\)\\s*(.*)",
+    "enabled":"true"
+  },
+  {
     "link": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u",
     "source": "st-ts",
     "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\\s*:\\s*(.*)\\s*(.*)",

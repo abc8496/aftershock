@@ -66,9 +66,9 @@ class source:
                     title = title.replace("&amp;","And")
                     #from resources.lib.libraries import livemeta
                     #names = cache.get(livemeta.source().getLiveNames, 200, table='live_cache')
-                    title = cleantitle.live(title)
-                    if title == 'SKIP':
-                        continue
+                    #title = cleantitle.live(title)
+                    #if title == 'SKIP':
+                    #    continue
                     if 'temple' in title.lower():
                         continue
                     url = self.channel_link % url
