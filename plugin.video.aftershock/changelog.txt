@@ -1,7 +1,8 @@
-Aftershock v4.521 (XX-Jan-2017)
+Aftershock v4.5.2
 --------------------------------
 - [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
 - Optimized Live TV Names Filtering / Matching
+- Added new Live TV Source
 
 Aftershock v4.5.1 (11-Jan-2017)
 --------------------------------
