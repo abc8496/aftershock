@@ -132,4 +132,5 @@ class source:
                 url='plugin://plugin.video.f4mTester/?url=%s&streamtype=TSDOWNLOADER'%(urllib.quote_plus(url))
             elif '.m3u8' in url:
                 url='plugin://plugin.video.f4mTester/?url=%s&streamtype=HLSRETRY'%(urllib.quote_plus(url))
+        result = client.validateUrl(url)
         return url

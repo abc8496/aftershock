@@ -106,5 +106,6 @@ class source:
                 url = u
             except:
                 url = None
+        result = client.validateUrl(url)
         logger.debug('RESOLVED URL [%s]' % url, __name__)
         return url

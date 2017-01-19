@@ -104,6 +104,7 @@ class source:
             except:link = client.parseDOM(result, "source", attrs={"type":"application/x-mpegurl"}, ret="src")[0]
             logger.debug('URL : [%s]' % link, __name__)
             url = '%s|Referer=%s' % (link.strip(), url)
+            result = client.validateUrl(url)
             logger.debug('RESOLVED URL [%s]' % url, __name__)
             return url
         except :

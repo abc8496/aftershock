@@ -118,5 +118,6 @@ class source:
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)
         url = '%s|User-Agent=%s' % (url, self.getSolidPlayUserAgent())
+        result = client.validateUrl(url)
         logger.debug('RESOLVED URL [%s]' % url, __name__)
         return url
