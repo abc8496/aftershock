@@ -3,7 +3,7 @@
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="plugin.video.aftershock" version="4.2.4" optional="true"/>
+		<!--<import addon="plugin.video.aftershock" version="4.2.4" optional="true"/>-->
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
             <provides>executable</provides>

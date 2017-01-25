@@ -1,8 +1,11 @@
-import unittest, sys
+import sys
+import unittest
+
 sys.argv = ['plugin.video.aftershock', '1']
 
-from resources.lib.libraries import logger
-from resources.lib.sources import apnaview_mv
+from resources.lib.modules import logger
+'''
+
 from resources.lib.sources import bmoviez_mv
 from resources.lib.sources import crazy4ad_mv
 from resources.lib.sources import desihdmovies_mv
@@ -42,7 +45,7 @@ from resources.lib.sources import cinefun_live
 from resources.lib.sources import swift_live
 from resources.lib.sources import solid_live
 from resources.lib.sources import iptv_live
-
+'''
 
 class TestingMovies(unittest.TestCase):
     def setUp(self):
@@ -52,17 +55,18 @@ class TestingMovies(unittest.TestCase):
 
 
     def source(self, call):
-        movieUrl = call.get_movie(self.imdb, self.title, self.year)
+        movieUrl = call.movie(self.imdb, self.title, self.year)
         self.assertIsNotNone(movieUrl, 'Movie URL Not Found')
         logger.debug('[%s] Movie URL : %s' % (call.__class__, movieUrl))
 
-        sourceurl = call.get_sources(movieUrl)
+        sourceurl = call.sources(movieUrl)
         self.assertGreater(len(sourceurl), 0, 'No Sources found')
 
     def test_apnaview(self):
-        call = apnaview_mv.source()
+        from resources.lib.sources import apnaview
+        call = apnaview.source()
         self.source(call)
-
+    '''
     def test_bmoviez(self):
         self.imdb = 'tt5165344'
         self.title = 'Rustom'
@@ -220,7 +224,9 @@ class TestingMovies(unittest.TestCase):
         self.year = '2016'
         call = tamilyogi_mv.source()
         self.source(call)
+    '''
 
+'''
 class TestingLive(unittest.TestCase):
     def test_getLiveSources(self):
         from resources.lib.sources import sources
@@ -228,17 +234,14 @@ class TestingLive(unittest.TestCase):
         title = None
         year = None
         imdb = None
-        tmdb = None
         tvdb = None
-        tvrage = None
         season = None
         episode = None
         tvshowtitle = None
-        alter = None
         date = None
         meta = None
-        sourceList = sources().getSources(name, title, year, imdb, tmdb, tvdb, tvrage, season, episode, tvshowtitle,
-                                          alter, date, meta)
+        sourceList = sources().getSources(name, title, year, imdb, tvdb, season, episode, tvshowtitle,
+                                          date, meta)
 
     def source(self, call, generateJSON):
         from resources.lib.indexers import livetv
@@ -321,7 +324,7 @@ class TestingLive(unittest.TestCase):
 
 class TestingMobDro(unittest.TestCase):
     def test_mobdro(self):
-        from resources.lib.libraries import client
+        from resources.lib.modules import client
         import urllib
         c_url = "https://api.mobdro.sx/streambot/v4/show"
         c_headers = {"User-Agent":"Mobdro/5.0", "Referer":"api.mobdro.sx"}
@@ -330,6 +333,7 @@ class TestingMobDro(unittest.TestCase):
         c_data = urllib.urlencode(c_data)
         result = client.request(c_url, headers=c_headers, post=c_data)
         print result
+'''
 
 if __name__ == '__main__' :
     unittest.main()

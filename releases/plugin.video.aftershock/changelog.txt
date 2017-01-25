@@ -1,3 +1,10 @@
+Aftershock v4.5.X
+--------------------------------
+- [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
+- Kodi 17.0 (Krypton) Upgrade
+- Code Cosmetics
+- Code Refactor / Cleanup
+
 Aftershock v4.5.5
 --------------------------------
 - [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]

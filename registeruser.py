@@ -1,4 +1,4 @@
-import sys, re, base64
+import sys
 
 sys.argv = ['plugin.video.aftershock', '1']
 # -*- coding: utf-8 -*-
@@ -55,7 +55,6 @@ def registerUser(user, emailAddress, expiresInDays=365):
         pass
 '''
 
-from resources.lib.libraries import user
 try :
     # 12/16/2016
     '''
