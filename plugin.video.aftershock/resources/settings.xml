@@ -45,7 +45,7 @@
 		<setting id="provider.hindilinks4u" type="bool" label="HindiLinks4U" default="true" />
 		<setting id="provider.hotstar" type="bool" label="HotStar" default="true" />
 		<setting id="provider.ibollytv" type="bool" label="iBollyTV" default="true" />
-		<setting id="provider.json" type="bool" label="json" default="true" />
+		<setting id="provider.staticjson" type="bool" label="staticjson" default="true" />
 		<setting id="provider.iptv" type="bool" label="IPTV" default="true" />
 		<setting id="provider.miradetodo" type="bool" label="Miradetodo" default="true" />
 		<setting id="provider.movie25" type="bool" label="Movie25" default="true" />
