@@ -19,6 +19,9 @@
 '''
 
 import re
+import os
+import json
+import base64
 
 from resources.lib.modules.liveParser import *
 
@@ -159,7 +162,7 @@ class source:
         url = self.live_link
         self.headers['User-Agent'] = self.getSwiftUserAgent()
         result = client.request(url, headers=self.headers)
-        result = json.loads(result.replace('\x0a',''))
+        result = json.loads(result.replace('\x0a','').replace('\t',''))
         return result
 
     def resolve(self, url, resolverList):

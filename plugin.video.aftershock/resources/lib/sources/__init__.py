@@ -552,7 +552,7 @@ class sources:
 
         logger.debug('Calling getLiveSource for %s' % call, __name__)
         retValue = 0
-        retValue, sources = call.getLiveSource()
+        retValue, sources = call.livetv()
         logger.debug('Finished getLiveSource for %s' % call, __name__)
         if not name == None : name = name.upper()
 
