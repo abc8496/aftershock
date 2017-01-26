@@ -79,7 +79,7 @@ class source:
             except: result = ''
 
             result = result.decode('iso-8859-1').encode('utf-8')
-
+            result = result.replace('\n','').replace('\t','')
             result = client.parseDOM(result, "table", attrs={"class": "table table-bordered"})[0]
             result = client.parseDOM(result, "tbody")[0]
             result = client.parseDOM(result, "tr")
@@ -109,8 +109,8 @@ class source:
     def source(self, item):
         quality = ''
         try :
-            urls = client.parseDOM(item, "td")[1]
-            urls = client.parseDOM(urls, "a", ret="href")
+            #urls = client.parseDOM(item, "td")
+            urls = client.parseDOM(item, "a", ret="href")
             for i in range(0, len(urls)):
                 uResult = client.request(urls[i], mobile=False)
                 uResult = uResult.replace('\n','').replace('\t','')

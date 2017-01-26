@@ -70,7 +70,7 @@ def resolve(url):
             url = 'http://cdn.phoenix.intergi.com/' + video_info[0] + '/videos/' + video_info[1] + '/video-mobile.mp4?hosting_id=' + video_info[0]
             try :
                 result = client.request(url, output='chunk', timeout=10)
-                if test == None:
+                if result == None:
                     raise Exception()
             except:
                 pass
