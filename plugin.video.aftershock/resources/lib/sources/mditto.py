@@ -33,7 +33,7 @@ class source:
         self.base_link_2 = self.base_link_1
         self.search_link = 'search?q=%s'
         self.info_link = '/catalog/movie/%s/cc=US'
-        self.list = []
+        self.srcs = []
 
     def movie(self, imdb, title, year):
         try:
@@ -68,9 +68,9 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             oUrl = urlparse.urljoin(self.base_link_1, url)
             try: result = client.request(oUrl)
@@ -82,11 +82,11 @@ class source:
             url = client.parseDOM(url, "source", ret="src")[0]
             url = '%s|Referer=%s' % (url, oUrl)
 
-            sources.append({'source': "Ditto", 'parts': '1', 'quality': "HD", 'provider': 'Ditto', 'url': url, 'direct':True})
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            srcs.append({'source': "Ditto", 'parts': '1', 'quality': "HD", 'provider': 'Ditto', 'url': url, 'direct':True})
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         try:

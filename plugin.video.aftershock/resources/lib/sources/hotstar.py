@@ -43,7 +43,7 @@ class source:
         self.added_link = '/category/hindi-movies/feed'
         self.HD_link = '/category/hindi-blurays/feed'
         self.res_map = {"1080": "1080p", "900": "HD", "720": "HD", "404": "SD", "360": "SCR"}
-        self.list = []
+        self.srcs = []
         if not (control.setting('hotstar_ip') == '') :
             self.ip = control.setting('hotstar_ip')
         else :
@@ -84,9 +84,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             try: result = client.request(url, headers=self.headers)
             except: result = ''
@@ -115,10 +115,10 @@ class source:
             except Exception as e:
                 logger.error('[%s] Exception : %s' % (self.__class__, e))
                 pass
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)

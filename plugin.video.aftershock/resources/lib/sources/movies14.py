@@ -59,8 +59,8 @@ class source:
 
     def sources(self, url):
         try:
-			sources = []
-			if url == None: return sources
+			srcs = []
+			if url == None: return srcs
 			link = client.request(url)
 			for frame in client.parseDOM(link, 'div', attrs = {'class': 'player_wraper'}):
 				iframe_url = client.parseDOM(frame, 'iframe', ret='src')
@@ -74,10 +74,10 @@ class source:
 						else: quality = "SD"
 						url = client.replaceHTMLCodes(url)
 						url = url.encode('utf-8')
-						sources.append({'source': 'gvideo', 'quality': quality, 'provider': 'Movies14', 'url': url, 'direct': True, 'debridonly': False})
-			return sources
+						srcs.append({'source': 'gvideo', 'quality': quality, 'provider': 'Movies14', 'url': url, 'direct': True, 'debridonly': False})
+			return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

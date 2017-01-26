@@ -62,9 +62,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
 
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             url = urlparse.urljoin(self.base_link, url)
 
@@ -98,13 +98,13 @@ class source:
                     url += [{'url': i[0], 'quality': 'SCR'} for i in result if '360' in i[1]]
 
                     for i in url:
-                        sources.append({'source': 'gvideo', 'parts' : '1','quality': i['quality'], 'provider': 'Pubfilm', 'url': i['url'], 'direct': True, 'debridonly': False})
+                        srcs.append({'source': 'gvideo', 'parts' : '1','quality': i['quality'], 'provider': 'Pubfilm', 'url': i['url'], 'direct': True, 'debridonly': False})
                 except:
                     pass
-            logger.debug('SOURCES URL %s' % sources, __name__)
-            return sources
+            logger.debug('SOURCES URL %s' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def pidtv_tvcache(self, tvshowtitle):
         try:

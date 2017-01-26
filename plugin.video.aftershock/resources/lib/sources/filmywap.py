@@ -66,7 +66,7 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            sources = []
+            srcs = []
 
             if url == None: return sources
 
@@ -103,12 +103,12 @@ class source:
                 url = links[key]
                 host = client.host(url)
 
-                sources.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'filmywap', 'url': url, 'direct': False, 'debridonly': False})
+                srcs.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'filmywap', 'url': url, 'direct': False, 'debridonly': False})
 
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except :
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         return url

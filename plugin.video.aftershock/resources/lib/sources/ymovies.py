@@ -177,7 +177,7 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
             for movielink, cookies, referer in url:
                 # print ("YMOVIES SOURCES", movielink, cookies, referer)
                 headers = {'Referer': referer,
@@ -198,12 +198,12 @@ class source:
                         quality = "SD"
                     url = client.replaceHTMLCodes(url)
                     url = url.encode('utf-8')
-                    sources.append(
+                    srcs.append(
                         {'source': 'gvideo', 'quality': quality, 'provider': 'Ymovies', 'url': url, 'direct': True,
                          'debridonly': False})
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         if 'requiressl=yes' in url:

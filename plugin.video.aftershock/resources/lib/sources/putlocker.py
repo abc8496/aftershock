@@ -48,9 +48,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
 
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             if not str(url).startswith('http'):
 
@@ -122,13 +122,13 @@ class source:
             links += [{'source': 'openload.co', 'quality': 'SD', 'url': i, 'direct': False} for i in r if 'openload.co' in i]
 
 
-            for i in links: sources.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url'], 'direct': i['direct'], 'debridonly': False})
+            for i in links: srcs.append({'source': i['source'], 'quality': i['quality'], 'provider': 'Putlocker', 'url': i['url'], 'direct': i['direct'], 'debridonly': False})
 
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except Exception as e:
             logger.error(e)
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList=None):
         return url

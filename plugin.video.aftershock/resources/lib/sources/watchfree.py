@@ -81,9 +81,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             url = urlparse.urljoin(self.base_link, url)
 
@@ -109,13 +109,13 @@ class source:
                     else:  quality = 'SD'
                     quality = quality.encode('utf-8')
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'Watchfree', 'url': url, 'direct': False, 'debridonly': False})
+                    srcs.append({'source': host, 'quality': quality, 'provider': 'Watchfree', 'url': url, 'direct': False, 'debridonly': False})
                 except:
                     pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

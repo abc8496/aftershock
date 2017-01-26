@@ -71,7 +71,7 @@ class source:
 
         self.zee_zindagi_link = 'forumdisplay.php?f=2679'
 
-        self.list = []
+        self.srcs = []
 
     def networks(self):
         listItems = []
@@ -245,7 +245,7 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            sources = []
+            srcs = []
 
             result = ''
             links = [self.base_link_1, self.base_link_2, self.base_link_3]
@@ -288,7 +288,7 @@ class source:
                                 pass
                         host = client.host(urls[0])
                         url = "##".join(urls)
-                        sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url, 'direct':False})
+                        srcs.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'DesiRulez','url':url, 'direct':False})
                         quality = ''
                         urls = []
                     quality = child.getText()
@@ -324,11 +324,11 @@ class source:
                         pass
                 host = client.host(urls[0])
                 url = "##".join(urls)
-                sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url,'direct':False})
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+                srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiRulez', 'url': url,'direct':False})
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)

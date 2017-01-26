@@ -67,9 +67,9 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             url = urlparse.urljoin(self.base_link, url)
 
@@ -98,14 +98,14 @@ class source:
                     url = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(items[i])[0][1]
 
                     host = client.host(url)
-                    sources.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'DesiHDMovies', 'url': url, 'direct':False})
+                    srcs.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'DesiHDMovies', 'url': url, 'direct':False})
                 except :
                     pass
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except Exception as e:
             logger.error('[%s] Exception : %s' % (self.__class__, e))
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

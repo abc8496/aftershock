@@ -67,9 +67,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             url = urlparse.urljoin(self.base_link, url)
 
@@ -117,7 +117,7 @@ class source:
                     t = r['target']
 
                     if 'openload' in t:
-                        sources.append({'source': 'openload.co', 'quality': quality, 'provider': 'Ninemovies', 'url': t, 'direct': False, 'debridonly': False})
+                        srcs.append({'source': 'openload.co', 'quality': quality, 'provider': 'Ninemovies', 'url': t, 'direct': False, 'debridonly': False})
 
                     post = r['params']
                     if not post: raise Exception()
@@ -134,14 +134,14 @@ class source:
                     r = [i['file'] for i in r if 'file' in i]
 
                     for i in r:
-                        try: sources.append({'source': 'gvideo', 'quality': directstream.googletag(i)[0]['quality'], 'provider': 'Ninemovies', 'url': i, 'direct': True, 'debridonly': False})
+                        try: srcs.append({'source': 'gvideo', 'quality': directstream.googletag(i)[0]['quality'], 'provider': 'Ninemovies', 'url': i, 'direct': True, 'debridonly': False})
                         except: pass
                 except:
                     pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         return url

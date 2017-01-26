@@ -32,7 +32,7 @@ class source:
     def __init__(self):
         self.fileName = 'static.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
-        self.list = []
+        self.srcs = []
 
     def removeJSON(self, name):
         control.delete(self.fileName)
@@ -55,8 +55,8 @@ class source:
                     raise Exception()
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile()
-            return (retValue, self.list)
+                self.srcs = liveParser.parseFile()
+            return (retValue, self.srcs)
         except :
             import traceback
             traceback.print_exc()

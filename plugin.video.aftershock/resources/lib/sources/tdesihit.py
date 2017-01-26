@@ -59,9 +59,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             url = urlparse.urljoin(self.base_link, url)
 
@@ -93,13 +93,13 @@ class source:
                         url = "##".join(urls)
                     else:
                         url = urls[0]
-                    sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiHit', 'url': url, 'direct':False})
+                    srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'DesiHit', 'url': url, 'direct':False})
                 except :
                     pass
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

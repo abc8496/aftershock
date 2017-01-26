@@ -36,7 +36,7 @@ class source:
         self.base_link = 'https://cinefuntv.com'
         self.live_link = 'https://cinefuntv.com/smtalnc/content.php?cmd=content&categoryid=6&device=ios&version=0&key=CYxPIVE9ae'
         self.channel_link = 'https://cinefuntv.com/watchnow.php?content=%s'
-        self.list = []
+        self.srcs = []
         self.fileName = 'cinefun.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
         self.headers={'User-Agent':base64.b64decode('Q0ZVTlRWLzMuMSBDRk5ldHdvcmsvNzU4LjAuMiBEYXJ3aW4vMTUuMC4w')}
@@ -71,8 +71,8 @@ class source:
                     json.dump(channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
-            return (generateJSON, self.list)
+                self.srcs = liveParser.parseFile(decode=False)
+            return (generateJSON, self.srcs)
         except:
             import traceback
             traceback.print_exc()

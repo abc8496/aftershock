@@ -40,7 +40,7 @@ class source:
         self.now = datetime.datetime.now()
         self.user = control.setting('eros.user')
         self.password = control.setting('eros.pwd')
-        self.list = []
+        self.srcs = []
 
     def movie(self, imdb, title, year):
         try:
@@ -74,9 +74,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             self.login()
             #url = urlparse.urljoin(self.base_link_1, url)
@@ -86,10 +86,10 @@ class source:
 
             result = json.loads(result)
 
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def login(self):
         try :

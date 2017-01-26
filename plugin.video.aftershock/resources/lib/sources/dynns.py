@@ -41,7 +41,7 @@ class source:
         self.channel_link = 'http://origin.dittotv.com/livetv/%s'
         self.poster_link = 'http://dittotv2.streamark.netdna-cdn.com/vod_images/optimized/livetv/%s.jpg'
         self.headers = {'User-Agent':base64.b64decode('dW1hci8xLjEgQ0ZOZXR3b3JrLzc1OC4wLjIgRGFyd2luLzE1LjAuMA==')}
-        self.list = []
+        self.srcs = []
         self.deviceId = None
         self.ipAddress = None
         self.fileName = 'dynns.json'
@@ -102,9 +102,9 @@ class source:
                     json.dump(channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
+                self.srcs = liveParser.parseFile(decode=False)
 
-            return (generateJSON, self.list)
+            return (generateJSON, self.srcs)
         except:
 
             pass

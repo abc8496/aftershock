@@ -65,9 +65,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             if debrid.status() == False: raise Exception()
 
@@ -104,13 +104,13 @@ class source:
                     except:
                         info = ''
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'DLTube', 'url': url, 'info': info, 'direct': False, 'debridonly': True})
+                    srcs.append({'source': host, 'quality': quality, 'provider': 'DLTube', 'url': url, 'info': info, 'direct': False, 'debridonly': True})
                 except:
                     pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):
@@ -119,5 +119,3 @@ class source:
             return url
         except:
             return
-
-

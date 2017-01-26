@@ -78,9 +78,9 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             try: import xbmc ; ip = xbmc.getIPAddress()
             except: ip = 'London'
@@ -98,11 +98,11 @@ class source:
 
             #url = '%s|Referer=%s&User-Agent=%s' % (url, url, client.getDefaultUserAgent())
 
-            sources.append({'source': 'einthusan', 'parts' : '1','quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            srcs.append({'source': 'einthusan', 'parts' : '1','quality': 'HD', 'provider': 'Einthusan', 'url': url,'direct':True})
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         return url

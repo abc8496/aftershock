@@ -35,7 +35,7 @@ class source:
     def __init__(self):
         self.base_link = 'http://swiftstreamz.com'
         self.live_link = base64.b64decode('aHR0cDovL3N3aWZ0c3RyZWFtei5jb20vU3dpZnRTdHJlYW0vc3dpZnRkYXRhLnBocA==')
-        self.list = []
+        self.srcs = []
         self.fileName = 'swift.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
         self.headers={'Authorization':base64.b64decode('QmFzaWMgVTNkcFpuUlVaV002UUZOM2FXWjBWR1ZqUUE9PQ==')}
@@ -79,8 +79,8 @@ class source:
                     json.dump(self.channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
-            return (generateJSON, self.list)
+                self.srcs = liveParser.parseFile(decode=False)
+            return (generateJSON, self.srcs)
         except:
             import traceback
             traceback.print_exc()

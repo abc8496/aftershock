@@ -67,9 +67,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             if debrid.status() == False: raise Exception()
 
@@ -156,16 +156,16 @@ class source:
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'Rlsmovies', 'url': url, 'info': info, 'direct': False, 'debridonly': True})
+                    srcs.append({'source': host, 'quality': quality, 'provider': 'Rlsmovies', 'url': url, 'info': info, 'direct': False, 'debridonly': True})
                 except:
                     pass
 
-            check = [i for i in sources if not i['quality'] == 'CAM']
+            check = [i for i in srcs if not i['quality'] == 'CAM']
             if check: sources = check
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

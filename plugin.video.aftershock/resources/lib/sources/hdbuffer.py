@@ -42,91 +42,6 @@ class source:
         self.HD_link = '/category/%s/dvdbluraymovies-%sonline'
         self.list = []
 
-    def scn_full_list(self, url, lang=None,  provider=None):
-        self.list = []
-
-        pagesScanned = 0
-        try :
-            url = getattr(self, url + '_link')
-            url = url % (lang, lang)
-        except:pass
-
-        turl = url
-
-        while((len(self.list) < 15) and (pagesScanned < 10)):
-            self.scn_list(turl, lang)
-            try : url =  re.compile('(.+)/page/.+').findall(turl)[0]
-            except :
-                pass
-            try: pageNo =  re.compile('/page/(.+)').findall(turl)[0]
-            except:
-                pageNo = 1
-                pass
-            pageNo = int(pageNo) + 1
-            turl = '%s/page/%s' % (url, pageNo)
-            pagesScanned = pagesScanned + 1
-        self.list[0].update({'next':turl})
-        self.list = metacache.fetchImdb(self.list)
-        return self.list
-
-    def scn_list(self, url, lang=None):
-        try :
-            links = [self.base_link_1, self.base_link_1, self.base_link_1]
-            for base_link in links:
-                try: result = client.request(base_link + url)
-                except:
-                    result = ''
-
-                if 'nag cf' in result: break
-
-            if result == '' :
-                return result
-
-            result = result.decode('iso-8859-1').encode('utf-8')
-            result = client.parseDOM(result, "div", attrs={"class": "nag cf"})[0]
-            movies = client.parseDOM(result, "div", attrs={"class": "thumb"})
-            for movie in movies:
-                try:
-                    title = client.parseDOM(movie, "a", ret="title")[0]
-                    title = re.compile('(.+?) [(]\d{4}[)]').findall(title)[0]
-                    title = client.replaceHTMLCodes(title)
-                    try : title = title.encode('utf-8')
-                    except: pass
-
-                    year = client.parseDOM(movie, "a", ret="title")[0]
-                    year = re.compile('.+? [(](\d{4})[)]').findall(year)[0]
-                    year = year.encode('utf-8')
-
-                    name = '%s (%s)' % (title, year)
-                    try: name = name.encode('utf-8')
-                    except: pass
-
-                    url = client.parseDOM(movie, "a", ret="href")[0]
-                    url = client.replaceHTMLCodes(url)
-                    try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
-                    except: pass
-
-                    poster = '0'
-                    try: poster = client.parseDOM(movie, "img", ret="src")[0]
-                    except: pass
-                    poster = client.replaceHTMLCodes(poster)
-                    try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
-                    except: pass
-                    poster = poster.encode('utf-8')
-
-                    duration = '0' ; tvdb = '0'; genre = '0'
-
-                    self.list.append({'title': title, 'originaltitle': title, 'duration':duration,'year': year, 'genre': genre, 'name': name, 'tvdb': tvdb, 'poster': poster, 'banner': '0', 'fanart': '0', 'lang':lang})
-
-                except:
-                    pass
-
-            return self.list
-
-        except:
-            pass
-        return
-
     def movie(self, imdb, title, year):
         try:
             self.base_link = random.choice([self.base_link_1, self.base_link_2])
@@ -159,9 +74,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             try: result = client.request(self.movie_link % (self.base_link_1, url))
             except: result = ''

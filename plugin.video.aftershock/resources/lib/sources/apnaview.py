@@ -39,91 +39,7 @@ class source:
         self.theaters_link = '/browse/%s?year=%s' % ('%s', self.now.year)
         self.added_link = '/browse/%s?'
         self.sort_link = '&order=desc&sort=date'
-        self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
-        self.sources = []
-        self.genres = {'Action':'15',
-                       'Adult':'32',
-                       'Adventure':'22',
-                       'Biography':'29',
-                       'Children':'28',
-                       'Comedy':'10',
-                       'Crime':'21',
-                       'Drama':'12',
-                       'Family':'26',
-                       'Fantasy':'31',
-                       'History':'30',
-                       'Horror':'16',
-                       'Romance':'11',
-                       'Thriller':'13',
-                       'Suspense':'14'}
-        self.genre_url = '/browse/%s?genre=%s'
-        self.years_url = '/browse/%s?year=%s'
-
-    def scn_full_list(self, url, lang=None, provider=None):
-        self.list = []
-
-        try :
-            url = getattr(self, url + '_link')
-            url = url % lang
-            url += self.sort_link
-        except:pass
-
-        links = [self.base_link, self.base_link, self.base_link]
-        for base_link in links:
-            try: result = client.request(base_link + url)
-            except:
-                result = ''
-            if 'row movie-list' in result: break
-
-        result = result.decode('iso-8859-1').encode('utf-8')
-        movies = client.parseDOM(result, "div", attrs={"class": "movie"})
-
-        for movie in movies:
-            try :
-                title = client.parseDOM(movie, "span", attrs={"class": "title"})[0]
-                #title = re.compile('(.+?) [(]\d{4}[)]').findall(title)
-                title = re.compile('(.+?) \d{4} ').findall(title)[0]
-                title = client.replaceHTMLCodes(title)
-                try : title = title.encode('utf-8')
-                except: pass
-
-                year = client.parseDOM(movie, "span", attrs={"class": "title"})[0]
-                year = year = re.compile('.+? (\d{4})').findall(year)[0]
-                year = year.encode('utf-8')
-
-                name = '%s (%s)' % (title, year)
-                try: name = name.encode('utf-8')
-                except: pass
-
-                url = client.parseDOM(movie, "a", ret="href")[0]
-                url = client.replaceHTMLCodes(url)
-                try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
-                except: pass
-
-                poster = '0'
-                try:
-                    poster = client.parseDOM(movie, "img", ret="src")[0]
-                    poster = '%s%s' % (self.base_link, poster)
-                except: pass
-                poster = client.replaceHTMLCodes(poster)
-                try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
-                except: pass
-                poster = poster.encode('utf-8')
-
-                duration = '0'
-
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'duration': duration, 'name': name, 'poster': poster, 'banner': '0', 'fanart': '0', 'tvdb':'0'})
-            except:
-                pass
-        try :
-            next = client.parseDOM(result, "li", attrs={"class": "next page"})
-            url = client.parseDOM(next, "a", ret="href")[0]
-            url = url.replace("&amp;", "&").replace(self.base_link, '')
-            self.list[0].update({'next':'%s' % (url)})
-        except:
-            pass
-
-        return self.list
+        self.srcs = []
 
     def movie(self, imdb, title, year):
         try:
@@ -155,7 +71,7 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            if url == None: return self.sources
+            if url == None: return self.srcs
 
             url = '%s%s' % (self.base_link, url)
 
@@ -185,10 +101,10 @@ class source:
                 while stillWorking:
                     stillWorking = False
                     stillWorking = [True for x in threads if x.is_alive() == True]
-            logger.debug('SOURCES [%s]' % self.sources, __name__)
-            return self.sources
+            logger.debug('SOURCES [%s]' % self.srcs, __name__)
+            return self.srcs
         except:
-            return self.sources
+            return self.srcs
 
     def source(self, item):
         quality = ''
@@ -209,7 +125,7 @@ class source:
                 url = "##".join(urls)
             else:
                 url = urls[0]
-            self.sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url, 'direct':False})
+            self.srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'ApnaView', 'url': url, 'direct':False})
         except :
             pass
 

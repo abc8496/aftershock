@@ -47,9 +47,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             data = urlparse.parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
@@ -134,16 +134,14 @@ class source:
                     host = client.replaceHTMLCodes(host)
                     host = host.encode('utf-8')
 
-                    sources.append({'source': host, 'quality': quality, 'provider': 'crazy4AD', 'url': url, 'info': info,'parts':'1', 'direct': False, 'debridonly': True})
+                    srcs.append({'source': host, 'quality': quality, 'provider': 'crazy4AD', 'url': url, 'info': info,'parts':'1', 'direct': False, 'debridonly': True})
                 except:
                     pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):
         return False
-
-

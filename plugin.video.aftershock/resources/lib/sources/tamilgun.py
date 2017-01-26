@@ -38,7 +38,7 @@ class source:
         self.base_link_1 = 'http://www.tamilgun.pro'
         self.base_link_2 = self.base_link_1
         self.search_link = '/feed/?search=Search&s=%s'
-        self.list = []
+        self.srcs = []
 
     def movie(self, imdb, title, year):
         try:
@@ -72,9 +72,9 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try :
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             if 'hd' in url.lower():
                 quality = 'HD'
@@ -85,11 +85,11 @@ class source:
 
             try:
                 linkcode = jsunpack.unpack(html).replace('\\', '')
-                sources = json.loads(re.findall('sources:(.*?)\}\)',linkcode)[0])
-                for source in sources:
+                srcs = json.loads(re.findall('sources:(.*?)\}\)',linkcode)[0])
+                for source in srcs:
                     url = source['file']
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                    self.srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
             except:
                 pass
 
@@ -101,7 +101,7 @@ class source:
                 for link in links:
                     url = link.get('src')
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                    self.srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
             except:
                 pass
 
@@ -115,7 +115,7 @@ class source:
                     if 'http' in str(link):
                         url = link.get('src')
                         host = client.host(url)
-                        sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                        self.srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
             except:
                 pass
 
@@ -123,13 +123,13 @@ class source:
                 sources = json.loads(re.findall('vdf-data-json">(.*?)<',html)[0])
                 url = 'https://www.youtube.com/watch?v=%s'%sources['videos'][0]['youtubeID']
                 host = client.host(url)
-                sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
+                self.srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilgun', 'url': url, 'direct':False})
             except:
                 pass
 
-            return sources
+            return self.srcs
         except:
-            return sources
+            return self.srcs
 
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)

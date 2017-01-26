@@ -35,7 +35,7 @@ class source:
         self.base_link_1 = 'http://www.tamilyogi.cc'
         self.base_link_2 = self.base_link_1
         self.search_link = '/feed/?search=Search&s=%s'
-        self.list = []
+        self.srcs = []
 
     def movie(self, imdb, title, year):
         try:
@@ -69,9 +69,9 @@ class source:
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try :
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             if 'hd' in url.lower():
                 quality = 'HD'
@@ -88,14 +88,14 @@ class source:
                 for link in links:
                     url = link.get('src')
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilyogi', 'url': url, 'direct':False})
+                    srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'tamilyogi', 'url': url, 'direct':False})
 
             except:
                 pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)

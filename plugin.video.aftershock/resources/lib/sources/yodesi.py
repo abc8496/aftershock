@@ -38,7 +38,7 @@ class source:
         self.info_link = 'http://www.yo-desi.com/player.php?id=%s'
         self.now = datetime.datetime.now()
 
-        self.list = []
+        self.srcs = []
 
     def networks(self):
         listItems = []
@@ -155,7 +155,7 @@ class source:
         try:
             logger.debug('SOURCES URL %s' % url, __name__)
             quality = ''
-            sources = []
+            srcs = []
 
             result = ''
 
@@ -191,15 +191,15 @@ class source:
                         urls[j] = rUrl
                     host = client.host(urls[0])
                     url = "##".join(urls)
-                    sources.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'YoDesi','url':url, 'direct':False})
+                    srcs.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'provider':'YoDesi','url':url, 'direct':False})
                     urls = []
                 except Exception as e:
                     logger.error(e)
                     pass
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         try:

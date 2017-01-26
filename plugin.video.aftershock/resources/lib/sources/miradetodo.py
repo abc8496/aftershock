@@ -61,9 +61,9 @@ class source:
 
     def sources(self, url):
         try:
-            sources = []
+            srcs = []
 
-            if url == None: return sources
+            if url == None: return srcs
 
             r = urlparse.urljoin(self.base_link, url)
 
@@ -99,13 +99,13 @@ class source:
                     url = [i for i in url if any(x in i['url'] for x in ['google', 'blogspot'])]
 
                     for i in url:
-                        sources.append({'source': 'gvideo', 'quality': i['quality'], 'provider': 'MiraDeTodo', 'url': i['url'], 'direct': True, 'debridonly': False})
+                        srcs.append({'source': 'gvideo', 'quality': i['quality'], 'provider': 'MiraDeTodo', 'url': i['url'], 'direct': True, 'debridonly': False})
                 except:
                     pass
 
-            return sources
+            return srcs
         except:
-            return sources
+            return srcs
 
 
     def resolve(self, url, resolverList):

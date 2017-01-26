@@ -35,7 +35,7 @@ class source:
     def __init__(self):
         self.base_location = 'https://offshoregit.com/vineegu/aftershock-repo/iptv_base.json'
         self.base_link = []
-        self.list = []
+        self.srcs = []
         self.fileName = 'iptv.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
         self.vlc_user_agent = 'VLC/2.2.1 LibVLC/2.2.17&Icy-MetaData=1'
@@ -121,8 +121,8 @@ class source:
                     json.dump(channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
-            return (generateJSON, self.list)
+                self.srcs = liveParser.parseFile(decode=False)
+            return (generateJSON, self.srcs)
         except Exception as e:
             import traceback
             traceback.print_exc()

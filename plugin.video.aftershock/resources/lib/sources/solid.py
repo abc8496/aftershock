@@ -32,7 +32,7 @@ class source:
     def __init__(self):
         self.base_link = ''
         self.live_link = base64.b64decode('aHR0cDovL3NvbGlkc3RyZWFtei5jb20vc29saWRkYXRhLnBocA==')
-        self.list = []
+        self.srcs = []
         self.channelList = {}
         self.fileName = 'solid.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
@@ -90,8 +90,8 @@ class source:
                     json.dump(self.channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
-            return (generateJSON, self.list)
+                self.srcs = liveParser.parseFile(decode=False)
+            return (generateJSON, self.srcs)
         except:
             import traceback
             traceback.print_exc()

@@ -37,7 +37,7 @@ class source:
         self.info_link = 'http://www.desiplex.net/watch/?id=%s'
         self.now = datetime.datetime.now()
 
-        self.list = []
+        self.srcs = []
 
     def tvshow(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
         if tvshowurl:
@@ -70,7 +70,7 @@ class source:
         try:
             logger.debug('SOURCES URL %s' % url, __name__)
             quality = 'HD'
-            sources = []
+            srcs = []
 
             result = ''
 
@@ -94,11 +94,11 @@ class source:
                 url = "##".join(parts)
             else :
                 url = parts[0]
-            sources.append({'source':host, 'parts': len(parts), 'quality':quality,'provider':'BadtameezDil','url':"##".join(parts), 'direct':False})
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            srcs.append({'source':host, 'parts': len(parts), 'quality':quality,'provider':'BadtameezDil','url':"##".join(parts), 'direct':False})
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         try:

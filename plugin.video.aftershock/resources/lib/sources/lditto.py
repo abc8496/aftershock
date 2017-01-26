@@ -43,7 +43,7 @@ class source:
                         'Connection':'keep-alive',
                         'User-Agent': cache.get(client.randomagent, 1, table='live_cache') ,
                         'Referer':'http://www.dittotv.com/livetv'}
-        self.list = []
+        self.srcs = []
         self.fileName = 'ditto.json'
         self.filePath = os.path.join(control.dataPath, self.fileName)
 
@@ -82,8 +82,8 @@ class source:
                     json.dump(channelList, outfile, sort_keys=True, indent=2)
 
                 liveParser = LiveParser(self.fileName, control.addon)
-                self.list = liveParser.parseFile(decode=False)
-            return (generateJSON, self.list)
+                self.srcs = liveParser.parseFile(decode=False)
+            return (generateJSON, self.srcs)
         except:
             import traceback
             traceback.print_exc()

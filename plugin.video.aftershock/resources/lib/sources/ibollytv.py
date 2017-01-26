@@ -39,7 +39,7 @@ class source:
         self.theaters_link = '/watch-%s-movies-online?year=%s&' % ('%s', self.now.year)
         self.added_link = '/watch-%s-movies-online?'
         self.sort_link = 'order=desc&sort=latest'
-        self.sources = []
+        self.srcs = []
         self.genres = {'Action':'Action',
                        'Adult':'Mature',
                        'Children':'Animation',
@@ -53,74 +53,6 @@ class source:
                        'Suspense':'Suspense'}
         self.genre_url = '/watch-%s-movies-online?genre=%s'
         self.years_url = '/watch-%s-movies-online?year=%s'
-
-    def scn_full_list(self, url, lang=None, provider=None):
-        self.list = []
-
-        try :
-            url = getattr(self, url + '_link')
-            url = url % lang
-            url += self.sort_link
-        except:pass
-
-        links = [self.base_link, self.base_link, self.base_link]
-        for base_link in links:
-            try: result = client.request(base_link + url)
-            except:
-                result = ''
-
-            if 'thumbnail movie-thumbnail' in result: break
-
-        result = result.decode('iso-8859-1').encode('utf-8')
-        movies = client.parseDOM(result, "div", attrs={"class": "thumbnail movie-thumbnail"})
-
-        for movie in movies:
-            try :
-                title = client.parseDOM(movie, "a", ret="title")[0]
-                title = re.compile('(.+?) [(]\d{4}[)]$').findall(title)[0]
-                title = client.replaceHTMLCodes(title)
-                try : title = title.encode('utf-8')
-                except: pass
-
-                year = client.parseDOM(movie, "a", ret="title")[0]
-                year = re.compile('.+? [(](\d{4})[)]$').findall(year)[0]
-                year = year.encode('utf-8')
-
-                name = '%s (%s)' % (title, year)
-                try: name = name.encode('utf-8')
-                except: pass
-
-                url = client.parseDOM(movie, "a", ret="href")[0]
-                url = client.replaceHTMLCodes(url)
-                try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
-                except: pass
-
-                poster = '0'
-                try:
-                    poster = client.parseDOM(movie, "img", ret="src")[0]
-                    if 'no-image-available' in poster:
-                        poster = '0'
-                        raise Exception()
-                    poster = '%s%s' % (poster)
-                except: pass
-                poster = client.replaceHTMLCodes(poster)
-                try: poster = urlparse.parse_qs(urlparse.urlparse(poster).query)['u'][0]
-                except: pass
-                poster = poster.encode('utf-8')
-
-                duration = '0'
-
-                self.list.append({'title': title, 'originaltitle': title, 'year': year, 'duration': duration, 'name': name, 'poster': poster, 'banner': '0', 'fanart': '0', 'tvdb':'0'})
-            except:
-                pass
-        try :
-            next = client.parseDOM(result, "li", attrs={"class": "next page"})
-            url = client.parseDOM(next, "a", ret="href")[0]
-            url = url.replace("&amp;", "&").replace(self.base_link, '')
-            self.list[0].update({'next':'%s' % (url)})
-        except:
-            pass
-        return self.list
 
     def movie(self, imdb, title, year):
         try:
@@ -154,9 +86,9 @@ class source:
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
             quality = ''
-            self.sources = []
+            self.srcs = []
 
-            if url == None: return self.sources
+            if url == None: return self.srcs
 
             try: result = client.request(url)
             except: result = ''
@@ -169,7 +101,7 @@ class source:
 
                 url = re.compile('(SRC|src|data-config)=\"(.+?)\"').findall(item)[0][1]
                 host = client.host(url)
-                self.sources.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'iBollyTV', 'url': url, 'direct':False})
+                self.srcs.append({'source': host, 'parts' : '1', 'quality': quality, 'provider': 'iBollyTV', 'url': url, 'direct':False})
             except:
                 pass
 
@@ -196,10 +128,10 @@ class source:
 
             except:
                 pass
-            logger.debug('SOURCES [%s]' % self.sources, __name__)
-            return self.sources
+            logger.debug('SOURCES [%s]' % self.srcs, __name__)
+            return self.srcs
         except:
-            return self.sources
+            return self.srcs
 
     def source(self, item):
         quality = ''
@@ -217,7 +149,7 @@ class source:
                 url = "##".join(urls)
             else:
                 url = urls[0]
-            self.sources.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'iBollyTV', 'url': url, 'direct':False})
+            self.srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'provider': 'iBollyTV', 'url': url, 'direct':False})
         except:
             pass
 
