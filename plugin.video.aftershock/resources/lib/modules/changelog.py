@@ -17,9 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
+import xbmc,xbmcgui,xbmcaddon,xbmcvfs,os
 
 def get(version):
-    import xbmc,xbmcgui,xbmcaddon,xbmcvfs,os
+
     addonInfo = xbmcaddon.Addon().getAddonInfo
     addonPath = xbmc.translatePath(addonInfo('path'))
     changelogfile = os.path.join(addonPath, 'changelog.txt')

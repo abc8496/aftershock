@@ -38,6 +38,8 @@ try :
     #params = {'tmdb': '0', 'name': 'Awards ', 'tvdb': '0', 'tvshowtitle': 'awards', 'year': '0', 'url': 'forumdisplay.php?f=36', 'imdb': '0', 'provider': 'desirulez_mv_tv', 'action': 'episodes', 'tvrage': '0'}
     #params = {'action': 'movies', 'url': 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=hi&count=40&start=1&sort=release_date,desc&start=1'}
     #params = {'tmdb': '0', 'tvdb': '0', 'tvshowtitle': 'Bigg Boss 10', 'year': '2016', 'url': 'forums/3994-Bigg-Boss-10', 'imdb': '0', 'provider': 'desirulez_mv_tv', 'action': 'episodes', 'tvrage': '0'}
+    params = {'episode': '0', 'name': '25th January 2017', 'title': '25th January 2017', 'tvdb': '0', 'season': '10', 'tvshowtitle': 'Bigg Boss 10', 'date': '0', 'meta': '{"name": "25th January 2017", "title": "25th January 2017", "url": "threads/1007812-Bigg-Boss-10-25th-January-2017-Watch-Online?s=451b4b6c7c04cdeaad54b035505e7cf4", "season": "10", "tvshowtitle": "Bigg Boss 10", "next": "forums/3994-Bigg-Boss-10/page2?s=451b4b6c7c04cdeaad54b035505e7cf4", "provider": "desirulez", "duration": "1800", "trailer": "plugin://plugin.video.aftershock/?action=trailer&name=Bigg+Boss+10", "tvshowurl": "forums/3994-Bigg-Boss-10"}', 'imdb': '0', 't': '20170125204217585000', 'year': '0', 'action': 'play'}
+
     select = None
 
     try:
