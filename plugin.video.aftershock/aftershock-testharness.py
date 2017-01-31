@@ -38,6 +38,8 @@ try :
     #params = {'tmdb': '0', 'name': 'Awards ', 'tvdb': '0', 'tvshowtitle': 'awards', 'year': '0', 'url': 'forumdisplay.php?f=36', 'imdb': '0', 'provider': 'desirulez_mv_tv', 'action': 'episodes', 'tvrage': '0'}
     #params = {'action': 'movies', 'url': 'http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=hi&count=40&start=1&sort=release_date,desc&start=1'}
     #params = {'tmdb': '0', 'tvdb': '0', 'tvshowtitle': 'Bigg Boss 10', 'year': '2016', 'url': 'forums/3994-Bigg-Boss-10', 'imdb': '0', 'provider': 'desirulez_mv_tv', 'action': 'episodes', 'tvrage': '0'}
+    params =  {'action': 'desiLiveNavigator', 'url': 'all', 'name': 'ALL'}
+
     select = None
 
     try:
@@ -154,6 +156,9 @@ try :
     #navigator.navigator().desiLiveTV(url)
     #from resources.lib.sources import swift_live
     #swift_live.source().getLiveSource()
+
+    from resources.lib.indexers import navigator
+    navigator.navigator().desiLiveTV(url)
 
     from resources.lib.modules import livemeta
     #livemeta.source().getLiveNames()

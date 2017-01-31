@@ -108,7 +108,7 @@ class source:
                             host = 'hotstar'
                             quality = self.res_map[res]
                             url = '%s|Cookie=%s' % (url, cookie)
-                            sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'Hotstar', 'url': url, 'direct':True})
+                            srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'Hotstar', 'url': url, 'direct':True})
                         except Exception as e:
                             logger.error('[%s] Exception : %s' % (self.__class__, e))
                             pass

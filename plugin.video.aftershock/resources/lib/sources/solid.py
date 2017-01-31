@@ -62,7 +62,7 @@ class source:
                 result = client.request(category_url, headers=self.headers)
                 result = json.loads(result)
 
-                categories = ['INDIAN LIVE', 'PUNJABI LIVE','TAMIL LIVE', 'MALAYALAM LIVE','TELUGU LIVE', 'OTHER INDIAN LIVE']
+                categories = ['HINDI', 'PUNJABI','TAMIL LIVE', 'SOUTH INDIAN','NORTH INDIAN']
                 liveCategories = result['categories']['live']
                 liveChannels = result['available_channels']
                 serverInfo = result['server_info']
@@ -121,6 +121,7 @@ class source:
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)
         url = '%s|User-Agent=%s' % (url, self.getSolidPlayUserAgent())
-        result = client.validateUrl(url)
         logger.debug('RESOLVED URL [%s]' % url, __name__)
+        #result = client.validateUrl(url)
+        logger.debug('VALID RESOLVED URL [%s]' % url, __name__)
         return url

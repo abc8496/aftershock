@@ -251,7 +251,7 @@ elif action == 'startLiveProxy':
         import os
         from resources.lib.modules import control
 
-        libPath = os.path.join(control.addonInfo('path'), 'resources', 'lib', 'libraries')
+        libPath = os.path.join(control.addonInfo('path'), 'resources', 'lib', 'modules')
         serverPath = os.path.join(libPath, 'localproxy.py')
         try:
             import requests

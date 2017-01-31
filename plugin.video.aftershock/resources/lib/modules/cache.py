@@ -92,7 +92,7 @@ def clear(table=None, cacheFile=None):
     try:
         control.idle()
 
-        if table == None: table = ['rel_list', 'rel_lib']
+        if table == None: table = ['rel_list', 'rel_lib','rel_shows']
         elif not type(table) == list: table = [table]
 
         if cacheFile == None:

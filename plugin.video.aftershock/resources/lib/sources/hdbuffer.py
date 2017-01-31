@@ -103,13 +103,13 @@ class source:
                 try :
                     url = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(link)[0][1]
                     host = client.host(url)
-                    sources.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'HDBuffer', 'url': url, 'direct':False})
+                    srcs.append({'source': host, 'parts': '1', 'quality': quality, 'provider': 'HDBuffer', 'url': url, 'direct':False})
                 except :
                     pass
-            logger.debug('SOURCES [%s]' % sources, __name__)
-            return sources
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
         except:
-            return sources
+            return srcs
 
     def resolve(self, url, resolverList):
         logger.debug('ORIGINAL URL [%s]' % url, __name__)

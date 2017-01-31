@@ -67,7 +67,6 @@ def setView(content, viewDict=None):
 
     skin = control.skin
     import xbmc
-    xbmc.log('Skin Name : %s' % skin, xbmc.LOGNOTICE)
     for i in range(0, 200):
          if control.condVisibility('Container.Content(%s)' % content):
              try:
@@ -78,17 +77,14 @@ def setView(content, viewDict=None):
                  view = dbcur.fetchone()
                  view = view[2]
                  if view == None: raise Exception()
-                 xbmc.log('1 - Setting ViewMode : %s' % str(view), xbmc.LOGNOTICE)
                  return control.execute('Container.SetViewMode(%s)' % str(view))
              except:
                  try:
-                     xbmc.log('2 - Setting ViewMode : %s' % str(viewDict[skin]), xbmc.LOGNOTICE)
                      return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
                  except:
                      return
          else:
              try:
-                 xbmc.log('3 - Setting ViewMode : %s' % str(viewDict[skin]), xbmc.LOGNOTICE)
                  return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
              except:
                  return

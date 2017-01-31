@@ -20,7 +20,7 @@
 
 import client
 import random
-import urllib
+import urllib, urlparse
 
 
 def request(url, check):
@@ -35,6 +35,15 @@ def request(url, check):
         if check in str(result): return result.decode('iso-8859-1').encode('utf-8')
     except:
         return
+
+def parse(url):
+    try: url = client.replaceHTMLCodes(url)
+    except: pass
+    try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
+    except: pass
+    try: url = urlparse.parse_qs(urlparse.urlparse(url).query)['q'][0]
+    except: pass
+    return url
 
 def get():
     return random.choice([

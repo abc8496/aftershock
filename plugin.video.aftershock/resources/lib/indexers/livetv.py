@@ -26,6 +26,7 @@ import urllib
 from resources.lib.modules import control
 from resources.lib.modules import views
 from resources.lib.sources import sources
+from resources.lib.modules import logger
 
 try:
     from sqlite3 import dbapi2 as database
@@ -58,8 +59,8 @@ class channels:
                 date=None
                 meta={'genre':url}
 
-
                 sourceList = sources().getSources(name, title, year, imdb, tvdb, season, episode, tvshowtitle, date, meta)
+
                 sourceList = dict((item['name'],item) for item in sourceList).values()
 
                 self.list.extend(sourceList)
@@ -70,6 +71,7 @@ class channels:
                 else:
                     self.channelDirectory(self.list, action='desiLiveNavigator')
         except Exception as e:
+            logger.error(e, __name__)
             pass
 
     def channelDirectory(self, items, action='play'):
