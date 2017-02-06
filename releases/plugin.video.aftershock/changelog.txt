@@ -1,6 +1,11 @@
 Aftershock v4.6.0
 --------------------------------
 - [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
+- IPTV Fix
+
+Aftershock v4.6.0
+--------------------------------
+- [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
 - Kodi 17.0 (Krypton) Upgrade
 - Code Cosmetics
 - Code Refactor / Cleanup

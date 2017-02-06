@@ -6,6 +6,18 @@
     "enabled":"true"
   },
   {
+    "link": "http://iptv4.ddns.net:8000/get.php?username=aftershockpy&password=aftershockpy&type=m3u",
+    "source": "af-ts",
+    "regex":"#EXTINF:-1,.*(IND)\\s*:\\s*(.*)\\s*(.*)",
+    "enabled":"true"
+  },
+  {
+    "link": "http://iptv4.ddns.net:8000/get.php?username=aftershockpy&password=aftershockpy&type=m3u&output=hls",
+    "source": "af-hls",
+    "regex":"#EXTINF:-1,.*(IND)\\s*:\\s*(.*)\\s*(.*)",
+    "enabled":"true"
+  },
+  {
     "link": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u",
     "source": "st-ts",
     "regex":"#EXTINF:-1,.*(in|hindi|punjabi|telugu|tamil|marathi|Malyalam|Kannada|BENGALI)\\s*:\\s*(.*)\\s*(.*)",
