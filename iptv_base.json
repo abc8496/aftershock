@@ -6,15 +6,15 @@
     "enabled":"true"
   },
   {
-    "link": "http://iptv4.ddns.net:8000/get.php?username=aftershockpy&password=aftershockpy&type=m3u",
+    "link": "http://iptv.indiansat.net:80/get.php?username=aftershockpy&password=aftershockpy&type=m3u",
     "source": "af-ts",
-    "regex":"#EXTINF:-1,.*(IND)\\s*:\\s*(.*)\\s*(.*)",
+    "regex":"#EXTINF:-1,.*(IN|IND)\\s*[:|_]\\s*(.*)\\s*(.*)",
     "enabled":"true"
   },
   {
-    "link": "http://iptv4.ddns.net:8000/get.php?username=aftershockpy&password=aftershockpy&type=m3u&output=hls",
+    "link": "http://iptv.indiansat.net:80/get.php?username=aftershockpy&password=aftershockpy&type=m3u&output=hls",
     "source": "af-hls",
-    "regex":"#EXTINF:-1,.*(IND)\\s*:\\s*(.*)\\s*(.*)",
+    "regex":"#EXTINF:-1,.*(IN|IND)\\s*[:|_]\\s*(.*)\\s*(.*)",
     "enabled":"true"
   },
   {
