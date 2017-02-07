@@ -1,3 +1,8 @@
+Aftershock v4.6.3
+--------------------------------
+- [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
+- Updated Live Providers
+
 Aftershock v4.6.2
 --------------------------------
 - [COLOR orange]NOTE: Donations for this addon gracefully accepted at http://paypal.me/aftershockpy/10USD[/COLOR]
