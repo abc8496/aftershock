@@ -23,8 +23,8 @@ import time
 import urllib
 import urlparse
 
-from resources.lib.modules import client
-from resources.lib.modules import cache
+from . import client
+from . import cache
 
 
 def request(url, post=None, headers=None, mobile=False, safe=False, timeout='30'):

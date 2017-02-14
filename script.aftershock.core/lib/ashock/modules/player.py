@@ -23,9 +23,9 @@ import re
 import time
 
 import xbmc
-from resources.lib.modules import bookmarks
-from resources.lib.modules import control
-from resources.lib.modules import subtitles
+from . import bookmarks
+from . import control
+from . import subtitles
 
 
 class player(xbmc.Player):

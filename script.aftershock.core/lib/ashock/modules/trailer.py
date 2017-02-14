@@ -25,8 +25,8 @@ import re
 import urllib
 import urlparse
 
-from resources.lib.modules import control
-from resources.lib.modules import client
+from . import control
+from . import client
 
 
 class trailer:

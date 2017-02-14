@@ -9,13 +9,13 @@
     "link": "http://iptv.indiansat.net:80/get.php?username=aftershockpy&password=aftershockpy&type=m3u",
     "source": "af-ts",
     "regex":"#EXTINF:-1,.*(IN|IND)\\s*[:|_]\\s*(.*)\\s*(.*)",
-    "enabled":"true"
+    "enabled":"false"
   },
   {
     "link": "http://iptv.indiansat.net:80/get.php?username=aftershockpy&password=aftershockpy&type=m3u&output=hls",
     "source": "af-hls",
     "regex":"#EXTINF:-1,.*(IN|IND)\\s*[:|_]\\s*(.*)\\s*(.*)",
-    "enabled":"true"
+    "enabled":"false"
   },
   {
     "link": "http://live.softiptv.com:9900/get.php?username=525&password=525&type=m3u",

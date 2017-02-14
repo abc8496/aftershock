@@ -31,9 +31,9 @@ import urllib
 import urllib2
 import urlparse
 
-from resources.lib.modules import cache
-from resources.lib.modules import control
-from resources.lib.modules import workers
+from . import cache
+from . import control
+from . import workers
 
 
 def randomagent():

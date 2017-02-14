@@ -25,7 +25,7 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-from resources.lib.modules import control
+from . import control
 
 
 def fetch(items, lang):

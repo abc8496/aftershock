@@ -37,14 +37,14 @@ try:
 except:
     from pysqlite2 import dbapi2 as database
 
-from resources.lib.modules import control
-from resources.lib.modules import cleantitle
-from resources.lib.modules import client
-from resources.lib.modules import workers
-from resources.lib.modules import debrid
-from resources.lib.modules import cache
+from ashock.modules import control
+from ashock.modules import cleantitle
+from ashock.modules import client
+from ashock.modules import workers
+from ashock.modules import debrid
+from ashock.modules import cache
 from resources.lib import resolvers
-from resources.lib.modules import logger
+from ashock.modules import logger
 
 sysaddon = sys.argv[0] ; syshandle = int(sys.argv[1])
 
@@ -194,7 +194,7 @@ class sources:
 
             control.sleep(200)
 
-            from resources.lib.modules.player import player
+            from ashock.modules.player import player
             player().run(content, name, url, year, imdb, tvdb, meta)
 
             return url
@@ -289,7 +289,7 @@ class sources:
                     if control.setting('playback_info') == 'true':
                         control.infoDialog(items[i]['label'])
 
-                    from resources.lib.modules.player import player
+                    from ashock.modules.player import player
                     player().run(content, title, self.url, year, imdb, tvdb, meta)
 
                     return self.url
@@ -641,7 +641,7 @@ class sources:
             pass
 
         try :
-            from resources.lib.modules import livemeta
+            from ashock.modules import livemeta
             meta = livemeta.source().getLiveMeta()
 
             for item in meta:

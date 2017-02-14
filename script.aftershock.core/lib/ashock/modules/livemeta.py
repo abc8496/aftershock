@@ -20,9 +20,9 @@
 
 import json
 
-from resources.lib.modules import control
-from resources.lib.modules import logger
-from resources.lib.modules.fileFetcher import *
+from . import control
+from . import logger
+from .fileFetcher import *
 
 
 class source:

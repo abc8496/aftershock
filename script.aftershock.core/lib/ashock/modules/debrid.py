@@ -22,9 +22,9 @@ import json
 import time
 import urllib
 
-from resources.lib.modules import client
-from resources.lib.modules import control
-from resources.lib.modules import cache
+from . import client
+from . import control
+from . import cache
 
 
 def rdAuthorize():

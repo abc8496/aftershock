@@ -21,8 +21,8 @@
 import urllib
 import urlparse
 
-from resources.lib.modules import client
-from resources.lib.modules import logger
+from ashock.modules import client
+from ashock.modules import logger
 
 try :import urlresolver
 except:pass

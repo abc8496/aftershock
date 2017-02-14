@@ -129,13 +129,13 @@ try :
     from resources.lib.indexers import tvshows
     from resources.lib.indexers import episodes
     from resources.lib import sources
-    from resources.lib.modules import debrid, user, client, livemeta
-    from resources.lib.modules import client
+    from ashock.modules import debrid, user, client, livemeta
+    from ashock.modules import client
     from resources.lib.resolvers import dailymotion
     from resources.lib import resolvers
     from resources.lib.sources import einthusan
 
-    from resources.lib.modules import user
+    from ashock.modules import user
 
     #movies.movies().get(url, lang=lang)
 
@@ -160,7 +160,7 @@ try :
     from resources.lib.indexers import navigator
     navigator.navigator().desiLiveTV(url)
 
-    from resources.lib.modules import livemeta
+    from ashock.modules import livemeta
     #livemeta.source().getLiveNames()
 
     from resources.lib.sources import sources
@@ -193,13 +193,13 @@ try :
     #from resources.lib.sources import iptv_live
     #iptv_live.source().getLiveSource(True)
 
-    #from resources.lib.modules import control
+    #from ashock.modules import control
     #control.delete('*.json')
 
     #from resources.lib.sources import swift_live
     #swift_live.source().resolve('http://163.172.142.242:8081/swiftiptv/9xjalwa/playlist.m3u8', None)
 
-    #from resources.lib.modules import cleantitle
+    #from ashock.modules import cleantitle
     #print cleantitle.live('COLORS TV HD ( ENTERTAINMENT )')
     #print cleantitle.live('COLORS TV INDIA')
     #print cleantitle.live('COLORS TV APAC')
@@ -207,7 +207,7 @@ try :
 
 
 except:
-    from resources.lib.modules import client
+    from ashock.modules import client
     import traceback
     traceback.print_exc()
     client.printException('aftershock-testharness')

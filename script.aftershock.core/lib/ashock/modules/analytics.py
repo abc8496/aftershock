@@ -23,10 +23,10 @@ import json
 import urllib
 import uuid
 
-from resources.lib.modules import client
-from resources.lib.modules import control
-from resources.lib.modules import logger
-from resources.lib.modules import cache
+from . import client
+from . import control
+from . import logger
+from . import cache
 
 
 def sendAnalytics(screenName):

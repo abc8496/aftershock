@@ -21,7 +21,7 @@
 import json
 import urlparse
 
-from resources.lib.modules import client
+from . import client
 
 
 def getTrakt(url, post=None):

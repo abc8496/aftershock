@@ -21,7 +21,7 @@
 import re
 import unicodedata
 
-from resources.lib.modules import control
+from . import control
 
 try:
     from sqlite3 import dbapi2 as database

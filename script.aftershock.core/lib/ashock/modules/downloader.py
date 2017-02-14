@@ -35,7 +35,7 @@ def download(name, image, url):
     if type(url) is list:
         url = url[0]
 
-    from resources.lib.modules import control
+    from . import control
 
     if url == None:
         return control.infoDialog(control.lang(30501).encode('utf-8'))

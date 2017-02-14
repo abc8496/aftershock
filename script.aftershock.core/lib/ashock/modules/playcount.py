@@ -21,7 +21,7 @@
 import sys
 import xbmc
 
-from resources.lib.modules import control
+from . import control
 
 
 def movies(title, year, imdb, watched):

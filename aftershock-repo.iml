@@ -5,6 +5,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/plugin.video.aftershock" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/script.aftershocknow.guide" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/script.aftershock.core/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/script.aftershock.providers/lib" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -40,6 +42,24 @@
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/../kodi-repo/script.module.livestreamer/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/script.aftershock.core/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/script.aftershock.providers/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

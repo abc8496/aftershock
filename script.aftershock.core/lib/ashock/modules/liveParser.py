@@ -24,7 +24,7 @@ import os
 
 import control
 import logger
-from resources.lib.modules import cleantitle
+from . import cleantitle
 
 
 class LiveParser(object):

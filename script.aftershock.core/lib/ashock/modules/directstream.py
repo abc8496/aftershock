@@ -23,7 +23,7 @@ import re
 import urllib
 import urlparse
 
-from resources.lib.modules import client
+from . import client
 
 
 def google(url):
