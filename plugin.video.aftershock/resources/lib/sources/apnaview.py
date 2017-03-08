@@ -51,7 +51,7 @@ class source:
             result = client.request(query)
 
             result = result.decode('iso-8859-1').encode('utf-8')
-            result = client.parseDOM(result, "div", attrs={"class": "movie"})
+            result = client.parseDOM(result, "div", attrs={"class": "row"})
 
             title = cleantitle.movie(title)
             for item in result:

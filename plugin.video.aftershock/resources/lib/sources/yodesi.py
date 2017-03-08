@@ -186,7 +186,7 @@ class source:
                         result = result.decode('iso-8859-1').encode('utf-8')
                         item = client.parseDOM(result, name="div", attrs={"style": "float:none;height:700px;margin-left:200px"})[0]
                         rUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
-                        if not rUrl.startswith('http:'):
+                        if not rUrl.startswith('http:') and not rUrl.startswith('https:'):
                             rUrl = '%s%s' % ('http:', rUrl)
                         urls[j] = rUrl
                     host = client.host(urls[0])

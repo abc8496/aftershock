@@ -148,6 +148,8 @@ def request(url, close=True, redirect=True, error=False, proxy=None, post=None, 
                 elif error == False:
                     return
             except:
+                import traceback
+                traceback.print_exc()
                 pass
         if output == 'cookie':
             try: result = '; '.join(['%s=%s' % (i.name, i.value) for i in cookies])
@@ -428,7 +430,10 @@ def urlRewrite(url):
                       {'host':'vidzi.php','url':'http://vidzi.tv/embed-%s-640x360.html'},
                       {'host':'vidgg.php','url':'http://www.vidgg.to/embed/?id=%s&amp;px=1'},
                       {'host':'aurora.php','url':'http://www.auroravid.to/embed/?v=%s&amp;px=1'},
-                      {'host':'cloudtime.php','url':'http://www.cloudtime.to/embed/?v=%s&amp;px=1'}]
+                      {'host':'cloudtime.php','url':'http://www.cloudtime.to/embed/?v=%s&amp;px=1'},
+                      {'host':'watchers.php','url':'http://watchers.to/embed-%s-725x410.html'},
+                      {'host':'vidwatch.php','url':'http://vidwatch.me/embed-%s.html'},
+                      {'host':'speedwatch.php','url':'http://speedwatch.us/embed-%s.html'}]
     try :
         videoID = getVideoID(url)
         for i in urlReWriteDict:

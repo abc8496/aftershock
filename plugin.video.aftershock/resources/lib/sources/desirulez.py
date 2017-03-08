@@ -166,6 +166,8 @@ class source:
                 if type(title) is list and len(title) > 0:
                     title = str(title[0])
                 title = client.replaceHTMLCodes(title)
+                if title == 'Naamkarann':
+                    title = 'Naamkaran'
                 url = client.parseDOM(item, "a", ret="href")
 
                 if not url:

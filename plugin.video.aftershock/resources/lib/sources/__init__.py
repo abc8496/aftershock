@@ -324,19 +324,10 @@ class sources:
 
         if content == 'movie':
             sourceDict = [(i[0], i[1], getattr(i[1], 'movie', None)) for i in sourceDict]
-            #sourceDict = [i for i in sourceDict if i.endswith(('_mv', '_mv_tv'))]
-            #try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
-            #except: sourceDict = [(i, 'true') for i in sourceDict]
         elif content == 'episode':
             sourceDict = [(i[0], i[1], getattr(i[1], 'tvshow', None)) for i in sourceDict]
-            #sourceDict = [i for i in sourceDict if i.endswith(('_tv', '_mv_tv'))]
-            #try: sourceDict = [(i, control.setting(re.sub('_mv_tv$|_mv$|_tv$', '', i))) for i in sourceDict]
-            #except: sourceDict = [(i, 'true') for i in sourceDict]
         elif content == 'live':
             sourceDict = [(i[0], i[1], getattr(i[1], 'livetv', None)) for i in sourceDict]
-            #sourceDict = [i for i in sourceDict if i.endswith('_live')]
-            #try: sourceDict = [(i, control.setting(re.sub('_live$', '', i))) for i in sourceDict]
-            #except: sourceDict = [(i, 'true') for i in sourceDict]
 
         sourceDict = [(i[0], i[1]) for i in sourceDict if not i[2] == None]
 
@@ -821,6 +812,8 @@ class sources:
         for i in range(len(self.srcs)): self.srcs[i]['source'] = self.srcs[i]['source'].lower()
         self.srcs = sorted(self.srcs, key=lambda k: k['source'])
 
+        originalSrcs = self.srcs
+
         quality = control.setting('playback_quality')
         if quality == '': quality = '0'
 
@@ -863,7 +856,9 @@ class sources:
         if len(filter) < 35:filter += [i for i in self.srcs if i['quality'] == '']
         self.srcs = filter
 
-        logger.debug('ORIGINAL SOURCE COUNT : %s' % len(self.srcs), __name__)
+        r = [x for x in self.srcs + originalSrcs if x not in self.srcs or x not in originalSrcs]
+
+        logger.debug('Filtered Sources : %s' % r, __name__)
 
         for i in range(len(self.srcs)):
 

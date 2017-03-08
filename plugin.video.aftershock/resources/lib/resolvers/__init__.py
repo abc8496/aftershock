@@ -94,4 +94,5 @@ def info():
         , {'class': 'ditto', 'host': ['dittotv.com']}
         , {'class': 'dynns', 'host': ['dynns.com']}
         , {'class': 'dailymotion', 'host': ['dailymotion.com']}
+        , {'class': 'watchify', 'host': ['watchify.net']}
     ]
