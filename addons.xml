@@ -8,8 +8,8 @@
         <import addon="script.module.urlresolver"  version="3.0.21"/>
 		<import addon="script.module.metahandler"  version="1.0.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
-        <import addon="script.aftershocknow.guide" version="1.0.0"/>
         <import addon="script.aftershock.core" version="1.0.0"/>
+        <import addon="script.aftershocknow.guide" version="1.0.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="aftershock.py">
         <provides>video</provides>
@@ -63,9 +63,9 @@
 	</extension>
 </addon>
 
-<addon id="script.aftershock.core" name="aftershock-core" version="1.0.0" provider-name="AftershockPY">
+<addon id="script.aftershock.core" name="aftershock-core" version="1.0.1" provider-name="AftershockPY">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.19.0"/>
   </requires>
   <extension point="xbmc.python.module" library="lib"/>
   <extension point="xbmc.addon.metadata">
@@ -78,24 +78,9 @@
   </extension>
 </addon>
 
-<addon id="script.aftershock.providers" name="aftershock-providers" version="0.0.1" provider-name="AftershockPY">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib"/>
-  <extension point="xbmc.addon.metadata">
-    <summary></summary>
-    <description></description>
-    <platform>all</platform>
-    <license>Simplified BSD</license>
-    <source></source>
-    <website></website>
-  </extension>
-</addon>
-
-<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.2.0" provider-name="IDev">
+<addon id="script.aftershocknow.guide" name="Aftershock Now" version="1.2.1" provider-name="IDev">
 	<requires>
-		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 		<!--<import addon="plugin.video.aftershock" version="4.2.4" optional="true"/>-->
 	</requires>

@@ -7,8 +7,8 @@
         <import addon="script.module.urlresolver"  version="3.0.21"/>
 		<import addon="script.module.metahandler"  version="1.0.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
-        <import addon="script.aftershocknow.guide" version="1.0.0"/>
         <import addon="script.aftershock.core" version="1.0.0"/>
+        <import addon="script.aftershocknow.guide" version="1.0.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="aftershock.py">
         <provides>video</provides>
