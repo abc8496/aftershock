@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.aftershock" name="Aftershock" version="4.6.7" provider-name="AftershockPY">
+<addon id="plugin.video.aftershock" name="Aftershock" version="4.6.7.1" provider-name="AftershockPY">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
         <import addon="repository.aftershock" version="2.0.1"/>
@@ -28,7 +28,10 @@
             <screenshot>resources/screenshots/screenshot-02.png</screenshot>
             <screenshot>resources/screenshots/screenshot-03.png</screenshot>
         </assets>
-        <news>-Updated Providers [CR] - Updated Resolvers</news>
+        <news>- Updated Providers [CR]
+            - Updated Metadata Handling [CR]
+            - Updated Resolvers [CR]
+            - Added Resolvers</news>
   </extension>
 </addon>
 
@@ -63,7 +66,7 @@
 	</extension>
 </addon>
 
-<addon id="script.aftershock.core" name="aftershock-core" version="1.0.2" provider-name="AftershockPY">
+<addon id="script.aftershock.core" name="aftershock-core" version="1.0.2.1" provider-name="AftershockPY">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
   </requires>

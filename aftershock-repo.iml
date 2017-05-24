@@ -23,15 +23,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.metahandler/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.urlresolver" />
         </CLASSES>
         <JAVADOC />
@@ -51,6 +42,33 @@
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/script.aftershock.providers/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.metahandler/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.addon.common/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Library/Application Support/Kodi/addons/script.module.simplejson/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
