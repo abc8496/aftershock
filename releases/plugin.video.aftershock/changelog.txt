@@ -2,7 +2,7 @@
 
 Aftershock v4.7.0
 --------------------------------
-- Updated Providers
+- Added / Updated Providers
 - Updated Metadata Handling
 - Updated Resolvers
 - Added Resolvers
