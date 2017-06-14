@@ -26,6 +26,8 @@ import xbmc
 from . import bookmarks
 from . import control
 from . import subtitles
+from . import playcount
+from . import trakt
 
 
 class player(xbmc.Player):
@@ -204,10 +206,7 @@ class player(xbmc.Player):
                 pass
 
             try:
-                from metahandler import metahandlers
-                metaget = metahandlers.MetaData(preparezip=False)
-                metaget.get_meta('movie', self.title ,year=self.year)
-                metaget.change_watched(self.content, '', self.imdb, season='', episode='', year='', watched=7)
+                playcount.movies(self.title, self.year, self.imdb, 7)
             except:
                 pass
 
@@ -225,11 +224,7 @@ class player(xbmc.Player):
                 pass
 
             try:
-                from metahandler import metahandlers
-                metaget = metahandlers.MetaData(preparezip=False)
-                metaget.get_meta('tvshow', self.tvshowtitle, imdb_id=self.imdb)
-                metaget.get_episode_meta(self.tvshowtitle, self.imdb, self.season, self.episode)
-                metaget.change_watched(self.content, '', self.imdb, season=self.season, episode=self.episode, year='', watched=7)
+                playcount.tvshows(self.imdb, self.tvdb, self.season, self.episode, 7)
             except:
                 pass
 

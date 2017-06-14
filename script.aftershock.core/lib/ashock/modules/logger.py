@@ -58,12 +58,13 @@ def warning(msg, caller=None):
     log(msg, caller, level=LOGWARNING)
 
 def error(msg, caller=None):
-    func = inspect.currentframe().f_back.f_code
-
-    if caller is not None:
-        caller = "%s.%s()" % (caller, func.co_name)
     if control.setting('debug') == 'true':
-        log('%s\n%s' % (msg , traceback.format_exc()), caller, level=LOGERROR)
+        func = inspect.currentframe().f_back.f_code
+
+        if caller is not None:
+            caller = "%s.%s()" % (caller, func.co_name)
+
+            log('%s\n%s' % (msg , traceback.format_exc()), caller, level=LOGERROR)
 
 def log(msg, caller, level=LOGDEBUG):
     # override message level to force logging when addon logging turned on

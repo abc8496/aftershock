@@ -28,7 +28,6 @@ except:
 
 from . import control
 
-
 def addView(content):
     try:
         skin = control.skin
@@ -64,7 +63,6 @@ def addView(content):
         return
 
 def setView(content, viewDict=None):
-
     skin = control.skin
     import xbmc
     for i in range(0, 200):
@@ -83,9 +81,4 @@ def setView(content, viewDict=None):
                      return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
                  except:
                      return
-         else:
-             try:
-                 return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
-             except:
-                 return
          control.sleep(100)

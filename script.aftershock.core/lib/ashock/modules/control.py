@@ -226,13 +226,13 @@ def resetSettings(forceReset, version):
         return '1'
 
 # estuary View Modes :
-## List          xbmc.executebuiltin('Container.SetViewMode(50)') ## List
-## Poster        xbmc.executebuiltin('Container.SetViewMode(51)') ## PosterWrap 1
-## Wall          xbmc.executebuiltin('Container.SetViewMode(52)') ## Thumbnails
-## Shift         xbmc.executebuiltin('Container.SetViewMode(53)') ## PosterWrap 2
+## List          xbmc.executebuiltin('Container.SetViewMode(50)')
+## Poster        xbmc.executebuiltin('Container.SetViewMode(51)')
+## Shift         xbmc.executebuiltin('Container.SetViewMode(53)')
 ## InfoWall      xbmc.executebuiltin('Container.SetViewMode(54)')
-## WideList      xbmc.executebuiltin('Container.SetViewMode(55)') ## BigList
-## FanArt        xbmc.executebuiltin('Container.SetViewMode(502)') ## Fanart
+## WideList      xbmc.executebuiltin('Container.SetViewMode(55)')
+## Wall          xbmc.executebuiltin('Container.SetViewMode(500)')
+## FanArt        xbmc.executebuiltin('Container.SetViewMode(502)')
 
 # Confluence
 # List          xbmc.executebuiltin('Container.SetViewMode(502)')
@@ -246,5 +246,9 @@ def resetSettings(forceReset, version):
 
 viewMode = {
             'confluence':{'list':'502', 'biglist':'51', 'thumbnails':'500', 'posterwrap':'501', 'fanart':'508', 'mediainfo1':'504','mediainfo2':'503', 'mediainfo3':'515'},
-            'esturary':{'list':'50', 'biglist':'55', 'thumbnails':'52', 'posterwrap':'53', 'fanart':'502', 'mediainfo1':'54','mediainfo2':'53', 'mediainfo3':'515'}
+            'esturary':{'list':'50', 'poster':'51', 'shift':'53', 'infowall':'54', 'widelist':'55', 'wall':'500', 'fanart':'502'}
             }
+
+#confluence :
+#estouchy : 50, 500, 550
+#esturary : 50,51,52,53,54,55,500,501,502
